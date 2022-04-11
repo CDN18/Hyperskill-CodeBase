@@ -1,0 +1,96 @@
+<h2>Iterating over arrays</h2>
+<html>
+ <head></head>
+ <body>
+  <p>When we work with elements of an array, we often need to perform some kind of algorithm. For example, we might need to sort them, find the maximum element, print only positive numbers, reverse the order, calculate the arithmetic average of a series of numbers, and so on.</p> 
+  <h5 style="text-align: center;" id="processing-arrays-using-loops">Processing arrays using loops</h5> 
+  <p>A convenient way to process an array is to iterate over it using a loop. The <code class="language-java">length</code> property of an array can help us avoid an <code class="language-java">ArrayIndexOutOfBoundsException</code>.</p> 
+  <p>In the example below, you can see how we can <strong>fill an array with the squares of the indices of its elements</strong>.</p> 
+  <pre><code class="language-java">int n = 10; // the size of an array
+int[] squares = new int[n]; // creating an array with the specified size
+
+System.out.println(Arrays.toString(squares)); // [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+/* iterating over the array */
+for (int i = 0; i &lt; squares.length; i++) {
+    squares[i] = i * i; // set the value by the element index 
+}
+
+System.out.println(Arrays.toString(squares)); // [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]</code></pre> 
+  <p>In this code, an array of size 10 is created and filled with zeros. Then, the value of each element of the array is set to the square of the element's index. Then the program converts the array to the string representation that lists all elements inside square brackets, and prints it to the standard output.</p> 
+  <p>Now let's see how we can use the loop to <strong>check the order of elements</strong>.</p> 
+  <p>The following program checks if the given array is sorted in ascending order and prints "OK" if the answer is positive, otherwise prints "BROKEN".</p> 
+  <pre><code class="language-java">int[] numbers = { 1, 2, 3, 4, 5, 10, 6 }; // the order is broken
+
+boolean broken = false; // suppose the array is well-ordered
+
+/* iterating over the array */
+for (int i = 1; i &lt; numbers.length; i++) {
+    
+    if (numbers[i] &lt; numbers[i - 1]) { // if the order is broken
+        broken = true; // write a result
+        break;         // terminate the loop
+    }
+}
+
+if (broken) {
+    System.out.println("BROKEN");
+} else {
+    System.out.println("OK");
+}</code></pre> 
+  <p>For the given array the program prints <code class="language-java">"BROKEN"</code>.</p> 
+  <p>While and do-while loops are also admissible for iterating arrays, but they are less commonly used.</p> 
+  <h5 style="text-align: center;" id="reading-an-array-from-the-standard-input">Reading an array from the standard input</h5> 
+  <p>We can also use a loop to read all the elements of an array from the standard input.</p> 
+  <p>For example, the following input consists of two lines. The first line contains the length of the array and the second line contains all its elements.</p> 
+  <pre><code class="language-java">5
+101 102 504 302 881</code></pre> 
+  <p>Let's read these numbers using <code class="language-java">Scanner</code> (you can use other tools for reading) and then output all the numbers it read.</p> 
+  <pre><code class="language-java">Scanner scanner = new Scanner(System.in);
+        
+int len = scanner.nextInt(); // reading a length
+int[] array = new int[len];  // creating an array with the specified length
+        
+for (int i = 0; i &lt; len; i++) {
+    array[i] = scanner.nextInt(); // read the next number of the array
+}
+
+System.out.println(Arrays.toString(array)); // output the array</code></pre> 
+  <p>The program outputs:</p> 
+  <pre><code class="language-java">[101, 102, 504, 302, 881]</code></pre> 
+  <h5 style="text-align: center;" id="using-for-each-loop">Using for-each loop</h5> 
+  <p>Since Java 5, there has been a special form of the for-loop called <strong>for-each</strong>. It is used to iterate through each element of an array, a string, or a collection (we will learn them in the following topics) without indices.</p> 
+  <p>Here's how it looks:</p> 
+  <pre><code class="language-no-highlight">for (type var : array) { 
+    //statements using var
+}</code></pre> 
+  <p>And here's how it can be read: for each element <code class="language-java">var</code> of type <code class="language-java">type</code> in the <code class="language-java">array</code> array do <code class="language-java">{</code> some statements in the body <code class="language-java">}</code>.</p> 
+  <p>Let's consider the constituents in more detail. <code class="language-java">type</code> specifies the type of variable that will store one element of the array in each iteration. Usually, that type equals the type of the elements stored in the array. <code class="language-java">var</code> is the name of that variable. You can choose any name you prefer, but remember to stick to variable naming conventions. On the first iteration, it stores the first element of the array, on the second iteration it stores the second element, and so on.</p> 
+  <p>Let's now calculate the number of <code class="language-java">'a'</code> letters in the given character array using the <strong>for-each loop</strong>:</p> 
+  <pre><code class="language-java">char[] characters = { 'a', 'b', 'c', 'a', 'b', 'c', 'a' };
+
+int counter = 0;
+for (char ch : characters) {
+    if (ch == 'a') {
+        counter++;
+    }
+}
+
+System.out.println(counter); // it outputs "3"</code></pre> 
+  <p>We can do the same thing with the for-loop:</p> 
+  <pre><code class="language-java">char[] characters = {'a', 'b', 'c', 'a', 'b', 'c', 'a'};
+
+int counter = 0;
+for (int i = 0; i &lt; characters.length; i++) {
+    if (characters[i] == 'a') {
+        counter++;
+    }
+}
+
+System.out.println(counter); // it outputs "3"</code></pre> 
+  <p>The for-each loop has some limitations. First of all, you cannot use it if you want to modify an array, because the variable we use for iterations doesn't store the array element itself, only its copy. It is also impossible to obtain an element by its index since we have no index track. Finally, as is clear from the name, we cannot move through an array with more than one step per iteration: we iterate over each and every element, so we work with them one by one.</p> 
+  <p>As you can see, the absence of indices makes the code more readable. The for-each loop also allows you to avoid the <code class="language-java">ArrayIndexOutOfBoundsException</code>. All of this makes it a popular tool for iterating over an array. </p> 
+  <h5 id="conclusion">Conclusion</h5> 
+  <p>Using loops is a convenient way to process an array of elements. You can perform various algorithms, iterate an array and read in from the standard input with a loop. A form of for-loop called for-each is commonly used to iterate through each element of an array, string, or collection without the elements' indices. There are some limitations to its use, but it makes the code more readable and allows us to avoid the <code class="language-java">ArrayIndexOutOfBoundsException</code>.</p>
+ </body>
+</html>

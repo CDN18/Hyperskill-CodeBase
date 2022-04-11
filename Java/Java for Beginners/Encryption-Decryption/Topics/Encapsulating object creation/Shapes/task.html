@@ -1,0 +1,36 @@
+<h2>Shapes</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Suppose you have the following class hierarchy and a factory in your image viewer application.<br> </p> 
+  <pre><code class="language-java">interface Shape {
+    // fields and methods
+}
+
+class Circle implements Shape {
+    // fields and methods
+}
+
+class Polygon implements Shape {
+
+    // fields and methods
+}
+
+class ShapeFactory {
+
+    public Shape getShape(String type) {
+        type = type.toUpperCase();
+
+        switch (type) {
+            case "CIRCLE":
+                return new Circle();
+            case "POLYGON":
+                return new Polygon();
+            default:
+                return null;
+        }
+    }
+}</code></pre> 
+  <p><br> Choose all working ways to get an instance of Polygon in this application.</p>
+ </body>
+</html>

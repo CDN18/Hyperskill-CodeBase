@@ -1,0 +1,50 @@
+<h2>Calling a method</h2>
+<html>
+ <head></head>
+ <body>
+  <p>You may remember that a method is a sequence of statements that can be invoked or referred to by its name. Nothing special, huh? But what if we tell you that you can use it in a program anytime you need and anywhere you want just by simply invoking it with one line of code? Hope that we caught your attention now!</p> 
+  <p>To get started, we will call some method:</p> 
+  <pre><code class="language-java">getVolume(a, b, h);</code></pre> 
+  <p>Here, <code class="language-java">getVolume</code> is the name of the method that, for example, calculates a volume of some geometric shape, and the variables <code class="language-java">a</code>, <code class="language-java">b</code> and <code class="language-java">h</code> are its parameters. Technically, the parameter of a method is some value that is used inside the method. The combination of the name and method's parameters in parentheses is the way we call or invoke the method. Let's focus on it in more detail.</p> 
+  <h5>Name of the method</h5> 
+  <p>Each method has a name that is used to call it. Generally, it reflects what the method does – prints, finds, calculates, provides you with some information. </p> 
+  <p>The Java compiler requires a method name to be a <strong>legal identifier</strong>. The rules for legal identifiers are the following:</p> 
+  <ul> 
+   <li>identifiers are case-sensitive;</li> 
+   <li>an identifier can include Unicode letters, digits, underscore <code class="language-java">_</code> or currency characters, such as <code class="language-java">$</code>;</li> 
+   <li>an identifier can't start with a digit;</li> 
+   <li>identifiers must not be a keyword.</li> 
+  </ul> 
+  <p>In addition, there is a naming convention that restricts possible method names. It's optional but desired for developers. By convention, a one-word name should be a verb in lowercase: <code class="language-java">sum</code>, <code class="language-java">multiply</code>, or <code class="language-java">round</code>. On the contrary, such names as <code class="language-java">recorded</code>, <code class="language-java">students</code> or <code class="language-java">highest</code> do not comply with the convention.</p> 
+  <p>If a method has a multi-word name, the first letter of the second and the following words should be capitalized: <code class="language-java">getValue</code>, <code class="language-java">calculateNumberOfOranges</code>, or <code class="language-java">findLetter</code>.</p> 
+  <p>OK, now we know how methods are named. Let's talk about how we actually call them!</p> 
+  <h5>Calling a method</h5> 
+  <p>If you want to call (or invoke) a method in your program, you should write its name and pass the values of its parameters in parentheses. Here's how it can be done: </p> 
+  <pre><code class="language-java">printNumber(7); // this method prints 7
+
+convertDoubleToInt(1.25); // this method converts double value to int
+
+findUserByName("Kate"); // this method finds a user whose name is Kate</code></pre> 
+  <p>Let's take a look at the <code class="language-java">findUserByName</code> example.</p> 
+  <p>Here we pass a String value with a name to make the <code class="language-java">findUserByName</code> do its job. To call a method from outside the class it belongs to you need to indicate a class as a prefix. Check these methods:</p> 
+  <pre><code class="language-java">Math.round(79.378); // method with Math class name
+Character.isLetter('a'); // method with Character class name</code></pre> 
+  <p>Let's try to perform a small task by invoking a method:</p> 
+  <pre><code class="language-java">double weight = 63.85;
+weight = Math.round(weight); // now weight equals 64.0</code></pre> 
+  <p>Here, we have methods that take parameters, but what if we tell you that some methods don't accept parameters at all? In that case, just leave the parentheses empty.</p> 
+  <p>Some methods are called in a slightly different way. Take a look:</p> 
+  <pre><code class="language-java">// this is how you call an instance method
+
+String name = new String("Anya"); // created an instance (1)
+name = name.toLowerCase(); // anya (2)</code></pre> 
+  <p>Methods like this require an object of a certain class to be invoked. Before we called the <code class="language-java">toLowerCase()</code> method, we created an object of the <code class="language-java">String</code> class called <code class="language-java">name</code>, since the method in question deals with strings. Now we can call the method for this particular <strong>instance </strong><em>(2), </em>which results in decapitalizing all the letters from our string. </p> 
+  <p>As you see, this method requires an instance to be created before it can be called, that's why it is known as an <strong>instance method</strong>. We will talk about this type of method later.</p> 
+  <h5>Built-in methods</h5> 
+  <p>Why do you need to rewrite algorithms that have already been written? Of course, we're not talking about some special cases like educational tasks. Still, it is more efficient to use pre-defined methods that are always available to the user. That is why there are two types of methods in Java: <strong>built-in</strong> and <strong>user-defined </strong>methods.</p> 
+  <p>Built-in methods belong to the Standard Java library. Now there are a lot of built-in methods that convert or compare values, round doubles, find the maximum or the minimum value, and do a lot of useful operations. We've already dealt with the <code class="language-java">round()</code>, <code class="language-java">isLetter()</code>, <code class="language-java">compareTo()</code>, <code class="language-java">hasNext()</code> methods, but the number of built-in methods is huge and constantly growing. You can find the method you need in the Oracle documentation. For example, check out the link to the <a target="_blank" href="https://docs.oracle.com/javase/8/docs/api/java/lang/Math.html" rel="noopener noreferrer nofollow">Math library</a>.</p> 
+  <p>In contrast to built-in methods, user-defined methods are created by the programmer. It is a common practice to create a customized subprogram for a specific purpose. You may create your own method and even put it in your own class. Later on, we will learn why it is a good practice to use user-defined methods and how to actually create them. </p> 
+  <h5>Conclusion</h5> 
+  <p>Generally, a method is a necessary tool for a programmer who is aiming for a neat and reusable code style. With the help of methods, you can perform any specific task you need. They make the program look more readable, and you don't need to repeat routine code lines over and over. Some tasks are wrapped in special built-in methods that are part of the standard Java library. Also, there are user-defined methods that are created by the programmer. We will discuss these methods in other topics. </p>
+ </body>
+</html>

@@ -1,0 +1,62 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.Scanner;
+
+    abstract class Career {
+
+        public void execute() {
+            // write your code here ...
+        }
+
+        // write your code here ...
+
+        // Do not change the code below
+        public void dream() {
+            System.out.println("Dream big!");
+        }
+
+        public void plan() {
+            System.out.println("Draw a plan!");
+        }
+
+        public void study() {
+            System.out.println("Study!");
+        }
+    }
+
+    class Engineer {
+       // write your code here ...
+    }
+
+    class DataScientist {
+       // write your code here ...
+    }
+
+    // Do not change the code below
+    class Main {
+        public static void main(String[] args) {
+            final Scanner scanner = new Scanner(System.in);
+            final String type = scanner.nextLine();
+            scanner.close();
+            Career plan = null;
+            if ("engineer".equalsIgnoreCase(type)) {
+                plan = new Engineer();
+            } else if ("scientist".equalsIgnoreCase(type)) {
+                plan = new DataScientist();
+            } else {
+                System.out.println("Error!");
+                System.exit(0);
+            }
+            plan.execute();
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/19018#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Mon, 11 Apr 2022 21:21:01 UTC
+record: -1

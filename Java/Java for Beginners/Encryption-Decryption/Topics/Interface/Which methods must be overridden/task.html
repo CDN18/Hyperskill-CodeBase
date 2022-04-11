@@ -1,0 +1,20 @@
+<h2>Which methods must be overridden</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Here is an interface and a class implementing this interface:</p> 
+  <pre><code class="language-java">interface A {
+    
+    static void staticMethod() { }
+    
+    void method();
+    
+    default void defaultMethod() { }
+
+    abstract void abstractMethod();
+}
+
+class B implements A { }</code></pre> 
+  <p>Which methods must be implemented in the class <code class="language-java">B</code>?</p>
+ </body>
+</html>

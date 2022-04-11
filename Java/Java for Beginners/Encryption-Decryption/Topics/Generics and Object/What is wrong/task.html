@@ -1,0 +1,17 @@
+<h2>What is wrong</h2>
+<html>
+ <head></head>
+ <body>
+  <p>What is the result of the following code execution:</p> 
+  <pre><code class="language-java">Box&lt;String&gt; box = new Box();
+box.set(10L);</code></pre> 
+  <p>If <code class="language-java">Box</code> is a generic class:</p> 
+  <pre><code class="language-java">class Box&lt;T&gt; {
+    T value;
+
+    void set(T value) {
+        this.value = value;
+    }
+}</code></pre>
+ </body>
+</html>

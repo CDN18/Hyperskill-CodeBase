@@ -1,0 +1,17 @@
+<h2>Determine the value</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Given code that processes strings:</p> 
+  <pre><code class="language-java">String str1 = "aaabbcccdaa";
+String str2 = " ";
+
+for (int i = 0; i &lt; str1.length(); i++) {
+    char ch = str1.charAt(i);
+    if (ch != str2.charAt(str2.length() - 1)) {
+        str2 += ch;
+    }
+}</code></pre> 
+  <p>What is the value of <code class="language-java">str2</code>?</p>
+ </body>
+</html>

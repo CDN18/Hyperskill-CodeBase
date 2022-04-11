@@ -1,0 +1,112 @@
+<h2>Scanning the input</h2>
+<html>
+ <head></head>
+ <body>
+  <p>The <strong>standard input</strong> is a stream of data going into a program. It is supported by the operating system. By default, the standard input obtains data from the keyboard input but it's possible to redirect it from a file.</p> 
+  <p>Actually, not all programs need to use the standard input. But we will often use it here to help you master your programming skills! The typical way to solve programming problems is the following:</p> 
+  <ol> 
+   <li>Read data from the standard input (System.in);</li> 
+   <li>Process data to obtain a result;</li> 
+   <li>Output the result to the standard output (System.out).</li> 
+  </ol> 
+  <p>This type of code challenge can be easily tested by different formats of input data, and for this reason, we will use them a lot.</p> 
+  <h5 style="text-align: center;">Reading data with a scanner</h5> 
+  <p>The simplest way to obtain data from the standard input is to use the standard class <strong><code class="language-java">Scanner</code></strong>. It allows a program to read values of different types (string, numbers, etc) from the standard input. In this topic, we will consider reading data from the input.</p> 
+  <p>To use this class you should add the following import statement to the top of your file with the source code.</p> 
+  <pre><code class="language-java">import java.util.Scanner;</code></pre> 
+  <p>Then you add the following construction after the import:</p> 
+  <pre><code class="language-java">Scanner scanner = new Scanner(System.in);</code></pre> 
+  <p>With this line, we create an object of <code class="language-java">Scanner</code> class, that enables us to use its methods. We will learn more about creating objects in other topics. <code class="language-java">System.in</code> indicates that the program will read text that you type in the standard input. For now, you will always require this line exactly.</p> 
+  <p>There are two ways to read strings with a <code class="language-java">Scanner</code> class. If your input is an integer number or a single word, you can read the data using <strong><code class="language-java">next()</code> method</strong>. As an example, the following code fragment reads the user’s name and prints <em>hello</em> message:</p> 
+  <pre><code class="language-java">String name = scanner.next();
+
+System.out.println("Hello, " + name + "!");</code></pre> 
+  <p>For instance, the user's name is James. The output of the program will be the following:</p> 
+  <pre><code class="language-no-highlight">Hello, James!</code></pre> 
+  <p>If the user's input is an integer number like 123, the program will output this number. Note that the <code class="language-java">next()</code> method will store 123 or another integer number as a string, even if we know that this string consists of a number.</p> 
+  <pre><code class="language-no-highlight">Hello, 123!</code></pre> 
+  <p></p>
+  <div class="alert alert-primary">
+    There are more specialized methods for reading other types of input values. In this topic, we only consider reading strings.
+  </div>
+  <p></p> 
+  <p>But, if the user prints a compound name like Erich Maria, the program will output only the first word:</p> 
+  <pre><code class="language-java">Hello, Erich!</code></pre> 
+  <p>In this case, you'll need another method, a<strong> <code class="language-java">nextLine()</code> method,</strong> which reads and outputs the whole line:</p> 
+  <pre><code class="language-java">Hello, Erich Maria!</code></pre> 
+  <p>As you may notice, the <code class="language-java">next()</code> method reads one word only and doesn't include any whitespace. By contrast, the <code class="language-java">nextLine()</code> method includes all space characters it encounters.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   Note that in Java 
+   <strong>whitespace</strong> includes not only the space character, but mostly everything that looks empty when printed: a tab, the newline character, and other non-printing characters.
+  </div>
+  <p></p> 
+  <p>In this article, we are dealing with space and newline characters: technically, we produce a corresponding character when pressing <em>Enter</em> and starting a new line. The term "whitespace" is used to refer to either of them. The more correct term to refer to what we’ve called “word” is <strong>token</strong>: it is a piece of text surrounded by whitespace. We can say now that the <code class="language-java">next()</code> method finds and returns the next token, while the <code class="language-java">nextLine()</code> reads all data till the end of the current line.</p> 
+  <p>Now you can read a whole word and even a whole line invoking these two methods. To invoke both of them correctly, it is important to know the difference between them.</p> 
+  <h5 style="text-align: center;">Reading a multiline input</h5> 
+  <p>Reading multiline input may still be a bit tricky: you should take into account the position of the cursor and the reading methods behavior.</p> 
+  <p>Let’s investigate this process with an example:</p> 
+  <pre><samp><span style="color: #ff0000;"><strong>|</strong></span>This is a simple
+
+multiline input,
+
+that is being read
+</samp></pre> 
+  <p><span style="color: #ff0000;"><strong>|</strong></span> is a position of the cursor before reading the input. </p> 
+  <p>If we invoke the <code class="language-java">next()</code> method, the program will read the input till the whitespace, as indicated by the color <span style="color: #64b0f4;"><strong>blue</strong></span>:</p> 
+  <pre><samp><span style="color: #64b0f4;"><strong>This</strong></span><span style="color: #ff0000;"><strong>|</strong></span> is a simple
+
+multiline input,
+
+that is being read
+</samp></pre> 
+  <p>After invoking the <code class="language-java">nextLine()</code> method the program reads the whole line starting from the whitespace. This data is indicated by a <strong><span style="color: #66cc66;">green</span></strong> color. The <code class="language-java">nextLine()</code> places the cursor at the beginning of a new line (if there is such a line in your input):</p> 
+  <pre><samp><span style="color: #64b0f4;"><strong>This</strong></span><strong><span style="color: #66cc66;"> is a simple</span></strong>
+
+<span style="color: #ff0000;"><strong>|</strong></span>multiline input,
+
+that is being read
+</samp></pre> 
+  <p>Then, let's invoke the <code class="language-java">next()</code> method two times. The first input is indicated by an <strong><span style="color: #ff9900;">orange</span></strong> color. You may see that the position of the cursor is right after the word and before the whitespace:</p> 
+  <pre><samp><span style="color: #64b0f4;"><strong>This</strong></span><strong><span style="color: #66cc66;"> is a simple</span></strong>
+
+<span style="color: #ff9900;"><strong>multiline</strong></span><span style="color: #ff0000;"><strong>|</strong></span> input,
+
+that is being read
+</samp></pre> 
+  <p>Now we invoke the <code class="language-java">next()</code> method again. The program outputs the second word in the line <em>without</em> whitespace. It doesn't even matter how many space characters are there, because the <code class="language-java">next()</code> method will skip the whitespace until it finds the next token. </p> 
+  <p>The second input is indicated by <span style="color: #66cccc;"><strong>light blue</strong></span> color. As you may see, the position of the cursor is still at the current line right before the new line and after the comma:</p> 
+  <pre><samp><span style="color: #64b0f4;"><strong>This</strong></span><strong><span style="color: #66cc66;"> is a simple</span></strong>
+
+<strong><span style="color: #ff9900;">multiline</span></strong> <span style="color: #66cccc;"><strong>input,</strong></span><span style="color: #ff0000;"><strong>|</strong></span>
+
+that is being read</samp>
+</pre> 
+  <p>Here is a tricky thing about the <code class="language-java">nextLine()</code> method that also shows a major difference between the <code class="language-java">next()</code> and the <code class="language-java">nextLine()</code> methods. As you already know, the program will read input from the position of the cursor till the new line (again, if there is such a line in your input). In this example the cursor is located before the new line: thus, the <code class="language-java">nextLine()</code> method will return an empty line ("") and place the cursor at the beginning of a new line. </p> 
+  <pre><samp><span style="color: #64b0f4;"><strong>This</strong></span><strong><span style="color: #66cc66;"> is a simple</span></strong>
+
+<strong><span style="color: #ff9900;">multiline</span></strong> <span style="color: #66cccc;"><strong>input,</strong></span>
+
+<span style="color: #ff0000;"><strong>|</strong></span>that is being read</samp></pre> 
+  <p>To sum up, let's look at the code as a whole and consider the variables we have just read:</p> 
+  <pre><code class="language-java">import java.util.Scanner; 
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);  
+
+        String word1 = scanner.next(); // "This"
+        String line1 = scanner.nextLine(); // " is a simple" 
+        String word2 = scanner.next(); // "multiline"
+        String word3 = scanner.next(); // "input,"
+        String line2 = scanner.nextLine(); // "" 
+        
+    }
+}</code></pre> 
+  <p>This example may seem artificial, but it should help you to catch the difference between these two methods. Remember that usually the variables are named in a more expressive way.</p> 
+  <h5 style="text-align: center;">Conclusion</h5> 
+  <p>We can read data from the standard input with a special <code class="language-java">Scanner</code> class. The <code class="language-java">next()</code> and the <code class="language-java">nextLine()</code> methods will help you to read strings. Both of them are used for getting input, but they act differently. The <code class="language-java">next()</code> method can read the input only till the whitespace while the <code class="language-java">nextLine()</code> method reads the input till the end of the whole line. </p> 
+  <p>We recommend you to use the class <code class="language-java">Scanner</code> when solving programming problems. It is one of the simplest ways to get values from the standard input. More complex ways to read data will be discussed in further topics.</p>
+ </body>
+</html>

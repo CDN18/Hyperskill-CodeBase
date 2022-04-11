@@ -1,0 +1,134 @@
+<h2>Introduction to generic programming</h2>
+<html>
+ <head></head>
+ <body>
+  <h5 style="text-align: center;">Generic programming</h5> 
+  <p>There are situations when methods and classes do not depend on the data types on which they operate. For example, the algorithm to find an element in an array can process arrays of strings, integers or custom classes. It does not matter what the array stores: the algorithm is always the same. Yet we cannot write this algorithm as a single method, because it requires different arguments (<code class="language-java">int[]</code>, <code class="language-java">String[]</code>, etc).</p> 
+  <p>Since version 5, Java has supported generic programming that introduces abstraction over types. Generic methods and classes can handle different types in the same general way.<strong> </strong>A concrete type is determined only when a developer creates an object of the class or invokes the method. This approach enables us to write more abstract code and develop reusable software libraries. Let us consider it step by step using examples written in Java.</p> 
+  <h5 style="text-align: center;">Type parameters</h5> 
+  <p>A generic type is a generic class (or interface) that is parameterized over types. To declare a generic class, we need to declare a class with the type parameter section delimited by angle brackets <code class="language-java">&lt;</code> <code class="language-java">&gt;</code> following the class name.</p> 
+  <p>In the following example, the class <code class="language-java">GenericType</code> has a single type parameter named <code class="language-java">T</code>. We assume that the type <code class="language-java">T</code> is "some type" and write the class body regardless of the concrete type.</p> 
+  <pre><code class="language-java">class GenericType&lt;T&gt; { 
+
+    /**
+     * A field of "some type"
+     */
+    private T t;
+
+    /**
+     * Takes a value of "some type" and assigns it to the field
+     */
+    public GenericType(T t) {
+        this.t = t;
+    }
+
+    /**
+     * Returns a value of "some type"
+     */
+    public T get() {
+        return t;
+    }
+
+    /**
+     * Takes a value of "some type", assigns it to a field and then returns it
+     */
+    public T set(T t) {
+        this.t = t;
+        return this.t;   
+    }
+}</code></pre> 
+  <p>After being declared, a type parameter can be used inside the class body as an ordinary type. For instance, the above example uses the type parameter <code class="language-java">T</code> as: </p> 
+  <ul> 
+   <li>a type for a <em>field</em></li> 
+   <li>a<em> constructor</em> argument type</li> 
+   <li>an<em> instance method</em> argument and return type</li> 
+  </ul> 
+  <p>The behavior of both instance methods does not depend on the concrete type of <code class="language-java">T</code>; it can take/return a string or a number in the same way.</p> 
+  <p>A class can have any number of type parameters. For example, the following class has three.</p> 
+  <pre><code class="language-java">class Three&lt;T, U, V&gt; {
+    T t;
+    U u;
+    V v;
+}</code></pre> 
+  <p>But most generic classes have just one or two type parameters.</p> 
+  <h5 style="text-align: center;">The naming convention for type parameters</h5> 
+  <p>There is a naming convention that restricts type parameter name choices to single uppercase letters. Without this convention, it would be difficult to tell the difference between a type variable and an ordinary class name.</p> 
+  <p>The most commonly used type parameter names are:</p> 
+  <ul> 
+   <li><code class="language-java">T</code> – Type</li> 
+   <li><code class="language-java">S</code>, <code class="language-java">U</code>, <code class="language-java">V</code> etc. – 2nd, 3rd, 4th types</li> 
+   <li><code class="language-java">E</code> – Element (used extensively by different collections)</li> 
+   <li><code class="language-java">K</code> – Key</li> 
+   <li><code class="language-java">V</code> – Value</li> 
+   <li><code class="language-java">N</code> – Number</li> 
+  </ul> 
+  <h5 style="text-align: center;">Creating objects of generic classes</h5> 
+  <p>To create an object of a generic class (standard or custom), we need to specify the type argument following the type name.</p> 
+  <pre><code class="language-java">GenericType&lt;Integer&gt; obj1 = new GenericType&lt;Integer&gt;(10);
+
+GenericType&lt;String&gt; obj2 = new GenericType&lt;String&gt;("abc");</code></pre> 
+  <p></p>
+  <div class="alert alert-warning">
+   It is important to note that a type argument must be a reference type. Primitive types like int or double are invalid type arguments.
+   <strong> </strong>
+  </div>
+  <p></p> 
+  <p>Java 7 made it possible to replace the type arguments required to invoke the constructor of a generic class with an empty set of type arguments, as long as the compiler can <em>infer </em>the type arguments from the context.</p> 
+  <pre><code class="language-java">GenericType&lt;Integer&gt; obj1 = new GenericType&lt;&gt;(10);
+
+GenericType&lt;String&gt; obj2 = new GenericType&lt;&gt;("abc");</code></pre> 
+  <p>We will use this format in all further examples.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   The pair of angle brackets 
+   <code class="language-java">&lt;&gt;</code> is informally called the 
+   <em>diamond operator.</em>
+  </div>
+  <p></p> 
+  <p>Sometimes, declaring a variable with a generic type can be lengthy and difficult to read. Starting from Java 10, we can write <code class="language-java">var</code> instead of a specific type to force automatic type inference based on the type of assigned value.</p> 
+  <pre><code class="language-java">var obj3 = new GenericType&lt;&gt;("abc");</code></pre> 
+  <p>After we have created an object with a specified type argument, we can invoke methods of the class that take or return the type parameter:</p> 
+  <pre><code class="language-java">Integer number = obj1.get(); // 10
+String string = obj2.get();  // "abc"
+
+System.out.println(obj1.set(20));    // prints the number 20
+System.out.println(obj2.set("def")); // prints the string "def"</code></pre> 
+  <p>If a class has multiple type parameters, we need to specify all of them when creating instances:</p> 
+  <pre><code class="language-java">GenericType&lt;Type1, Type2, ..., TypeN&gt; obj = new GenericType&lt;&gt;(...);</code></pre> 
+  <h5 style="text-align: center;">Custom generic array</h5> 
+  <p>As a more complicated example, let us consider the following class which represents a generic immutable array. It has one field to store items of type <code class="language-java">T</code>, a constructor to set items, a method to get an item by its index, and another method to get the length of the internal array. The class is immutable because it does not provide methods to modify the items array.</p> 
+  <pre><code class="language-java">public class ImmutableArray&lt;T&gt; {
+
+    private final T[] items;
+
+    public ImmutableArray(T[] items) {
+        this.items = items.clone();
+    }
+
+    public T get(int index) {
+        return items[index];
+    }
+
+    public int length() {
+        return items.length;
+    }
+}</code></pre> 
+  <p>This class shows that a generic class can have methods (like length) that do not use the parameter type at all.</p> 
+  <p>The following code creates an instance of <code class="language-java">ImmutableArray</code> to store three strings and then output the items to the standard output.</p> 
+  <pre><code class="language-java">var stringArray = new ImmutableArray&lt;&gt;(new String[] {"item1", "item2", "item3"});
+
+for (int i = 0; i &lt; stringArray.length(); i++) {
+    System.out.print(stringArray.get(i) + " ");
+}</code></pre> 
+  <p>It is possible to parameterize <code class="language-java">ImmutableArray</code> with any reference type, including arrays, standard classes, or your own classes.</p> 
+  <pre><code class="language-java">var doubleArray = new ImmutableArray&lt;&gt;(new Double[] {1.03, 2.04});
+
+MyClass obj1 = ..., obj2 = ...; // suppose, you have two objects of your custom class
+
+var array = new ImmutableArray&lt;&gt;(new MyClass[] {obj1, obj2});</code></pre> 
+  <p>We used <code class="language-java">var</code> in the above examples to save space. Instead of using var, we could have explicitly specified the type, e.g. <code class="language-java">ImmutableArray&lt;String&gt; stringArray = ...;</code> and so on.</p> 
+  <h5 style="text-align: center;">Conclusion</h5> 
+  <p>A class can declare one or more type parameters and use them inside the class body as types for fields, method arguments, return values, and local variables. In this case, the class does not know the concrete type on which it operates. The concrete type must be specified when creating instances of the class. This approach allows you to write classes and methods that can process many different types in the same way.</p> 
+  <p>Remember that only a reference type (an array, a standard class, a custom class) can be used as a concrete type for generics. This means that instead of primitive types, we use wrapper classes such as <code class="language-java">Integer</code>, <code class="language-java">Double</code>, <code class="language-java">Boolean</code>, and so on when creating an object of a generic class. </p>
+ </body>
+</html>

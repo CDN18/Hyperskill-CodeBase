@@ -1,0 +1,30 @@
+<h2>Job offer</h2>
+<html>
+ <head></head>
+ <body>
+  <p>You would like to offer a job as a Java developer for several candidates.</p> 
+  <p>Your company has a special rule written in Java for decision-making.</p> 
+  <pre><code class="language-java">boolean offerAJob = 
+        (knowJava &amp;&amp; yearsOfExperienceInJava &gt;= 1) || 
+        (knowPython &amp;&amp; yearsOfExperienceInPython &gt;= 3);</code></pre> 
+  <p>A small explanation:</p> 
+  <p><strong>- knowJava</strong> is a boolean variable that shows whether the candidate knows Java or not.</p> 
+  <p><strong>- knowPython</strong> is a boolean variable that shows whether the candidate knows Python or not.</p> 
+  <p><strong>- yearsOfExperienceInJava</strong> is an <code class="language-java">int</code> variable that shows how many years of Java programming the candidate has.</p> 
+  <p><strong>- yearsOfExperienceInPython</strong> is another <code class="language-java">int</code> variable that shows how many years of Python programming the candidate has.</p> 
+  <p>The list of candidates with their skills is the following:</p> 
+  <p>- <strong>John:</strong> knowJava = true; yearsOfExperienceInJava = 1; knowPython = false; yearsOfExperienceInPython = 0;</p> 
+  <p>- <strong>Mary:</strong> knowJava = false; yearsOfExperienceInJava = 0; knowPython = true; yearsOfExperienceInPython = 3;</p> 
+  <p>- <strong>Olivia:</strong> knowJava = true; yearsOfExperienceInJava = 0; knowPython = true; yearsOfExperienceInPython = 2;</p> 
+  <p>- <strong>Alexander: </strong>knowJava = true; yearsOfExperienceInJava = 3; knowPython = true; yearsOfExperienceInPython = 2;</p> 
+  <p>- <strong>Andrew:</strong> knowJava = false; yearsOfExperienceInJava = 1; knowPython = false; yearsOfExperienceInPython = 1;</p> 
+  <p>- <strong>Emily:</strong> knowJava = false; yearsOfExperienceInJava = 0; knowPython = true; yearsOfExperienceInPython = 2;</p> 
+  <p> </p> 
+  <p><strong>Using a decision-making rule, select all candidates that will be good for your company.</strong></p> 
+  <p></p>
+  <div class="alert alert-primary">
+   Note, sometimes a candidate may have the experience, but still knows the programming language badly. In this case, we consider their knowledge as false.
+  </div>
+  <p></p>
+ </body>
+</html>

@@ -1,0 +1,22 @@
+type: choice
+is_multiple_choice: false
+options:
+- text: Only the first line does not work.
+- text: Both lines work correctly.
+- text: Only the second line does not work.
+- text: Both lines do not work.
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2264#comment
+status: Solved
+record: -1

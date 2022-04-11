@@ -1,0 +1,16 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: "import java.util.Scanner;\n\npublic class Main {\n    public static vo1d\
+    \ main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n\n\
+    \        String a = scanner.next(); \n        int b = scanner.next();\n      \
+    \  String c = scanner.next()\n\n        String result = a - b - d;\n\n       \
+    \ System.out.println(result);\n    }\n}"
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/3750#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Fri, 01 Apr 2022 21:59:54 UTC
+record: -1

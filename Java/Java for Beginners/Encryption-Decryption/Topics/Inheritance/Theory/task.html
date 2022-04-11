@@ -1,0 +1,109 @@
+<h2>Inheritance</h2>
+<html>
+ <head></head>
+ <body>
+  <h5 style="text-align: center;">Extending classes</h5> 
+  <p><strong>Inheritance</strong> is a mechanism for deriving a new class from another class (base class). The new class acquires some fields and methods of the base class. Inheritance is one of the main principles of object-oriented programming. It allows developers to build convenient class hierarchies and reuse existing code.</p> 
+  <p>When it comes to inheritance, there are several terms. A class <strong>derived</strong> from another class is called a <strong>subclass</strong> (it's also known as a <strong>derived class</strong>, <strong>extended class</strong> or <strong>child class</strong>). The class from which the subclass is derived is called a <strong>superclass</strong> (also a <strong>base class</strong> or a <strong>parent class)</strong>.</p> 
+  <p>To derive a new class from another the keyword <code class="language-java">extends</code> is used. The common syntax is shown below.</p> 
+  <pre><code class="language-java">class SuperClass { }
+
+class SubClassA extends SuperClass { }
+
+class SubClassB extends SuperClass { }
+
+class SubClassC extends SubClassA { }</code></pre> 
+  <p>There are important points about inheritance in Java:</p> 
+  <ul> 
+   <li>Java doesn't support multiple-class inheritance meaning that a class can only inherit from a single superclass;</li> 
+   <li>a class hierarchy can have multiple levels (class <code class="language-java">C</code> can extend class <code class="language-java">B</code> that extends class <code class="language-java">A</code>);</li> 
+   <li>a superclass can have more than one subclass.</li> 
+  </ul> 
+  <p>A subclass inherits all public and protected fields and methods from the superclass. A subclass can also add new fields and methods. The inherited and added members will be used in the same way.</p> 
+  <p>A subclass doesn't inherit private fields and methods from the superclass. However, if the superclass has public or protected methods for accessing its private fields, these members can be used inside subclasses.</p> 
+  <p>Constructors are not inherited, but the superclass's constructor can be invoked from the subclass using the special keyword <code class="language-java">super</code>. This keyword is discussed in more detail in another topic.</p> 
+  <p>If you'd like the base class members to be accessible from all subclasses but not from the outside code (excluding the same package), use the access modifier <code class="language-java">protected</code>.</p> 
+  <p><strong>Inheritance</strong> represents the <strong>IS-A</strong> relationship. A base class represents the general and a subclass represents the particular or specific.</p> 
+  <h5 style="text-align: center;">An example of a class hierarchy</h5> 
+  <p>Let's consider a more graphic example. A telecommunication company serves clients. It has a small staff consisting only of managers and programmers. Let's consider a class hierarchy for people associated with the company's activities (including clients).</p> 
+  <p>At first, we present the hierarchy as a figure. An arrow indicates that one class extends another one.</p> 
+  <p style="text-align: center;"><img alt="" height="301px" src="https://ucarecdn.com/204baef8-7807-4f39-b853-a3b53de89d14/" width="398px"></p> 
+  <p style="text-align: center;"><strong>The class hierarchy for the telecommunication company</strong></p> 
+  <ul> 
+   <li>the base class <code class="language-java">Person</code> has fields for storing common data: name, year of birth, and address;</li> 
+   <li>the class <code class="language-java">Client</code> has additional fields to store the contract number and status (gold or not);</li> 
+   <li>the class <code class="language-java">Employee</code> stores the start date of work for the company and the salary;</li> 
+   <li>the class <code class="language-java">Programmer</code> has an array of the programming languages a programmer uses;</li> 
+   <li>the class <code class="language-java">Manager</code> may have a dazzling smile.</li> 
+  </ul> 
+  <p>Let's see the code:</p> 
+  <pre><code class="language-java">class Person {
+    protected String name;
+    protected int yearOfBirth;
+    protected String address;
+
+    // public getters and setters for all fields here
+}
+
+class Client extends Person {
+    protected String contractNumber;
+    protected boolean gold;
+
+    // public getters and setters for all fields here
+}
+
+class Employee extends Person {
+    protected Date startDate;
+    protected Long salary;
+
+    // public getters and setters for all fields here
+}
+
+class Programmer extends Employee {
+    protected String[] programmingLanguages;
+
+    public String[] getProgrammingLanguages() {
+        return programmingLanguages;
+    }
+
+    public void setProgrammingLanguages(String[] programmingLanguages) {
+        this.programmingLanguages = programmingLanguages;
+    }
+}
+
+class Manager extends Employee {
+    protected boolean smile;
+
+    public boolean isSmile() {
+        return smile;
+    }
+
+    public void setSmile(boolean smile) {
+        this.smile = smile;
+    }
+}</code></pre> 
+  <p>This hierarchy has two levels and five classes overall. All fields are <code class="language-java">protected</code> which means they are visible to subclasses. Each class also has public getters and setters but some are skipped in the code.</p> 
+  <p>Let's create an object of the <code class="language-java">Programmer</code> class and fill the inherited fields using the inherited setters. To read the values of the fields we can use inherited getters.</p> 
+  <pre><code class="language-java">Programmer p = new Programmer();
+
+p.setName("John Elephant");
+p.setYearOfBirth(1985);
+p.setAddress("Some street, 15");
+p.setStartDate(new Date());
+p.setSalary(500_000L);
+p.setProgrammingLanguages(new String[] { "Java", "Scala", "Kotlin" });
+
+System.out.println(p.getName()); // John Elephant
+System.out.println(p.getSalary()); // 500000
+System.out.println(Arrays.toString(p.getProgrammingLanguages())); // [Java, Scala, Kotlin]</code></pre> 
+  <p>We also can create an instance of any class included in the considered hierarchy.</p> 
+  <p>So,<strong> inheritance</strong> provides a powerful mechanism for code reuse and writing convenient hierarchies. Many things of the real world can be simulated like hierarchies from a more general to a more particular concept.</p> 
+  <h5 style="text-align: center;">Final classes</h5> 
+  <p>If a class is declared with the keyword <code class="language-java">final</code>, it cannot have subclasses at all.</p> 
+  <pre><code class="language-java">final class SuperClass { }</code></pre> 
+  <p>If you try to extend the class, a compile-time error will occur.</p> 
+  <p>Some standard classes are declared as final: <code class="language-java">Integer</code>, <code class="language-java">Long</code>, <code class="language-java">String</code>, <code class="language-java">Math</code>. They cannot be extended.</p> 
+  <h5 style="text-align: center;">Conclusion</h5> 
+  <p><strong>Inheritance</strong> allows you to build class hierarchies when subclasses (children) take some fields and methods of the superclass (parent). Such a hierarchy can have multiple levels, but every class can inherit only a single superclass. A good class hierarchy helps to avoid code duplication and make your program more modular. If a class should not have subclasses, it should be marked as <code class="language-java">final</code>.</p>
+ </body>
+</html>

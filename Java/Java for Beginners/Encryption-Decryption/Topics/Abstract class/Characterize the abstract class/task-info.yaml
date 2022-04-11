@@ -1,0 +1,22 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: An abstract class can extend another abstract class.
+- text: An abstract class can have <b>static</b> fields and methods.
+- text: An abstract class must have at least one abstract method.
+- text: An abstract class can be declared with the <b>final</b> keyword.
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/3429#comment
+status: Solved
+record: -1

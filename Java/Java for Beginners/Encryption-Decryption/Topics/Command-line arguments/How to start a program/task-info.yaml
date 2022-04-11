@@ -1,0 +1,23 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: <b>java Main</b> starts the program with one command-line argument
+- text: <b>java Main</b> starts the program without command-line arguments
+- text: <b>java Main Main</b> starts the program with two command-line arguments
+- text: <b>java Main Main Main Main</b> starts the program with three command-line
+    arguments
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/3337#comment
+status: Solved
+record: -1

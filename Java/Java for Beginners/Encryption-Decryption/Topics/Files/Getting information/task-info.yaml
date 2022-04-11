@@ -1,0 +1,21 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: file.isDirectory()
+- text: file.isFile()
+- text: file.exists()
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/3625#comment
+status: Solved
+record: -1

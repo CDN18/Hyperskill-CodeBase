@@ -1,0 +1,21 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: a.compareTo(b) == 0
+- text: a.compareTo(b) &gt; 0
+- text: a.compareTo(b) &lt; 0
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/14457#comment
+status: Solved
+record: -1

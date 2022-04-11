@@ -1,0 +1,35 @@
+<h2>Delete all files recursively</h2>
+<html>
+ <head></head>
+ <body>
+  <p>All real applications generate log files for keeping records on their performance, user activities, or other information. To prevent running out of free disk space, sometimes you need to clean up by deleting old files. That is what the code below is supposed to do.</p> 
+  <p>Take a look at the code. The helper method <code class="language-java">getChildren</code> finds all the files. It takes a directory as a passed argument and returns a list of nested files and directories. If the directory happens to be empty, it returns an empty list.</p> 
+  <p>A file is considered old<em> </em>if it was last modified earlier than the passed <code class="language-java">thresholdDate</code>. </p> 
+  <p>Your task is to complete the code so it will work properly. What method should be invoked to make the code read only old files and ignore others within directories?</p> 
+  <p>The system of nested directories itself should not be changed.</p> 
+  <p>Fill in the gap in the 7th line.</p> 
+  <pre><code class="language-java">1  public void deleteOldFiles(File rootDir, long thresholdDate) {
+2       Deque&lt;File&gt; files = new ArrayDeque&lt;&gt;(getChildren(rootDir));
+3
+4       while (files.size() != 0) {
+5           File file = files.pop();
+6
+7           if (file.__) {
+8               if (file.lastModified() &lt; thresholdDate) {
+9                   file.delete();
+10              }
+11          } else {
+12              files.addAll(getChildren(file));
+13          }
+14      }
+15  }
+16
+17  private List&lt;File&gt; getChildren(File dir) {
+18      File[] children = dir.listFiles();
+19
+20      return children == null || children.length == 0 ?
+21              Collections.emptyList() :
+22              Arrays.asList(children);
+23  }</code></pre>
+ </body>
+</html>

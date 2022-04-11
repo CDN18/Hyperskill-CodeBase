@@ -1,0 +1,25 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: The class <b>Cookie</b> has the default constructor.
+- text: 'The class <b>Cookie</b> has a constructor with one formal parameter of the
+    type <b>String</b>. '
+- text: The object <b>cookie</b> must have a field filled by the value <b>"chocolate
+    chips"</b>
+- text: The class <b>Cookie</b> has a constructor with the name <b>Cookie</b>.
+- text: The  class <b>Cookie</b> has a constructor without parameters.
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/1984#comment
+status: Solved
+record: -1

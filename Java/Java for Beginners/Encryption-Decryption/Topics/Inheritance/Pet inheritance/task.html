@@ -1,0 +1,27 @@
+<h2>Pet inheritance</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Here are two classes: <code class="language-java">Pet</code> and <code class="language-java">Cat</code>:</p> 
+  <pre><code class="language-java">class Pet {
+        
+    private String birthDate;
+    protected String name;
+    
+    public String getBirthDate() {
+        return birthDate;
+    }
+        
+    public String getName() {
+        return name;
+    }
+
+    private void setName(String name) {
+        this.name = name;
+    }
+}
+
+class Cat extends Pet { }</code></pre> 
+  <p>Which members of <code class="language-java">Pet</code> does <code class="language-java">Cat</code> inherit?</p>
+ </body>
+</html>

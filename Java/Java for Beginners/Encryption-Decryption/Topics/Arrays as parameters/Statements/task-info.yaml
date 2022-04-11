@@ -1,0 +1,24 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: A method can have a parameter of the <b>boolean[]</b> type (the array of booleans).
+- text: It's impossible to pass a single-element array to a method.
+- text: When you pass an array to a method, a copy of each element of the array is
+    created.
+- text: If a method has several parameters, a <b>vararg</b> must be the first parameter.
+- text: It's possible to pass an array to a <b>vararg</b> parameter.
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2748#comment
+status: Solved
+record: -1

@@ -1,0 +1,28 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.*;
+
+    public class Main {
+
+        // write a method here
+
+        /* Do not change code below */
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+            int[] array = Arrays.stream(scanner.nextLine().split(" "))
+                    .mapToInt(Integer::parseInt)
+                    .toArray();
+            int[] result = getFirstAndLast(array);
+            Arrays.stream(result).forEach(e -> System.out.print(e + " "));
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2760#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Fri, 01 Apr 2022 21:06:43 UTC
+record: -1

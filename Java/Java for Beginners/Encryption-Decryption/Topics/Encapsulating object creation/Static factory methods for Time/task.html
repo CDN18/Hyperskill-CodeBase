@@ -1,0 +1,22 @@
+<h2>Static factory methods for Time</h2>
+<html>
+ <head></head>
+ <body>
+  <p>The normal way to create an instance of a class is to use a public constructor of the class. But there is another technique. A class can provide a public static factory method that returns an instance of the class. An advantage of static factory methods is that they have names that make the code easier to read.</p> 
+  <p>In this problem, you have the class <code class="language-java">Time</code> containing three fields: <code class="language-java">hour</code>, <code class="language-java">minute</code> and <code class="language-java">second</code>. Implement the following static factory methods of this class:</p> 
+  <ul> 
+   <li><code class="language-java">noon()</code> returns an instance initialized with 12 hours, 0 minutes, and 0 seconds.</li> 
+   <li><code class="language-java">midnight()</code> returns an instance initialized with 0 hours, 0 minutes, and 0 seconds.</li> 
+   <li><code class="language-java">of(int hour, int minute, int second)</code> returns an instance initialized with passed hour, minute and second if the passed arguments are correct (hour: 0-23, minute: 0-59, seconds: 0-59), otherwise, <code class="language-java">null</code>.</li> 
+   <li><code class="language-java">ofSeconds(long seconds)</code> returns an instance initialized with seconds passed since midnight; as an example, the invocation <code class="language-java">Time.ofSeconds(500000)</code> must create an instance with 18 hours, 53 minutes and 20 seconds (days are skipped);</li> 
+  </ul> 
+  <p>As you see, the methods are more readable than the same constructors. If you want to create an instance of <code class="language-java">Time</code> representing noon, you can write:</p> 
+  <pre><code class="language-java">Time noon = Time.noon();</code></pre> 
+  <p>Note:</p> 
+  <ul> 
+   <li>do not change fields of the class <code class="language-java">Time</code>;</li> 
+   <li>in a real application, it may be better to throw an exception than return <code class="language-java">null</code> when arguments are incorrect.</li> 
+  </ul> 
+  <p>You must not read or output something in this problem. Just implement the static factory methods.</p>
+ </body>
+</html><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">noon</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">12 0 0</code></pre><br><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">midnight</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">0 0 0</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 5 seconds</font><br><br>

@@ -1,0 +1,104 @@
+<h2>Getters and setters</h2>
+<html>
+ <head></head>
+ <body>
+  <h5 style="text-align: center;" id="data-encapsulation">Data encapsulation</h5> 
+  <p>According to the <strong>data encapsulation</strong> principle, the fields of a class cannot be directly accessed from other classes. The fields can be accessed only through the methods of that particular class.</p> 
+  <p>To access hidden fields, programmers write special types of methods: <strong>getters</strong> and <strong>setters</strong>. Getters can only read fields, and setters can only write (modify) the fields. Both types of methods should be <code class="language-java">public</code>.</p> 
+  <p>Using these methods gives us some advantages:</p> 
+  <ul> 
+   <li>the fields of a class can be made read-only, write-only, or both;</li> 
+   <li>a class can have total control over what values are stored in the fields;</li> 
+   <li>users of a class don't know how the class stores its data and don't depend on the fields.</li> 
+  </ul> 
+  <h5 style="text-align: center;" id="getters-and-setters">Getters and setters</h5> 
+  <p>Java doesn't provide any special keywords for getter and setter methods. Their main difference from other methods is their names.</p> 
+  <p>According to the <a target="_blank" href="https://docstore.mik.ua/orelly/java-ent/jnut/ch06_02.htm" rel="nofollow noopener noreferrer">JavaBeans Convention</a>:</p> 
+  <ul> 
+   <li><strong>getters </strong>start with <strong>get</strong>, followed by the variable name, with the first letter of the variable name capitalized;</li> 
+   <li><strong>setters </strong>start with <strong>set</strong>, followed by the variable name, with the first letter of the variable name capitalized.</li> 
+  </ul> 
+  <p>This convention applies to any types except <code class="language-java">boolean</code>. A <strong>getter</strong> for a boolean field starts with <strong>is</strong>, followed by the variable name.</p> 
+  <p><strong>Example 1.</strong> The class <code class="language-java">Account</code> has four fields: <code class="language-java">id</code>, <code class="language-java">code</code>, <code class="language-java">balance</code> and <code class="language-java">enabled</code>. Each field has a keyword <strong>private</strong> to hide the field from direct access from other classes. Also, the class has <strong>public</strong> getters and setters for accessing fields through these methods.</p> 
+  <pre><code class="language-java">class Account {
+
+    private long id;
+    private String code;
+    private long balance;
+    private boolean enabled;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public long getBalance() {
+        return balance;
+    }
+
+    public void setBalance(long balance) {
+        this.balance = balance;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+}</code></pre> 
+  <p>Here you can see the different getters and setters for the class <code class="language-java">Account</code>. Just as the convention states, the boolean field <code class="language-java">enabled</code> has a different getter name: it starts with the word <code class="language-java">is</code> instead of <code class="language-java">get</code>.</p> 
+  <p>Let's create an instance of the class and fill the fields, then read values from the fields and output them.</p> 
+  <pre><code class="language-java">Account account = new Account();
+
+account.setId(1000);
+account.setCode("62968503812");
+account.setBalance(100_000_000);
+account.setEnabled(true);
+
+System.out.println(account.getId());      // 1000
+System.out.println(account.getCode());    // 62968503812
+System.out.println(account.getBalance()); // 100000000
+System.out.println(account.isEnabled());  // true</code></pre> 
+  <p>Sometimes, <strong>getters </strong>or <strong>setters</strong> can contain a more sophisticated logic. For example, <strong>g</strong><strong>etters</strong> may return non-stored values (calculated at runtime), or <strong>setters</strong> may also in some cases modify the value of another field according to changes. But usually, getters and setters have a minimum of programming logic.</p> 
+  <p><strong>Example 2.</strong> In the following class, the setter <code class="language-java">setName</code> doesn't change the current value if the passed value is <code class="language-java">null</code>.</p> 
+  <pre><code class="language-java">class Patient {
+
+    private String name;
+
+    public Patient(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+    
+    public void setName(String name) {
+        if (name != null) {
+            this.name = name;
+        }
+    }
+}</code></pre> 
+  <h5 style="text-align: center;" id="conclusion">Conclusion</h5> 
+  <p>To restrict access to fields from external code make them <code class="language-java">private</code> and write suitable <strong>getters/setters</strong> to <strong>read/change </strong>only the fields you need. Do not forget to make use of the naming convention when writing them.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   Note, modern IDEs (such as 
+   <strong>IntelliJ IDEA</strong>) can generate getters and setters automatically based on class fields.
+  </div>
+  <p></p>
+ </body>
+</html>

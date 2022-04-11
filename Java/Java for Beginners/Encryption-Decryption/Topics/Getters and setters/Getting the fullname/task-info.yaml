@@ -1,0 +1,33 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class User {
+        private String firstName;
+        private String lastName;
+
+        public User() {
+            this.firstName = "";
+            this.lastName = "";
+        }
+
+        public void setFirstName(String firstName) {
+            // write your code here
+        }
+
+        public void setLastName(String lastName) {
+            // write your code here
+        }
+
+        public String getFullName() {
+            return ""; // write your code here
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/8261#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Sat, 02 Apr 2022 08:17:53 UTC
+record: -1

@@ -1,0 +1,83 @@
+<h2>Abstract class</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Sometimes you have a set of fields and methods that you need to reuse in all classes within a hierarchy. It is possible to put all the common members to a special base class and then declare subclasses which can access these members. At the same time, you do not need to create objects of the base class. To achieve it, you can use an <strong>abstract class</strong> as the base class in the hierarchy.</p> 
+  <h5 style="text-align: center;">What is an abstract class?</h5> 
+  <p>An <strong>abstract class</strong> is a class declared with the keyword <strong><code class="language-java">abstract</code></strong>. It represents an abstract concept that is used as a base class for subclasses.</p> 
+  <p>Abstract classes have some special features:</p> 
+  <ul> 
+   <li>it's impossible to create an instance of an abstract class;</li> 
+   <li>an abstract class can contain abstract methods that must be implemented in non-abstract subclasses;</li> 
+   <li>it can contain fields and non-abstract methods (including static);</li> 
+   <li>an abstract class can extend another class, including abstract;</li> 
+   <li>it can contain a constructor.</li> 
+  </ul> 
+  <p></p>
+  <div class="alert alert-warning">
+   As you can see, an abstract class has two main differences from regular (concrete) classes: 
+   <strong>no instances</strong> and 
+   <strong>abstract methods</strong>.
+  </div>
+  <p></p> 
+  <p><strong>Abstract methods</strong> are declared by adding the keyword <strong><code class="language-java">abstract</code></strong>. They have a declaration (modifiers, a return type, and a signature) but don't have an implementation. Each concrete (non-abstract) subclass must implement these methods.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   Note, static methods can't be abstract!
+  </div>
+  <p></p> 
+  <h5 style="text-align: center;">Example</h5> 
+  <p>Here is an abstract class <code class="language-java">Pet</code>:</p> 
+  <pre><code class="language-java">public abstract class Pet {
+
+    protected String name;
+    protected int age;
+
+    protected Pet(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    public abstract void say(); // an abstract method
+}</code></pre> 
+  <p>The class has two fields, a constructor, and an abstract method.</p> 
+  <p>Since <code class="language-java">Pet</code> is an abstract class we cannot create instances of this class:</p> 
+  <pre><code class="language-java">Pet pet = new Pet("Unnamed", 5); // this throws a compile time error</code></pre> 
+  <p>The method <code class="language-java">say()</code> is declared abstract because, at this level of abstraction, its implementation is unknown. Concrete subclasses of the class <code class="language-java">Pet</code> should have an implementation of this method.</p> 
+  <p>Below are two concrete subclasses of <code class="language-java">Pet</code>. You can see that they override the abstract method:</p> 
+  <pre><code class="language-java">class Cat extends Pet {
+
+    // It can have additional fields as well
+
+    public Cat(String name, int age) {
+        super(name, age);
+    }
+
+    @Override
+    public void say() {
+        System.out.println("Meow!");
+    }
+}
+
+class Dog extends Pet {
+
+    // It can have additional fields as well
+
+    public Dog(String name, int age) {
+        super(name, age);
+    }
+
+    @Override
+    public void say() {
+        System.out.println("Woof!");
+    }
+}</code></pre> 
+  <p>We can create instances of these classes and call the <code class="language-java">say()</code> method.</p> 
+  <pre><code class="language-java">Dog dog = new Dog("Boss", 5);
+Cat cat = new Cat("Tiger", 2);
+        
+dog.say(); // it prints "Woof!"
+cat.say(); // it prints "Meow!"</code></pre> 
+  <p>Do not forget that Java doesn't support multiple inheritance for classes. Therefore, a class can extend only one abstract class.</p>
+ </body>
+</html>

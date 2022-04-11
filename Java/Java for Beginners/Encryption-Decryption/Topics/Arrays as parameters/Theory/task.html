@@ -1,0 +1,64 @@
+<h2>Arrays as parameters</h2>
+<html>
+ <head></head>
+ <body>
+  <h5 style="text-align: center;">Passing arrays to methods</h5> 
+  <p>A method can have parameters of any types including arrays, strings, primitive types, and so on.</p> 
+  <p>In the following example, the method <code class="language-java">processArray</code> has a single parameter of the type <code class="language-java">int[]</code>:</p> 
+  <pre><code class="language-java">public static void processArray(int[] array) { /* do something */ }</code></pre> 
+  <p>In the body of the method<strong>,</strong> we can process the input array in any way.</p> 
+  <p>A parameter of an array type looks like a primitive type parameter. But there is one important difference related to the fact that an array is a reference type.</p> 
+  <p>When you pass a value of a primitive type to a method, a copy of the value is created. When you pass an array to a method, a copy of the reference is created, but the value is the same. It means that if you change the actual value (elements of an array) in the body of a method, you will see these changes outside the method.</p> 
+  <p>The following method swaps the first and the last elements of its parameter (array).</p> 
+  <pre><code class="language-java">public static void swapFirstAndLastElements(int[] nums) { // nums is an array
+    if (nums.length &lt; 1) {
+        return; // it returns nothing, i.e. just exits the method
+    }
+
+    int temp = nums[nums.length - 1]; // save the last element in a temporary local variable
+    nums[nums.length - 1] = nums[0];  // now, the last element becomes the first
+    nums[0] = temp;                   // now, the former first element becomes the last
+}</code></pre> 
+  <p>Calling the method from the main method:</p> 
+  <pre><code class="language-java">public static void main(String[] args) {
+
+    int[] numbers = { 1, 2, 3, 4, 5 }; // numbers
+
+    System.out.println(Arrays.toString(numbers)); // before swapping
+
+    swapFirstAndLastElements(numbers); // swapping
+
+    System.out.println(Arrays.toString(numbers)); // after swapping
+}</code></pre> 
+  <p>The output is:</p> 
+  <pre><code class="language-java">[1, 2, 3, 4, 5]
+[5, 2, 3, 4, 1]</code></pre> 
+  <p>So, in the body of the main method, an array is visible as modified.</p> 
+  <h5 style="text-align: center;">Varargs</h5> 
+  <p>It's possible to pass an arbitrary number of the same type arguments to a method using the special syntax named <strong>varargs (variable-length arguments)</strong>. These arguments are specified by three dots after the type. In the body of the method, you can process this parameter as a regular array of the specified type.</p> 
+  <p>The following method takes an integer <strong>vararg </strong>parameter and outputs the number of arguments in the standard output using the<strong> length</strong> property of arrays.</p> 
+  <pre><code class="language-java">public static void printNumberOfArguments(int... numbers) {
+    System.out.println(numbers.length);
+}</code></pre> 
+  <p>As you can see, a special syntax <code class="language-java">...</code> is used here to specify a <strong>vararg</strong> parameter.</p> 
+  <p>Now, you can invoke the method passing several integer numbers or an array of ints.</p> 
+  <pre><code class="language-java">printNumberOfArguments(1);
+printNumberOfArguments(1, 2);
+printNumberOfArguments(1, 2, 3);
+printNumberOfArguments(new int[] { }); // no arguments here
+printNumberOfArguments(new int[] { 1, 2 });</code></pre> 
+  <p>This code outputs:</p> 
+  <pre><code class="language-java">1
+2
+3
+0
+2</code></pre> 
+  <p>This example also demonstrates the difference between the arguments and parameters of a method. The method has only a single parameter but it can be called with several arguments.</p> 
+  <h5 style="text-align: center;">Varargs and other parameters</h5> 
+  <p>If a method has more than one parameter, the <code class="language-java">vararg</code> parameter must be the last one in the declaration of the method.</p> 
+  <p>Here is an incorrect example:</p> 
+  <pre><code class="language-java">public static void method(double... varargs, int a) { /* do something */ }</code></pre> 
+  <p>The correct version of the method is:</p> 
+  <pre><code class="language-java">public static void method(int a, double... varargs) { /* do something */ }</code></pre>
+ </body>
+</html>

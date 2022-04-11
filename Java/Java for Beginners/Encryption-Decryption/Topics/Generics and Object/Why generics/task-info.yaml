@@ -1,0 +1,24 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: 'Generics can work with multiple classes without explicit type-casting '
+- text: Generics speed up your code
+- text: Generics enhance type safety by shifting more type checking responsibilities
+    to compiler
+- text: Generics help to detect your bugs at run time
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2088#comment
+status: Solved
+record: -1
+custom_name: Why generics?

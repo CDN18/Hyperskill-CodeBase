@@ -1,0 +1,80 @@
+<h2>Files</h2>
+<html>
+ <head></head>
+ <body>
+  <p>It is often the case that a program needs to process and store data located outside the codebase: configuration settings, some dataset for processing, logs of execution and so on. The simplest way to store data is to use files that are supported by all modern operating systems. You can consider a file as a collection of data that is stored on a disk or another device, and that can be manipulated as a single unit when addressed by its name. Files can be organized into directories that act as folders for other files and directories.</p> 
+  <p>In this topic, we will learn how to work with files directly from a Java program.</p> 
+  <h5 style="text-align: center;">The File class</h5> 
+  <p>There is a class called <code class="language-java">File</code> in the <code class="language-java">java.io</code> package. An object of this class represents an existing or non-existing file or a directory. The class can be used to manipulate files and directories: creating, removing, accessing properties and more.</p> 
+  <p>The simplest way to create a file object is to pass a string path to its constructor. The valid format of the string depends on the operating system:</p> 
+  <ul> 
+   <li>Windows uses backslashes for paths (<code class="language-java">'\'</code>),</li> 
+   <li>Linux, OS X, Android and other UNIX-like systems use the forward slash (<code class="language-java">'/'</code>).</li> 
+  </ul> 
+  <p>You should keep this difference in mind while working with files.</p> 
+  <p>If your operating system is Windows, do not forget to use the escape character <code class="language-java">'\'</code>.</p> 
+  <p>Let's create two objects of the <code class="language-java">File</code> class for different platforms.</p> 
+  <pre><code class="language-java">File fileOnUnix = new File("/home/username/Documents");    // a directory on a UNIX-like system
+File fileOnWin = new File("D:\\Materials\\java-materials.pdf"); // a file on Windows</code></pre> 
+  <p>The code will work even if a file or a directory does not actually exist in your file system. It does not create a new file or directory. It just represents "a virtual" file or directory that exists already or may be created in the future.</p> 
+  <p>To display the character for separating the path to a file in your case, you can print the following:</p> 
+  <pre><code class="language-java">System.out.println(File.separator); // '/' - for Linux</code></pre> 
+  <p>Objects of the <code class="language-java">File</code> class are immutable; that is, once created, the abstract pathname represented by an object will never change.</p> 
+  <h5 style="text-align: center;">Absolute and relative path</h5> 
+  <p>You've already seen examples of files described by an <strong>absolute path</strong>. Simply, a path is <strong>absolute</strong> if it starts with the root element of the file system. It has the complete information about the file location including the type of the operating system.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   It is considered bad practice to locate a file using its absolute path inside your programs, since you will lose the ability to reuse your program on different platforms. Another problem is that you cannot transfer the file along with the specified directory, you will have to change the code that accesses it.
+  </div>
+  <p></p> 
+  <p>A <strong>relative path</strong> is a path that doesn't include the root element of the file system. This always starts from your <strong>working directory</strong>. This directory is represented by a <code class="language-java">.</code> (dot). A relative path is not complete and needs to be combined with the current directory path in order to reach the requested file.</p> 
+  <p>Here is an example with a file inside the images directory which is in your working directory:</p> 
+  <pre><code class="language-java">File fileOnUnix = new File("./images/picture.jpg");
+File fileOnWin = new File("./images/picture.jpg");</code></pre> 
+  <p>As you can see, both paths look exactly the same, which provides platform independence. Interestingly, the dot character can be skipped, so the path <code class="language-java">images/picture.jpg</code> is also correct.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   In order to construct platform-independent programs, it is a common convention to use relative paths whenever possible. You can also transfer the working directory that contains 
+   <code class="language-java">images/picture.jpg</code> without any code modifications.
+  </div>
+  <p></p> 
+  <p>To access the parent directory, just write <code class="language-java">..</code> (double dot). So, <code class="language-java">../picture.jpg</code> is a file placed in the parent directory of the working directory. The relative path <code class="language-java">images/../images/picture.jpg</code> means the parent directory of <code class="language-java">images</code>, then the <code class="language-java">images</code> folder again. And <code class="language-java">picture.jpg</code> is the file inside <code class="language-java">images</code> folder. In general <code class="language-java">images/../images/picture.jpg</code> and <code class="language-java">images/picture.jpg</code> are the same paths. </p> 
+  <h5 style="text-align: center;">Basic methods</h5> 
+  <p>An instance of <code class="language-java">File</code> has a list of methods. Take a look at some of them:</p> 
+  <ul> 
+   <li><code class="language-java">String getPath()</code> returns the string path to this file or directory;</li> 
+   <li><code class="language-java">String getName()</code> returns the name of this file or directory (just the last name of the path)</li> 
+   <li><code class="language-java">boolean isDirectory()</code> returns <code class="language-java">true</code> if it is a directory and exists, otherwise, <code class="language-java">false</code>;</li> 
+   <li><code class="language-java">boolean isFile()</code> returns <code class="language-java">true</code> if it is a file that exists (not a directory), otherwise, <code class="language-java">false</code>;</li> 
+   <li><code class="language-java">boolean exists()</code> returns <code class="language-java">true</code> if this file or directory actually exists in your file system, otherwise, <code class="language-java">false</code>;</li> 
+   <li><code class="language-java">String getParent()</code> returns the string path to the parent directory that contains this file or directory.</li> 
+  </ul> 
+  <p>The list is not complete, but for now, we will focus on these ones. For other methods, <a target="_blank" href="https://docs.oracle.com/javase/7/docs/api/java/io/File.html" rel="noopener noreferrer nofollow">see here</a>.</p> 
+  <p>Let's create an instance of an existing file and print out some info about it.</p> 
+  <pre><code class="language-java">File file = new File("/home/username/Documents/javamaterials.pdf");
+
+System.out.println("File name: " + file.getName());
+System.out.println("File path: " + file.getPath());
+System.out.println("Is file: " + file.isFile());
+System.out.println("Is directory: " + file.isDirectory());
+System.out.println("Exists: " + file.exists());
+System.out.println("Parent path: " + file.getParent());</code></pre> 
+  <p>As we expect, the code prints the following:</p> 
+  <pre><code class="language-java">File name: javamaterials.pdf
+File path: /home/username/Documents/javamaterials.pdf
+Is file: true
+Is directory: false
+Exists: true
+Parent path: /home/username/Documents</code></pre> 
+  <p>Suppose now we have an instance that represents a non-existing file and prints the details about it:</p> 
+  <pre><code class="language-java">File name: javamaterials1.pdf
+File path: /home/art/Documents/javamaterials1.pdf
+Is file: false
+Is directory: false
+Exists: false
+Parent path: /home/art/Documents</code></pre> 
+  <p>The file does not exist, so the application does not know its type.</p> 
+  <p>There is also a group of methods <code class="language-java">canRead()</code>, <code class="language-java">canWrite()</code>, <code class="language-java">canExecute()</code> to test whether the application can <strong>read/modify/execute </strong>the file denoted by the path. It is recommended to use these methods, otherwise, you can encounter file access errors when your user does not have enough permissions to perform an operation with a file.</p> 
+  <p>We believe the <code class="language-java">File</code> class provides a very clear API to process files and directories on different platforms.</p>
+ </body>
+</html>

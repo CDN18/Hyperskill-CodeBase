@@ -1,0 +1,46 @@
+content:
+- Introduction to Java
+- Overview of the basic program
+- Printing data
+- Scanning the input
+- Integer types and operations
+- Relational operators
+- Conditional statement
+- The while and do-while loops
+- The for-loop
+- Switch statement
+- Calling a method
+- Declaring a method
+- Functional decomposition
+- String
+- Primitive and reference types
+- Arrays as parameters
+- Iterating over arrays
+- Errors in programs
+- NPE
+- Array
+- Defining classes
+- Instance methods
+- Constructor
+- Package
+- Getters and setters
+- Objects
+- Interface
+- Boxing and unboxing
+- Introduction to generic programming
+- ArrayList
+- The List interface
+- Comparable
+- Processing strings
+- Generics and Object
+- Overloading
+- Hierarchy of exceptions
+- Command-line arguments
+- Hiding and overriding
+- Files
+- Abstract class
+- Inheritance
+- Encapsulating object creation
+- Factory method
+- Template method
+- Strategy

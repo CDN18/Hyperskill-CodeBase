@@ -1,0 +1,15 @@
+<h2>Clock factory</h2>
+<html>
+ <head></head>
+ <body>
+  <p>There is a hierarchy of clocks with the base interface <code class="java">Clock</code> and the class <code class="java">ClockFactory</code> to produce instances.</p> 
+  <p>Implement the method <code class="java">produce</code> of the factory. It should return a clock according to the specified type string:</p> 
+  <ul> 
+   <li>"SAND" is for <code class="java">SandClock</code>;</li> 
+   <li>"DIGITAL" is for <code class="java">DigitalClock</code>;</li> 
+   <li>"MECH" is for <code class="java">MechanicalClock</code>.</li> 
+  </ul> 
+  <p>The single constructor of the factory takes the boolean parameter <code class="java">produceToyClock</code>. It determines what the factory does when an unsuitable type of clock is passed. If it is <code class="java">true</code>, the factory should produce an instance of <code class="java">ToyClock</code>, otherwise, return <code class="java">null</code>.</p> 
+  <p>Do not change the provided code of the clock classes.</p>
+ </body>
+</html><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 5 seconds</font><br><br>

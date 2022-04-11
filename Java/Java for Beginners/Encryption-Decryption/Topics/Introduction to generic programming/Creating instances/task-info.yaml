@@ -1,0 +1,23 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: A value of a reference type (e.g., <b>"string"</b>)
+- text: Class type (e.g., <b>String</b>)
+- text: A value of a primitive type (e.g., <b>42</b>)
+- text: An array of primitive types (e.g., <b>int[]</b>).
+- text: Primitive type (e.g., <b>int</b>)
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2595#comment
+status: Solved
+record: -1

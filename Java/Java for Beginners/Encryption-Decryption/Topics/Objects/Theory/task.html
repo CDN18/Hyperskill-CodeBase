@@ -1,0 +1,51 @@
+<h2>Objects</h2>
+<html>
+ <head></head>
+ <body>
+  <p>A typical object-oriented program consists of a set of interacting <strong>objects</strong>. Each object has its own state separated from others. Each object is an instance of a particular class (type) that defines common properties and possible behavior for its objects.</p> 
+  <p>All classes from the standard library (<strong><code class="language-java">String</code></strong>, <strong><code class="language-java">Date</code></strong>) and classes defined by programmers are <strong>reference</strong><strong> types</strong> which means that variables of these types store addresses where the actual objects are located. In this regard, the comparison and assignment operations work with objects differently than with primitive types.</p> 
+  <h5 style="text-align: center;">Creating objects</h5> 
+  <p>The keyword <strong>new</strong> creates an object of a particular class. Here we create a standard string and assign it to the variable <strong><code class="language-java">str</code></strong>:</p> 
+  <pre><code class="language-java">String str = new String("hello");</code></pre> 
+  <p>The variable <strong><code class="language-java">str</code></strong> stores a reference to the object <strong>"hello"</strong> located somewhere in the heap memory.</p> 
+  <p>In the same way, we can create an object of any class we know.</p> 
+  <p>Here is a class that describes a patient in a hospital information system:</p> 
+  <pre><code class="language-java">class Patient {
+    String name;
+    int age;
+}</code></pre> 
+  <p>Here is an instance of this class:</p> 
+  <pre><code class="language-java">Patient patient = new Patient();</code></pre> 
+  <p>Despite the fact that <strong><code class="language-java">String</code></strong> is a standard class and <strong><code class="language-java">Patient</code></strong> is our own class, both classes are regular reference types. However, there is a big difference between those classes and we will discuss it below. </p> 
+  <h5 style="text-align: center;">Immutability of objects</h5> 
+  <p>There is an important concept in programming called <strong>immutability</strong>. Immutability means that an object always stores the same values. If we need to modify these values, we should create a new object. The common example is the standard <strong><code class="language-java">String</code></strong> class. Strings are immutable objects so all string operations produce a new string. Immutable types allow you to write programs with fewer errors.</p> 
+  <p>The class <strong><code class="language-java">Patient</code></strong> is not immutable because it is possible to change any field of an object.</p> 
+  <pre><code class="language-java">Patient patient = new Patient();
+
+patient.name = "Mary";
+patient.name = "Alice";</code></pre> 
+  <p>In the following topics, we will look at the existing immutable classes as well as learn how to create new ones and when to use them.</p> 
+  <h5 style="text-align: center;">Sharing references</h5> 
+  <p>More than one variable can refer to the same object.</p> 
+  <pre><code class="language-java">Patient patient = new Patient();
+
+patient.name = "Mary";
+patient.age = 24;
+
+System.out.println(patient.name + " " + patient.age); // Mary 24
+
+Patient p = patient;
+
+System.out.println(p.name + " " + p.age); // Mary 24</code></pre> 
+  <p>It is important to understand that two variables refer to the same data in memory rather than two independent copies. Since our class is mutable, we can modify the object using both references.</p> 
+  <pre><code class="language-java">patient.age = 25;
+System.out.println(p.age); // 25</code></pre> 
+  <h5 style="text-align: center;">Nullability</h5> 
+  <p>As for any reference types, a variable of class type can be <strong>null</strong> which means it is not initialized yet.</p> 
+  <pre><code class="language-java">Patient patient = null;</code></pre> 
+  <p>This is a common feature in Java available for classes since they are reference types.</p> 
+  <h5 style="text-align: center;">Conclusion</h5> 
+  <p>By now, not only have we already worked with some classes from the standard library but also learned how Java allows us to create our own classes. In this topic, we've discussed that the nature of custom classes' objects and standard library ones are based on the same principles.</p> 
+  <p>Keep in mind, that classes defined by programmers are <strong>reference types</strong>. When objects are created by the <strong>new</strong> operator it returns reference in memory where the created objects are located. By this reference, we can get access to its fields and change them. Several variables can refer to the same object through a reference. It is also possible to create two independent objects with the same field's content. It's important to understand that references to such objects are different. However, not all objects allow changing its state after creation. Such a feature is called <strong>immutability</strong>.</p>
+ </body>
+</html>

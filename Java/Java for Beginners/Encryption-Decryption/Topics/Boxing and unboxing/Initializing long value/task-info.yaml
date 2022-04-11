@@ -1,0 +1,22 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: Long val = 4321L;
+- text: Long val = Long.of(4321);
+- text: Long val = Long.valueOf("4321");
+- text: Long val = Long.parseLong("4321");
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2148#comment
+status: Solved
+record: -1

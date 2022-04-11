@@ -1,0 +1,52 @@
+<h2>Errors in programs</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Suppose, you're writing a Java program. Different errors may occur during its compilation or execution. We will divide all possible errors into two groups: <strong>compile-time errors</strong> and <strong>run-time errors</strong>.</p> 
+  <p>Let's look at cases where errors occur and how to avoid them.</p> 
+  <h5 style="text-align: center;">Compile-time errors</h5> 
+  <p>Compile-time errors are errors that prevent a Java program from being compiled:</p> 
+  <ul> 
+   <li>a syntax error: incorrect keyword, a forgotten symbol <code class="language-java">;</code> at the end of a statement;</li> 
+   <li>a bad source code file name;</li> 
+   <li>invoking a non-existing method;</li> 
+   <li>and many others.</li> 
+  </ul> 
+  <p>Consider an example of compile-time errors. The following program should output the string <strong>"Hello!" </strong>but it does not compile.</p> 
+  <pre><code class="language-java">public class MyClass {
+
+    public ztatic void main(String args[]) {
+        System.out.printn("Hello!");
+    }
+}</code></pre> 
+  <p>There are two errors in this program:</p> 
+  <ul> 
+   <li>a typo in the keyword <code class="language-java">static</code>;</li> 
+   <li>incorrect name of the method <code class="language-java">println</code>.</li> 
+  </ul> 
+  <p>If you fix these mistakes, it will be possible to compile this program.</p> 
+  <p>To avoid such errors, programmers use a modern IDE (Integrated Development Environment) with a static code analyzer. This tool allows programmers to identify compile-time errors before the compilation. In addition, it is able to highlight warnings about more complex errors and weak places in your code, as well as tips on how to improve the code.</p> 
+  <p>Over time, you will write code that contains fewer or even no compile-time errors.</p> 
+  <h5 style="text-align: center;">Run-time errors</h5> 
+  <p>Run-time errors (also known as "bugs") are errors that occur when the program is running. Run-time errors will cause your program to behave unexpectedly or may even stop the execution.</p> 
+  <p>There are two subtypes of run-time errors:</p> 
+  <ul> 
+   <li><strong>logic errors</strong> – when a program produces a wrong result because the code is not correct (for example, instead of <strong>"Hello!"</strong>, your program outputs <strong>"Hi!"</strong>);</li> 
+   <li><strong>unhandled exceptional events</strong> like division by zero, not found files, and other unexpected cases.</li> 
+  </ul> 
+  <p>We will learn how to handle exceptional events (exceptions) in further lessons.</p> 
+  <p>Avoiding such run-time errors is a more difficult task than avoiding compile-time errors. If your program compiles successfully, there are no guarantees that it does not have bugs. There are different strategies to find such errors:</p> 
+  <ul> 
+   <li>to <strong>debug</strong> your program;</li> 
+   <li>to write<strong> automatic tests</strong> for your program;</li> 
+   <li>to use the practice of <strong>code review </strong> as part of the development process. In general, this practice stands for a case, when one or more developers visually inspect the source code of a program.</li> 
+  </ul> 
+  <h5 style="text-align: center;">Conclusion</h5> 
+  <ul> 
+   <li>Compile-time errors happen when a program fails to compile. They include typos and incorrect method invocations.</li> 
+   <li>Static code analyzers in IDEs help to spot compile-time errors before program compilation.</li> 
+   <li>Run-time errors, or bugs, occur after compilation when a program is running. They may result in unexpected program behavior and crashes.</li> 
+   <li>Debugging is a useful instrument to identify run-time errors in your program.</li> 
+  </ul>
+ </body>
+</html>

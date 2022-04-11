@@ -1,0 +1,23 @@
+type: choice
+is_multiple_choice: false
+options:
+- text: It does not compile
+- text: It will return a <b>String</b>
+- text: An exception occurs after executing this line
+- text: It will return <b>Void</b>
+- text: It will return an <b>Object</b>
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/3537#comment
+status: Solved
+record: -1

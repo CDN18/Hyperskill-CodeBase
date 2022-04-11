@@ -1,0 +1,71 @@
+<h2>Defining classes</h2>
+<html>
+ <head></head>
+ <body>
+  <p>When programmers are writing a real program, they use standard classes as building blocks. However, they often need to declare new program-specific classes to better represent the domain area. In this topic, we will see how you can create a <strong>custom class</strong> in Java.</p> 
+  <h5 style="text-align: center;">Declaring new classes</h5> 
+  <p>A new class is declared with the <code class="language-java">class</code> keyword followed by the name of the class. For example, this is how you would create a class named <code class="language-java">Nothing</code>:</p> 
+  <pre><code class="language-java">class Nothing {
+    // empty body
+}</code></pre> 
+  <p>A class body can include fields, methods, and constructors. <strong>Fields</strong> store data, <strong>methods</strong> define behavior and <strong>constructors</strong> allow us to create and initialize new objects of the class. Not all Java classes have fields and methods so sometimes you will see classes without them.</p> 
+  <p>The source code of a class is placed in a <code class="language-java">.java</code> file. Usually, a source code file contains only one class and has the same name as that class, but sometimes a file can contain more classes.</p> 
+  <h5 style="text-align: center;">Writing fields</h5> 
+  <p>A <strong>field</strong> is a variable that stores data. It may have any type, including primitive types (int, float, boolean and so on) and classes (even the same class). A class can have as many fields as you need.</p> 
+  <p>Let's declare a class <code class="language-java">Patient</code>:</p> 
+  <pre><code class="language-java">/**
+ * The class is a "blueprint" for patients
+ */
+class Patient {
+
+    String name;
+    int age;
+    float height;
+    String[] complaints;
+}</code></pre> 
+  <p>This class represents a patient in a hospital information system. It has four fields for storing important information about the patient: <code class="language-java">name</code>, <code class="language-java">age</code>, <code class="language-java">height</code>, and <code class="language-java">complaints</code>. All objects of the class <code class="language-java">Patient</code> have the same fields, but their values may be different for each object.</p> 
+  <h5 style="text-align: center;">Creating objects</h5> 
+  <p>Let's create an <strong>instance</strong> of the class <code class="language-java">Patient</code> using the keyword <strong>new</strong>:</p> 
+  <pre><code class="language-java">Patient patient = new Patient();</code></pre> 
+  <p>When you create a new object, each field is initialized with the default value of the corresponding type.</p> 
+  <pre><code class="language-java">System.out.println(patient.name); // it prints null
+System.out.println(patient.age); // it prints 0</code></pre> 
+  <h5 style="text-align: center;">Creating multiple objects of the same class</h5> 
+  <p>The following program creates two objects of the class <code class="language-java">Patient</code> and prints the information about them.</p> 
+  <p>Note that<strong> </strong>both classes are placed in the same file named <code class="language-java">PatientDemo.java</code>.</p> 
+  <pre><code class="language-java">public class PatientDemo {
+    
+    public static void main(String[] args) {
+        
+        Patient john = new Patient();
+        
+        john.name = "John";
+        john.age = 30;
+        john.height = 180;
+        
+        System.out.println(john.name + " " + john.age + " " + john.height);
+            
+        Patient alice = new Patient();
+
+        alice.name = "Alice";
+        alice.age = 22;
+        alice.height = 165;
+        
+        System.out.println(alice.name + " " + alice.age + " " + alice.height);
+    }
+}
+
+class Patient {
+
+    String name;
+    int age;
+    float height;
+}</code></pre> 
+  <p>In the code above, we've created two patients, John and Alice, defined the values of their fields and then printed out the information about them. So, the output of the code above is:</p> 
+  <pre><code class="language-java">John 30 180
+Alice 22 165</code></pre> 
+  <h5 style="text-align: center;">Summary</h5> 
+  <p>In this topic, we've learned how to create classes in Java. Custom classes can be very useful because they allow you to define fields and methods that work best for your purposes.</p> 
+  <p>Fields keep the current state (data) of the instances of the class and their values can be different for different instances. You can create objects of the class, assign values to their fields and use those objects in your programs. All in all, classes are a very powerful tool and we hope that you'll use them in your projects!</p>
+ </body>
+</html>

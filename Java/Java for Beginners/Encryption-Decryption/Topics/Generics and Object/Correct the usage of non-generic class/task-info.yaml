@@ -1,0 +1,36 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class Holder {
+        private Object value;
+
+        public void set(Object value) {
+            this.value = value;
+        }
+
+        public Object get() {
+            return value;
+        }
+    }
+
+    class Main {
+        public static void main(String... args) {
+            Holder holder = new Holder();
+            holder.set(256);
+
+            // correct the line to make the code compile
+            Integer value = holder.get();
+
+            // do not change
+            System.out.println(value);
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/11179#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Sun, 03 Apr 2022 20:36:57 UTC
+record: -1

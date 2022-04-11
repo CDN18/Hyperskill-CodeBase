@@ -1,0 +1,22 @@
+type: choice
+is_multiple_choice: false
+options:
+- text: '6 5 4 3 '
+- text: 5 4 3 2
+- text: 5 4 3 2 1
+- text: 6 5 4 3 2
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2026#comment
+status: Solved
+record: -1

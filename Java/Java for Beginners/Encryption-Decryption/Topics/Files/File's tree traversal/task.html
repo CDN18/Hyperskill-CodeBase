@@ -1,0 +1,26 @@
+<h2>File's tree traversal</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Here's one way to traverse all subdirectories and collect all files in a list.</p> 
+  <p>The method <code class="language-java">listFiles</code> returns the nested files and directories of a directory as an array.</p> 
+  <pre><code class="language-java">1  public List&lt;File&gt; getAllFiles(File rootDir) {
+2      File[] children = rootDir.listFiles();
+3      if (children == null || children.length == 0) {
+4          return Collections.emptyList();
+5      }
+6
+7      List&lt;File&gt; files = new ArrayList&lt;&gt;();
+8      for (File child : children) {
+9          if (child.__) {
+10             files.addAll(getAllFiles(child));
+11         } else {
+12             files.add(child);
+13         }
+14     }
+15
+16     return files;
+17 }</code></pre> 
+  <p>Replace the underscore with correct code (line 9) to make the code correct: it should collect all files in a current directory and its subdirectories.</p>
+ </body>
+</html>

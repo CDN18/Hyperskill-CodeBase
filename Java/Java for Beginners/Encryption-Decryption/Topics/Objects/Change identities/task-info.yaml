@@ -1,0 +1,23 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class Person {
+        String name;
+        int age;
+    }
+
+    class MakingChanges {
+        public static void changeIdentities(Person p1, Person p2) {
+            // write your code here
+
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/12690#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Sat, 02 Apr 2022 13:13:46 UTC
+record: -1

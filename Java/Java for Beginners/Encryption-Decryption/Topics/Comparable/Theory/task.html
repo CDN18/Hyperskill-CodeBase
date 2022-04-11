@@ -1,0 +1,176 @@
+<h2>Comparable</h2>
+<html>
+ <head></head>
+ <body>
+  <p>While working with data, you will likely need to order it in a convenient way. For example, you may have to put numbers in ascending order, group lines in alphabetical order, and organize anything you work with by date, by price, or by other custom characteristics. </p> 
+  <p>In Java, it's possible to implement various sorting algorithms for any type of data. What if you have to work with custom types, sort elements of a collection, and try to compare objects that are not directly comparable? That's where the <code class="language-java">Comparable</code> interface comes in handy. In this topic, we will learn all about this interface and its <code class="language-java">compareTo()</code> method.</p> 
+  <h5 id="preparing-to-compare">Preparing to compare</h5> 
+  <p>Let's look at an example. We created a list of <code class="language-java">Integer</code>'s, added some elements and then sorted them.</p> 
+  <pre><code class="language-java">public static void main(String[] args) {
+    List&lt;Integer&gt; list = new ArrayList&lt;&gt;();
+    list.add(55);
+    list.add(13);
+    list.add(47);
+
+    Collections.sort(list);
+    System.out.println(list);
+}</code></pre> 
+  <p>As expected, we get:</p> 
+  <pre><code class="language-java">[13, 47, 55]</code></pre> 
+  <p>Now, let's create a simple class <code class="language-java">Car</code> where we want to sort cars by their numbers.</p> 
+  <pre><code class="language-java">public class Car {
+    private int number;
+    private String model;
+    private String color;
+    private int weight;
+
+    // constructor
+
+    // getters, setters
+}</code></pre> 
+  <p>Now we try to write some code for the <code class="language-java">main</code> method, create our collection and sort it using the <code class="language-java">Collections.sort()</code> method.</p> 
+  <pre><code class="language-java">public static void main(String[] args) {
+    List&lt;Car&gt; cars = new ArrayList&lt;&gt;();
+    Car car1 = new Car(876, "BMW", "white", 1400);
+    Car car2 = new Car(345, "Mercedes", "black", 2000);
+    Car car3 = new Car(470, "Volvo", "blue", 1800);
+    cars.add(car1);
+    cars.add(car2);
+    cars.add(car3);
+
+    Collections.sort(cars);
+    System.out.println(cars);
+}</code></pre> 
+  <p>As a result, we get a compilation error:</p> 
+  <pre><code class="language-no-highlight">The method sort(List&lt;T&gt;) in the type Collections 
+  is not applicable for the arguments (ArrayList&lt;Car&gt;)</code></pre> 
+  <p>The reason for this is that standard classes like <code class="language-java">Integer</code>, <code class="language-java">String</code> and so on implement a special interface, so we can compare them without any problems. As for our custom class <code class="language-java">Car</code>, it doesn't work like that. Let's see how we can fix this.</p> 
+  <h5 id="comparable-interface">Comparable interface</h5> 
+  <p><code class="language-java">Comparable</code> provides the <code class="language-java">compareTo()</code> method which allows comparing an object with other objects of the same type. It's also important to comply with the conditions: all objects can be compared to other objects of the same type in the most widely used way, which means <code class="language-java">compareTo()</code> should be consistent with the <code class="language-java">equals</code> method. A sequence of data has the <strong>natural ordering</strong>, if for each 2 elements <code class="language-java">a</code> and <code class="language-java">b</code>, where <code class="language-java">a</code> is located to the left of <code class="language-java">b</code>, the condition is true: <code class="language-java">a.compareTo(b) &lt;= 0</code></p> 
+  <p>It's easy to understand how to compare an <code class="language-java">Integer</code> or <code class="language-java">String</code> because they already implement the <code class="language-java">Comparable</code> interface, but how do we compare objects of our custom type? We can do it in different ways depending on the task. We can compare them by any single field or several fields.</p> 
+  <p>To be able to sort, we must rewrite our <code class="language-java">Car</code> class using the <code class="language-java">Comparable</code> interface. For example, we can compare our <code class="language-java">Car</code> objects by their <code class="language-java">number</code>. Here's how you can implement it:</p> 
+  <pre><code class="language-java">public class Car implements Comparable&lt;Car&gt; {
+
+    private int number;
+    private String model;
+    private String color;
+    private int weight;
+
+    // constructor
+
+    // getters, setters
+
+    @Override
+    public int compareTo(Car otherCar) {
+        return Integer.valueOf(getNumber()).compareTo(otherCar.getNumber());
+    }
+
+}</code></pre> 
+  <p>Now if we run our new code we get the correct result.</p> 
+  <h5 id="implementing-the-compareto-method">Implementing the compareTo method</h5> 
+  <p>Let's talk about the <code class="language-java">compareTo()</code> method. It compares the current object with the object sent as a parameter. To implement it correctly we need to make sure that the method returns:</p> 
+  <ul> 
+   <li>A positive integer (for example, 1), if the current object is greater;</li> 
+   <li>A negative integer (for example, -1), if the current object is less;</li> 
+   <li>Zero, if they are equal.</li> 
+  </ul> 
+  <p>Below you can see an example of how the <code class="language-java">compareTo()</code> method is implemented in the <code class="language-java">Integer</code> class.</p> 
+  <pre><code class="language-java">@Override
+public int compareTo(Integer anotherInteger) {
+    return compare(this.value, anotherInteger.value);
+}
+
+public static int compare (int x, int y) {
+    return (x &lt; y) ? -1 : ((x == y) ? 0 : 1);
+}</code></pre> 
+  <p>There are some other rules for implementing the <code class="language-java">compareTo()</code> method. To demonstrate them, imagine we have a class called <code class="language-java">Coin:</code></p> 
+  <pre><code class="language-java">class Coin implements Comparable&lt;Coin&gt; {
+    private final int nominalValue;    // nominal value
+    private final int mintYear;        // the year the coin was minted
+
+    Coin(int nominalValue, int mintYear) {
+        this.nominalValue = nominalValue;
+        this.mintYear = mintYear;
+    }
+
+    @Override
+    public int compareTo(Coin other) {
+        // This method we have to implement
+    }
+
+    // We consider two coins equal if they have the same nominal value
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) return true;
+        if (that == null || getClass() != that.getClass()) return false;
+        Coin coin = (Coin) that;
+        return nominalValue == coin.nominalValue;
+    }
+
+    // getters, setters, hashCode and toString
+}</code></pre> 
+  <p>Let's create some objects of <code class="language-java">Coin</code>.</p> 
+  <pre><code class="language-java">public static void main(String[] args) {
+
+    Coin big = new Coin(25, 2006);
+    Coin medium1 = new Coin(10, 2016);
+    Coin medium2 = new Coin(10, 2001);
+    Coin small = new Coin(2, 2000);
+}</code></pre> 
+  <p>One of the rules is to keep the <code class="language-java">compareTo()</code> implementation consistent with the implementation of the <code class="language-java">equals()</code> method. For example:</p> 
+  <ul> 
+   <li><code class="language-java">medium1.compareTo(medium2) == 0</code> should have the same boolean value as <code class="language-java">medium2.equals(medium1)</code></li> 
+  </ul> 
+  <p>If we compare our coins and <code class="language-java">big</code> is bigger than <code class="language-java">medium1</code> and <code class="language-java">medium1</code> is bigger than <code class="language-java">small</code>, then <code class="language-java">big</code> is bigger than <code class="language-java">small</code>:</p> 
+  <ul> 
+   <li><code class="language-java">(big.compareTo(medium1) &gt; 0 &amp;&amp; medium1.compareTo(small) &gt; 0)</code> implies <code class="language-java">big.compareTo(small) &gt; 0</code></li> 
+  </ul> 
+  <p><code class="language-java">medium1</code> is bigger than <code class="language-java">small</code>, hence <code class="language-java">small</code> is smaller than <code class="language-java">big</code>:</p> 
+  <ul> 
+   <li><code class="language-java">big.compareTo(small) &gt; 0</code> and <code class="language-java">small.compareTo(big) &lt; 0</code></li> 
+  </ul> 
+  <p>if <code class="language-java">medium1</code> is equal to <code class="language-java">medium2</code>, they both must be bigger or smaller than <code class="language-java">small</code> and <code class="language-java">big</code> respectively:</p> 
+  <ul> 
+   <li><code class="language-java">medium1.compareTo(medium2) == 0</code> implies that <code class="language-java">big.compareTo(medium1) &gt; 0</code> and <code class="language-java">big.compareTo(medium2) &gt; 0</code> or <code class="language-java">small.compareTo(medium1) &lt; 0</code> and <code class="language-java">small.compareTo(medium2) &lt; 0</code> </li> 
+  </ul> 
+  <p>This will ensure that we can safely use such objects in sorted sets and sorted maps.</p> 
+  <p>In this case, we can comply with all these requirements if we compare our coins by their nominal value:</p> 
+  <pre><code class="language-java">class Coin implements Comparable&lt;Coin&gt; {
+
+    // fields, constructor, equals, hashCode, getters and setters
+
+    @Override
+    public int compareTo(Coin other) {
+        if (nominalValue == other.nominalValue) {
+            return 0;
+        } else if (nominalValue &lt; other.nominalValue) {
+            return -1;
+        } else {
+            return 1;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Coin{nominal=" + nominalValue + ", year=" + mintYear + "}";
+    }
+}</code></pre> 
+  <p>Now we can add the coins to a list and sort them:</p> 
+  <pre><code class="language-java">List&lt;Coin&gt; coins = new ArrayList&lt;&gt;();
+
+coins.add(big);
+coins.add(medium1);
+coins.add(medium2);
+coins.add(small);
+
+Collections.sort(coins);
+coins.forEach(System.out::println);</code></pre> 
+  <p>In the output, we can see that the coins have been successfully sorted:</p> 
+  <pre><code class="language-no-highlight">Coin{nominal=2, year=2000}
+Coin{nominal=10, year=2016}
+Coin{nominal=10, year=2001}
+Coin{nominal=25, year=2006}</code></pre> 
+  <h5 id="conclusion">Conclusion</h5> 
+  <p>In this topic, we explored how to use the <code class="language-java">Comparable</code> interface in our custom classes to define natural ordering algorithms. We also learned how to properly implement the <code class="language-java">compareTo</code> method.</p>
+ </body>
+</html>

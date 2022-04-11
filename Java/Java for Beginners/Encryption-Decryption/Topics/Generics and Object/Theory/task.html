@@ -1,0 +1,68 @@
+<h2>Generics and Object</h2>
+<html>
+ <head></head>
+ <body>
+  <p>As you know, <strong>generics</strong> enable us to parameterize types when defining classes (or interfaces) and methods. Parameterized types make it possible to re-use the same code while processing different concrete types.</p> 
+  <h5 style="text-align: center;">Reusing code with generics</h5> 
+  <p>Let's consider a generic class named <code class="language-java">GenericType</code> that stores a value of "some type".</p> 
+  <pre><code class="language-java">class GenericType&lt;T&gt; { 
+
+    private T t;
+
+    public GenericType(T t) {
+        this.t = t;
+    }
+
+    public T get() {
+        return t;
+    }
+}</code></pre> 
+  <p>It is possible to create an object with a concrete type (e.g., <code class="language-java">String</code>):</p> 
+  <pre><code class="language-java">GenericType&lt;String&gt; instance1 = new GenericType&lt;&gt;("abc");
+String str = instance1.get();</code></pre> 
+  <p>We can also create instances with other types (<code class="language-java">Integer</code>, <code class="language-java">Character</code>) and then invoke the <code class="language-java">get</code> method to access the internal field. In this manner, generics allow us to use the same class and methods for processing different types.</p> 
+  <h5 style="text-align: center;">Reusing code with Object</h5> 
+  <p>But there is another way to reuse code. If we declare a field of type <code class="language-java">Object</code>, we can assign a value of any reference type to it. This approach was widely used before the introduction of generics in<strong> </strong>Java 5.</p> 
+  <p>The following class demonstrates this concept:</p> 
+  <pre><code class="language-java">class NonGenericClass {
+
+    private Object val;
+
+    public NonGenericClass(Object val) {
+        this.val = val;
+    }
+
+    public Object get() {
+        return val;
+    }
+}</code></pre> 
+  <p>Now we can create an instance of this class with the same string as in the previous example (see <code class="language-java">GenericType</code>).</p> 
+  <pre><code class="language-java">NonGenericClass instance2 = new NonGenericClass("abc");</code></pre> 
+  <p>It is also possible to create an instance by passing in a value of type <code class="language-java">Integer</code>, <code class="language-java">Character</code>, or any other reference type.</p> 
+  <p>Using the <code class="language-java">Object</code> class this way allows us to reuse the same class to store different data types.</p> 
+  <h5 style="text-align: center;">The advantage of generics: from run-time to compile-time</h5> 
+  <p>After an invocation of the <code class="language-java">get()</code> method we obtain an <code class="language-java">Object</code>, not a <code class="language-java">String</code> or an <code class="language-java">Integer</code>. We cannot get a string directly from the method.</p> 
+  <pre><code class="language-java">NonGenericClass instance2 = new NonGenericClass("abc");
+String str = instance2.get(); // Compile-time error: Incompatible types</code></pre> 
+  <p>To get the string back, we must perform an explicit type-cast to the <code class="language-java">String</code> class.</p> 
+  <pre><code class="language-java">String str = (String) instance2.get(); // "abc"</code></pre> 
+  <p>This works because a string was passed into <code class="language-java">instance2</code>. But what if the instance does not store a string? If this is the case, the code throws an exception. Here is an example:</p> 
+  <pre><code class="language-java">NonGenericClass instance3 = new NonGenericClass(123);
+String str = (String) instance3.get(); // throws java.lang.ClassCastException</code></pre> 
+  <p>Now we can see the main advantage of generics over the <code class="language-java">Object</code> class. Because there is no need to perform an explicit type-cast, we never get a runtime exception. If we do something wrong, we can see it at compile-time.</p> 
+  <pre><code class="language-java">GenericType&lt;String&gt; instance4 = new GenericType&lt;&gt;("abc");
+        
+String str = instance4.get(); // There is no type-casting here
+Integer num = instance4.get(); // It does not compile</code></pre> 
+  <p>A compile-time error will be detected by the programmer, not a user of the program. Because generics let the compiler take care of type casting, generics are both safer and more flexible compared to the <code class="language-java">Object</code> class. </p> 
+  <h5 style="text-align: center;">Generics without specifying a type argument</h5> 
+  <p>When you create an instance of a generic class, you have the option to not specify an argument type at all.</p> 
+  <pre><code class="language-java">GenericType instance5 = new GenericType("my-string");</code></pre> 
+  <p>In this case, the field of the class is <code class="language-java">Object</code>, and the <code class="language-java">get</code> method returns an <code class="language-java">Object</code> as well.</p> 
+  <p>The above code is equivalent to the following line:</p> 
+  <pre><code class="language-java">GenericType&lt;Object&gt; instance5 = new GenericType&lt;&gt;("abc"); // it is parameterized with Object</code></pre> 
+  <p>Usually, you will not use generics parameterized by <code class="language-java">Object</code> due to the same problems as presented above. Just remember that this possibility exists.</p> 
+  <h5 style="text-align: center;">Conclusion</h5> 
+  <p>Both generics and Object allow you to write generalized code. Using <code class="language-java">Object</code>, however, may require explicit type-casting, which can lead to error-prone code. Generics provide type-safety by shifting type checking responsibilities to the Java compiler.</p>
+ </body>
+</html>

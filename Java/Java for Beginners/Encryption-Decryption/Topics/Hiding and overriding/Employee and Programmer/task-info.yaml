@@ -1,0 +1,27 @@
+type: choice
+is_multiple_choice: false
+options:
+- text: protected long calcSalary() { return yearsOfExperience * 500 + super.baseSalary;
+    }
+- text: public long calcProgrammerSalary() { return yearsOfExperience * 500 + super.baseSalary;
+    }
+- text: public long calcSalary(long coefficient) { return coefficient * 500 + super.baseSalary;
+    }
+- text: public void calcSalary() { this.baseSalary = 40_000L; }
+- text: public long calcSalary() { return yearsOfExperience * 500 + super.baseSalary;
+    }
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/3062#comment
+status: Solved
+record: -1

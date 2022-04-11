@@ -1,0 +1,22 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: 'int[] numbers = new int[3] { 1, 2, 3 }; '
+- text: String[] words = { "first", "second", "third" };
+- text: double[] doubles = new { 1.0d, 1.1d, 1.2d };
+- text: char[] letters = new char[] { 'A', 'B', 'C' };
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/1958#comment
+status: Solved
+record: -1

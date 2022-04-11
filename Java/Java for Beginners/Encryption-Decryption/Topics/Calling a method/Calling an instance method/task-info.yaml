@@ -1,0 +1,22 @@
+type: string
+files:
+- name: answer.txt
+  visible: true
+  placeholders:
+  - offset: 0
+    length: 17
+    placeholder_text: type your solution here
+    initial_state:
+      length: 17
+      offset: 0
+    initialized_from_dependency: false
+    selected: false
+    status: Solved
+  text: type your solution here
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/10976#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Fri, 01 Apr 2022 19:57:15 UTC
+record: -1

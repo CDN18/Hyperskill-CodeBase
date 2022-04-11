@@ -1,0 +1,62 @@
+<h2>Overview of the basic program</h2>
+<html>
+ <head></head>
+ <body>
+  <p>In this topic, we will build our very first Java program. Our program will simply print <strong>"Hello, World!"</strong> on the screen (a tradition by most programmers when learning new languages). Our code may not seem too exciting at first, however, we will learn about the basic template that all Java programs need to follow.</p> 
+  <h5 style="text-align: center;">The Hello World program</h5> 
+  <p>Here is the Java code of this program:</p> 
+  <pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}</code></pre> 
+  <p>You can type this code in the <strong>Your Code</strong> section <a target="_blank" href="https://www.jdoodle.com/online-java-compiler" rel="nofollow noopener noreferrer">here</a> and then press the <strong>execute</strong> button. In the <strong>result</strong> section, you will see:</p> 
+  <pre><code class="language-java">Hello, World!</code></pre> 
+  <p>If you have already installed Java, you can run the program on your computer. If not, there is no need to install it right now. We will do that later.</p> 
+  <h5 style="text-align: center;">The basic terminology</h5> 
+  <p>Now that you have seen<strong> </strong>the result, let's learn some basic terminology and then try to understand this program.</p> 
+  <ul> 
+   <li><strong>Program</strong> – a sequence of instructions (called statements), which are executed one after another in a predictable manner. Sequential flow is the most common and straightforward sequence of statements, in which statements are executed in the order that they are written – from top to bottom in a sequential manner;</li> 
+   <li><strong>Statement</strong> – a single action (like print a text) terminated by semi-colon (<code class="language-java">;</code>);</li> 
+   <li><strong>Block</strong> – a group of zero, one or more statements enclosed by a pair of braces <code class="language-java">{...}</code>; There are two such blocks in the program above.</li> 
+   <li><strong>Method </strong>– a sequence of statements that represents a high-level operation (also known as subprogram or procedure).</li> 
+   <li><strong>Syntax</strong> – a set of rules that define how a program needs to be written in order to be valid; Java has its own specific syntax that we will learn;</li> 
+   <li><strong>Keyword</strong> – a word that has a special meaning in the programming language (<code class="language-java">public</code>, <code class="language-java">class</code>, and many others). These words cannot be used as variable names for your own program;</li> 
+   <li><strong>Identifier or name </strong>– a word that refers to something in a program (such as a variable or a function name);</li> 
+   <li><strong>Comment</strong> – a textual explanation of what the code does. Java comments start with <code class="language-java">//</code>.</li> 
+   <li><strong>Whitespace</strong> –<strong> </strong>all characters that are not visible (space, tab, newline, etc.).</li> 
+  </ul> 
+  <h5 style="text-align: center;">The Hello World program under a microscope</h5> 
+  <p>The <strong>Hello World</strong> program illustrates the basic elements of Java programs. For now, we will discuss only the most important elements.</p> 
+  <p>1. <strong>The public class.</strong> It is the basic unit of a program. Every Java program must have at least one class. The definition of a class consists of the <code class="language-java">class</code> keyword followed by the class name. A class can have any name, such as <code class="language-java">App</code>, <code class="language-java">Main</code>, or <code class="language-java">Program</code>, but it must not start with a digit. A set of braces <code class="language-java">{...}</code> encloses the body of a class.</p> 
+  <pre><code class="language-java">public class Main {
+    // ...
+}</code></pre> 
+  <p>The text after <code class="language-java">//</code> is just a comment, not a part of the program. We will learn about comments in detail in later topics.</p> 
+  <p><strong>2. The main method.</strong> To make the program runnable, we put a method named <code class="language-java">main</code> inside a class. It is the entry point for a Java program. Again, the braces <code class="language-java">{...}</code> enclose the body of the method, which contains programming statements.</p> 
+  <pre><code class="language-java">public static void main(String[] args) {
+    // statements go here
+}</code></pre> 
+  <p>The keywords <code class="language-java">public</code>, <code class="language-java">static</code>, and <code class="language-java">void</code> will be discussed later, so just remember them for now. The name of this method (<code class="language-java">main</code>) is predefined and should always be the same. Capitalization matters; if you name your first method like <strong>Main</strong>, <strong>MAIN</strong> or something else, the program cannot start.</p> 
+  <p>The element <code class="language-java">String[] args</code> represents a sequence of arguments passed to the program from the outside world. Don't worry about them right now.</p> 
+  <p><strong>3. Printing "Hello, world!"</strong>. The body of the method consists of programming statements that determine what the program should do after starting. Our program prints the string <strong>"Hello, World!"</strong> using the following statement:</p> 
+  <pre><code class="language-java">System.out.println("Hello, World!"); //  each statement has to end with ;</code></pre> 
+  <p>This is one of the most important things to understand from the <strong>Hello World</strong> program. We invoke a special method <code class="language-java">println</code> to display a string followed by a new line on the screen. We will often use this approach to print something of interest to the screen. The text is printed without double quotes.</p> 
+  <p></p>
+  <div class="alert alert-warning">
+   It is important that 
+   <strong>"Hello, World!"</strong> is not a keyword or an identifier; it is just a text to be printed.
+  </div>
+  <p></p> 
+  <h5 style="text-align: center;">Keywords</h5> 
+  <p>As you can see, even a simple Java program consists of many elements, including <strong>keywords</strong> that are parts of the language. In total, Java provides more than 50 keywords which you will gradually learn on this platform. The full list is <a target="_blank" href="https://en.wikipedia.org/wiki/List_of_Java_keywords" rel="noopener noreferrer nofollow">here</a>, though you don't need to remember all of them at this moment.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   Note, 
+   <code class="language-java">main</code> is outside the given list because it is not a keyword.
+  </div>
+  <p></p> 
+  <h5 style="text-align: center;">Conclusion</h5> 
+  <p>We have discussed the simplest program you can write in Java. It has a single class with a single <code class="language-java">main</code> method. Every Java program must have a <code class="language-java">main</code> method as it is the first to be executed when the program runs.<strong> </strong>Don't worry about memorizing every single term used in the topic (syntax, statement, block). These terms will reappear in further materials. Do not forget to use the provided <strong>Hello World</strong> program as a template for your own programs.</p>
+ </body>
+</html>

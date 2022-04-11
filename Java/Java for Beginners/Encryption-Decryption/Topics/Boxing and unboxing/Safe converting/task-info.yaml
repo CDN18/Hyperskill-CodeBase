@@ -1,0 +1,28 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.Scanner;
+
+    public class Main {
+
+        public static int convert(Long val) {
+            // write your code here
+        }
+
+        /* Do not change code below */
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+            String val = scanner.nextLine();
+            Long longVal = "null".equals(val) ? null : Long.parseLong(val);
+            System.out.println(convert(longVal));
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2150#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Sat, 02 Apr 2022 17:41:19 UTC
+record: -1

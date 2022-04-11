@@ -1,0 +1,39 @@
+<h2>What does the code print</h2>
+<html>
+ <head></head>
+ <body>
+  <p>You are given a class hierarchy.</p> 
+  <p> </p> 
+  <pre><code class="language-java">class A {
+    
+    public void print() {
+        System.out.println("A");
+    }
+}
+
+class B extends A {
+    
+    @Override
+    public void print() {
+        System.out.println("B");
+    }
+}
+
+class C extends B { }
+
+class D extends C {
+
+    @Override
+    public void print() {
+        System.out.println("D");
+    }
+}</code></pre> 
+  <p> </p> 
+  <p>What does the following code print?</p> 
+  <p> </p> 
+  <pre><code class="language-java">C c = new C();
+
+
+c.print();</code></pre>
+ </body>
+</html>

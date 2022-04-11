@@ -1,0 +1,106 @@
+<h2>Overloading</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Overloading allows you to change the method’s signature: the number of parameters, their type or both. If methods have the same name, but a different number or type of parameters, they are <strong>overloaded</strong>. It means you can invoke different methods by the same name by passing different arguments.</p> 
+  <h5>How to overload methods</h5> 
+  <p>As an example, let's consider some overloaded method from the standard class <code class="language-java">Math</code>:</p> 
+  <pre><code class="language-java">public static int abs(int a) { return (a &lt; 0) ? -a : a; }
+
+public static float abs(float a) { return (a &lt;= 0.0F) ? 0.0F - a : a; }</code></pre> 
+  <p>These methods have the same name but different type of the argument. They are overloaded.</p> 
+  <p></p>
+  <div class="alert alert-warning">
+   <strong>Important </strong>that it's impossible to declare more than one method with the same name and parameters (number and types), even with different return types. The return type is not considered for overloading because it's not a part of the signature.
+  </div>
+  <p></p> 
+  <p>Here are four methods <code class="language-java">print</code> for printing different values.</p> 
+  <pre><code class="language-java">public static void print(String stringToPrint) {
+    System.out.println(stringToPrint);
+}
+
+public static void print(String stringToPrint, int times) {
+    for (int i = 0; i &lt; times; i++) {
+        System.out.println(stringToPrint);
+    }
+}
+
+public static void print(int times, String stringToPrint) {
+    for (int i = 0; i &lt; times; i++) {
+        System.out.println(stringToPrint);
+    }
+}
+
+public static void print(int val) {
+    System.out.println(val);
+}</code></pre> 
+  <p>The first method prints an input string, the second and the third ones print an input string a given number of times, and the last one prints an integer value. These methods are overloaded.</p> 
+  <p>Let's invoke these methods:</p> 
+  <pre><code class="language-java">print("some string");
+print("another string", 2);
+print(2, "another string again");
+print(5);</code></pre> 
+  <p>As you can see, it's possible to call any of these methods by the same name passing suitable arguments. The code outputs:</p> 
+  <pre><code class="language-no-highlight">some string
+another string
+another string
+another string again
+another string again
+5</code></pre> 
+  <p></p>
+  <div class="alert alert-primary">
+   Note, that in the case when parameters have different types, changing the order of these parameters is a valid case of overloading, as in the second and third methods from the example above.
+  </div>
+  <p></p> 
+  <p>The overloading mechanism allows us to not write different names for methods that perform similar operations.</p> 
+  <p>Looking ahead, we'll assume that overloading is a form of the static (compile-time) polymorphism.</p> 
+  <h5 style="text-align: center;">Overloading and casting</h5> 
+  <p>To understand how overloading deals with type casting, let's consider an example of overloaded methods that only differ in the type of the single argument and see when each of them will be invoked and why.</p> 
+  <pre><code class="language-java">public class OverloadingExample {
+
+    public static void print(short a) {
+        System.out.println("short arg: " + a);
+    }
+
+    public static void print(int a) {
+        System.out.println("int arg: " + a);
+    }
+
+    public static void print(long a) {
+        System.out.println("long arg: " + a);
+    }
+
+    public static void print(double a) {
+        System.out.println("double arg: " + a);
+    }
+
+    public static void main(String[] args) {
+        print(100);
+    }
+}</code></pre> 
+  <p>Now if we call <code class="language-java">print(100)</code>, the program outputs:</p> 
+  <pre><code class="language-java">int arg: 100</code></pre> 
+  <p>What we see here is that 100 is treated as <code class="language-java">int</code> and the corresponding method is invoked.</p> 
+  <p>In the case where the type of a method parameter is not exactly the same as the type of the passed argument, the compiler chooses the method that has the closest type of the argument in order of the implicit casting.</p> 
+  <p>Since all integer literals are treated as <code class="language-java">int</code> by default, <code class="language-java">int</code> will be the starting point. The closest one will then be <code class="language-java">long</code>.</p> 
+  <p>Let's remove or comment the method <code class="language-java">public static void print(int a)</code>, then recompile and run the program again. The result is as expected:</p> 
+  <pre><code class="language-java">long arg: 100</code></pre> 
+  <p>Ok, now, let's remove the method <code class="language-java">public static void print(long a)</code> too. Since we have no method with <code class="language-java">float</code> argument, the next type in the order of implicit type casting will be <code class="language-java">double</code>. After recompiling the program outputs:</p> 
+  <pre><code class="language-java">double arg: 100.0</code></pre> 
+  <p>If we remove the method <code class="language-java">public static void print(double a)</code> the only method we have left is the one with <code class="language-java">short</code> type of argument. The program won't compile if we just call <code class="language-java">print(100)</code> as we did before. </p> 
+  <p>Let's explain why. When we pass some value to the method, the compiler does not evaluate it. All that is known is that it is integer literal and hence has integer type. </p> 
+  <p>In our case, since 100 is treated as an <code class="language-java">int</code> by default and JVM doesn't know if the passed value can be cast to <code class="language-java">short</code> safely, the only way to pass <code class="language-java">short</code> argument is by casting the value explicitly:</p> 
+  <pre><code class="language-java">public class OverloadingExample {
+
+    public static void print(short a) {
+        System.out.println("short arg: " + a);
+    }
+
+    public static void main(String[] args) {
+        print((short) 100);  // explicit casting 
+    }
+}</code></pre> 
+  <h5>Conclusion </h5> 
+  <p>Method overloading allows you to implement two or more methods with the same name, but different arguments. The arguments of such methods may differ in their number or type. This helps to avoid having various method references for similar tasks. When invoked, the proper method is chosen based on the provided arguments. If the argument has a different type from what is expected, the closest type of the argument in order of the implicit casting is used.</p>
+ </body>
+</html>

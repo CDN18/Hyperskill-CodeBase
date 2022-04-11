@@ -1,0 +1,66 @@
+<h2>Primitive and reference types</h2>
+<html>
+ <head></head>
+ <body>
+  <p>In Java, all data types are separated into two groups: <strong>primitive types</strong> and <strong>reference types.</strong></p> 
+  <p>Java provides only eight primitive types. They are built-in in the language syntax as keywords. The names of all primitive types are lowercase. The most commonly used type is <code class="language-java">int</code> which represents an integer number.</p> 
+  <pre><code class="language-java">int num = 100;</code></pre> 
+  <p>The number of reference types is huge and constantly growing. A programmer can even create their own type and use it like standard types. The most frequently used reference types are <code class="language-java">String</code>, <code class="language-java">Scanner</code> and arrays. Remember that Java, like most programming languages, is case sensitive.<br> In this topic, we will focus on <code class="language-java">String</code>, which is a common example of the reference type.</p> 
+  <h5 style="text-align: center;">The new keyword</h5> 
+  <p>In most cases, an object of a reference type can be created using the <code class="language-java">new</code> keyword. When we use the <code class="language-java">new</code> keyword, the memory is allocated for the object we create. That is called instantiation of the object because we create an instance of it. Then we initialize the variable by assigning some value to it. Often, as in our example, it is done with one line.</p> 
+  <pre><code class="language-java">String language = new String("java"); 
+//instantiation of String and initialization with "java"</code></pre> 
+  <p>You can also use a literal for strings:</p> 
+  <pre><code class="language-java">String language = "java";</code></pre> 
+  <p>The first approach with the keyword <code class="language-java">new</code> is common for reference types, while the second is only string-specific. Both approaches give us the same result for strings but they have some technical differences which we will not consider here. </p> 
+  <h5 style="text-align: center;">The main difference</h5> 
+  <p>The basic difference between primitive and reference types is that a variable of a primitive type stores the actual values, whereas a variable of a reference type stores an address in memory (reference) where the data is located. The data can be presented as a complex structure that includes other data types as their parts.</p> 
+  <p>The following picture simply demonstrates this difference. There are two main memory spaces: <strong>stack</strong> and <strong>heap</strong>. All values of primitive types are stored in stack memory, but variables of reference types store addresses of objects located in heap memory.</p> 
+  <p style="text-align: center;"> </p> 
+  <p style="text-align: center;"><img alt="" height="287px" src="https://ucarecdn.com/1f65bb80-d7af-44fa-b847-9bfcc674da63/" width="399px"></p> 
+  <p> </p> 
+  <p>We will not consider stack and heap in detail here. Just remember this difference between primitive and reference types.</p> 
+  <h5 style="text-align: center;">Assignment</h5> 
+  <p>The way to store data also affects the mechanism to assign the value of a variable to another variable:</p> 
+  <ul> 
+   <li><strong>primitive types</strong>: the value is just copied;</li> 
+   <li><strong>reference types</strong>: the address to the value is copied (the data is shared between several variables).</li> 
+  </ul> 
+  <p>Here is a snippet of code and a picture that demonstrates this.</p> 
+  <pre><code class="language-java">int a = 100;
+int b = a; // 100 is copied to b
+
+String language = new String("java");
+String java = language;</code></pre> 
+  <p>The variable <code class="language-java">b</code> has a copy of the value stored in the variable <code class="language-java">a</code>. But the variables <code class="language-java">language</code> and <code class="language-java">java</code> reference the same value, rather than copying it. The picture below clearly demonstrates the difference.</p> 
+  <p style="text-align: center;"><img alt="" height="296" src="https://ucarecdn.com/45c7da14-b310-49a3-8b74-c51aff294952/" width="419"></p> 
+  <p>Just remember, when assigning one value of a reference variable to another, we just make a copy of a reference rather than the value itself.</p> 
+  <h5 style="text-align: center;">Comparisons</h5> 
+  <p>Comparing reference types using <code class="language-java">==</code> and <code class="language-java">!=</code> is not the same as comparing primitive types. Actually, when you are comparing two variables of the <code class="language-java">String</code> type, it compares references (addresses) rather than actual values.</p> 
+  <p>The following code demonstrates it:</p> 
+  <pre><code class="language-java">String s1 = new String("java");
+String s2 = new String("java");
+String s3 = s2;
+
+System.out.println(s1 == s2); // false
+System.out.println(s2 == s3); // true</code></pre> 
+  <p>The picture below demonstrates this effect:<br> </p> 
+  <p style="text-align: center;"><img alt="" height="299px" src="https://ucarecdn.com/0bdcd814-44e7-4f18-94a4-5605064c277c/" width="349px"></p> 
+  <p><br> So, you should not use comparison operators when you want to compare the values. The correct way to compare content is to invoke the special method <code class="language-java">equals</code>.</p> 
+  <pre><code class="language-java">String s1 = new String("java");
+String s2 = new String("java");
+String s3 = s2;
+
+System.out.println(s1.equals(s2)); // true
+System.out.println(s2.equals(s3)); // true</code></pre> 
+  <h5 style="text-align: center;">The null type</h5> 
+  <p>Unlike primitive types, a variable of a reference type can refer to a special <code class="language-java">null</code> value that represents the fact that it is not initialized yet or doesn't have a value.</p> 
+  <pre><code class="language-java">String str = null;
+System.out.println(str); // null
+str = "hello";
+System.out.println(str); // hello</code></pre> 
+  <p>The following statement with a primitive type won't compile.</p> 
+  <pre><code class="language-java">int n = null; // it won't compile</code></pre> 
+  <p>Unfortunately, the frequent use of the <code class="language-java">null</code> value can easily lead to errors in the program and complicate the code. Try to avoid <code class="language-java">null</code> whenever it is possible, only use it if you really need it.</p>
+ </body>
+</html>

@@ -1,0 +1,110 @@
+<h2>ArrayList</h2>
+<html>
+ <head></head>
+ <body>
+  <h5 style="text-align: center;">Resizable arrays</h5> 
+  <p>One of the most widely used classes of Java Class Library is a class named <code class="language-java">ArrayList</code> that represents a resizable array of objects of a specified type. Unlike the standard array denoted as <code class="language-java">[]</code>, it can dynamically grow after the addition and shrink after the removal of its elements. This behavior is very useful if you do not know the size of the array in advance or you need one that can change size over the lifetime of a program.</p> 
+  <p>In fact, this class is built on top of a standard Java array, extending it with a set of convenient operations. Like a standard array, it allows getting the current number of elements (its size) as well as accessing its elements by their indexes.</p> 
+  <p>There is only one restriction: <code class="language-java">ArrayList</code>: being a generic class, it cannot store primitive types. However, it can store any reference types, including <code class="language-java">String</code>'s, wrapper classes (like <code class="language-java">Integer</code>'s), other <code class="language-java">ArrayList</code>'s, and custom classes.</p> 
+  <h5 style="text-align: center;">Creating an instance of ArrayList</h5> 
+  <p>To start using the class by its short name, make the following import:</p> 
+  <pre><code class="language-java">import java.util.ArrayList;</code></pre> 
+  <p>Let's consider several ways to create instances of this class.</p> 
+  <p>1) The simplest way is to use a no-argument constructor:</p> 
+  <pre><code class="language-java">ArrayList&lt;String&gt; list = new ArrayList&lt;&gt;();</code></pre> 
+  <p>The created list is empty, but its initial capacity is 10 (by default).</p> 
+  <p>2) We can also specify the initial capacity of it:</p> 
+  <pre><code class="language-java">ArrayList&lt;String&gt; list = new ArrayList&lt;&gt;(50);</code></pre> 
+  <p>This list is empty, but its initial capacity is set to 50.</p> 
+  <p>3) Or you can construct an <code class="language-java">ArrayList</code> that consists of elements of another list:</p> 
+  <pre><code class="language-java">ArrayList&lt;String&gt; list = new ArrayList&lt;&gt;(anotherList);</code></pre> 
+  <p>Regardless of how you create an instance of <code class="language-java">ArrayList</code>, its size will dynamically change. In this lesson, we will create a list with the default capacity like in the first example.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   If you are an advanced user, you know that it is better to create and use an 
+   <code class="language-java">ArrayList</code> via its 
+   <code class="language-java">List</code> interface. We will do it in the next lessons after learning 
+   <strong>inheritance</strong>. We believe that the current approach is enough for now since it requires less knowledge to start using dynamic collections.
+  </div>
+  <p></p> 
+  <h5 style="text-align: center;">Basic methods</h5> 
+  <p>The collection has a set of convenient methods that emulate and extend the functionality of standard arrays. Let's discuss what they are. First, let's initialize some collection:</p> 
+  <pre><code class="language-java">ArrayList&lt;String&gt; names = new ArrayList&lt;&gt;(); // empty collection of strings</code></pre> 
+  <p>First of all, there's a method to determine the size of the collection <code class="language-java">size</code> that returns the number of elements of the list. Let's try learning the size of ours:</p> 
+  <pre><code class="language-java">System.out.println(names.size()); // 0</code></pre> 
+  <p>As expected, it is empty and the result is zero. We also might want to learn the value of the specified position of the object. For that, collections have a <code class="language-java">get(int index)</code> method that returns the object of the list which is present at the specified index.</p> 
+  <p>Next, there are a bunch of methods to add elements and set values of a collection:</p> 
+  <ul> 
+   <li><code class="language-java">add(Object o)</code> adds a passed element to the last position of the collection;</li> 
+   <li><code class="language-java">add(int index, Object o)</code> adds a passed element to the specified position of the collection;</li> 
+   <li><code class="language-java">set(int index, Object o)</code> replaces the element present at the specified index with the object;</li> 
+  </ul> 
+  <p>Let's add some names to our collection:</p> 
+  <pre><code class="language-java">names.add("Justin");      // [Justin]
+names.add("Helen");       // [Justin, Helen]
+names.add(1, "Joshua");   // [Justin, Joshua, Helen]
+names.add(0, "Laura");    // [Laura, Justin, Joshua, Helen]</code></pre> 
+  <p>And replace one name with another:</p> 
+  <pre><code class="language-java">names.set(3, "Marie"); // now: [Laura, Justin, Joshua, Marie]</code></pre> 
+  <p>We can check that everything is as expected:</p> 
+  <pre><code class="language-java">System.out.println(names);        // [Laura, Justin, Joshua, Marie]
+System.out.println(names.size()); // 4
+System.out.println(names.get(0)); // the first element is "Laura"
+System.out.println(names.get(3)); // the last element is "Marie"</code></pre> 
+  <p>Finally, there are methods for removing elements from the collection:</p> 
+  <ul> 
+   <li><code class="language-java">remove(Object o)</code> removes <strong>the first occurrence</strong> of the specified element from this list, if it is present;</li> 
+   <li><code class="language-java">remove(int index)</code> removes the element at the specified position in this list;</li> 
+   <li><code class="language-java">clear()</code> removes all elements from the collection.</li> 
+  </ul> 
+  <p>Let's try removing elements by value and index:</p> 
+  <pre><code class="language-java">names.remove("Justin"); // [Laura, Joshua, Marie]
+names.remove(1);        // [Laura, Marie]
+names.clear();          // []</code></pre> 
+  <p></p>
+  <div class="alert alert-warning">
+   Important: indexes of elements start with 0 just like for standard arrays
+  </div>
+  <p></p> 
+  <p>Try to play with this code by yourself and enjoy the power of <code class="language-java">ArrayList</code> . </p> 
+  <h5 style="text-align: center;">More ArrayList methods</h5> 
+  <p>We've illustrated the possibilities of basic methods for collections in Java applied to an <code class="language-java">ArrayList</code> object. But this class has some more methods of its own. First, let's create another <code class="language-java">ArrayList</code>:</p> 
+  <pre><code class="language-java">/* an ArrayList of Integers, not ints */
+ArrayList&lt;Integer&gt; numbers = new ArrayList&lt;&gt;();
+
+numbers.add(1);
+numbers.add(2);
+numbers.add(3);
+numbers.add(1);</code></pre> 
+  <p>There's also an <code class="language-java">addAll(Collection c)</code> method for adding the whole collection to an <code class="language-java">ArrayList</code>. It appends elements of the provided collection to the end of the list:</p> 
+  <pre><code class="language-java">ArrayList&lt;Integer&gt; numbers2 = new ArrayList&lt;&gt;();    // creating another list of Integers
+numbers2.add(100);
+numbers2.addAll(numbers); // [100, 1, 2, 3, 1]</code></pre> 
+  <p>The class also has a method called <code class="language-java">contains</code> that checks whether a list contains a value or not, and two methods <code class="language-java">indexOf </code><span style="color: #222222;">and</span><code class="language-java">lastIndexOf</code> that find the index of the first and the last occurrences of an element, respectively. They return <code class="language-java">-1</code> if there is no such index.</p> 
+  <p>Let's see:</p> 
+  <pre><code class="language-java">System.out.println(numbers.contains(2));    // true
+System.out.println(numbers.contains(4));    // false
+System.out.println(numbers.indexOf(1));     // 0
+System.out.println(numbers.lastIndexOf(1)); // 3
+System.out.println(numbers.lastIndexOf(4)); // -1</code></pre> 
+  <p>As you see, this class provides a rich set of methods to work with elements. You do not have to write them by yourself, as you do for standard arrays.</p> 
+  <h5 style="text-align: center;">Iterating over ArrayList</h5> 
+  <p>It is possible to iterate over elements of an instance of the class. It is done in the same way as iterating over an array. In the following example, we use <em>for </em>and <em>for-each</em> loops to add the five first powers of ten in a list and then print the numbers to the standard output.</p> 
+  <pre><code class="language-java">ArrayList&lt;Long&gt; powersOfTen = new ArrayList&lt;&gt;();
+
+int count = 5;
+for (int i = 0; i &lt; count; i++) {
+    long power = (long) Math.pow(10, i);
+    powersOfTen.add(power);
+}
+
+for (Long value : powersOfTen) {
+    System.out.print(value + " ");
+}</code></pre> 
+  <p>The code prints the following:</p> 
+  <pre><code class="language-java">1 10 100 1000 10000</code></pre> 
+  <p>It is not harder than using a standard array.</p> 
+  <h5 style="text-align: center;">Conclusion</h5> 
+  <p>We've considered the <code class="language-java">ArrayList</code> class from the <code class="language-java">java.util</code> package. This class is similar to standard Java arrays but has the possibility to dynamically change its size. It has methods to get the size, add, remove and access elements by their indexes. In addition, <code class="language-java">ArrayList</code> provides a set of useful methods that check whether an element is present in the array and find it. A regular array does not have such methods built-in.</p>
+ </body>
+</html>

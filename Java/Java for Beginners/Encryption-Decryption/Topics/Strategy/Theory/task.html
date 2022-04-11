@@ -1,0 +1,120 @@
+<h2>Strategy</h2>
+<html>
+ <head></head>
+ <body>
+  <h5 style="text-align: center;">The design problem</h5> 
+  <p>Imagine the following situation: there is a lot of monstrous conditionals or switch statements to select an algorithm for execution. Sometimes you have to add new algorithms to this already complex structure. Yet another problem is that the code begins to be duplicated in different contexts. How can one make it easier to add new algorithms and write a more concise code?</p> 
+  <p>There is a special pattern named <strong>Strategy</strong>. It's one of the most used patterns in object-oriented design. It defines a family of algorithms, encapsulates each in a separate class and makes them interchangeable within that family.</p> 
+  <h5 style="text-align: center;">Introducing the strategy pattern</h5> 
+  <p>In <strong>Strategy</strong> pattern, algorithms executed in different branches are moved into their own classes called strategies, all of which implement a common interface. Strategies represent behavior, not domain entities.</p> 
+  <p>The pattern has several advantages:</p> 
+  <ul> 
+   <li>it allows you to choose an algorithm (behavior) at runtime;</li> 
+   <li>it isolates the code of algorithms from the other classes, thus simplifying the addition of new algorithms;</li> 
+   <li>it lets the algorithm vary independently from clients that use it.</li> 
+  </ul> 
+  <p>To use the pattern, you should take the following steps:</p> 
+  <ol> 
+   <li>Determine the common <code class="language-java">Strategy</code> interface for a family of algorithms. It should contain one or more abstract methods.</li> 
+   <li>Extract all algorithms into their own classes (concrete strategies). They should follow the <code class="language-java">Strategy</code> interface.</li> 
+   <li>Declare a special class called <code class="language-java">Context</code> for storing a reference to a strategy. The context delegates execution to an instance of a concrete strategy through its interface, instead of implementing the behavior itself.</li> 
+  </ol> 
+  <p><strong>Note</strong> that the interface here is not necessarily the interface in java. It can be a simple or an abstract class. The main thing is that it represents an abstract strategy that is inherited by concrete strategies.</p> 
+  <p>The following diagram illustrates all elements of the pattern and their relations:</p> 
+  <p style="text-align: center;"><img alt="" height="328px" src="https://ucarecdn.com/4d19108f-6789-4d7c-967a-5be842df103f/" width="652px"></p> 
+  <p style="text-align: center;"><strong>The Strategy pattern</strong></p> 
+  <p>The client code should create an instance of <code class="language-java">Context</code>, set a strategy and invoke a special method to start the execution. The invocation will be delegated to a concrete strategy that is referred by the <code class="language-java">strategy</code> field.</p> 
+  <p>In some cases, the <code class="language-java">execute</code> method of a strategy implements the whole algorithm. In other cases, it implements only a part of the algorithm, and its basic part is in the <code class="language-java">invoke</code> method of <code class="language-java">Context</code>. It may be useful when <code class="language-java">Strategy</code> interface provides several methods which implement independent parts of the general algorithm.</p> 
+  <p>Perhaps now this pattern looks a bit complicated and abstract, so let's consider a specific example.</p> 
+  <h5 style="text-align: center;">An example: sending messages</h5> 
+  <p>Suppose there's an application that needs to send messages to the customers. There are different ways to reach out to them: via SMS or e-mail. In addition, new sending methods will be added in future (for instance, push sending). It would be nice to change the existing code as little as possible when adding new strategies.</p> 
+  <p>According to the strategy pattern, we need to define a family of algorithms (sending methods). Each algorithm must encapsulate a logic to send a message using a concrete transport (SMS/email).</p> 
+  <p>Here is our hierarchy of sending methods:</p> 
+  <pre><code class="language-java">interface SendingMethod {
+
+    void send(String from, String to, String msg);
+}
+
+class SmsSendingMethod implements SendingMethod {
+
+    @Override
+    public void send(String from, String to, String msg) {
+        System.out.println(String.format("send SMS from '%s' to '%s'", from, to));
+    }
+}
+
+class EmailSendingMethod implements SendingMethod {
+
+    @Override
+    public void send(String from, String to, String msg) {
+        System.out.println(String.format("Email from '%s' to '%s'", from, to));
+    }
+}</code></pre> 
+  <p>Our <code class="language-java">Context</code> is <code class="language-java">MessageSender</code> which references a sending method and allows us to change the currently used method:</p> 
+  <pre><code class="language-java">class MessageSender {
+
+    private SendingMethod method;
+    
+    // it may contain additional fields as well
+
+    public void setMethod(SendingMethod method) {
+        this.method = method;
+    }
+
+    public void send(String from, String to, String msg) {
+        this.method.send(from, to, msg);
+    }
+}</code></pre> 
+  <p>In the client code, we should create an instance of <code class="language-java">MessageSender</code>, set a sending method and invoke the method <em>send</em> with three string arguments. Also, we can change the sending method to another one.</p> 
+  <pre><code class="language-java">MessageSender sender = new MessageSender(); // create a message sender
+
+sender.setMethod(new EmailSendingMethod()); // set a concrete sending method
+
+sender.send("alice@gmail.com", "bob@gmail.com", "Hello!");
+
+sender.setMethod(new SmsSendingMethod()); // set another sending method
+
+sender.send("1-541-444-3333", "1-541-555-2222", "Hello!");</code></pre> 
+  <p>After starting, it outputs:</p> 
+  <pre><code class="language-java">Email from 'alice@gmail.com' to 'bob@gmail.com'
+send SMS from '1-541-444-3333' to '1-541-555-2222'</code></pre> 
+  <p>Of course, this example is greatly simplified. In a real application, you'd need to use more complex logic to send messages. But it does a decent job demonstrating the main idea of the strategy pattern.</p> 
+  <h5 style="text-align: center;">Complicating the strategy pattern</h5> 
+  <p>For different reasons, you will probably meet more complex implementations of the strategy pattern.</p> 
+  <p><strong>1) Field and constructors.</strong> A concrete strategy may need its own settings stored in fields. Here is a class <code class="language-java">PushSendingMethod</code> with a setting field which we fill in the constructor:</p> 
+  <pre><code class="language-java">class PushSendingMethod implements SendingMethod {
+    
+    private final boolean magicFlag;
+    
+    public PushSendingMethod(boolean magicFlag) {
+        this.magicFlag = magicFlag;
+    }
+
+    @Override
+    public void send(String from, String to, String msg) {
+        System.out.println(String.format("Send push from '%s' to '%s'", from, to));
+    }
+}</code></pre> 
+  <p>We can set the value when creating an instance of the method:</p> 
+  <pre><code class="language-java">sender.setMethod(new PushSendingMethod(true));</code></pre> 
+  <p><strong>2) Different and unused arguments.</strong> Different strategies may need different arguments or use not all arguments defined in the overridden method. In addition, new strategies may need other arguments which will require a change in the entire hierarchy.</p> 
+  <p>The simplest way to solve the problem is to pass an aggregate type containing the necessary parameters. Each strategy will use only the required fields of the aggregate.</p> 
+  <p>Here is a rewritten class <code class="language-java">SendingMethod</code>. The method <em>send</em> takes an instance of Message that contains different fields. Fields are public just for short.</p> 
+  <pre><code class="language-java">interface SendingMethod {
+
+    void send(Message message);
+}
+
+class Message {
+
+    public String from;
+    public String to;
+    public String title;
+    public String text;
+    public byte[] attachment; // attachment data just like an image or something else
+}</code></pre> 
+  <p><strong>3) Multiple methods.</strong> A strategy may have multiple methods. For instance, <code class="language-java">PaymentStrategy</code> can contain methods to pay for an order and return the money. It's possible to separate the strategy into two independent ones. But sometimes it's better to have one strategy with multiple methods.</p> 
+  <h5 style="text-align: center;">Conclusion</h5> 
+  <p>The <strong>Strategy</strong> pattern is useful when we have multiple algorithms for performing a task and we want to choose any of the algorithms at runtime. This pattern is especially good when the number of algorithms increases because it isolates algorithms from the client code. However, this design pattern complicates the system by adding multiple additional classes.</p>
+ </body>
+</html>

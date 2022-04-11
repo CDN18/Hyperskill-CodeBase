@@ -1,0 +1,80 @@
+<h2>Boxing and unboxing</h2>
+<html>
+ <head></head>
+ <body>
+  <h5 style="text-align: center;">Wrapper classes</h5> 
+  <p>Each primitive type has a class dedicated to it. These classes are known as <strong>wrappers</strong> and they are <strong>immutable</strong> (just like strings). Wrapper classes can be used in different situations:</p> 
+  <ul> 
+   <li>when a variable can be <code class="language-java">null</code> (absence of a value);</li> 
+   <li>when you need to store values in generic collections (will be considered in the next topics);</li> 
+   <li>when you want to use special methods of these classes.</li> 
+  </ul> 
+  <p>The following table lists all primitive types and the corresponding wrapper classes.</p> 
+  <p style="text-align: center;"><strong><img alt="" height="298" src="https://ucarecdn.com/547298e4-3df8-4e70-9577-41663f4c6c0f/" width="563"></strong></p> 
+  <p style="text-align: center;"><strong>The table with primitive types and the corresponding wrappers</strong></p> 
+  <p>As you can see, Java provides eight wrapper classes: one for each primitive type. The third column shows the type of argument you need so that you can create an object of the corresponding wrapper class.</p> 
+  <h5 style="text-align: center;">Boxing and unboxing</h5> 
+  <p><strong>Boxing</strong> is the conversion of primitive types to objects of corresponding wrapper classes.<strong> Unboxing</strong> is the reverse process. The following code illustrates both processes:</p> 
+  <pre><code class="language-java">int primitive = 100;
+Integer reference = Integer.valueOf(primitive); // boxing
+int anotherPrimitive = reference.intValue();    // unboxing</code></pre> 
+  <p><strong>Autoboxing </strong>and<strong> auto-unboxing</strong> are automatic conversions performed by the Java compiler.</p> 
+  <pre><code class="language-java">double primitiveDouble = 10.8;
+Double wrapperDouble = primitiveDouble; // autoboxing
+double anotherPrimitiveDouble = wrapperDouble; // auto-unboxing</code></pre> 
+  <p>You can mix both automatic and manual boxing/unboxing processes in your programs.</p> 
+  <p></p>
+  <div class="alert alert-warning">
+   Autoboxing works only when the left and the right parts of an assignment have the same type. In other cases, you will get a compilation error.
+  </div>
+  <p></p> 
+  <pre><code class="language-java">Long n1 = 10L; // OK, assigning long to Long
+Integer n2 = 10; // OK, assigning int to Integer 
+
+Long n3 = 10; // WRONG, assigning int to Long
+Integer n4 = 10L; // WRONG assigning long to Integer</code></pre> 
+  <h5 style="text-align: center;">Constructing wrappers based on other types</h5> 
+  <p>The wrapper classes have constructors for creating objects from other types. For instance, an object of a wrapper class can be created from a string (except for the <code class="language-java">Character</code> class).</p> 
+  <pre><code class="language-java">Integer number = new Integer("10012"); // an Integer from "10012"
+Float f = new Float("0.01");           // a Float from "0.01"
+Long longNumber = new Long("100000000"); // a Long from "100000000"
+Boolean boolVal = new Boolean("true");   // a Boolean from "true"</code></pre> 
+  <p>You can also create wrapper objects using special methods:</p> 
+  <pre><code class="language-java">Long longVal = Long.parseLong("1000");      // a Long from "1000"
+Long anotherLongVal = Long.valueOf("2000"); // a Long from "2000"</code></pre> 
+  <p>If the input string has an invalid argument (for instance, <code class="language-java">"1d0o3"</code>), both of these methods throw the <code class="language-java">NumberFormatException</code>.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   Note, since Java 9, the constructors are deprecated. You should use special methods to create objects of the wrapper classes.
+  </div>
+  <p></p> 
+  <ul> 
+  </ul> 
+  <h5 style="text-align: center;">Comparing wrappers</h5> 
+  <p>Just like for any reference type, the operator <code class="language-java">==</code> checks whether two wrapper objects are actually equal, i.e. if they refer to the same object in memory. The method <code class="language-java">equals</code> , on the other hand, checks whether two wrapper objects are meaningfully equal, for example, it checks if two wrappers or strings have the same value.</p> 
+  <pre><code class="language-java">Long i1 = Long.valueOf("2000");
+Long i2 = Long.valueOf("2000");
+System.out.println(i1 == i2);      // false
+System.out.println(i1.equals(i2)); // true</code></pre> 
+  <p>Do not forget about this feature when working with wrappers. Even though they correspond to the primitive types, wrapper objects are reference types!</p> 
+  <h5 style="text-align: center;">NPE when unboxing</h5> 
+  <p>There is one possible problem when unpacking. If the wrapper object is <code class="language-java">null</code>, the unpacking throws<strong> </strong><code class="language-java">NullPointerException</code><strong>.</strong></p> 
+  <pre><code class="language-java">Long longVal = null;
+long primitiveLong = longVal; // It throws NPE</code></pre> 
+  <p>To fix it, we can add a conditional statement that produces a default value:</p> 
+  <pre><code class="language-java">long unboxed = val != null ? val : 0; // No NPE here</code></pre> 
+  <p>This code does not throw an exception.</p> 
+  <p>Another example is arithmetic operations on <code class="language-java">Integer</code>, <code class="language-java">Long</code>, <code class="language-java">Double</code> and other numeric wrapper types. They may cause an <strong>NPE</strong> since there is auto-unboxing involved.</p> 
+  <pre><code class="language-java">Integer n1 = 50;
+Integer n2 = null;
+Integer result = n1 / n2; // It throws NPE</code></pre> 
+  <h5 style="text-align: center;">Primitive types vs wrapper classes</h5> 
+  <p>In this topic, we've taken a look at wrapper classes for primitive data types. Wrapper classes allow us to represent primitive types as objects, that are reference data types.</p> 
+  <p>Here are some important points to keep in mind:</p> 
+  <ul> 
+   <li>processing values of primitive types is faster than processing wrapper objects;</li> 
+   <li>wrappers can be used when you need <code class="language-java">null</code> as a no-value indicator;</li> 
+   <li>primitive types cannot be used in standard collections (like lists, sets, or others), but wrappers can.</li> 
+  </ul>
+ </body>
+</html>

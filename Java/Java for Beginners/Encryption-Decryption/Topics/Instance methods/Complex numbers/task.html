@@ -1,0 +1,26 @@
+<h2>Complex numbers</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Jake wants to write a program that works with <a target="_blank" href="https://en.wikipedia.org/wiki/Complex_number" rel="noopener noreferrer nofollow">complex numbers</a>. He created a class <code class="language-java">Complex</code> that represents a complex number with its real and imaginary parts. Now he needs instance methods so that he can calculate the sum and difference of two complex numbers.</p> 
+  <p>Help Jake and create two instance methods for his class:</p> 
+  <ul> 
+   <li><code class="language-java">add(Complex num)</code> that takes another complex number as an argument and adds its corresponding fields to the current instance;</li> 
+   <li><code class="language-java">subtract(Complex num)</code> that takes another complex number as an argument and subtracts its corresponding fields from the current instance;</li> 
+  </ul> 
+  <p>Both methods should return nothing.</p> 
+  <p>Do not make the fields and methods <code class="language-java">private</code>.</p> 
+  <p>Let's consider the example for the <code class="language-java">add</code> method. If <code class="language-java">number = 10 + 4i</code> and <code class="language-java">anotherNumber = 6 + 6i</code>, applying the method <code class="language-java">add</code> to <code class="language-java">number</code> with the argument <code class="language-java">anotherNumber</code> changes number to <code class="language-java">number = 16 + 10i</code> </p> 
+  <pre><code class="language-java">Complex number = new Complex();
+number.real = 10;
+number.image = 4;
+// math expression of number = 10.0 + 4.0i
+
+Complex anotherNumber = new Complex();
+anotherNumber.real = 6;
+anotherNumber.image = 6;
+// math expression of anotherNumber = 6.0 + 6.0i
+
+number.add(anotherNumber); // number = 16.0 + 10.0i</code></pre>
+ </body>
+</html><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 5 seconds</font><br><br>

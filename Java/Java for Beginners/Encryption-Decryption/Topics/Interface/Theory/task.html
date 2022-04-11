@@ -1,0 +1,157 @@
+<h2>Interface</h2>
+<html>
+ <head></head>
+ <body>
+  <h5 style="text-align: center;" id="why-interface">Why interface</h5> 
+  <p>The general idea of OOP and one of its principles is abstraction. It means that real-world objects can be represented by their abstract models. Designing models is about focusing on the essential features of the objects and discarding the others. To understand what it means, let's take a look at a pencil. A pencil is an object that we can use to draw. Other properties such as material or length may be important to us sometimes but do not define the idea of a pencil.</p> 
+  <p>Imagine we need to create a graphical editor program. One of the basic functions of the program is drawing. Before drawing, the program asks a user to select a drawing tool. It can be a pen, pencil, brush, highlighter, marker, spray, and others. Each tool from a set has its own specific features: a pencil and a spray leave different marks and that matters. But there is also an essential feature that unites them: the ability to draw. </p> 
+  <p>Now let's consider the <code class="language-java">Pencil</code> class, which is an abstraction of a pencil. As we already discussed the class at least should have the <code class="language-java">draw</code> method that accepts a model of a curve. This is a crucial function of a pencil for our program. Suppose <code class="language-java">Curve</code> is a class that represents some curve:</p> 
+  <pre><code class="language-java">class Pencil {
+    ...
+    public void draw(Curve curve) {...}
+}</code></pre> 
+  <p>Let's define classes for other tools, for example, a brush:</p> 
+  <pre><code class="language-java">class Brush {
+    ...
+    public void draw(Curve curve) {...}
+}</code></pre> 
+  <p>Each of them has the method <code class="language-java">draw</code>, although uses it in its own fashion. The ability to draw is a common feature for all of them. Let's call this feature <code class="language-java">DrawingTool</code>. Then we can say that if a class has the <code class="language-java">DrawingTool</code> feature, then it should be able to draw, that means the class should have the <code class="language-java">void draw(Curve curve) {...}</code> method.</p> 
+  <p>Java allows declaring this feature by introducing interfaces. This is how our interface looks like:</p> 
+  <pre><code class="language-java">interface DrawingTool {
+    void draw(Curve curve);
+}</code></pre> 
+  <p>It declares the <code class="language-java">draw</code> method without implementation.</p> 
+  <p>Now let's mark classes that are able to draw by adding <code class="language-java">implements DrawingTool</code> to the class declaration. If a class implements an interface, it has to implement all declared methods:</p> 
+  <pre><code class="language-java">class Pencil implements DrawingTool {
+    ...
+    public void draw(Curve curve) {...}
+}
+
+class Brush implements DrawingTool {
+    ...
+    public void draw(Curve curve) {...}
+}</code></pre> 
+  <p>Now just a quick look at the class declaration is enough to understand that class is able to draw. In other words, the main idea of an interface is <em>declaring functionality</em>.</p> 
+  <p>Another important advantage of introducing interfaces is that you can use them as a type:</p> 
+  <pre><code class="language-java">DrawingTool pencil = new Pencil();
+DrawingTool brush = new Brush();</code></pre> 
+  <p>Now both a pencil and a brush objects have the same type. It means that both classes can be treated in a similar way as a <code class="language-java">DrawingTool</code>. This is another way of supporting <strong>polymorphism</strong>, which helps to design reusable drawing function of the graphical editor program.</p> 
+  <pre><code class="language-java">void drawCurve(DrawingTool tool, Curve curve) {
+    System.out.println("Drawing a curve " + curve + " using a " + tool);
+    tool.draw(curve);
+}</code></pre> 
+  <p>In many cases, it is more important to know what an object can do, instead of how it does what it does. This is a reason why interfaces are commonly used for declaring a type of variable.</p> 
+  <h5 style="text-align: center;" id="declaring-interfaces">Declaring interfaces</h5> 
+  <p>An interface can be considered as a special kind of a class that can't be instantiated. To declare an interface you should write the keyword <strong><code class="language-java">interface</code></strong> instead of <strong><code class="language-java">class</code></strong> before the name of the interface:</p> 
+  <pre><code class="language-java">interface Interface { }</code></pre> 
+  <p>An interface can contain:</p> 
+  <ul> 
+   <li>public constants;</li> 
+   <li>abstract methods without an implementation (the keyword <strong><code class="language-java">abstract</code></strong> is not required here);</li> 
+   <li>default methods with implementation (the keyword <strong><code class="language-java">default</code></strong> is required);</li> 
+   <li>static methods with implementation (the keyword <strong><code class="language-java">static</code></strong> is required);</li> 
+   <li>private methods with implementation.</li> 
+  </ul> 
+  <p></p>
+  <div class="alert alert-primary">
+   If the modifiers are not specified once the method is declared, its parameters will be 
+   <strong>public abstract</strong> by default.
+  </div>
+  <p></p> 
+  <p>The keyword <strong><code class="language-java">abstract</code></strong> before a method means that the method does not have a body, it just declares a signature. <strong><code class="language-java">default</code></strong> methods will be discussed further in details.</p> 
+  <p>An interface can't contain any fields other than <code class="language-java">public static final</code> (<strong>constants</strong>), constructors, or non-public abstract methods. Let's declare an interface containing all possible members:</p> 
+  <pre><code class="language-java">interface Interface {
+        
+    int INT_CONSTANT = 0; // it's a constant, the same as public static final int INT_FIELD = 0
+        
+    void instanceMethod1();
+        
+    void instanceMethod2();
+        
+    static void staticMethod() {
+        System.out.println("Interface: static method");
+    }
+        
+    default void defaultMethod() {
+        System.out.println("Interface: default method. It can be overridden");
+    }
+
+    private void privateMethod() {
+        System.out.println("Interface: private methods in interfaces are acceptable but should have a body");
+    }
+}</code></pre> 
+  <p></p>
+  <div class="alert alert-primary">
+   Static, default, and private methods should have an implementation in the interface!
+  </div>
+  <p></p> 
+  <p>Let's take a closer look at this interface. The variable <code class="language-java">INT_CONSTANT</code> is not the same as a class field here – it's a static final constant. Two methods <code class="language-java">instanceMethod1()</code> and <code class="language-java">instanceMethod2()</code> are abstract methods. The <code class="language-java">staticMethod()</code> is just a regular static method. The default method <code class="language-java">defaultMethod()</code> has an implementation but it can be overridden in subclasses. The <code class="language-java">privateMethod</code> has an implementation as well and can be used to decompose <code class="language-java">default</code> methods.</p> 
+  <h5 style="text-align: center;" id="implementing-interfaces">Implementing interfaces</h5> 
+  <p>A class can implement an interface using the keyword <strong><code class="language-java">implements</code></strong>. We must provide implementations for all abstract methods of the interface.</p> 
+  <p>Let's implement the interface we've considered earlier:</p> 
+  <pre><code class="language-java">class Class implements Interface {
+
+    @Override
+    public void instanceMethod1() {
+        System.out.println("Class: instance method1");
+    }
+
+    @Override
+    public void instanceMethod2() {
+        System.out.println("Class: instance method2");
+    }
+}</code></pre> 
+  <p>Now we can create an instance of the class and call its methods:</p> 
+  <pre><code class="language-java">Interface instance = new Class();
+
+instance.instanceMethod1(); // it prints "Class: instance method1"
+instance.instanceMethod2(); // it prints "Class: instance method2"
+instance.defaultMethod();   // it prints "Interface: default method. It can be overridden"</code></pre> 
+  <p>Note that the <code class="language-java">instance</code> variable has <code class="language-java">Interface</code> type, although it is ok to use <code class="language-java">Class</code> for denoting type.</p> 
+  <pre><code class="language-java">Class instance = new Class();</code></pre> 
+  <h5 style="text-align: center;" id="implementing-and-extending-multiple-interfaces">Implementing and extending multiple interfaces</h5> 
+  <p>One of the important interface features is <strong>multiple inheritance</strong>.</p> 
+  <p>A class can implement multiple interfaces:</p> 
+  <pre><code class="language-java">interface A { }
+interface B { }
+interface C { }
+    
+class D implements A, B, C { }</code></pre> 
+  <p>An interface can extend one or more other interfaces using the keyword <strong><code class="language-java">extends</code></strong>:</p> 
+  <pre><code class="language-java">interface A { }
+interface B { }
+interface C { }
+
+interface E extends A, B, C { }</code></pre> 
+  <p>A class can also extend another class and implement multiple interfaces:</p> 
+  <pre><code class="language-java">class A { }
+
+interface B { }
+interface C { }
+    
+class D extends A implements B, C { }</code></pre> 
+  <p>All the examples above do not pose any problems.</p> 
+  <p>Multiple inheritance of interfaces is often used in the Java standard class library. The class String, for example, implements three interfaces at once:</p> 
+  <pre><code class="language-java">public final class String 
+    implements java.io.Serializable, Comparable&lt;String&gt;, CharSequence {
+// ...
+}</code></pre> 
+  <h5 style="text-align: center;" id="marker-interfaces">Marker interfaces</h5> 
+  <p>In some situations, an interface can have no members at all. Such interfaces are called <strong>marker</strong> or <strong>tagged interfaces</strong>. For example, a well-known interface <code class="language-java">Serializable</code> is a marker interface:</p> 
+  <pre><code class="language-java">public interface Serializable{ 
+}</code></pre> 
+  <p>Other examples of marker interfaces are <code class="language-java">Cloneable</code>, <code class="language-java">Remote</code>, etc. They are used to provide essential information to the JVM.</p> 
+  <h5 style="text-align: center;" id="static-methods">Static methods</h5> 
+  <p>You can declare and implement a static method in an interface</p> 
+  <pre><code class="language-java">interface Car {
+    static float convertToMilesPerHour(float kmh) {
+        return 0.62 * kmh;
+    }
+}</code></pre> 
+  <p>To use a static method you just need to invoke it directly from an interface</p> 
+  <pre><code class="language-java">Car.convertToMilesPerHour(4.5);</code></pre> 
+  <p>The main purpose of interface static methods is defining utility functionality that is common for all classes implementing the interface. They help to avoid code duplication and creating additional utility classes.</p> 
+  <h5 style="text-align: center;" id="conclusion">Conclusion</h5> 
+  <p>An interface is a special kind of class that cannot be instantiated. The main idea of an interface is declaring functionality. Interfaces help to abstract from specific classes and emphasize the functionality. It makes software design more reusable and clean. It is a good practice to apply the so-called interface-oriented design which means that you should rely on interfaces instead of concrete implementations. To implement an interface, the keyword <code class="language-java">implements</code> is used. Opposite to a class, an interface can extend several interfaces. A class can implement multiple interfaces.</p>
+ </body>
+</html>

@@ -1,0 +1,79 @@
+<h2>Command-line arguments</h2>
+<html>
+ <head></head>
+ <body>
+  <p>As you already know, the <code class="language-java">main</code> method is an entry point of every Java program.</p> 
+  <pre><code class="language-java">public static void main(String[] args) {}</code></pre> 
+  <p>As it works as a usual method, it can receive some parameters via the <code class="language-java">String[] args</code> part. But as it is the main method of the program, you can think of them as the whole program's arguments, so-called <strong>command-line arguments</strong>. </p> 
+  <p>So, here we will look closer at how these arguments are used.</p> 
+  <h5 id="different-numbers-of-parameters-passing-example">Different numbers of parameters + passing example</h5> 
+  <p>There are different ways of providing command-line args to a program. For example, you can define them with your IDE tools or write them manually as a program run command parameters:</p> 
+  <pre><code class="language-java">java Main myArg</code></pre> 
+  <p>We can pass a different number of parameters separating them with space and get the values in <code class="language-java">main(...)</code> as array members:</p> 
+  <pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        System.out.println(args[0]);
+        System.out.println(args[1]);
+    }
+}</code></pre> 
+  <p>Now if we compile the <code class="language-java">Main</code> class from its directory with </p> 
+  <pre><code class="language-bash">javac Main.java</code></pre> 
+  <p>and then call it with two arguments we will get the expected output:</p> 
+  <pre><code class="language-bash">java Main myFirstArg mySecondArg
+myFirstArg
+mySecondArg</code></pre> 
+  <p> If we want to pass an argument that consists of multiple "words" separated by blank space, we must put such an argument in double quotes:</p> 
+  <pre><code class="language-no-highlight">java Main myFirstArg "multiple word arg"
+myFirstArg
+multiple word arg</code></pre> 
+  <p>We don't have to pass any arguments, but the program will fail while trying to get the argument that was not provided:</p> 
+  <pre><code class="language-no-highlight">java Main
+Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: 0
+        at Main.main(Main.java:5)</code></pre> 
+  <h5 id="argument-types">Argument types</h5> 
+  <p>The command-line arguments are always provided as an array of <code class="language-java">Strings</code>. You can still pass number values, but they will be accepted as <code class="language-java">Strings</code>. Casting to a number or whatever type you expect it to be should be done manually in the program:</p> 
+  <pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        int i = Integer.parseInt(args[0]);
+        System.out.println("Provided number : " + i);
+    }
+}</code></pre> 
+  <p></p>
+  <div class="alert alert-primary">
+    We are using standard output tools here to simplify the example. It is not the common way of logging/showing error information in real applications.
+  </div>
+  <p></p> 
+  <p>Now we need to recompile the class with <code class="language-java">javac</code>.</p> 
+  <p>Then, if we test it with a correct integer value, it looks like:</p> 
+  <pre><code class="language-bash">java Main 5
+Provided number : 5</code></pre> 
+  <h5 id="with-or-without-arguments">With or without arguments?</h5> 
+  <p>What will happen, if there are two different <code class="language-java">main</code> methods: with and without args? </p> 
+  <pre><code class="language-java">public class Main {
+    
+    public static void main(String[] args) {
+        System.out.println("Method with arguments called!");
+        System.out.println(args[0]);
+    }
+
+    public static void main() {
+        System.out.println("No arguments method called!");
+    }
+    
+}</code></pre> 
+  <p>If you recompile and try to call the program with empty arguments list and then with any argument, the first method will be called both times.</p> 
+  <p></p>
+  <div class="alert alert-warning">
+    It means, that in Java the 
+   <code class="language-java">main</code> method always has to accept arguments, but you don't have to always provide them. 
+  </div> So, if your program requires no arguments, its 
+  <code class="language-java">main</code> method still has to have 
+  <code class="language-java">String[] args</code> as parameter. Java programmers are not allowed to change the type of 
+  <code class="language-java">args</code> array as well: it has to be 
+  <code class="language-java">String[]</code>.
+  <p></p> 
+  <h5 id="summary">Summary</h5> 
+  <p>Now you know more about the command-line arguments in Java. You can pass them to your program as <code class="language-java">Strings</code> and handle them in the <code class="language-java">main</code> method to make your application more flexible and configurable.</p> 
+  <p>It's time to revise what you have learned with some tasks!</p>
+ </body>
+</html>

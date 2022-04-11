@@ -1,0 +1,22 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: The superclass method and the subclass method must have the same name.
+- text: The method cannot be <b>private</b>.
+- text: The method can have the modifier <b>final</b>.
+- text: The method can have the modifier <b>static</b>.
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2004#comment
+status: Solved
+record: -1

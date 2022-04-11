@@ -1,0 +1,24 @@
+type: choice
+is_multiple_choice: false
+options:
+- text: 1 version
+- text: 2 versions
+- text: 3 versions
+- text: As many versions as the total number of users
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/3741#comment
+status: Solved
+record: -1
+selected_options:
+- 0

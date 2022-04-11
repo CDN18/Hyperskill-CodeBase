@@ -1,0 +1,22 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: The methods should have the same name.
+- text: The methods should have different names of parameters.
+- text: The methods should have parameters of different types.
+- text: The methods should have different type of returning value.
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2037#comment
+status: Solved
+record: -1

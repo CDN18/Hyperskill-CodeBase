@@ -1,0 +1,39 @@
+<h2>Correctly overridden methods</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Below is a class and its subclass:</p> 
+  <p> </p> 
+  <pre><code class="language-java">class A {
+    
+    public void doA() { }
+    
+    public final void doB() { }
+    
+    public void doC(int k) { }
+    
+    protected void doD() { }
+    
+    protected void doE() { }
+}
+
+class B extends A {
+    
+    @Override
+    public void doA() { }
+    
+    @Override
+    public void doB() { }
+    
+    @Override
+    public void doC(String s) { }
+    
+    @Override
+    private void doD() { }
+    
+    public void doE() { }
+}</code></pre> 
+  <p> </p> 
+  <p>Select all methods of the class <code class="language-java">A</code> that are correctly overridden in the class <code class="language-java">B</code>.</p>
+ </body>
+</html>

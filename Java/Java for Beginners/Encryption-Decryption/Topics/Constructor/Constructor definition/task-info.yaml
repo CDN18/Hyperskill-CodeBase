@@ -1,0 +1,23 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: A constructor must have some parameters.
+- text: Constructors can be considered as special types of methods.
+- text: It's impossible to create an instance of a class that has no explicit constructor.
+- text: Constructor name must be the same as its class name.
+- text: Constructor must not have an explicit return type.
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2171#comment
+status: Solved
+record: -1

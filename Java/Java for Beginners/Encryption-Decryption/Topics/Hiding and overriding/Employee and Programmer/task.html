@@ -1,0 +1,46 @@
+<h2>Employee and Programmer</h2>
+<html>
+ <head></head>
+ <body>
+  There are two classes: 
+  <code class="java">Employee</code> and 
+  <code class="java">Programmer</code>.
+  <div>
+   <br>
+  </div>
+  <div>
+   <pre><code class="language-java">class Employee {
+    
+    protected long baseSalary;
+
+    public Employee(long baseSalary) {
+        this.baseSalary = baseSalary;
+    }
+
+    public long calcSalary() {
+        return baseSalary;
+    }
+}
+
+class Programmer extends Employee {
+
+    private int yearsOfExperience;
+    
+    public Programmer(long baseSalary, int yearsOfExperience) {
+        super(baseSalary);
+        this.yearsOfExperience = yearsOfExperience;
+    }
+
+    // overridden calcSalary
+}</code></pre>
+   <br>
+  </div>
+  <div>
+   <div>
+    Select a correct overridden method 
+    <code class="java">calcSalary</code> in the class 
+    <code class="java">Programmer</code>.
+   </div>
+  </div>
+ </body>
+</html>
