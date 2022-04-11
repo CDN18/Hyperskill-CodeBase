@@ -6,7 +6,7 @@ If you don't have much experience in programming, this track is the best way to 
 
 | Project | Difficulty |
 | -- | -- |
-| [Encryption-Decryption](./Java%20for%20Beginners/Encryption-Decryption/) | Challenging |
+| [Encryption-Decryption](./Encryption-Decryption/) | Challenging |
 | Minesweeper | Challenging |
 | Flashcards | Challenging |
 | Error Correcting Encoder-Decoder | Challenging |
