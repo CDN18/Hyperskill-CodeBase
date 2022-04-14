@@ -1,0 +1,22 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: the <b>Deque</b> interface  extends the <b>Queue</b> interface
+- text: 'the <b>ArrayDeque</b> class implements the <b>Deque</b> interface '
+- text: 'the <b>LinkedList</b> class doesn''t implement the <b>Deque</b> interface '
+- text: 'the <b>Queue</b> interface extends the <b>Collection</b> interface '
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2104#comment
+status: Solved
+record: -1

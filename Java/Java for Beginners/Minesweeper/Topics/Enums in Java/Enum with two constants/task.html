@@ -1,0 +1,20 @@
+<h2>Enum with two constants</h2>
+<html>
+ <head></head>
+ <body>
+   You have an enum 
+  <code class="language-java">Role</code> with two constants: 
+  <code class="language-java">ADMIN</code> and 
+  <code class="language-java">USER</code>.
+  <p></p> 
+  <p>Which lines of the code below print <code class="language-java">true</code>?</p> 
+  <pre><code class="language-java">Role role1 = Role.ADMIN;
+Role role2 = Role.ADMIN;
+Role role3 = Role.USER;
+
+System.out.println(role1 == Role.ADMIN);  // (1)
+System.out.println(role1.equals(role2)); // (2)
+System.out.println(role1 == role2);    // (3)
+System.out.println(role1 == role3);    // (4)</code></pre>
+ </body>
+</html>

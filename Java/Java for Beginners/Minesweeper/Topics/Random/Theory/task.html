@@ -1,0 +1,100 @@
+<h2>Random</h2>
+<html>
+ <head></head>
+ <body>
+  <p>A <strong>random number</strong> is a number that is almost impossible to predict, like the result of throwing a dice. A random number generator can provide you with such a number when you need it, and you will probably need it quite often. For example, it comes in handy when you're trying to create a password nobody can guess, make the next unpredictable move in a game, or generate a lot of random data for testing purposes. Random generators are widely used in cryptography, machine learning, games, and more.</p> 
+  <h5 style="text-align: center;">Pseudorandom numbers and seeding</h5> 
+  <p>Before we start exploring how to generate random numbers in Java, let's focus on one important point. The random numbers we are going to discuss aren't truly random because they can always be determined by an initial value, called <strong>seed</strong>.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   Every time we get a new random number, we actually get the next number in a predefined sequence. These numbers are often called 
+   <strong>pseudorandom</strong>, and they are not completely unpredictable! We can calculate them all if we know the initial value and the algorithm of the sequence. That initial value is called a 
+   <strong>seed</strong>.
+  </div>
+  <p></p> 
+  <p>It is guaranteed that the same seed produces the same sequence if the same Java runtime version is used because the algorithm is the same. However, that is good enough for practical tasks. These generators are quite important because of their speed in number generation and their reproducibility.</p> 
+  <h5 style="text-align: center;">Creating a pseudorandom generator</h5> 
+  <p>Java provides the <code class="language-java">Random</code> class to generate pseudorandom values of different types, such as <code class="language-java">int</code>, <code class="language-java">long</code>, <code class="language-java">double</code>, and even <code class="language-java">boolean</code>. We will consider how to use this class only for numbers.</p> 
+  <p>First of all, we need to import it:</p> 
+  <pre><code class="language-java">import java.util.Random;</code></pre> 
+  <p>We have two constructors to create an object of this class:</p> 
+  <ul> 
+   <li><code class="language-java">Random()</code> creates a new random generator and sets the <strong>seed</strong> of the generator to a value that is very likely to be distinct from any other invocation of this constructor:</li> 
+  </ul> 
+  <pre><code class="language-java">Random random = new Random();</code></pre> 
+  <ul> 
+   <li><code class="language-java">Random(long seed)</code> creates a new random generator with the specified initial value of its internal state:</li> 
+  </ul> 
+  <pre><code class="language-java">Random random = new Random(100000);</code></pre> 
+  <p>If we don't specify a seed, the generator will give us a new sequence every time. But if we specify the seed, the sequence will be calculated based on it.</p> 
+  <p>Regardless of what constructor we used, we have a generator called <code class="language-java">random</code> that can produce random numbers.</p> 
+  <h5 style="text-align: center;">The basic methods</h5> 
+  <p>After we've created a generator, we can invoke one of the following methods of it:</p> 
+  <ul> 
+   <li><code class="language-java">int nextInt()</code> returns a pseudorandom value of the <code class="language-java">int</code> type;</li> 
+   <li><code class="language-java">int nextInt(int n)</code> returns a pseudorandom value of <code class="language-java">int</code> type in the range from <code class="language-java">0</code> (inclusive) to <code class="language-java">n</code> (exclusive);</li> 
+   <li><code class="language-java">long nextLong()</code> returns a pseudorandom value of <code class="language-java">long</code> type;</li> 
+   <li><code class="language-java">double nextDouble()</code> returns a pseudorandom value of <code class="language-java">double</code> type between <code class="language-java">0.0</code> and <code class="language-java">1.0</code>;</li> 
+   <li><code class="language-java">void nextBytes(byte[] bytes)</code> generates random bytes and places them into a user-supplied byte array.</li> 
+  </ul> 
+  <p>All the listed methods produce uniformly distributed values.</p> 
+  <p>Let's take a look at an example:</p> 
+  <pre><code class="language-java">Random random = new Random();
+System.out.println(random.nextInt(5)); // it may print 0, 1, 2, 3, 4</code></pre> 
+  <p>If we start this code multiple times, the result is different (or it may happen to be the same).</p> 
+  <p>If we need to reproduce the same sequence of random numbers, we may specify a seed to the constructor:</p> 
+  <pre><code class="language-java">Random random = new Random(100000);
+System.out.println(random.nextInt(5)); // it may print 0, 1, 2, 3, 4
+System.out.println(random.nextInt(5)); // it may print 0, 1, 2, 3, 4</code></pre> 
+  <p>in this case, while starting the program multiple times, we will always get the same numbers in the output.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   <strong>Note:</strong> an object of the 
+   <code class="language-java">Random</code> class can generate Gaussian distributed pseudorandom double numbers by invoking the 
+   <code class="language-java">nextGaussian()</code> method. This distribution may be required for some statistical analysis and machine learning applications, but it is not that common in general programming.
+  </div>
+  <p></p> 
+  <h5 style="text-align: center;">An example: printing pseudorandom numbers</h5> 
+  <p>Let's suppose that we need a program that prints out a specified number of pseudorandom integers within a given range (boundaries included). Unfortunately, the <code class="language-java">Random</code> class does not provide a method to generate numbers in a range. Let's use it as an opportunity to practice and create it from scratch!</p> 
+  <p>As you remember, the <code class="language-java">nextInt(n)</code> method produces a pseudorandom integer from <code class="language-java">0</code> (inclusive) to <code class="language-java">n</code> (exclusive).</p> 
+  <p style="text-align: center;"><img alt="" height="64" src="https://ucarecdn.com/655547bc-1f49-4156-8ed5-bda751413f14/" width="216"></p> 
+  <p>We want to use it to generate numbers within a specific range, for example, from 2 to 5, inclusive on both boundaries.</p> 
+  <p style="text-align: center;"><img alt="" height="48" src="https://ucarecdn.com/c0f1974f-0476-448d-b664-04e95a746362/" width="290"></p> 
+  <p>Let's take the length of the interval plus one: 5 – 2 + 1 = 4. It allows us to generate any number from 0 to 3 by using the <code class="language-java">nextInt(4)</code> method.</p> 
+  <p style="text-align: center;"><img alt="" height="48" src="https://ucarecdn.com/f46f53d9-9af0-4191-8a64-4f66af44497c/" width="289"></p> 
+  <p>Now imagine that we shift the interval to the value of the lower border (2) as we need.</p> 
+  <p style="text-align: center;"><img alt="" height="49" src="https://ucarecdn.com/c1baea68-4005-4b91-a0ce-dd3480031789/" width="296"></p> 
+  <p>This way, we can generate any numbers from 2 to 5, including both boundaries.</p> 
+  <p>The illustrated idea can be implemented by a simple code line:</p> 
+  <pre><code class="language-java">int next = random.nextInt(upper - lower + 1) + lower;</code></pre> 
+  <p>Here is the complete program that prints 4 pseudorandom integers within a given range:</p> 
+  <pre><code class="language-java">import java.util.*;
+
+public class RandomNumbersDemo {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int lower = scanner.nextInt();
+        int upper = scanner.nextInt();
+        Random random = new Random();
+
+        int intervalLength = upper - lower + 1;
+
+        System.out.println(random.nextInt(intervalLength) + lower);
+        System.out.println(random.nextInt(intervalLength) + lower);
+        System.out.println(random.nextInt(intervalLength) + lower);
+        System.out.println(random.nextInt(intervalLength) + lower);
+    }
+}</code></pre> 
+  <p>For example, we have to generate numbers exactly within the range from 20 to 30 (inclusive):</p> 
+  <pre><code class="language-java">20 30</code></pre> 
+  <p>An output example:</p> 
+  <pre><code class="language-java">25
+26
+30
+20</code></pre> 
+  <p>As you can see, dealing with the <code class="language-java">Random</code> class is simple enough. Don't be afraid to introduce a bit of randomness into your programs :)</p> 
+  <h5>Conclusion</h5> 
+  <p>Java provides the <code class="language-java">Random</code> class to work with pseudorandom data. To work with it, we need to decide whether we need a predictable result or not. In the first case, we can use a known seed, and in the second case we can simply use the default seed which is generated based on the current system time. Remember that random sequences are only guaranteed to be the same if they are generated with the same version of Java runtime, but they can be different in different Java versions or different programming languages even for the same seed.</p>
+ </body>
+</html>

@@ -1,0 +1,113 @@
+<h2>Queue and Stack</h2>
+<html>
+ <head></head>
+ <body>
+  <p>A <strong>queue</strong> is a collection with limited access to elements: elements are inserted at the end of it and removed from the beginning. The collection follows the <strong>first-in-first-out (FIFO)</strong> principle. Queues are designed for holding elements prior to processing: tasks, events, or something else.</p> 
+  <p>An excellent real-life example of a queue is a line of students in the food court. New additions to a line made to the back of the queue, while removal (or serving) happens in the front.</p> 
+  <h5 style="text-align: center;">Implementations of Queue</h5> 
+  <p>In Java, all queues are represented by the <code class="language-java">Queue&lt;E&gt;</code> interface. However, the hierarchy of queues is more complex than it seems at first glance. The primary implementations of the <code class="language-java">Queue&lt;E&gt;</code> are <code class="language-java">LinkedList&lt;E&gt;</code> and <code class="language-java">ArrayDeque&lt;E&gt;</code>. There is also a <code class="language-java">PriorityQueue</code> which we will consider in a separate topic.</p> 
+  <p style="text-align: center;"><img alt="" height="361" src="https://ucarecdn.com/e10a18c5-c589-4bf1-a89f-6a8c56af8b0f/" width="457"></p> 
+  <p>Both of the primary implementations inherit the <code class="language-java">Deque&lt;E&gt;</code> interface which extends <code class="language-java">Queue&lt;E&gt;</code> and represents a <strong>double-ended queue</strong> that supports <strong>FIFO</strong> and <strong>LIFO</strong> access principles. At the same time, the <code class="language-java">LinkedList&lt;E&gt;</code> class also implements the <code class="language-java">List&lt;E&gt;</code> interface, so it can be used as a queue and as a list depending on the task.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   If you are writing a program that processes a small number of elements, there is not much difference as to which implementation to use. But for processing a huge number of elements, 
+   <code class="language-java">ArrayDeque</code> is more memory efficient than 
+   <code class="language-java">LinkedList</code> since it does not need to create internal nodes for every element. 
+   <a target="_blank" href="https://stackoverflow.com/questions/6163166/why-is-arraydeque-better-than-linkedlist" rel="noopener noreferrer nofollow">Here</a> you can find a more detailed discussion.
+  </div>
+  <p></p> 
+  <h5 style="text-align: center;">The Queue interface</h5> 
+  <p>The <code class="language-java">Queue&lt;E&gt;</code> interface extends <code class="language-java">Collection&lt;E&gt;</code> and adds some new methods:</p> 
+  <ul> 
+   <li><code class="language-java">boolean offer(E e)</code> inserts the specified element into the queue if it is possible to do so immediately without violating capacity restrictions; it returns <code class="language-java">true</code> / <code class="language-java">false</code> depending on the result of this operation;</li> 
+   <li><code class="language-java">E remove()</code> retrieves and removes the head of this queue; if it's empty, the method throws <code class="language-java">NoSuchElementException</code>;</li> 
+   <li><code class="language-java">E poll()</code> retrieves and removes the head of this queue, or returns <code class="language-java">null</code> if this queue is empty;</li> 
+   <li><code class="language-java">E element()</code> retrieves, but does not remove, the head of the queue; if it's empty, the method throws <code class="language-java">NoSuchElementException</code>;</li> 
+   <li><code class="language-java">E peek()</code> retrieves, but does not remove, the head of this queue, or returns <code class="language-java">null</code> if this queue is empty.</li> 
+  </ul> 
+  <p>The differences between some of these methods and methods inherited from <code class="language-java">Collection</code> may not be so obvious. Let's see:</p> 
+  <ul> 
+   <li>the <code class="language-java">add(E e)</code> method does the same as <code class="language-java">offer(E e)</code> but throws <code class="language-java">IllegalStateException</code> if no space is currently available;</li> 
+   <li><code class="language-java">remove()</code> and <code class="language-java">element()</code> throws <code class="language-java">NoSuchElementException</code> where the queue is empty, but <code class="language-java">poll()</code> and <code class="language-java">peek()</code> just return <code class="language-java">null</code> in this case.</li> 
+  </ul> 
+  <p></p>
+  <div class="alert alert-primary">
+   In practice, you will use 
+   <code class="language-java">offer</code>, 
+   <code class="language-java">peek</code> and 
+   <code class="language-java">poll</code> more often than others.
+  </div>
+  <p></p> 
+  <h5 style="text-align: center;">Using ArrayDeque as a queue</h5> 
+  <p>Let's consider an example of how to use <code class="language-java">ArrayDeque</code> as a queue (<strong>FIFO</strong>).</p> 
+  <pre><code class="language-java">Queue&lt;String&gt; q = new ArrayDeque&lt;&gt;();
+
+q.offer("first");
+q.offer("second");
+q.offer("third");
+
+System.out.println(q.peek()); // first
+System.out.println(q.peek()); // first
+System.out.println(q.poll()); // first,
+
+System.out.println(q.peek()); // second
+System.out.println(q.poll()); // second
+System.out.println(q.poll()); // third
+
+System.out.println(q.isEmpty()); // true</code></pre> 
+  <p>Just remember, <code class="language-java">peek()</code> returns the current head element, but does not remove it from the queue, whereas <code class="language-java">poll()</code> does it. The use of the <code class="language-java">LinkedList</code> as a <code class="language-java">Queue</code> is similar.</p> 
+  <h5 style="text-align: center;">Deque</h5> 
+  <p>As we mentioned before, <code class="language-java">Deque&lt;E&gt;</code> extends <code class="language-java">Queue&lt;E&gt;</code> and represents a queue where you can insert and remove elements from both ends. It combines access rules provided by queue (FIFO) and stack (LIFO) together.</p> 
+  <p>The <strong>Deque</strong> interface provides methods for working with the first and the last element of a queue. Some of the methods throw an exception, while others just return a special value (<code class="language-java">null</code>). Check out the table:</p> 
+  <p style="text-align: center;"><img alt="" height="259" src="https://ucarecdn.com/5fb79da7-2a3f-4a69-b795-0d6d62e0a41e/" width="750"></p> 
+  <p>Since <code class="language-java">ArrayDeque</code> and <code class="language-java">LinkedList</code> implement this interface, they both can work as a queue (FIFO), a stack (LIFO), or a deque.</p> 
+  <p>We will consider an example of how to use it further.</p> 
+  <h5 style="text-align: center;">Deque as a stack</h5> 
+  <p>As you probably remember, <strong>Stack</strong> is an abstract data type where elements are inserted and removed according to the <strong>last-in-first-out (LIFO)</strong> principle. The simplest real-life example is a stack of books. Only a book placed at the top can be removed at a time, but a new book is always added on the top of the stack.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   <em><strong>The Standard Class Library</strong></em> provides the 
+   <code class="language-java">Stack</code> class, but, according to JavaDoc, a more complete and consistent set of 
+   <strong>LIFO</strong> stack operations is provided by the 
+   <code class="language-java">Deque</code> interface and its implementations, which should be used in preference to this class. So, it is recommended to use 
+   <code class="language-java">Deque</code> for stacks.
+  </div>
+  <p></p> 
+  <p>In the following example, we illustrate some operations of <code class="language-java">Deque</code> using it as a stack.</p> 
+  <pre><code class="language-java">Deque&lt;String&gt; stack = new ArrayDeque&lt;&gt;();
+
+stack.offerLast("first");
+stack.offerLast("second");
+stack.offerLast("third");
+
+System.out.println(stack); // [first, second, third]
+
+System.out.println(stack.pollLast()); // third
+System.out.println(stack.pollLast()); // second
+System.out.println(stack.pollLast()); // first
+
+System.out.println(stack.pollLast()); // null</code></pre> 
+  <p>As you can see, it really works. In addition, the <code class="language-java">ArrayDeque</code> implementation is quite efficient for representing large stacks.</p> 
+  <h5 style="text-align: center;">The old Stack class</h5> 
+  <p>Sometimes, the old <code class="language-java">Stack&lt;E&gt;</code> class with a more minimalistic API can be found in legacy source code. It doesn't implement <code class="language-java">Deque</code> or <code class="language-java">Queue</code> interface. Here is a simple example.</p> 
+  <pre><code class="language-java">Stack&lt;String&gt; stack = new Stack&lt;&gt;();
+
+stack.push("first");
+stack.push("second");
+stack.push("third");
+
+System.out.println(stack); // [first, second, third]
+
+System.out.println(stack.pop()); // "third"
+System.out.println(stack.pop()); // "second"
+System.out.println(stack.pop()); // "first"
+
+System.out.println(stack.pop()); // throws EmptyStackException</code></pre> 
+  <p>The method <code class="language-java">pop()</code> always throws an exception if the stack is empty.</p> 
+  <p>Do not forget, according to the Java Doc, it's preferable to use implementations of the <code class="language-java">Deque</code> interface as stacks.</p> 
+  <h5 style="text-align: center;">Conclusion</h5> 
+  <p>We've considered the <code class="language-java">Queue</code> interface, its subtype <code class="language-java">Deque</code> interfaces as well as two of its implementations.</p> 
+  <p>If you need to work with a queue <strong>(</strong>FIFO<strong>)</strong>, try to use <code class="language-java">ArrayDeque</code> via the standard <code class="language-java">Queue</code> interface. This implementation is quite efficient, and the interface provides all the required operations. If you need to work with a stack (LIFO) or deque (FIFO+LIFO), try to use <code class="language-java">ArrayDeque</code> via the <code class="language-java">Deque</code> interface which provides operations for both ends of a queue. The <code class="language-java">LinkedList</code> can also be used as an implementation, but it is considered less memory efficient when working with a large number of elements.</p> 
+  <p>Sometimes you can find an old <code class="language-java">Stack</code> class in the source code, but it is recommended to avoid it in the new code.</p>
+ </body>
+</html>

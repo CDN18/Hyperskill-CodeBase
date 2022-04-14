@@ -1,0 +1,74 @@
+<h2>Enums in Java</h2>
+<html>
+ <head></head>
+ <body>
+  <p>When a variable can only take one out of a small set of possible values, it's a good idea to use <strong>enums</strong> in a program. Enum is a special keyword short for <em>enumeration</em> that allows us to create a list of constants grouped by their content: seasons, colors, states, etc. When we store a bunch of constants in one place and handle them together<strong>,</strong> it helps us to avoid errors, and it makes the code look more readable and clear.</p> 
+  <p>Now, let's look closer at how enums work.</p> 
+  <h5>Defining an enum</h5> 
+  <p>We can create our own enumeration in a way that is similar to declaring classes. According to the Java Code Convention, constants in an enum are written in uppercase letters. All constants should be separated with commas. Take a look at the example enum <code class="language-java">Season</code>:</p> 
+  <pre><code class="language-java">public enum Season {
+    SPRING, SUMMER, AUTUMN, WINTER // four instances
+}</code></pre> 
+  <p></p>
+  <div class="alert alert-primary">
+   It is possible to declare an enum inside the class. In this case, we don't need to use 
+   <code class="language-java">public</code> modifier in the enum declaration.
+  </div>
+  <p></p> 
+  <p>In general, an enum can be considered as a class with predefined instances. Here, we have four instances of seasons <code class="language-java">SPRING</code>, <code class="language-java">SUMMER</code>, <code class="language-java">AUTUMN</code> and <code class="language-java">WINTER</code> inside the storage <code class="language-java">Season</code>. If we want to extend the list of constants, we can simply add another instance in our enum: mid-winter, Australian winter, etc. Don't forget that in real life they have to make sense. </p> 
+  <p>Now that we've got an idea of how to define basic enums, let's learn how to use them in a program.</p> 
+  <h5>Methods for processing enums</h5> 
+  <p>Suppose that we have to write a program with an enum that displays three possible user statuses. Let's create an enum <code class="language-java">UserStatus</code> with these statuses:</p> 
+  <pre><code class="language-java">public enum UserStatus {
+    PENDING, ACTIVE, BLOCKED
+}</code></pre> 
+  <p>And now we initialize a variable of the type <code class="language-java">UserStatus</code> from the previous example:</p> 
+  <pre><code class="language-java">UserStatus active = UserStatus.ACTIVE;</code></pre> 
+  <p>Each enum value has a name that can be accessed by using the method <code class="language-java">name()</code>:</p> 
+  <pre><code class="language-java">System.out.println(active.name()); // ACTIVE</code></pre> 
+  <p>Sometimes, we may need to access an enumeration instance by its name. This can be done with the <code class="language-java">valueOf()</code> method which provides us with another way to initialize a variable:</p> 
+  <pre><code class="language-java">UserStatus blocked = UserStatus.valueOf("BLOCKED"); // BLOCKED</code></pre> 
+  <p>An important thing to remember about this method is that it is case-sensitive<strong>. </strong>That means that if the given string doesn't exactly match any constant, we will get an <strong>IllegalArgumentException</strong>.</p> 
+  <pre><code class="language-java">UserStatus blocked = UserStatus.valueOf("blocked"); // IllegalArgumentException, valueOf is case-sensitive</code></pre> 
+  <p>If we want to look at all constants of an enumeration, we can get them in an array by using the <code class="language-java">values()</code> method:</p> 
+  <pre><code class="language-java">UserStatus[] statuses = UserStatus.values(); // [PENDING, ACTIVE, BLOCKED]</code></pre> 
+  <p>Another method called <code class="language-java">ordinal()</code> returns the ordinal position of an instance of an enum:</p> 
+  <pre><code class="language-java">System.out.println(active.ordinal()); // 1 (starting with 0)
+System.out.println(UserStatus.BLOCKED.ordinal()); // 2</code></pre> 
+  <p>Although an enum is a reference type, two variables can be correctly compared by using both the <code class="language-java">equals</code> method and the operator <code class="language-java">==</code>.</p> 
+  <pre><code class="language-java">System.out.println(active.equals(UserStatus.ACTIVE)); // true
+System.out.println(active == UserStatus.ACTIVE); // true</code></pre> 
+  <h5>Enumerations in the switch statement</h5> 
+  <p>An <strong>enum</strong> can be successfully used in the <code class="language-java">switch</code> statement. Depending on the status, our program can perform different actions indicated by the <code class="language-java">switch</code> statement. In this case, it prints out different responses:</p> 
+  <pre><code class="language-java">UserStatus status = ... // some status
+ 
+switch (status) {
+    case PENDING:
+        System.out.println("You need to wait a little.");
+        break;
+    case ACTIVE:
+        System.out.println("No problems, you may pass here.");
+        break;
+    case BLOCKED:
+        System.out.println("Stop! You can't pass here.");
+        break;
+    default:
+        System.out.println("Unsupported enum constant.");
+}</code></pre> 
+  <p>The message that our program outputs depends on the value of the variable <code class="language-java">status</code>.</p> 
+  <h5>Iterating over an enum</h5> 
+  <p>One of the best ways to iterate over an enum is to use a <code class="language-java">for</code> or a <code class="language-java">for-each</code> loop. Let's apply it to our sample enum:</p> 
+  <pre><code class="language-java">for (UserStatus status : UserStatus.values()) {
+        System.out.println(status);
+    }
+/* the output is
+PENDING 
+ACTIVE
+BLOCKED
+*/</code></pre> 
+  <p>Here, we used the <code class="language-java">values()</code> method to return an array of enum values. This loop comes in handy when iterating over enums with a large number of constants.</p> 
+  <h5>Conclusion</h5> 
+  <p>An enum is a special keyword that helps us to define named constants grouped together according to their content. By defining enums you can make code more readable and avoid invalid values being passed in.<br> The number of constants in an enum may be extended whenever we want. Also, you can use the <code class="language-java">name()</code>, <code class="language-java">valueOf()</code>, <code class="language-java">ordinal()</code> and <code class="language-java">equals()</code> methods to process the enum. <code class="language-java">switch</code> statements and <code class="language-java">for-each</code> loops are widely used while working with enums in simple programs. </p> 
+  <p>Now you know how to use it, so get ready for some practice!</p>
+ </body>
+</html>

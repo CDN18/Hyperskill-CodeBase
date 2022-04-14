@@ -1,0 +1,23 @@
+<h2>Getting the max element of a stack</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Write a program simulating a stack that can <strong>effectively </strong>return the current max element. Your program should read a sequence of commands of different types from the standard input.</p> 
+  <p>There are three types of commands:</p> 
+  <ul> 
+   <li><strong>push v</strong> is to add an element (v) to a top of the stack;</li> 
+   <li><strong>pop</strong> is to remove the top element of the stack;</li> 
+   <li><strong>max</strong> is to return the current max in the stack.</li> 
+  </ul> 
+  <p>The time complexity of these operations should not depend on the stack size (<strong>constant time, </strong><strong>O(1)</strong>).</p> 
+  <p><strong>Hint: </strong>you may use several standard stacks to write a solution.</p> 
+  <p><strong>Input data format</strong></p> 
+  <p>The first line contains the number of commands. Next lines contain one of the following commands:<strong> push v, pop, max</strong>.</p> 
+  <p><strong>Output data format</strong></p> 
+  <p>The program must output the current max for each command <strong>max</strong>.<br> </p>
+  <div class="alert alert-warning">
+   Note, that if your methods have time complexity more than O(1), your solution will not be accepted by timeout restriction.
+  </div>
+  <p></p>
+ </body>
+</html><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">5<br>push 2<br>push 1<br>max<br>pop<br>max<br></code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">2<br>2</code></pre><br><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">5<br>push 1<br>push 2<br>max<br>pop<br>max<br></code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">2<br>1</code></pre><br><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">10<br>push 2<br>push 3<br>push 9<br>push 7<br>push 2<br>max<br>max<br>max<br>pop<br>max<br></code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">9<br>9<br>9<br>9</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 2 seconds</font><br><br>

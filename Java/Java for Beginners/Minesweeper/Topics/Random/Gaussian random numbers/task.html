@@ -1,0 +1,17 @@
+<h2>Gaussian random numbers</h2>
+<html>
+ <head></head>
+ <body>
+  <p>For the given numbers <strong>K</strong>, <strong>N</strong>, and <strong>M</strong> find the first seed that is greater than or equal to <strong>K</strong> where each of <strong>N</strong> Gaussian numbers is less than or equal to <strong>M</strong>.</p> 
+  <p>The input contains numbers <strong>K</strong>, <strong>N</strong>, <strong>M</strong> in a single line.</p> 
+  <p>You should output the seed.</p> 
+  <p><button class="btn-sm btn-outline-secondary" onclick="getElementById('hint-411').style.display='inline'"> Hint </button> </p>
+  <div id="hint-411" style="display:none;">
+   You have to check all 
+   <strong>N</strong> iterations of Gaussian generated numbers to be less than or equal to 
+   <strong>M</strong>. If that is true, then escape loop and print the seed. If any of the generated numbers is greater than M, then you have to test out the next seed and go to the loop all over again.
+  </div>
+  <p></p> 
+  <p>Don't get too upset if you still don't understand this problem. Skip it or google for more information.</p>
+ </body>
+</html><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">0 5 0</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">38</code></pre><br><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">0 5 -1.5</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">498666</code></pre><br><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">10000 1 1.9</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">10000</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 5 seconds</font><br><br>

@@ -7,6 +7,6 @@ If you don't have much experience in programming, this track is the best way to 
 | Project | Difficulty |
 | -- | -- |
 | [Encryption-Decryption](./Encryption-Decryption/) | Challenging |
-| Minesweeper | Challenging |
+| [Minesweeper](./Minesweeper/) | Challenging |
 | Flashcards | Challenging |
 | Error Correcting Encoder-Decoder | Challenging |

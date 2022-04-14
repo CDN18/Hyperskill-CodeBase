@@ -1,0 +1,18 @@
+<h2>Which brackets are balanced</h2>
+<html>
+ <head></head>
+ <body>
+  <p>You're dealing with a string consisting of brackets. Write a program to examine whether the pairs of "{", "}", "(", ")", "[", "]" are correct or <strong>balanced</strong>. This means that each opening bracket must have a corresponding closing one (and vice versa) and they must go in the correct order. </p> 
+  <p>For example, the program should print <code class="java">true</code> for the string <code class="java">[()]{}{[()()]()}</code> and <code class="java">false</code> for <code class="java">()[]}</code>.</p> 
+  <p>The classic algorithm for solving this problem relies on using a stack.</p> 
+  <ol> 
+   <li>create an instance of a stack;</li> 
+   <li>traverse the input string; 
+    <ol> 
+     <li>if the current character is a starting bracket "(" or "{" or "[" then push it to the stack;</li> 
+     <li>if the current is a closing bracket ")" or "}" or "]" then remove (pop) the top element from the stack. If the popped bracket does not match the starting bracket then parentheses are not balanced;</li> 
+    </ol> </li> 
+   <li>if there are some starting brackets left in the stack after completing traversal, then the parentheses are not balanced.</li> 
+  </ol>
+ </body>
+</html><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">([][])</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">true</code></pre><br><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">([](){([])})</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">true</code></pre><br><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">{{[()]]</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">false</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 5 seconds</font><br><br>

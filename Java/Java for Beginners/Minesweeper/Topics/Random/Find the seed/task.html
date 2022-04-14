@@ -1,0 +1,17 @@
+<h2>Find the seed</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Your job is to find the seed between <strong>A</strong> and <strong>B</strong> (both inclusive) that produces <strong>N</strong> pseudorandom numbers from<strong> 0</strong> (inclusive) to <strong>K</strong> (exclusive). It should also have the maximum of these<strong> N</strong> numbers to be the minimum among all maximums of other seeds in this range.</p> 
+  <p>Sounds complicated? Take a look at the example.</p> 
+  <p>Here we have <strong>A </strong>= <strong>7</strong>, <strong>B </strong>= <strong>9</strong>,<strong> N </strong>= <strong>4</strong>, <strong>K </strong>= <strong>100</strong>. Let's suppose:</p> 
+  <ul> 
+   <li>For the seed <strong>7</strong>, we get the sequence 45, 99, 23, 67 – the maximum is <strong>99</strong>.</li> 
+   <li>For the seed <strong>8</strong>, we get 64, 34, 23, 9 – the maximum is <strong>64</strong>.</li> 
+   <li>For the seed <strong>9</strong>, we get 78, 34, 0, 11 – the maximum is <strong>78</strong>.</li> 
+  </ul> 
+  <p>Then the minimum among these maximums is <strong>64</strong>. That means, in this example, the seed we are looking for is <strong>8</strong>. </p> 
+  <p>The input contains numbers <strong>A</strong>, <strong>B</strong>, <strong>N</strong>,<strong> K</strong> in a single line and in this order.</p> 
+  <p>Your task is to output 2 numbers: a seed and its maximum. If there are some seeds with equal minimal maximums, you should output the seed that is smaller than all other seeds.</p>
+ </body>
+</html><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">0 100 5 1000</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">18<br>270</code></pre><br><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">0 100 1000 1000</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">5<br>993</code></pre><br><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">0 100 10000 1000</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">0<br>999</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 12 seconds</font><br><br>

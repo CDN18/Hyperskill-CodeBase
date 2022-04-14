@@ -1,0 +1,23 @@
+type: choice
+is_multiple_choice: false
+options:
+- text: random.nextInt(upper - lower + 1) + lower
+- text: random.nextInt(upper - lower) + lower
+- text: random.nextInt(lower) + upper
+- text: random.nextInt(lower, upper + 1)
+- text: random.nextInt(upper - lower) + lower + 1
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/4912#comment
+status: Solved
+record: -1
