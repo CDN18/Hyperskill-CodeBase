@@ -1,0 +1,14 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: "import java.util.*;\n\npublic class Main {\n\n    public static void main(String[]\
+    \ args) {    \n        // write your code here\n        System.out.println(map);\n\
+    \    }\n}"
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2345#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Sun, 17 Apr 2022 02:59:21 UTC
+record: -1

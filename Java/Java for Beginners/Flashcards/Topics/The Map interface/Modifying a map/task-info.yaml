@@ -1,0 +1,36 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.*;
+
+    class MapUtils {
+
+        public static void mapShare(Map<String, String> map) {
+            // write your code here
+        }
+
+    }
+
+    /* Do not change code below */
+    public class Main {
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+            Map<String, String> map = new HashMap<>();
+            while (scanner.hasNextLine()) {
+                String s = scanner.nextLine();
+                String[] pair = s.split(":");
+                map.put(pair[0], pair[1]);
+            }
+            MapUtils.mapShare(map);
+            map.forEach((key, value) -> System.out.println(key + ":" + value));
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2347#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Sun, 17 Apr 2022 02:08:49 UTC
+record: -1

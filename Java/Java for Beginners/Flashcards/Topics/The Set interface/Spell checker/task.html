@@ -1,0 +1,10 @@
+<h2>Spell checker</h2>
+<html>
+ <head></head>
+ <body>
+  <p>The simplest spell checker is the one based on a list of known words. Every word in the text is being searched for in this list and, if such word was not found, it is marked as erroneous.</p> 
+  <p>Write such a spell checker.</p> 
+  <p>The first line of the input contains <span class="math-tex">\( d \)</span> – number of records in the list of known words. Next go <span class="math-tex">\( d \)</span> lines containing one known word per line, next — the number <span class="math-tex">\( l \)</span> of lines of the text, after which — <span class="math-tex">\( l \)</span> lines of the text.</p> 
+  <p>Write a program that outputs those words from the text that are not found in the dictionary (i.e. erroneous). Your spell checker should be case insensitive. The words are entered in an arbitrary order. Words, which are not found in the dictionary, should not be duplicated in the output.</p>
+ </body>
+</html><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">3<br>a<br>bb<br>cCc<br>2<br>a bb aab aba ccc<br>c bb aaa</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">aab<br>aaa<br>aba<br>c</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 5 seconds</font><br><br>

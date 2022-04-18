@@ -1,0 +1,28 @@
+<h2>Correct packages</h2>
+<html>
+ <head></head>
+ <body>
+  <p>You have the following public classes:</p> 
+  <ul> 
+   <li><code class="language-java">org.demo.A</code></li> 
+   <li><code class="language-java">org.demo.mypackage.B</code></li> 
+   <li><code class="language-java">org.demo.mypackage.C</code></li> 
+  </ul> 
+  <p>In the body of the class <code class="language-java">org.demo.mypackage.B</code> you'd like to use other classes for writing fields:</p> 
+  <pre><code class="language-java">package org.demo.mypackage;
+
+public class B {
+
+    C c1 = new C();  // (1)
+
+    C c2 = new org.demo.mypackage.C(); // (2)
+
+    mypackage.C c3 = new org.demo.mypackage.C(); // (3)
+
+    org.demo.A a = new org.demo.A(); // (4)
+
+    A a1 = new A(); // (5)
+}</code></pre> 
+  <p>Select all correct lines (see the number in comments).</p>
+ </body>
+</html>

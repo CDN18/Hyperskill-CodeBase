@@ -1,0 +1,19 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class BigIntegerConverter {
+
+        /**
+         * @param number string representing the number
+         * @return BigInteger instance
+         */
+        public static Number getBigInteger(String number) {
+            return // create BigInteger instance here
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/9897#comment
+status: Solved
+record: -1

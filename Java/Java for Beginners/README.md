@@ -8,5 +8,5 @@ If you don't have much experience in programming, this track is the best way to 
 | -- | -- |
 | [Encryption-Decryption](./Encryption-Decryption/) | Challenging |
 | [Minesweeper](./Minesweeper/) | Challenging |
-| Flashcards | Challenging |
+| [Flashcards](./Flashcards/) | Challenging |
 | Error Correcting Encoder-Decoder | Challenging |

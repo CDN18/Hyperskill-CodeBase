@@ -1,0 +1,20 @@
+<h2>System of units</h2>
+<html>
+ <head></head>
+ <body>
+  <p>You are given an enum <code class="language-java">SI</code> with three constants. Each constant stores a string field with its quantity name:</p> 
+  <pre><code class="language-java">enum SI {
+
+    M("length"),
+    KG("mass"),
+    S("time");
+
+    public final String quantityName;
+
+    SI(String quantityName) {
+        this.quantityName = quantityName;
+    }
+}</code></pre> 
+  <p>Declare the instance method <code class="language-java">getQuantityName</code> that returns the quantity name of the constant.</p>
+ </body>
+</html><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 5 seconds</font><br><br>

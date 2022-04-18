@@ -1,0 +1,239 @@
+<h2>The Map interface</h2>
+<html>
+ <head></head>
+ <body>
+  <p>In some situations, you need to store pairs of associated objects. For example, when counting the number of words in a text, the first one is a word and the second one is the number of its occurrences in the text. There is a special type of collections called <strong>map</strong> to effectively store such pairs of objects.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   A 
+   <strong>map</strong> is a 
+   <u>collection of key-value pairs</u>. Keys are always unique while values can repeat.
+  </div>
+  <p></p> 
+  <p>A good example of a map from the real world is a phone book where keys are names of your friends and values are phones associated with them.</p> 
+  <pre><code class="language-java">Keys  : Values
+-----------------------
+Bob   : +1-202-555-0118
+James : +1-202-555-0220
+Katy  : +1-202-555-0175</code></pre> 
+  <p>Maps have some similarities with sets and arrays;</p> 
+  <ul> 
+   <li><strong>keys</strong> of a map form a<strong> set</strong>, but each key has an associated value;</li> 
+   <li><strong>keys</strong> of a map are similar to <strong>indexes of an array</strong>, but the keys can have any type including integer numbers, strings and so on.</li> 
+  </ul> 
+  <p>Due to these reasons, you can encounter some kind of <em>deja vu</em> effect when learning maps.</p> 
+  <p>Next, all our examples will use string and numbers as keys since using custom classes as types of keys have some significant points the same as for sets. It will be considered in other topics.</p> 
+  <h5 style="text-align: center;" id="the-map-interface">The Map interface</h5> 
+  <p><em><strong>The Collections Framework</strong></em> provides the <code class="language-java">Map&lt;K,V&gt;</code> interface to represent a <strong>map</strong> as an abstract data type. Here, <code class="language-java">K</code> is a type of keys, and <code class="language-java">V</code> is a type of associated values. The <code class="language-java">Map</code> interface is not a subtype of the <code class="language-java">Collection</code> interface, but maps are often considered as collections since they are part of the framework.</p> 
+  <p>The interface declares a lot of methods to work with maps. Some of the methods are similar to methods of <code class="language-java">Collection</code>, while others are unique to maps.</p> 
+  <p><strong>1) Collection-like methods:</strong></p> 
+  <ul> 
+   <li><code class="language-java">int size()</code> returns the number of elements in the map;</li> 
+   <li><code class="language-java">boolean isEmpty()</code> returns <code class="language-java">true</code> if the map does not contain elements and <code class="language-java">false</code> otherwise;</li> 
+   <li><code class="language-java">void clear()</code> removes all elements from the map.</li> 
+  </ul> 
+  <p>We hope, these methods do not need any comments.</p> 
+  <p><strong>2) Keys and values processing:</strong></p> 
+  <ul> 
+   <li><code class="language-java">V put(K key, V value)</code> associates the specified <code class="language-java">value</code> with the specified <code class="language-java">key</code> and returns the previously associated value with this <code class="language-java">key</code> or <code class="language-java">null</code>;</li> 
+   <li><code class="language-java">V get(Object key)</code> returns the value associated with the key, or <code class="language-java">null</code> otherwise;</li> 
+   <li><code class="language-java">V remove(Object key</code>) removes the mapping for a <code class="language-java">key</code> from the map;</li> 
+   <li><code class="language-java">boolean containsKey(Object key)</code> returns <code class="language-java">true</code> if the map contains the specified <code class="language-java">key</code>;</li> 
+   <li><code class="language-java">boolean containsValue(Object value)</code> returns <code class="language-java">true</code> if the map contains the specified <code class="language-java">value</code>.</li> 
+  </ul> 
+  <p>These methods are similar to the methods of collections, except they process key-value pairs.</p> 
+  <p><strong>3) Advanced methods:</strong></p> 
+  <ul> 
+   <li><code class="language-java">V putIfAbsent(K key, V value)</code> puts a pair if the specified key is not already associated with a value (or is mapped to <code class="language-java">null</code>) and return <code class="language-java">null</code>, otherwise, returns the current value;</li> 
+   <li><code class="language-java">V getOrDefault(Object key, V defaultValue)</code> returns the value to which the specified key is mapped, or <code class="language-java">defaultValue</code> if this map contains no mapping for the key.</li> 
+  </ul> 
+  <p>These methods together with some others are often used in real projects.</p> 
+  <p><strong>4) Methods which return other collections:</strong></p> 
+  <ul> 
+   <li><code class="language-java">Set&lt;K&gt; keySet()</code> Returns a <code class="language-java">Set</code> view of the keys contained in this map;</li> 
+   <li><code class="language-java">Collection&lt;V&gt; values()</code>returns a <code class="language-java">Collection</code> view of the values contained in this map;</li> 
+   <li><code class="language-java">Set&lt;Map.Entry&lt;K, V&gt;&gt; entrySet()</code> returns a <code class="language-java">Set</code> view of the entries (associations) contained in this map.</li> 
+  </ul> 
+  <p>This is even not a complete list of methods since <code class="language-java">Map</code> is really a huge interface. The documentation really helps when using maps.</p> 
+  <p>To start using a map, you need to instantiate one of its implementations: <code class="language-java">HashMap</code>, <code class="language-java">TreeMap</code>, and <code class="language-java">LinkedHashMap</code>. They use different rules for ordering elements and have some additional methods. There are also <strong>immutable</strong> maps whose names are not important for programmers.</p> 
+  <h5 style="text-align: center;" id="immutable-maps">Immutable maps</h5> 
+  <p>The simplest way to create a<strong> map</strong> is to invoke the <code class="language-java">of</code> method of the <code class="language-java">Map</code> interface. The method takes zero or any even number of arguments in the format <code class="language-java">key1, value1, key2, value2, ...</code> and returns an <strong>immutable</strong> map.</p> 
+  <pre><code class="language-java">Map&lt;String, String&gt; emptyMap = Map.of();
+
+Map&lt;String, String&gt; friendPhones = Map.of(
+        "Bob", "+1-202-555-0118",
+        "James", "+1-202-555-0220",
+        "Katy", "+1-202-555-0175"
+);</code></pre> 
+  <p>Now let's consider some operations that can be applied to <strong>immutable</strong> maps using our example with <code class="language-java">friendPhones</code>.</p> 
+  <p>The size of a map equals to the number of pairs contained in it.</p> 
+  <pre><code class="language-java">System.out.println(emptyMap.size());     // 0
+System.out.println(friendPhones.size()); // 3</code></pre> 
+  <p>It is possible to get a value from a map by its key:</p> 
+  <pre><code class="language-java">String bobPhone = friendPhones.get("Bob"); // +1-202-555-0118
+String alicePhone = friendPhones.get("Alice"); // null
+String phone = friendPhones.getOrDefault("Alex", "Unknown phone"); // Unknown phone</code></pre> 
+  <p></p>
+  <div class="alert alert-primary">
+   Note that the 
+   <code class="language-java">getOrDefault</code> method provides a simple way to prevent 
+   <strong>NPE</strong> since it avoids 
+   <code class="language-java">null</code>'s.
+  </div>
+  <p></p> 
+  <p>It is also possible to check whether a map contains a particular key or value by using <code class="language-java">containsKey</code> and <code class="language-java">containsValue</code> methods.</p> 
+  <p>We can directly access the set of keys and collection of values from a map:</p> 
+  <pre><code class="language-java">System.out.println(friendPhones.keySet()); // [James, Bob, Katy]
+System.out.println(friendPhones.values()); // [+1-202-555-0220, +1-202-555-0118, +1-202-555-0175]</code></pre> 
+  <p></p>
+  <div class="alert alert-warning">
+   Since it is 
+   <strong>immutable,</strong> only methods that do not change the elements of this map will work. Others will throw an exception 
+   <code class="language-java">UnsupportedOperationException</code>. If you'd like to put or to remove elements, use one of 
+   <code class="language-java">HashMap</code>, 
+   <code class="language-java">TreeMap</code> or 
+   <code class="language-java">LinkedHashMap</code>.
+  </div>
+  <p></p> 
+  <h5 style="text-align: center;" id="hashmap">HashMap</h5> 
+  <p>The <code class="language-java">HashMap</code> class represents a map backed by a <strong>hash table</strong>. This implementation provides constant-time performance for <code class="language-java">get</code> and <code class="language-java">put</code> methods assuming the hash function disperses the elements properly among the buckets.</p> 
+  <p>The following example demonstrates a map of products where key is the product code and value is the name.</p> 
+  <pre><code class="language-java">Map&lt;Integer, String&gt; products = new HashMap&lt;&gt;();
+
+products.put(1000, "Notebook");
+products.put(2000, "Phone");
+products.put(3000, "Keyboard");
+
+System.out.println(products); // {2000=Phone, 1000=Notebook, 3000=Keyboard}
+
+System.out.println(products.get(1000)); // Notebook
+
+products.remove(1000);
+
+System.out.println(products.get(1000)); // null
+
+products.putIfAbsent(3000, "Mouse"); // it does not change the current element
+
+System.out.println(products.get(3000)); // Keyboard</code></pre> 
+  <p></p>
+  <div class="alert alert-primary">
+   This implementation is often used in practice since it is highly-optimized for putting and getting pairs.
+  </div>
+  <p></p> 
+  <h5 style="text-align: center;" id="linkedhashmap">LinkedHashMap</h5> 
+  <p>The <code class="language-java">LinkedHashMap</code> stores the order in which elements were inserted.</p> 
+  <p>Let's see a part of the previous example again:</p> 
+  <pre><code class="language-java">Map&lt;Integer, String&gt; products = new LinkedHashMap&lt;&gt;(); // ordered map of products
+
+products.put(1000, "Notebook");
+products.put(2000, "Phone");
+products.put(3000, "Keyboard");
+
+System.out.println(products); // it's always ordered {1000=Notebook, 2000=Phone, 3000=Keyboard}</code></pre> 
+  <p>In this code, the order of pairs is always the same and matches the order in which they are inserted into the map.</p> 
+  <h5 style="text-align: center;" id="treemap">TreeMap</h5> 
+  <p>The <code class="language-java">TreeMap</code> class represents a map that gives us guarantees on the order of the elements. It is corresponding to the sorting order of the keys determined either by their natural order (if they implement the <code class="language-java">Comparable</code> interface) or by specific <code class="language-java">Comparator</code> implementation.</p> 
+  <p>This class implements the <code class="language-java">SortedMap</code> interface which extends the base <code class="language-java">Map</code> interface. It provides some new methods, related to comparisons of keys:</p> 
+  <ul> 
+   <li><code class="language-java">Comparator&lt;? super K&gt; comparator()</code> returns the comparator used to order elements in the map or <code class="language-java">null</code> if the map uses the natural ordering of its keys;</li> 
+   <li><code class="language-java">E firstKey()</code> returns the first (lowest) key in the map;</li> 
+   <li><code class="language-java">E lastKey()</code> returns the last (highest) key in the map;</li> 
+   <li><code class="language-java">SortedMap&lt;K, V&gt; headMap(K toKey)</code> returns a submap containing elements whose keys are strictly less than <code class="language-java">toKey</code>;</li> 
+   <li><code class="language-java">SortedMap&lt;K, V&gt; tailMap(K fromKey)</code> returns a submap containing elements whose keys are greater than or equal to <code class="language-java">fromKey</code>;</li> 
+   <li><code class="language-java">SortedMap&lt;K, V&gt; subMap(K fromKey, E toKey)</code> returns a submap containing elements whose keys are in range <code class="language-java">fromKey</code> (inclusive) <code class="language-java">toKey</code> (exclusive);</li> 
+  </ul> 
+  <p>The example below demonstrates how to create and use an object of <code class="language-java">TreeMap</code>. This map is filled with events, each of them has a date (key) and title (value).</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   <code class="language-java">LocalDate</code> is a class that represents a date. The invocation of 
+   <code class="language-java">LocalDate.of(year, month, day)</code> method creates the specified date object with the given year, month and day.
+  </div>
+  <p></p> 
+  <pre><code class="language-java">SortedMap&lt;LocalDate, String&gt; events = new TreeMap&lt;&gt;();
+
+events.put(LocalDate.of(2017, 6, 6), "The Java Conference");
+events.put(LocalDate.of(2017, 6, 7), "Another Java Conference");
+events.put(LocalDate.of(2017, 6, 8), "Discussion: career or education?");
+events.put(LocalDate.of(2017, 6, 9), "The modern art");
+events.put(LocalDate.of(2017, 6, 10), "Coffee master class");
+
+LocalDate fromInclusive = LocalDate.of(2017, 6, 8);
+LocalDate toExclusive = LocalDate.of(2017, 6, 10);
+
+System.out.println(events.subMap(fromInclusive, toExclusive));</code></pre> 
+  <p>The code outputs the resulting submap:</p> 
+  <pre><code class="language-java">{2017-06-08=Discussion: career or education?, 2017-06-09=The modern art}</code></pre> 
+  <p></p>
+  <div class="alert alert-primary">
+   Use 
+   <code class="language-java">TreeMap</code> only when you really need the sorting order of elements, since this implementation is less efficient than 
+   <code class="language-java">HashMap</code>.
+  </div>
+  <p></p> 
+  <h5 style="text-align: center;" id="iterating-over-maps">Iterating over maps</h5> 
+  <p>It is impossible to directly iterate over a map since it does not implement the <code class="language-java">Iterable</code> interface. Fortunately, some methods of maps return other collections which are iterable. The order of elements when iterating depends on the concrete implementation of the <code class="language-java">Map</code> interface.</p> 
+  <p>The following code shows how to get keys and values in a for-each loop:</p> 
+  <pre><code class="language-java">Map&lt;String, String&gt; friendPhones = Map.of(
+        "Bob", "+1-202-555-0118",
+        "James", "+1-202-555-0220",
+        "Katy", "+1-202-555-0175"
+);
+
+// printing names
+for (String name : friendPhones.keySet()) {
+    System.out.println(name);
+}
+
+// printing phones
+for (String phone : friendPhones.values()) {
+    System.out.println(phone);
+}</code></pre> 
+  <p>If you want to print a key and its associated value at the same iteration, you can get <code class="language-java">entrySet()</code> and iterate over it.</p> 
+  <pre><code class="language-java">for (var entry : friendPhones.entrySet()) {
+    System.out.println(entry.getKey() + ": " + entry.getValue());
+}</code></pre> 
+  <p>This code prints all pairs as we expect:</p> 
+  <pre><code class="language-java">Bob: +1-202-555-0118
+James: +1-202-555-0220
+Katy: +1-202-555-0175</code></pre> 
+  <p></p>
+  <div class="alert alert-primary">
+   We use 
+   <code class="language-java">var</code> released in Java 10 to declare the loop's variable 
+   <code class="language-java">entry</code>, but it is not necessary. If you have an older version of Java or just don't want to use 
+   <code class="language-java">var</code>, you can write the data type explicitly like 
+   <code class="language-java">Map.Entry&lt;String, String&gt;</code>.
+  </div>
+  <p></p> 
+  <p>The same behavior can be achieved by using a lambda expression with two arguments if you prefer this way:</p> 
+  <pre><code class="language-java">friendPhones.forEach((name, phone) -&gt; System.out.println(name + ": " + phone));</code></pre> 
+  <h5 style="text-align: center;" id="other-collections-as-values">Other collections as values</h5> 
+  <p>It is possible to store other collections as values in maps since collections are objects as well.</p> 
+  <p>Here is an example with a map of synonyms:</p> 
+  <pre><code class="language-java">Map&lt;String, Set&lt;String&gt;&gt; synonyms = new HashMap&lt;&gt;();
+
+synonyms.put("Do", Set.of("Execute"));
+synonyms.put("Make", Set.of("Set", "Attach", "Assign"));
+synonyms.put("Keep", Set.of("Hold", "Retain"));
+
+// {Keep=[Hold, Retain], Make=[Attach, Assign, Set], Do=[Execute]}
+System.out.println(synonyms);</code></pre> 
+  <p>Storing collections as keys of a map, on the other hand, is not a common case and it has some restrictions. Such keys should be represented by <strong>immutable</strong> collections. We will not consider this case here.</p> 
+  <h5 style="text-align: center;" id="map-equality">Map equality</h5> 
+  <p>Two maps are considered equal if they contain the same keys and values. Types of maps are not important.</p> 
+  <p>So, the following maps are fully equal:</p> 
+  <pre><code class="language-java">Map&lt;String, Integer&gt; namesToAges1 = Map.of("John", 30, "Alice", 28);
+Map&lt;String, Integer&gt; namesToAges2 = new HashMap&lt;&gt;();
+
+namesToAges2.put("Alice", 28);
+namesToAges2.put("John", 30);
+
+System.out.println(Objects.equals(namesToAges1, namesToAges2)); // true</code></pre> 
+  <p>But the following two maps are different since the second map does not include "Alice":</p> 
+  <pre><code class="language-java">Map&lt;String, Integer&gt; namesToAges1 = Map.of("John", 30, "Alice", 28);
+Map&lt;String, Integer&gt; namesToAges2 = Map.of("John", 28);
+
+System.out.println(Objects.equals(namesToAges1, namesToAges2)); // false</code></pre> 
+  <p>By this, we are finishing our consideration of maps. There was a lot of theory. If there's something you don't understand, try to practice anyway and return to the theory when questions arise.</p>
+ </body>
+</html>

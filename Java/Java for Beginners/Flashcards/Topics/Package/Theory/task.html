@@ -1,0 +1,114 @@
+<h2>Package</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Large Java projects have a lot of classes. It's difficult to manage them if they are stored in the same directory. <strong>Packages</strong> provide a mechanism for grouping classes together in the same module (or package). In this topic, you will learn how to use them to better systemize your classes and keep your app tidy.</p> 
+  <h5 style="text-align: center;" id="the-basics-of-packages">The basics of packages</h5> 
+  <p>In general, packages have many advantages. They allow us to:</p> 
+  <ul> 
+   <li>group related classes together, which makes it easier to figure out where a certain class is;</li> 
+   <li>avoid conflicting class names;</li> 
+   <li>control access to classes and members with access modifiers (you'll learn about this in another topic).</li> 
+  </ul> 
+  <p>According to the naming convention, package names are always lowercase, for example:</p> 
+  <pre><code class="language-java">model
+collection
+utils</code></pre> 
+  <p>A package can contain other packages, and the whole structure resembles directories in a file system. Here is an example project with a simple tree of packages and classes.</p> 
+  <p style="text-align: center;"><img alt="" src="https://ucarecdn.com/119ac6ef-23fa-44bf-b5cc-a1b104a8f473/"></p> 
+  <p>At the top of the tree, there is a directory <code class="language-java">src</code>. This is the source root directory. In this tree, the full name of the class <code class="language-java">User</code> is <code class="language-java">org.company.webapp.data.User</code>.</p> 
+  <p>You can output the full name using the following code:</p> 
+  <pre><code class="language-java">System.out.println(User.class.getName()); // org.company.webapp.data.User</code></pre> 
+  <p>Classes declared inside a package have a special keyword <code class="language-java">package</code> at the top of the file.</p> 
+  <pre><code class="language-java">package org.company.webapp.data;
+
+public class User {
+}</code></pre> 
+  <h5 style="text-align: center;" id="avoiding-conflicting-class-names">Avoiding conflicting class names</h5> 
+  <p>When you use external libraries, two classes may have the same name. Packages allow us to avoid a conflict of class names because the full class name includes the name of the package. So even if two classes from different packages have the same name, their full names will be different. That is, of course, if there are no conflicts between the package names.</p> 
+  <p>To avoid creating packages with the same names as other public packages it is generally recommended to start your package hierarchy with the reverse domain name of your company (or another organization). For example:</p> 
+  <pre><code class="language-java">org.company
+org.hyperskill
+net.labs</code></pre> 
+  <h5 style="text-align: center;" id="importing-classes">Importing classes</h5> 
+  <p>If two classes are located in the same package using one class inside the other is no problem. If this is not the case and the classes are in different packages, you need to write an import statement to use one class inside the other. The import statement is defined by the keyword<strong> </strong><code class="language-java">import</code>.</p> 
+  <p>Here is an example. We have two public classes in different packages:</p> 
+  <pre><code class="language-java">org.hyperskill.java.packages.theory.p1.A
+org.hyperskill.java.packages.theory.p2.B</code></pre> 
+  <p>To use class <code class="language-java">B</code> inside class <code class="language-java">A</code> we should use an import statement.</p> 
+  <pre><code class="language-java">package org.hyperskill.java.packages.theory.p1;  // current package
+
+import org.hyperskill.java.packages.theory.p2.B; // it's required to use the import
+
+public class A {
+
+    public static void method() {
+
+        B b = new B();
+    }
+}</code></pre> 
+  <p></p>
+  <div class="alert alert-primary">
+    The package declaration and import statements are optional. If both of them are present, the package must come before all imports! Otherwise, we get a compilation error.
+  </div>
+  <p></p> 
+  <p>It is also possible to import all classes from a package. To do this we need to write <code class="language-java">*</code> in the import statement instead of a particular class name.</p> 
+  <pre><code class="language-java">import org.hyperskill.java.packages.theory.p3.*; // import all classes from the package</code></pre> 
+  <p>Don't do this too often. In some cases, this is considered a bad practice and can break the compatibility of your program with new versions of Java. <a target="_blank" href="https://stackoverflow.com/questions/147454/why-using-a-wild-card-with-a-java-import-statement-bad" rel="noopener noreferrer nofollow">Here is an interesting discussion</a> about such statements.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   If two classes belong to the same package, you don't need to import them to each other.
+  </div>
+  <p></p> 
+  <p>There is a way to use a class from another package without the import statement. In this case, you should write the full class name (including the full package path) instead of the name of the class itself (short name). This is how we would use the <code class="language-java">Scanner</code> class without explicitly importing it first:</p> 
+  <pre><code class="language-java">java.util.Scanner scanner = new java.util.Scanner(System.in);
+java.util.Date now = new java.util.Date();</code></pre> 
+  <p> </p> 
+  <p>Let's polish the information about access to classes inside the package with the following example:</p> 
+  <p><img alt="" height="312" src="https://ucarecdn.com/0b07ed22-3058-48a1-96ad-9442d2f5a9ae/" width="832"></p> 
+  <p>The classes <code class="language-java">City</code> and <code class="language-java">Area</code> are located in the same subpackage <code class="language-java">state</code>, so you can use one class inside the other with a <strong>short name</strong>. The same thing is true for the classes <code class="language-java">Urban</code> and <code class="language-java">Rural</code> in the subpackage <code class="language-java">territory</code>.</p> 
+  <p>If you want to use any class of the subpackage <code class="language-java">territory</code> inside the class of the subpackage <code class="language-java">state</code> or vice versa, you need to write the <strong>full name</strong> of this class, <strong>import</strong> <strong>the class,</strong> or import the whole subpackage. Moreover, if you want to use classes from the subpackages <code class="language-java">state</code> or <code class="language-java">territory</code> inside the class <code class="language-java">Republic</code> from the package <code class="language-java">country</code> or vice versa, you also need to write a <strong>full name</strong> or <strong>import</strong> <strong>the class</strong>. This should be done even if these packages are in the same root package (here it is the package <code class="language-java">country</code>).</p> 
+  <h5 style="text-align: center;" id="importing-standard-classes">Importing standard classes</h5> 
+  <p>There is no difference between importing standard or custom classes.</p> 
+  <p>For example, many Java developers use <code class="language-java">java.util.Scanner</code> to work with the standard input/output. In their programs, they include the following import:</p> 
+  <pre><code class="language-java">import java.util.Scanner;</code></pre> 
+  <p>After this, we can create an instance of the <code class="language-java">Scanner</code> like in the examples above and use it in our programs.</p> 
+  <p>Even though we have to import most packages to use their classes, there is a Java package that is always automatically imported, namely, <code class="language-java">java.lang</code>. This package contains many widely used classes, such as <code class="language-java">String</code>, <code class="language-java">System</code>, <code class="language-java">Long</code>, <code class="language-java">Integer</code>, <code class="language-java">NullPointerException</code> and others.</p> 
+  <h5 style="text-align: center;" id="static-imports">Static imports</h5> 
+  <p>We can also import static members (methods and fields) of a class inside another class. If we write an asterisk <strong>* </strong>in the import statement, we don't need to write the imported class name before invoking static methods or reading static fields.</p> 
+  <p>Here is an example of the static import of the class <code class="language-java">Arrays</code> which contains a lot of useful methods for processing arrays.</p> 
+  <pre><code class="language-java">package org.hyperskill.java.packages.theory;
+
+import static java.util.Arrays.*; // instead of the statement "import java.util.Arrays;"
+
+public class Main {
+
+    public static void main(String[] args) {
+        int[] numbers = { 10, 4, 5, 47, 5, 12 }; // an array
+
+        sort(numbers); // instead of writing Arrays.sort(...)
+
+        int[] copy = copyOf(numbers, numbers.length); // instead of writing Arrays.copyOf(...)
+    }
+}</code></pre> 
+  <h5 style="text-align: center;" id="default-package">Default package</h5> 
+  <p>If we do not write a package statement before defining our class, it will be placed inside the <strong>default package</strong>. This package has a big disadvantage — classes located here can't be imported to classes located inside named packages.</p> 
+  <p>The following class cannot be used in a class located inside packages since there is no package declaration.</p> 
+  <pre><code class="language-java">// no package declaration
+
+public class Person {
+    String firstName;
+    String lastName;
+}</code></pre> 
+  <p></p>
+  <div class="alert alert-warning">
+   Do not use the 
+   <strong>default package</strong> for real applications. It is perfectly fine for simple, educational applications, like "Hello world", but more complex projects will be better in named packages.
+  </div>
+  <p></p> 
+  <h5 style="text-align: center;" id="conclusion">Conclusion</h5> 
+  <p>Packages are a very useful tool for OOP projects. They allow us to structure the source code better, and they make it more maintainable. That is very important for big projects that can consist of thousands of classes. Packages are also very helpful for avoiding conflicting class names because the full class name includes the path of the whole package. If we are careful with the naming of the package itself, there should be no conflicts!</p> 
+  <p>Another thing to remember is that packages affect the visibility of classes and class members to each other. That means that we should keep in mind the imports, static members, and the default package.</p> 
+  <p>Creating packages even for small applications is great training for your great future projects!</p>
+ </body>
+</html>

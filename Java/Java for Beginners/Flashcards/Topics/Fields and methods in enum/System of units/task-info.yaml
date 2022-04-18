@@ -1,0 +1,27 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    enum SI {
+
+        M("length"),
+        KG("mass"),
+        S("time");
+
+        public final String quantityName;
+
+        SI(String quantityName) {
+            this.quantityName = quantityName;
+        }
+
+        // implement getQuantityName() method here
+
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/11530#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Fri, 15 Apr 2022 11:33:42 UTC
+record: -1
