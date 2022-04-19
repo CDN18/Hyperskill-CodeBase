@@ -1,0 +1,24 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: SomeClass instance = new SomeClass(new int[] {1 , 2});
+- text: SomeClass instance = SomeClass(5);
+- text: SomeClass instance = new SomeClass();
+- text: SomeClass instance = new SomeClass(2);
+- text: SomeClass instance = SomeClass();
+- text: SomeClass instance = new SomeClass(2, 3);
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2172#comment
+status: Solved
+record: -1

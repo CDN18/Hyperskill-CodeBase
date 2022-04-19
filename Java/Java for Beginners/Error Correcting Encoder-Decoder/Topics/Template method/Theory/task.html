@@ -1,0 +1,84 @@
+<h2>Template method</h2>
+<html>
+ <head></head>
+ <body>
+  <h5 style="text-align: center;">Design problem</h5> 
+  <p><strong>Template Method</strong> is a behavioral pattern that describes the common algorithm while subclasses implement steps of this algorithm. This pattern lets the subclasses implement the steps of the algorithm without changing that algorithm's skeleton.</p> 
+  <p>As an example of the <strong>Template Method</strong>, we will consider the working process. The algorithm contains three steps: go to work, work, go home. It's a very true-to-life example indeed.</p> 
+  <p>Suppose all workers go to work and go home in an absolutely identical manner. The working routine, however, is different and depends on the worker’s qualification. We can choose any profession, but the algorithm remains the same.</p> 
+  <h5 style="text-align: center;">Template method pattern</h5> 
+  <p>An abstract base class implements standard algorithm steps and can provide a default implementation for custom steps. Specific subclasses provide concrete implementation for each of these steps.</p> 
+  <p>Template Method has the following components:</p> 
+  <ul> 
+   <li> <p><strong>Abstract Class</strong> describes primitive operations and the template method itself which calls primitive operations;</p> </li> 
+   <li> <p><strong>Concrete Class</strong> implements the primitive operations.</p> </li> 
+  </ul> 
+  <p> </p> 
+  <p style="text-align: center;"><img alt="" height="378px" src="https://ucarecdn.com/b7fd06ca-19e2-449f-aaa1-8aca2a787ddf/" width="589px"></p> 
+  <p> </p> 
+  <p>This pattern is actively used in JDK.</p> 
+  <h5 style="text-align: center;">Practice example</h5> 
+  <p>To demonstrate how the Template Method works, let's create an abstract class <code class="language-java">Worker</code> that describes the working routine. Then, let's add the template method:</p> 
+  <pre><code class="language-java">public abstract class Worker {
+
+    public void work() {
+        goToWork();
+
+        workingProcess();
+
+        goHome();
+    }
+
+    public void goToWork() {
+        System.out.println("= I'm going to work sadly =");
+    }
+
+    public void goHome() {
+        System.out.println("= I'm going home happy =");
+    }
+
+    public abstract void workingProcess();
+}</code></pre> 
+  <p> </p> 
+  <p>The common algorithm of actions is already determined. Now, we will create two concrete classes: <code class="language-java">Programmer</code><strong> </strong>and <code class="language-java">Actor</code><strong>:</strong></p> 
+  <pre><code class="language-java">public class Programmer extends Worker {
+
+    @Override
+    public void workingProcess() {
+        System.out.println(" &gt; I'm a programmer");
+        System.out.println(" &gt; I drink coffee");
+        System.out.println(" &gt; I write code");
+        System.out.println(" &gt; I drink coffee again");
+        System.out.println(" &gt; I write code again");
+    }
+}
+
+public class Actor extends Worker {
+
+    @Override
+    public void workingProcess() {
+        System.out.println(" &gt; I'm an actor");
+        System.out.println(" &gt; I read a scenario");
+        System.out.println(" &gt; I get used to role ");
+        System.out.println(" &gt; I play a role");
+   }
+}</code></pre> 
+  <p> </p> 
+  <p>In the <code class="language-java">TemplateMethodDemo</code> class we create programmer and actor instances and call the template method :</p> 
+  <pre><code class="language-java">public class TemplateMethodDemo {
+    public static void main(String[] args) {
+        Worker programmer = new Programmer();
+        Worker actor = new Actor();
+        programmer.work();
+        actor.work();
+    }
+}</code></pre> 
+  <h5 style="text-align: center;">Conclusion</h5> 
+  <p><strong>Template Method</strong> is applicable in the following cases:</p> 
+  <ul> 
+   <li> <p>When the behavior of an algorithm can vary, you let subclasses implement the behavior through overriding;</p> </li> 
+   <li> <p>When you want to avoid code duplication, implementing variations of the algorithm in subclasses;</p> </li> 
+   <li> <p>When you want to be sure that subclassing is allowed.</p> </li> 
+  </ul>
+ </body>
+</html>

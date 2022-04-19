@@ -1,0 +1,216 @@
+hyperskill_project:
+  id: 58
+  ide_files: https://stepik.org/media/attachments/lesson/210079/additional_files.json
+  is_template_based: false
+  use_ide: true
+update_date: Tue, 19 Apr 2022 13:13:47 UTC
+stages:
+- id: 312
+  step: 5454
+  is_completed: true
+- id: 313
+  step: 5455
+  is_completed: true
+- id: 314
+  step: 5456
+  is_completed: true
+- id: 315
+  step: 5457
+  is_completed: true
+- id: 316
+  step: 5458
+  is_completed: true
+topics:
+  0:
+  - title: Write, compile, and run
+    theory_id: 3739
+  - title: JVM, JRE, and JDK
+    theory_id: 3499
+  - title: Units of information
+    theory_id: 6865
+  - title: IDE
+    theory_id: 10996
+  - title: Introduction to operating systems
+    theory_id: 9704
+  - title: Computer programming
+    theory_id: 8739
+  - title: Introduction to Java
+    theory_id: 3500
+  - title: Basic literals
+    theory_id: 3522
+  - title: Overview of the basic program
+    theory_id: 3521
+  - title: Printing data
+    theory_id: 3749
+  - title: Types and variables
+    theory_id: 3518
+  - title: Comments
+    theory_id: 3520
+  - title: Scanning the input
+    theory_id: 9055
+  - title: Coding style conventions
+    theory_id: 12411
+  - title: Naming variables
+    theory_id: 3513
+  - title: Arithmetic operations
+    theory_id: 3519
+  - title: Integer types and operations
+    theory_id: 3565
+  - title: Boolean and logical operations
+    theory_id: 3516
+  - title: Relational operators
+    theory_id: 3512
+  - title: Conditional statement
+    theory_id: 3503
+  - title: Ternary operator
+    theory_id: 3506
+  - title: Increment and decrement
+    theory_id: 5008
+  - title: The while and do-while loops
+    theory_id: 3498
+  - title: The for-loop
+    theory_id: 3505
+  - title: Branching statements
+    theory_id: 3507
+  - title: Switch statement
+    theory_id: 3504
+  - title: Characters
+    theory_id: 3514
+  - title: Sizes and ranges
+    theory_id: 3532
+  - title: Type casting
+    theory_id: 3510
+  - title: Calling a method
+    theory_id: 10973
+  - title: Declaring a method
+    theory_id: 10982
+  - title: The main method
+    theory_id: 3489
+  - title: Functional decomposition
+    theory_id: 10570
+  - title: String
+    theory_id: 3523
+  - title: Primitive and reference types
+    theory_id: 5035
+  - title: Array
+    theory_id: 3511
+  - title: Arrays as parameters
+    theory_id: 3594
+  - title: Iterating over arrays
+    theory_id: 3602
+  - title: Introduction to OOP
+    theory_id: 3614
+  - title: Command line overview
+    theory_id: 8977
+  - title: Parameters and options
+    theory_id: 9746
+  - title: Running programs on your computer
+    theory_id: 3746
+  - title: IntelliJ IDEA
+    theory_id: 3801
+  - title: Random
+    theory_id: 4910
+  - title: Defining classes
+    theory_id: 3618
+  - title: Instance methods
+    theory_id: 3495
+  - title: Constructor
+    theory_id: 3535
+  - title: Objects
+    theory_id: 4727
+  1:
+  - title: Immutability
+    theory_id: 7929
+  - title: Computer algorithms
+    theory_id: 16547
+  - title: The big O notation
+    theory_id: 16699
+  - title: Data structures
+    theory_id: 16927
+  - title: Overloading
+    theory_id: 3525
+  - title: Errors in programs
+    theory_id: 3536
+  - title: What is an exception
+    theory_id: 3497
+  - title: NPE
+    theory_id: 1945
+  - title: Package
+    theory_id: 3621
+  - title: Hierarchy of exceptions
+    theory_id: 3570
+  - title: Exception handling
+    theory_id: 3552
+  - title: Pseudocode
+    theory_id: 15090
+  - title: Fixed-size array
+    theory_id: 7255
+  - title: Dynamic array
+    theory_id: 5357
+  - title: Processing strings
+    theory_id: 3551
+  - title: Introduction to generic programming
+    theory_id: 3492
+  - title: Generics and Object
+    theory_id: 3493
+  - title: What are collections
+    theory_id: 3770
+  - title: The Collections Framework overview
+    theory_id: 3624
+  - title: ArrayList
+    theory_id: 3567
+  - title: The List interface
+    theory_id: 3581
+  - title: Access modifiers
+    theory_id: 3589
+  - title: Getters and setters
+    theory_id: 3599
+  - title: Inheritance
+    theory_id: 3583
+  - title: Protected modifier
+    theory_id: 6692
+  - title: Referencing subclass objects
+    theory_id: 3585
+  - title: The Object class
+    theory_id: 3596
+  - title: Interface
+    theory_id: 3615
+  - title: Multiple constructors
+    theory_id: 3538
+  - title: The keyword super
+    theory_id: 3588
+  - title: Boxing and unboxing
+    theory_id: 3595
+  - title: Comparable
+    theory_id: 14456
+  2:
+  - title: Binary numbers
+    theory_id: 5544
+  - title: Hexadecimal numbers
+    theory_id: 8788
+  - title: Binary arithmetic
+    theory_id: 5630
+  - title: Converting from decimal to binary
+    theory_id: 5614
+  - title: Converting from binary to decimal
+    theory_id: 5622
+  - title: 1s Complement
+    theory_id: 5745
+  - title: 2s Complement
+    theory_id: 5753
+  - title: Files
+    theory_id: 3635
+  - title: Reading files
+    theory_id: 3636
+  - title: Formatted output
+    theory_id: 7046
+  - title: Writing files
+    theory_id: 3652
+  - title: What are streams
+    theory_id: 5533
+  - title: Input streams
+    theory_id: 9723
+  - title: Output streams
+    theory_id: 8837
+  - title: Bitwise and bit-shift operations
+    theory_id: 3515

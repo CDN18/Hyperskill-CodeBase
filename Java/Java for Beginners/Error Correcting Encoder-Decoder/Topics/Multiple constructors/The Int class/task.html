@@ -1,0 +1,25 @@
+<h2>The Int class</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Here's a simple wrapper class for values of the <code class="language-java">int</code> type.</p> 
+  <pre><code class="language-java">public class Int {
+
+    int val = 1;
+
+    public Int() {
+        val = 2;
+    }
+
+    public Int(int val) {
+        this();
+    }
+  
+    public Int(int val1, int val2) {
+        this(val1 + val2);
+    }
+}</code></pre> 
+  <p>What is the value of the field <strong><code class="language-java">val</code></strong> in the created object?</p> 
+  <pre><code class="language-java">Int myInt = new Int(3);</code></pre>
+ </body>
+</html>

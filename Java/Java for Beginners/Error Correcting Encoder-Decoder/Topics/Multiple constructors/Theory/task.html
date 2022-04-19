@@ -1,0 +1,90 @@
+<h2>Multiple constructors</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Sometimes we need to initialize all fields of an object when creating it, but there are cases in which it might be appropriate to initialize only one or several fields. Fortunately, for this purpose, a class can have several constructors that assign values to the fields in different ways. In this topic, you will learn how to work with multiple constructors and define the way they interact with each other.</p> 
+  <h5 style="text-align: center;" id="constructor-overloading">Constructor overloading</h5> 
+  <p>You can define as many constructors as you need. Each constructor should have a name that matches the class name but the parameters should be different. The situation when a class contains multiple constructors is known as <strong>constructor overloading</strong>.</p> 
+  <p>Here is an example:</p> 
+  <pre><code class="language-java">public class Robot {
+    String name;
+    String model;
+
+    public Robot() {
+        this.name = "Anonymous";
+        this.model = "Unknown";
+    }
+
+    public Robot(String name, String model) {
+        this.name = name;
+        this.model = model;
+    }
+}</code></pre> 
+  <p>The class <code class="language-java">Robot</code> has two constructors:</p> 
+  <ul> 
+   <li><code class="language-java">Robot()</code> is a no-argument constructor that initializes fields with default values;</li> 
+   <li><code class="language-java">Robot(String name, String model)</code> takes two parameters and assigns them to the corresponding fields.</li> 
+  </ul> 
+  <p>To create an instance of the class <code class="language-java">Robot</code> we can use either of the two constructors:</p> 
+  <pre><code class="language-java">Robot anonymous = new Robot(); // name is "Anonymous", model is "Unknown"
+Robot andrew = new Robot("Andrew", "NDR-114"); // name is "Andrew", model is "NDR-114"</code></pre> 
+  <p></p>
+  <div class="alert alert-warning">
+   Bear in mind that you cannot define two constructors with the same number, types, and order of the parameters!
+  </div>
+  <p></p> 
+  <h5 style="text-align: center;" id="invoking-constructors-from-other-constructors">Invoking constructors from other constructors</h5> 
+  <p>We can also invoke a constructor from another one. It allows you to initialize one part of an object by one constructor and another part by another constructor.</p> 
+  <p>Calling a constructor inside another one is done using <code class="language-java">this</code>. For example:</p> 
+  <pre><code class="language-java">this(); // calls a no-argument constructor</code></pre> 
+  <p>If you called a constructor that has parameters you can pass some arguments:</p> 
+  <pre><code class="language-java">this("arg1", "arg2"); // calls a constructor with two string arguments</code></pre> 
+  <p></p>
+  <div class="alert alert-warning">
+   Remember, the statement for invoking a constructor should be the first statement in the body of a caller constructor.
+  </div>
+  <p></p> 
+  <p>Here is an extended example of the <code class="language-java">Robot</code> class:</p> 
+  <pre><code class="language-java">public class Robot {
+    String name;
+    String model;
+    int lifetime;
+
+    public Robot() {
+        this.name = "Anonymous";
+        this.model = "Unknown";
+    }
+
+    public Robot(String name, String model) {
+        this(name, model, 20);
+    }
+
+    public Robot(String name, String model, int lifetime) {
+        this.name = name;
+        this.model = model;
+        this.lifetime = lifetime;
+    }
+}</code></pre> 
+  <p>Now, the class has three constructors:</p> 
+  <ul> 
+   <li><code class="language-java">Robot()</code> is a no-argument constructor;</li> 
+   <li><code class="language-java">Robot(String name, String model)</code> is a two-argument constructor that invokes another constructor;</li> 
+   <li><code class="language-java">Robot(String name, String model, int lifetime)</code> is a three-argument constructor that fills all fields.</li> 
+  </ul> 
+  <p>The second constructor invokes the third one and passes <code class="language-java">name</code>, <code class="language-java">model</code>, and <code class="language-java">lifetime = 20</code> to it. The third constructor, in its turn, initializes all fields of the created object.</p> 
+  <p>Let's add an output to the third constructor and see the result:</p> 
+  <pre><code class="language-java">public Robot(String name, String model, int lifetime) {
+    this.name = name;
+    this.model = model;
+    this.lifetime = lifetime;
+    System.out.println("The third constructor is invoked");
+}</code></pre> 
+  <p>Let's now create an instance using the two-argument constructor.</p> 
+  <pre><code class="language-java">Robot andrew = new Robot("Andrew", "NDR-114");</code></pre> 
+  <p>The program outputs:</p> 
+  <pre><code class="language-java">The third constructor is invoked</code></pre> 
+  <h5 style="text-align: center;" id="conclusion">Conclusion</h5> 
+  <p>In this topic, we've covered constructor overloading — creating multiple constructors for the class. Constructor overloading allows us to create an object of the class in different ways depending on the circumstances. </p> 
+  <p>We can also invoke constructors inside other constructors. All in all, Java provides many useful features for writing constructors and defining interactions between them.</p>
+ </body>
+</html>

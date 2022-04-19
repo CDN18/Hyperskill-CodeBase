@@ -1,0 +1,32 @@
+<h2>Entanglement</h2>
+<html>
+ <head></head>
+ <body>
+  <p>The class <code class="language-java">SomeClass</code> has four constructors:</p> 
+  <pre><code class="language-java">class SomeClass {
+
+    int val = 50;
+    String str = "default";
+
+    public SomeClass() {
+       this(100);
+    }
+
+    public SomeClass(int val) {
+        val = val;
+    }
+
+    public SomeClass(String str) {
+        this();
+        this.str = "some-value";
+    }
+
+    public SomeClass(int val, String str) {
+        this(str);
+    }
+}</code></pre> 
+  <p>You've created an instance of this class:</p> 
+  <pre><code class="language-java">SomeClass instance = new SomeClass(300, "another-value");</code></pre> 
+  <p>Find the correct values of fields for this instance.</p>
+ </body>
+</html>

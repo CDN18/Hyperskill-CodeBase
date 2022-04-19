@@ -1,0 +1,92 @@
+<h2>Output streams</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Although you might think you haven't worked with streams yet, surely you've already used similar constructions for printing data to console:</p> 
+  <pre><code class="language-java">System.out.println("Text to display");</code></pre> 
+  <p>In Java terminology <strong>System.out</strong> is an <strong>output stream</strong>, which allows programmers to print data to the console. In this way, you are familiar with output streams. It is time now to learn how streams work in more detail and consider other examples.</p> 
+  <h5>Destination</h5> 
+  <p>As we learned from the previous topic<strong> </strong>output stream allows you to write data to a <strong>destination</strong>. Some obvious destinations that you probably already worked with are console and file. Disks, memory buffer, web sockets, or other network locations can be a destination as well. Generally speaking, the destination is a target endpoint that data sent to output stream reaches.</p> 
+  <p>Java standard library provides a wide variety of classes to represent an output stream. Quite a large number of these classes is the result of several factors. One of them is that each destination requires a specific way to write to it. Indeed, writing to a file differs from writing to a web socket!</p> 
+  <h5>Character streams</h5> 
+  <p>Character output streams allow writing text data: <code class="language-java">char</code> or <code class="language-java">String</code>. You might have already used such streams as<code class="language-java">FileWriter</code> and <code class="language-java">PrintWriter</code> earlier for writing text data to files. Both of them, as well as other character output streams, have a common abstract ancestor <code class="language-java">java.io.Writer</code>. Let's look at it closely.</p> 
+  <p>The class contains a group of methods for writing. Some of them are listed here:</p> 
+  <ul> 
+   <li><code class="language-java">void write(char[] cbuf)</code> writes a char array</li> 
+   <li><code class="language-java">void write(char[] cbuf, int off, int len)</code> writes a portion of a char array</li> 
+   <li><code class="language-java">void write(int c)</code> writes a single character</li> 
+   <li><code class="language-java">void write(String str)</code> writes a string</li> 
+   <li><code class="language-java">void write(String str, int off, int len)</code> writes a portion of a string</li> 
+  </ul> 
+  <p>Another important method is <code class="language-java">close()</code>. It should be invoked for preventing resource leaks.</p>
+  <div class="alert alert-primary">
+    If you're familiar with 
+   <strong>try-with-resources</strong> construction, you know it is a better way to prevent resource leaks. For now, we're skipping it due to learning purposes
+  </div>
+  <p></p> 
+  <p><code class="language-java">Writer</code> has several direct subclasses for different purposes in the standard library. For example, <code class="language-java">FileWriter</code> is intended for writing to files. <code class="language-java">StringWriter</code> is designed to construct a string. <code class="language-java">CharArrayWriter</code> uses <code class="language-java">char[]</code> as a destination.</p> 
+  <p>Let's consider <code class="language-java">CharArrayWriter</code> class. Besides methods inherited from <code class="language-java">Writer</code> the class has its own <code class="language-java">toCharArray()</code> and <code class="language-java">writeTo</code> methods. The former provides <code class="language-java">char[]</code> with content. The latter writes content to another writer.</p> 
+  <p>Imagine the case when you need to create two types of business cards. Each type of card has its own content, but the contact sections are the same. Here it will be convenient to implement <code class="language-java">writeTo</code> method of <code class="language-java">CharArrayWriter</code> to supply both cards with contact sections content.</p> 
+  <pre><code class="language-java">CharArrayWriter contactWriter = new CharArrayWriter();
+FileWriter bc1 = new FileWriter("business_card_1.txt", true);
+FileWriter bc2 = new FileWriter("business_card_2.txt", true);
+
+contactWriter.write("Phone: 111-222-333; Address: Java Avenue, 7");
+contactWriter.writeTo(bc1);
+contactWriter.writeTo(bc2);
+
+char[] array = contactWriter.toCharArray(); // writer content as char[]
+
+bc1.close();
+bc2.close();
+contactWriter.close();</code></pre> 
+  <p>Here we've created <code class="language-java">FileWriter</code> objects in append mode by passing <code class="language-java">true</code> to an <code class="language-java">append</code> parameter.</p> 
+  <h5>Byte streams</h5> 
+  <p>From a computer's point of view, any data is just a sequence of bits: 0 or 1, which are usually assembled to bytes of 8 digits. In other words, any data is represented as a serial set of bytes. This means that images, audio, videos and so on have a binary format, i.e. represented as a sequence of bytes. Actually, text files have byte representation too: if you remember, characters are combinations of bytes.</p> 
+  <p>Java has a set of classes called <strong>byte output streams</strong> to write bytes.</p> 
+  <p>Byte output stream classes from the standard library extend <code class="language-java">java.io.OutputStream</code> abstract class. The class contains three methods for writing:</p> 
+  <ul> 
+   <li><code class="language-java">void write(byte[] b)</code> writes a byte array</li> 
+   <li><code class="language-java">void write(byte[] b, int off, int len)</code> writes a portion of a byte array</li> 
+   <li><code class="language-java">abstract void write(int b)</code> writes a single byte</li> 
+  </ul> 
+  <p>Just like character streams, byte streams have <code class="language-java">void close()</code> that should be invoked in a similar way.</p> 
+  <p>Let's look at some direct subclasses of <code class="language-java">OutputStream</code> from the standard library.<strong> </strong><code class="language-java">FileOutputStream</code> is intended for writing data to a file as a destination. <code class="language-java">ByteArrayOutputStream</code> as you may guess allows writing to <code class="language-java">byte[]</code> destination. Such classes like <code class="language-java">FilterOutputStream</code> or <code class="language-java">PipedOutputStream</code> have no endpoint destination and write data to other output streams. These classes are supposed to be intermediate streams for data transformation or possibly providing additional functionality.</p> 
+  <p>Let's look at an example where we write something to a file using <code class="language-java">FileOutputStream</code>. The class has a set of constructors. Some of them are:</p> 
+  <ul> 
+   <li><code class="language-java">FileOutputStream(String fileName)</code></li> 
+   <li><code class="language-java">FileOutputStream(String fileName, boolean append)</code></li> 
+   <li><code class="language-java">FileOutputStream(File file)</code></li> 
+   <li><code class="language-java">FileOutputStream(File file, boolean append)</code></li> 
+  </ul> 
+  <p>Parameter <code class="language-java">append</code> indicates whether to append (<em>true</em>) or overwrite (<em>false</em>) an existing file.</p> 
+  <p>It is useful to be aware that <code class="language-java">FileOutputStream</code> will create a file with the name provided if one does not exist yet. It creates a file right after <code class="language-java">FileOutputStream</code> is initialized, even if you have not tried to write into it.</p> 
+  <p>Let's look at the snippet now.</p> 
+  <pre><code class="language-java">byte[] data = new byte[] {'s', 't', 'r', 'e', 'a', 'm'};
+OutputStream outputStream = new FileOutputStream("sample.txt", false);
+outputStream.write(data);
+outputStream.close();</code></pre> 
+  <p>After running this code, you will see a <strong>sample.txt</strong> file with content <code class="language-java">stream</code> in it.</p> 
+  <h5>Character vs byte streams</h5> 
+  <p>Note that all methods of byte streams considered above allow you to only write bytes. It means that you can't directly write strings, you must convert them to <code class="language-java">byte[]</code> before. So if you want to write a string to a file, you have to convert it into bytes first. For instance, you can use the <code class="language-java">getBytes()</code> method for that. </p> 
+  <pre><code class="language-java">String str = "stream"; 
+byte[] strAsBytes = str.getBytes(); // convert String to byte[]</code></pre> 
+  <p>Converting <code class="language-java">String</code> to <code class="language-java">byte[]</code> every time you need to write something is inefficient and inconvenient. Moreover, many character streams are based on <strong>byte streams</strong> and are well-optimized. So if you want to write a text, do not reinvent the wheel: use character output streams.</p> 
+  <p>On the other hand, you'll need to use byte streams when you will work with binary files, for example, .jpg image or .pdf file.</p> 
+  <h5>Buffered streams</h5> 
+  <p>Output streams have 2 classes from the standard library which do buffering.</p> 
+  <p><code class="language-java">BufferedOutputStream</code> is based on the buffering principle. It has only two constructors:</p> 
+  <ul> 
+   <li><code class="language-java">BufferedOutputStream(OutputStream out)</code></li> 
+   <li><code class="language-java">BufferedOutputStream(OutputStream out, int size)</code></li> 
+  </ul> 
+  <p>Same works for <code class="language-java">BufferedWriter</code>:</p> 
+  <ul> 
+   <li><code class="language-java">BufferedWriter(Writer out)</code></li> 
+   <li><code class="language-java">BufferedWriter(Writer out, int size)</code></li> 
+  </ul> 
+  <p>These classes are intermediate output streams.<strong> </strong>They take an output stream<strong> </strong>as an input and do buffering before delegating to another stream. An additional parameter <code class="language-java">size</code> is the size of the buffer. If you want to release all data from the buffer by writing it to a destination, you can use <code class="language-java">flush()</code> method. It is usually called automatically when your buffer is full or before closing the stream.</p> 
+  <h5>Conclusion</h5> 
+  <p>The output stream is a way to write data to a destination. The destination is a target endpoint of data, which can be a file, a console, or even a web socket. Streams are divided into byte and character ones. Byte output streams allow writing sequences of bytes. It is necessary for working with binary files. Character output streams are intended for text writing. Character output stream classes usually end with <em>Writer</em>, because they extend one abstract <code class="language-java">java.io.Writer</code> class as a rule. Similarly, byte output streams end with <em>OutputStream</em>. Some streams use buffering under the hood. It is a widely used optimization, which tries to minimize costly interaction with a destination.</p>
+ </body>
+</html>
