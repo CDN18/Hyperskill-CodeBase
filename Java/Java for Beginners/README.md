@@ -9,4 +9,8 @@ If you don't have much experience in programming, this track is the best way to 
 | [Encryption-Decryption](./Encryption-Decryption/) | Challenging |
 | [Minesweeper](./Minesweeper/) | Challenging |
 | [Flashcards](./Flashcards/) | Challenging |
-| Error Correcting Encoder-Decoder | Challenging |
+| [Error Correcting Encoder-Decoder](./Error%20Correcting%20Encoder-Decoder/) | Challenging |
+|  Readability Score | Challenging |
+| Bulls and Cows | Hard (Graduate Project) |
+| Battleship | Hard (Graduate Project) |
+| Coffee Machine | Medium (Graduate Project) |
