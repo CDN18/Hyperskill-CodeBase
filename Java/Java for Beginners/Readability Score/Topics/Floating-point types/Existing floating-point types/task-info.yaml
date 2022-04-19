@@ -1,0 +1,23 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: rational
+- text: short
+- text: double
+- text: char
+- text: float
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2673#comment
+status: Solved
+record: -1

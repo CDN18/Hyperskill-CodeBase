@@ -1,0 +1,70 @@
+<h2>Math library</h2>
+<html>
+ <head></head>
+ <body>
+  <p>To efficiently perform various basic (and not so basic) numeric operations, including exponential, modulus or finding the maximum or minimum of two numbers, Java provides the standard class <code class="language-java">Math</code>. Let's consider some of the most common methods of this class.</p> 
+  <h5 style="text-align: center;">Basic and rounding methods</h5> 
+  <p>There's a number of popular methods for rounding numbers up and down and performing other basic operations. Let's take a look at some of them:</p> 
+  <ul> 
+   <li><strong>Math.min(..., ...)</strong> returns the smaller value of two arguments;</li> 
+   <li><strong>Math.max(..., ...)</strong> returns the greater value of two arguments;</li> 
+  </ul> 
+  <pre><code class="language-java">int min = Math.min(11, 81); // min is 11
+int max = Math.max(20, 30); // max is 30</code></pre> 
+  <ul> 
+   <li><strong>Math.abs(...)</strong> returns the absolute value of its argument;</li> 
+  </ul> 
+  <pre><code class="language-java">int abs = Math.abs(-10); // abs is 10
+double dabs = Math.abs(-10.33); // dabs is 10.33</code></pre> 
+  <ul> 
+   <li><strong>Math.floor(...)</strong> returns the largest double value that is less than or equal to its argument and is equal to an integer;</li> 
+   <li><strong>Math.ceil(...)</strong> returns the smallest double value that is greater than or equal to its argument and is equal to an integer.</li> 
+  </ul> 
+  <pre><code class="language-java">double floor = Math.floor(3.78); // floor is 3.0
+double ceil = Math.ceil(4.15); // ceil is 5.0</code></pre> 
+  <h5 style="text-align: center;">Exponential functions</h5> 
+  <p>When we need to calculate a square or a cube root of a given number, we can apply the following methods:</p> 
+  <ul> 
+   <li><strong>Math.sqrt(...) </strong>returns the square root of its argument;</li> 
+   <li><strong>Math.cbrt(...) </strong>returns the cube root of its argument;</li> 
+  </ul> 
+  <pre><code class="language-java">double sqrt = Math.sqrt(2); // sqrt is 1.4142...
+double cbrt = Math.cbrt(27.0); // cbrt is 3.0</code></pre> 
+  <p>It is also possible to raise a number to any power we would like:</p> 
+  <ul> 
+   <li><strong>Math.pow(..., ...)</strong> returns the value of the first argument raised to the power of the second argument.</li> 
+  </ul> 
+  <pre><code class="language-java">double square = Math.pow(5, 2); // the square of 5 is 25.0
+double cube = Math.pow(2, 3); // the cube of 2 is 8.0</code></pre> 
+  <h5 style="text-align: center;">Trigonometric functions</h5> 
+  <p>And here are some of the trigonometric functions, provided in <code class="language-java">Math</code>:</p> 
+  <ul> 
+   <li><strong>Math.sin(...) </strong>returns the trigonometric sine of the given angle in radians;</li> 
+   <li><strong>Math.cos(...)</strong> returns the trigonometric cosine of the given angle in radians;</li> 
+  </ul> 
+  <pre><code class="language-java">double sin = Math.sin(pi / 2); // sin90°  is 1.0
+double cos = Math.cos(pi); // cos180° is -1.0</code></pre> 
+  <ul> 
+   <li><strong>Math.toRadians(...)</strong> converts an angle measured in degrees to an angle measured in radians (approximately).</li> 
+  </ul> 
+  <pre><code class="language-java">double grad = Math.toRadians(30); // grad is 0.5235...</code></pre> 
+  <h5 style="text-align: center;">And there's more...</h5> 
+  <p>There are also methods for hyperbolic, logarithmic, angular, and other functions. Check them out <a target="_blank" href="http://docs.oracle.com/javase/8/docs/api/java/lang/Math.html" rel="noopener noreferrer nofollow">here</a> and use when needed. Among them, you'll find such a useful method as:</p> 
+  <ul> 
+   <li><strong>Math.random()</strong> returns a double value with a positive sign, greater than or equal to 0.0 and less than 1.0.</li> 
+  </ul> 
+  <pre><code class="language-java">double random = Math.random(); // a random value &gt;= 0.0 and &lt; 1.0</code></pre> 
+  <p>Apart from functions, the <code class="language-java">Math</code>class in Java contains two common <strong>constants:</strong></p> 
+  <ul> 
+   <li><strong>Math.PI</strong> is the ratio of the circumference of a circle to its diameter;</li> 
+   <li><strong>Math.E</strong> is the base of the natural logarithm.</li> 
+  </ul> 
+  <pre><code class="language-java">double pi = Math.PI; // pi is 3.1415...
+double e = Math.E; // e is 2.71828...</code></pre> 
+  <h5 style="text-align: center;">The length of the hypotenuse</h5> 
+  <p>Now let's take a look at an example. Assume that we have a right triangle (one angle is 90 degrees). We know the lengths of both sides: a = 3 and b = 4. Our task is to calculate the length of the hypotenuse. Now, it is time to go through the list of the <code class="language-java">Math</code> class functions. After finding the one we need, the only thing left is to write the following code:</p> 
+  <pre><code class="language-java">double a = 3, b = 4;
+double c = Math.hypot(a, b); // c is 5.0</code></pre> 
+  <p>As you can see, the <code class="language-java">Math</code>class has a lot of methods for performing numeric calculations and using them will make your life easier and your code nicer.</p>
+ </body>
+</html>

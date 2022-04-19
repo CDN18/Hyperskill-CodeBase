@@ -1,0 +1,122 @@
+<h2>Input streams</h2>
+<html>
+ <head></head>
+ <body>
+  <p>As a rule, every program consumes some data as a way to communicate with the outer world. It can be a user input from the console, a configuration file, or something else. Java has a common mechanism for consuming data called <strong>input streams</strong>. We have already provided some text as data for our programs, and now it is time to dive deeper and explore the whole mechanism.</p> 
+  <h5>Sources</h5> 
+  <p>Data can be obtained from many points considered as providers. Besides standard input or files, those can be network connections, in-memory buffers, or even objects. All of them are called <strong>sources</strong> for input streams. In fact, a source is any data that can be consumed and processed by a program. Working with data is quite a specific thing, and each source needs a specialized class.</p> 
+  <h5>Character streams</h5> 
+  <p>There are several classes for reading text.<strong> </strong>They are called<strong> </strong>character input streams and allow reading text data: <code class="java">char</code> or <code class="java">String</code>. For instance, there are <code class="java">FileReader</code>, <code class="java">CharArrayReader</code>, <code class="java">StringReader</code>, etc.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   The class name indicates what type of source it uses as input and usually ends with 
+   <em>Reader, </em>since 
+   <em>all </em>such classes extend the 
+   <code class="java">java.io.Reader</code> class.
+  </div>
+  <p></p> 
+  <p>Each class provides a set of useful methods while they also have common methods for reading data:</p> 
+  <ul> 
+   <li><code class="java">int read()</code> reads a single character. If the end of the stream is reached, the method returns the value <code class="java">-1</code>. Otherwise, it returns the numerical representation of the character according to the current encoding;</li> 
+   <li><code class="java">int read(char[] cbuf)</code> reads a sequence of characters into the passed array up to its capacity and returns the number of characters that were actually read. It can also return <code class="java">-1</code> in case no data was read;</li> 
+   <li><code class="java">int read(char[] cbuf, int off, int len)</code> reads characters into a portion of an array.</li> 
+  </ul> 
+  <p>These methods return the number of characters that were actually read or <code class="java">-1</code>. They also block the program from running until some input is available or the end of the stream is reached. </p> 
+  <p>Another important method is <code class="java">void close()</code> that should be invoked after a stream was used.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   If you're familiar with the try-with-resources construction, you know it is a better way to prevent resource leaks. For now, we're skipping it for learning purposes.
+  </div>
+  <p></p> 
+  <h5>Example of a character stream</h5> 
+  <p>Let's consider <code class="java">FileReader</code> as an example of the <code class="java">Reader</code> classes. <code class="java">FileReader</code> has a set of constructors. Here are some of them:</p> 
+  <ul> 
+   <li><code class="java">new FileReader(String fileName)</code></li> 
+   <li><code class="java">new FileReader(String fileName, Charset charset)</code></li> 
+   <li><code class="java">new FileReader(File file)</code></li> 
+   <li><code class="java">new FileReader(File file, Charset charset)</code></li> 
+  </ul> 
+  <p>As you can see, it can read text data from the file indicated either by a path <code class="java">String</code> or as a <code class="java">File</code> object.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   A charset is a class that declares the encoding from sequences of bytes to characters. By default, java uses the UTF-16 encoding, suitable for most tasks. However, sometimes the file may have another encoding and you'll have to use a different charset to read the content of the file properly.
+  </div>
+  <p></p> 
+  <p>Now let's try to read a file. Say we have a file <code class="java">file.txt</code> with the following content: <code class="java">input stream</code>.</p> 
+  <pre><code class="java">Reader reader = new FileReader("file.txt");
+
+char first = (char) reader.read(); // i
+char second = (char) reader.read(); // n
+
+char[] others = new char[12];
+int number = reader.read(others); // 10</code></pre> 
+  <p>After running the code, <code class="java">others</code> will contain <code class="java">['p', 'u', 't', ' ', 's', 't', 'r', 'e', 'a', 'm', '\u0000', '\u0000']</code>.</p> 
+  <p>Let's explain the result. Since we've read the first two letters into other variables, the first 10 characters of <code class="java">others</code> are filled starting from the third letter. When the stream reached the end of the file it stopped reading, so the last two characters are not updated.</p> 
+  <p>When you create an empty array it is actually filled with default values, which are <code class="java">'\u0000'</code> for a char array. This is the reason why the last 2 elements of <code class="java">others</code> are <code class="java">'\u0000'</code>.</p> 
+  <p>The tricky thing here is that <code class="java">'\u0000'</code> is interpreted as an empty symbol and not displayed at all, although technically it is present. Remember that when you read data into an array.</p> 
+  <p>Another common way of reading a text data stream is to read it char by char until the stream is closed:</p> 
+  <pre><code class="java">FileReader reader = new FileReader("file.txt");
+
+int charAsNumber = reader.read();
+while(charAsNumber != -1) {
+    char character = (char) charAsNumber;
+    System.out.print(character);
+    charAsNumber = reader.read();
+}
+reader.close();</code></pre> 
+  <p>When <code class="java">-1</code> is returned, it means the end of stream was reached, so that is there's nothing left to read.</p> 
+  <h5>Byte streams</h5> 
+  <p>Byte streams may seem more complicated so let's start with something you already know. To read some text data from the standard input we may create a <code class="java">Scanner</code> instance. You are familiar with the process:</p> 
+  <pre><code class="java">Scanner scanner = new Scanner(System.in);</code></pre> 
+  <p><code class="java">System.in</code> here is actually an example of a byte input stream. There are other specialized byte stream classes: <code class="java">ByteArrayInputStream</code> is used for reading from <code class="java">byte[]</code>, <code class="java">FileInputStream</code> is dedicated for files, <code class="java">AudioInputStream</code> is a way of consuming audio input and there's more.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   The class name of a byte stream indicates what type of source it uses as input and usually ends with 
+   <em>InputStream, </em>since all such classes extend the 
+   <code class="java">java.io.InputStream</code>class.
+  </div>
+  <p></p> 
+  <p>All byte stream classes have methods for reading similar to character input streams:</p> 
+  <ul> 
+   <li><code class="java">abstract int read()</code> reads a single byte;</li> 
+   <li><code class="java">int read(byte[] b)</code> reads a number of bytes and stores them in a byte array;</li> 
+   <li><code class="java">byte[] readAllBytes()</code> reads all bytes.</li> 
+  </ul> 
+  <p>The method that reads bytes into an array, returns an <code class="java">int</code> value. It is the number of bytes that were actually read from the source. If <code class="java">-1</code> value is returned it is a sign that no bytes were read.</p> 
+  <p>Each input stream class also has a <code class="java">void close()</code> method to release system resources.</p> 
+  <h5>Example of a byte stream</h5> 
+  <p>Suppose we have a file <code class="java">file.txt</code> that contains the following text: <code class="java">input stream</code>. Let's read it using the <code class="java">FileInputStream</code> class. It can be created by using several constructors, such as:</p> 
+  <ul> 
+   <li><code class="java">new FileInputStream(String pathToFile)</code></li> 
+   <li><code class="java">new FileInputStream(File file)</code></li> 
+  </ul> 
+  <p>Here we create a file input stream by specifying the name of the file:</p> 
+  <pre><code class="java">FileInputStream inputStream = new FileInputStream("myfile.txt");</code></pre> 
+  <p>We are going to read the first five bytes:</p> 
+  <pre><code class="java">byte[] bytes = new byte[5];
+int numberOfBytes = inputStream.read(bytes);
+System.out.println(numberOfBytes); // 5
+inputStream.close();</code></pre> 
+  <p>Now <code class="java">bytes</code>contains <code class="java">['i', 'n', 'p', 'u', 't']</code>. </p> 
+  <p>The byte-by-byte approach also works here, similar to the character streams example.</p> 
+  <h5>Testing input streams</h5> 
+  <p>In previous examples, we were considering reading data from files to show you how it is done. You can try it yourself at any moment. However, in the following coding problems, we are going to ask you to read data from standard input by other input streams classes.</p> 
+  <p>And there are some things to keep in mind.</p> 
+  <p>When testing your programs in IDE, you type the text and then press <strong>Enter</strong> to push the typed text into the input stream, like when you did with <code class="java">Scanner</code>. In this case, the <em>end-of-line </em>symbol is also appended as the last symbol of the typed sequence of characters and will be read into an array if that's what you do.<em> </em></p>
+  <div class="alert alert-warning">
+   Pressing Enter doesn't close the input stream
+   <em>.</em> It is still opened and waits for input. To actually close the input stream you need to produce an 
+   <em>end-of-file</em> event. In IDEA, you should press 
+   <strong>Ctrl+D</strong> (Windows and Linux) or 
+   <strong>&lt;command&gt;+D</strong> (MacOS).
+  </div>
+  <p></p> 
+  <h5>What type of stream should I use?</h5> 
+  <p>The main difference between byte and character streams is that byte ones read input data<em> as bytes</em> while character ones work with characters. </p> 
+  <p>A computer understands only sequences of bytes. From this perspective, any data is a set of bytes and byte input streams are a common way of reading any kind of data. For computers, characters are still combinations of bytes defined by a charset specification.</p> 
+  <p>On the contrary, as human beings, we are used to dealing with sequences of characters. Character input streams are aimed to read data which consists of characters. Under the hood, they still read bytes, but they immediately encode bytes to characters.</p> 
+  <p>If you need to read a text, use character input streams. Otherwise, for example, while reading audio, video, zip, etc., use byte input streams.</p> 
+  <h5>Conclusion</h5> 
+  <p>Input streams provide a way to read data from a source. The source is a data provider like a console, standard input, a file, a string, or even a network connection. There are two types of sources: byte and character ones. Character input streams are intended for reading text only. Byte input streams allow reading sequences of raw bytes. Character input stream classes usually end with <em>Reader</em>. Similarly, byte input streams end with <em>InputStream</em>.</p>
+ </body>
+</html>
