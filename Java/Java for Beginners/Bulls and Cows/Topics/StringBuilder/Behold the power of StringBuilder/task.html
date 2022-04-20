@@ -1,0 +1,19 @@
+<h2>Behold the power of StringBuilder</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Which of the following <code class="language-java">StringBuilder</code>'s contain a text fully equal to <code class="language-java">"Behold the power of StringBuilder"</code>?</p> 
+  <pre><code class="language-java">StringBuilder sb1 = new StringBuilder();
+sb1 = sb1.append("Behold the power of StringBuilder");
+
+StringBuilder sb2 = new StringBuilder();
+sb2.append("Behold the power of StringBuilder");
+
+StringBuilder sb3 = new StringBuilder()
+        .append("Behold")
+        .append("the power of")
+        .append("StringBuilder");
+
+StringBuilder sb4 = new StringBuilder("Behold the power of StringBuilder");</code></pre>
+ </body>
+</html>

@@ -1,0 +1,125 @@
+<h2>StringBuilder</h2>
+<html>
+ <head></head>
+ <body>
+  <h5 style="text-align: center;">Mutable strings</h5> 
+  <p>As you may know, strings in Java are <strong>immutable</strong>. It means that once created, a string cannot be changed. If we want to modify the content of a string object, we should create a new string. This may not be the best way when we perform a lot of modifications because each operation creates a new object, which is bad for performance.</p> 
+  <p>Fortunately, there is a special class named <code class="language-java">StringBuilder</code> that is used to create mutable string objects. An object of this class is similar to a regular string, except that it can be modified. As an example, it is better to use <code class="language-java">StringBuilder</code> than <code class="language-java">String</code> where lots of concatenations are performed at runtime.</p> 
+  <h5 style="text-align: center;">Constructing objects</h5> 
+  <p>It is possible to create an empty object of the type <code class="language-java">StringBuilder</code>:</p> 
+  <pre><code class="language-java">StringBuilder empty = new StringBuilder();
+System.out.println(empty); // ""</code></pre> 
+  <p>or pass a string to it:</p> 
+  <pre><code class="language-java">StringBuilder sb = new StringBuilder("Hello!");
+System.out.println(sb); // "Hello!"</code></pre> 
+  <p></p>
+  <div class="alert alert-primary">
+   <strong>Note,</strong> we do not need to import anything to use this class in programs.
+  </div>
+  <p></p> 
+  <h5 style="text-align: center;">Some important methods</h5> 
+  <p>The <code class="language-java">StringBuilder</code> class provides a set of useful methods to manipulate objects. Let's consider some of them.</p> 
+  <ul> 
+   <li><code class="language-java">int length()</code> returns the length (the character count), like in regular strings. This method does not modify the object.</li> 
+  </ul> 
+  <pre><code class="language-java">StringBuilder sb = new StringBuilder("I use Java");
+System.out.println(sb.length()); // 10</code></pre> 
+  <ul> 
+   <li><code class="language-java">char charAt(int index)</code> returns a character located at the specified index. The first character has the index 0. This method does not modify the object.</li> 
+  </ul> 
+  <pre><code class="language-java">StringBuilder sb = new StringBuilder("I use Java");
+System.out.println(sb.charAt(0)); // 'I'
+System.out.println(sb.charAt(6)); // 'J'</code></pre> 
+  <ul> 
+   <li><code class="language-java">void setCharAt(int index, char ch)</code> sets a character located at the specified index to <strong>ch</strong>.</li> 
+  </ul> 
+  <pre><code class="language-java">StringBuilder sb = new StringBuilder("start");
+sb.setCharAt(1, 'm');
+System.out.println(sb); // "smart"</code></pre> 
+  <ul> 
+   <li><code class="language-java">StringBuilder deleteCharAt(int index)</code> removes the character at the specified position.</li> 
+  </ul> 
+  <pre><code class="language-java">StringBuilder sb = new StringBuilder("dessert");
+sb.deleteCharAt(2);
+System.out.println(sb); // "desert"</code></pre> 
+  <ul> 
+   <li><code class="language-java">StringBuilder append(String str)</code> concatenates the given string to the end of the invoking <code class="language-java">StringBuilder</code> object. There are also several overloadings to take primitive types and even arrays of characters.</li> 
+  </ul> 
+  <pre><code class="language-java">StringBuilder sb = new StringBuilder("abc");
+sb.append("123");
+System.out.println(sb); // "abc123"</code></pre> 
+  <p>It is also possible to invoke this method multiple times on the same object in the same statement because this method returns the same modified object.</p> 
+  <pre><code class="language-java">StringBuilder messageBuilder = new StringBuilder(); // empty
+
+messageBuilder
+        .append("From: Kate@gmail.com\n")
+        .append("To: Max@gmail.com\n")
+        .append("Text: I lost my keys.\n")
+        .append("Please, open the door!");
+
+System.out.println(messageBuilder);</code></pre> 
+  <p>Output:</p> 
+  <pre><code class="language-no-highlight">From: Kate@gmail.com
+To: Max@gmail.com
+Text: I lost my keys.
+Please, open the door!</code></pre> 
+  <ul> 
+   <li><code class="language-java">StringBuilder insert(int offset, String str)</code> inserts the given string into the existing <code class="language-java">StringBuilder</code> object at the given position indicated by the offset. This method has a lot of overloadings for different types.</li> 
+  </ul> 
+  <pre><code class="language-java">StringBuilder sb = new StringBuilder("I'm a programmer.");
+sb.insert(6, "Java ");
+System.out.println(sb); // I'm a Java programmer.</code></pre> 
+  <ul> 
+   <li><code class="language-java">StringBuilder replace(int start, int end, String str)</code> replaces the substring from the specified string index (inclusive) to the end index (exclusive) with a given string.</li> 
+  </ul> 
+  <pre><code class="language-java">StringBuilder sb = new StringBuilder("Let's use C#");
+sb.replace(10,12,"Java");
+System.out.println(sb); // Let's use Java</code></pre> 
+  <ul> 
+   <li><code class="language-java">StringBuilder delete(int start, int end)</code> removes the substring from the start index (inclusive) to the end index (exclusive).</li> 
+  </ul> 
+  <pre><code class="language-java">StringBuilder sb = new StringBuilder("Welcome");
+sb.delete(0,3);
+System.out.println(sb); // "come"</code></pre> 
+  <ul> 
+   <li><code class="language-java">StringBuilder reverse()</code> causes this character sequence to be replaced by the reverse of the sequence.</li> 
+  </ul> 
+  <pre><code class="language-java">StringBuilder sb = new StringBuilder("2 * 3 + 8 * 4");
+sb.reverse();
+System.out.println(sb); // "4 * 8 + 3 * 2"</code></pre> 
+  <p></p>
+  <div class="alert alert-primary">
+   <strong>Note,</strong> when you have a 
+   <code class="language-java">StringBuilder</code> object, you can get a 
+   <code class="language-java">String</code> by invoking the 
+   <code class="language-java">toString</code> method.
+  </div>
+  <p></p> 
+  <p>For more details about methods see the <a target="_blank" href="https://docs.oracle.com/javase/10/docs/api/java/lang/StringBuilder.html" rel="nofollow noopener noreferrer">documentation</a>.</p> 
+  <h5 style="text-align: center;">The length() and capacity()</h5> 
+  <p>There are two methods that should not be confused: <code class="language-java">length</code> and <code class="language-java">capacity</code>. The <code class="language-java">length</code> returns the actual number of characters whereas <code class="language-java">capacity</code> returns the amount of storage available for newly inserted characters, beyond which an allocation will occur. The capacity is a part of the internal representation of <code class="language-java">StringBuilder</code>, and its value will dynamically change.</p> 
+  <p>The following example will help you better distinguish these methods:</p> 
+  <pre><code class="language-java">StringBuilder sb = new StringBuilder(); // initial capacity is 16
+
+System.out.println(sb.length());   // 0
+System.out.println(sb.capacity()); // 16
+
+sb.append("A very long string");
+
+System.out.println(sb.length());   // 18
+System.out.println(sb.capacity()); // 34</code></pre> 
+  <p>It is possible to specify the capacity when creating a <code class="language-java">StringBuilder</code> object, but it is not used very often:</p> 
+  <pre><code class="language-java">StringBuilder sb = new StringBuilder(30);
+
+System.out.println(sb.length());   // 0
+System.out.println(sb.capacity()); // 30</code></pre> 
+  <h5 style="text-align: center;">Conclusion</h5> 
+  <p>The <code class="language-java">StringBuilder</code> class is used to create mutable strings, which can be modified at runtime. You can perform different operations on <code class="language-java">StringBuilder</code> objects, like append, reverse, replace, delete, etc. No new objects will be created. It is recommended to use this class instead of <code class="language-java">String</code> when a lot of modifications are performed. This will prevent the creation of multiple intermediate objects; therefore, it will work faster and require less memory. One common case for this is a sequence of concatenations.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   <strong>Note,</strong> there is another similar class called 
+   <code class="language-java">StringBuffer</code>. We will consider it in coming topics.
+  </div>
+  <p></p>
+ </body>
+</html>
