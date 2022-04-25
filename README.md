@@ -10,4 +10,5 @@ The repo contains source codes of projects in [Hyperskill/JetBrains Academy](htt
 
 ## Catalogue
 ### [Java](./Java/)
-- [Java For Beginners](./Java/Java%20for%20Beginners/)
+- ✅[Java For Beginners](./Java/Java%20for%20Beginners/)
+- [Java Developer](./Java/Java%20Developer)
