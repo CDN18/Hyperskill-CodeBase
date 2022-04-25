@@ -1,0 +1,50 @@
+<h2>Balance management</h2>
+<html>
+ <head></head>
+ <body>
+  <p><br> You are given the enum <code class="language-java">Operation</code> and the class <code class="language-java">Account</code>. Their implementations are shown below.</p> 
+  <p>The <code class="language-java">Operation</code> enum:</p> 
+  <pre><code class="language-java">enum Operation {
+    /**
+     * deposit (add) an amount into an Account
+     */
+    DEPOSIT,
+    /**
+     * withdraw (subtract) an amount from an Account
+     */
+    WITHDRAW
+}</code></pre> 
+  <p>The <code class="language-java">Account</code> class:</p> 
+  <pre><code class="language-java">class Account {
+
+    private String code;
+    private Long balance;
+
+    public String getCode() {
+        return code;
+    }
+
+    public Long getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Long balance) {
+        this.balance = balance;
+    }
+}</code></pre> 
+  <p>Your task is to implement the method <code class="language-java">changeBalance</code><strong> </strong>to control balances. It has the following declaration:</p> 
+  <pre><code class="language-java">public static boolean changeBalance(Account account, Operation operation, Long sum)</code></pre> 
+  <ul> 
+   <li>If the given operation is DEPOSIT the method adds the sum to the account's balance.</li> 
+   <li>If the operation is WITHDRAW the method subtracts the given sum from the account's balance. If the given sum is greater than the balance, the method shouldn't change it. Instead, the method must output the string <strong>"Not enough money to withdraw."</strong> (without quotes, don't forget the full point).</li> 
+   <li>In any case, the method returns a <strong>boolean value</strong> — true if the balance has changed, false if it hasn't.</li> 
+  </ul> 
+  <p> </p> 
+  <p><strong>Example 1</strong></p> 
+  <p>The following values are passed to the method: operation = Operation.DEPOSIT, sum = 2000. The initial balance of the account is 1000.</p> 
+  <p>In this case, the method returns "true" and the new account balance is 3000.</p> 
+  <p><strong>Example 2</strong></p> 
+  <p>The following values are passed to the method: operation = Operation.WITHDRAW, sum = 5000. The initial balance of the account is 2000.</p> 
+  <p>In this case, the method returns "false", the account's balance is not changed (2000) and method prints "Not enough money to withdraw.".</p>
+ </body>
+</html><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 5 seconds</font><br><br>

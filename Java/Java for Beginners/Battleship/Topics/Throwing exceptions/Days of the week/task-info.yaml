@@ -1,0 +1,31 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.*;
+
+    public class Main {
+
+        public static String getDayOfWeekName(int number) {
+            // write your code here
+        }
+
+        /* Do not change code below */
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+            int dayNumber = scanner.nextInt();
+            try {
+                System.out.println(getDayOfWeekName(dayNumber));
+            } catch (Exception e) {
+                System.out.println(e.getClass().getName());
+            }
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/7004#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Wed, 20 Apr 2022 03:11:03 UTC
+record: -1

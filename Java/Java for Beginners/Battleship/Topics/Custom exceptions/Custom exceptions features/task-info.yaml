@@ -1,0 +1,25 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: You should declare a constructor that takes the Exception argument if there
+    are cases of creating custom exceptions on top of the standard ones
+- text: Extend RuntimeException to create a custom unchecked exception
+- text: It is better to create custom exceptions whenever possible rather than reuse
+    standard one.
+- text: While creating a custom exception it is recommended to put "Exception" at
+    the end of the exception name
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/15642#comment
+status: Solved
+record: -1

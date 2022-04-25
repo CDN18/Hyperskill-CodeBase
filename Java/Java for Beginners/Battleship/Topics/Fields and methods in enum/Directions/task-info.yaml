@@ -1,0 +1,23 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: Direction.valueOf("NORTH") returns Direction.NORTH as a Direction object
+- text: Direction.NORTH.getShortCode() returns "N" as a String
+- text: Direction.NORTH.name() returns "NORTH" as a String
+- text: Direction.valueOf("N") returns Direction.NORTH as a Direction object
+- text: Direction.NORTH.toString() returns "N" as a String
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/11527#comment
+status: Solved
+record: -1

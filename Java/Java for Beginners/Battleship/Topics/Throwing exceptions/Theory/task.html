@@ -1,0 +1,105 @@
+<h2>Throwing exceptions</h2>
+<html>
+ <head></head>
+ <body>
+  <p>You've now learned what exceptions are and in what situations they occur. Now it's time to explore them further by understanding when and how you should throw exceptions yourself.</p> 
+  <h5 style="text-align: center;">The throw keyword</h5> 
+  <p>Any object of the <code class="language-java">Throwable</code> class and all its subclasses can be thrown using the <strong>throw </strong>statement. The general form of the statement consists of the <code class="language-java">throw</code> keyword and an object to be thrown.</p> 
+  <p>In the following example, we create and throw an object of the <code class="language-java">RuntimeException</code> class that extends <code class="language-java">Throwable</code>.</p> 
+  <pre><code class="language-java">public class Main {
+    public static void main(String args[]) {
+        RuntimeException exception = new RuntimeException("Something's bad.");
+        throw exception;
+    }
+}</code></pre> 
+  <p>Let's consider the code snippet above. First, we create an object with the specified message as the constructor argument. Then, we throw this exception using the <code class="language-java">throw</code> keyword. Just creating an object is not enough to throw an exception.</p> 
+  <p>The program stops and prints the error with the message we provided:</p> 
+  <pre><code class="language-java">Exception in thread "main" java.lang.RuntimeException: Something's bad.
+	at Main.main(Main.java:3)</code></pre> 
+  <p>The common practice is to create and throw an exception in a single line:</p> 
+  <ul> 
+   <li>throwing an instance of <code class="language-java">Throwable</code></li> 
+  </ul> 
+  <pre><code class="language-java">throw new Throwable("Something's bad.");</code></pre> 
+  <ul> 
+   <li>throwing an instance of <code class="language-java">Exception</code></li> 
+  </ul> 
+  <pre><code class="language-java">throw new Exception("An exception occurs");</code></pre> 
+  <ul> 
+   <li>throwing an instance of <code class="language-java">NullPointerException</code></li> 
+  </ul> 
+  <pre><code class="language-java">throw new NullPointerException("The field is null");</code></pre> 
+  <p></p>
+  <div class="alert alert-primary">
+   It is only possible to throw an object of the 
+   <code class="language-java">Throwable</code> class or a class that extends 
+   <code class="language-java">Throwable</code>. For example, the line 
+   <code class="language-java">throw new Long(10L);</code> does not compile.
+  </div>
+  <p></p> 
+  <ul> 
+  </ul> 
+  <h5 style="text-align: center;">Throwing checked exceptions</h5> 
+  <p>For example, let's take a look at the following method that reads text from a file. In case the file is not found, the method throws an <code class="language-java">IOException</code>:</p> 
+  <pre><code class="language-java">public static String readTextFromFile(String path) throws IOException {
+    // find a file by the specified path    
+
+    if (!found) {
+        throw new IOException("The file " + path + " is not found");
+    }
+
+    // read and return text from the file
+}</code></pre> 
+  <p>Here we can only see a part of the method. The <code class="language-java">throws</code> keyword following the method parameters is required since an <code class="language-java">IOException</code> is a checked exception.</p> 
+  <p></p>
+  <div class="alert alert-warning">
+   If a method throws a checked exception, the type of exception must be specified in the method declaration after the 
+   <code class="language-java">throws</code> keyword. Otherwise, the code won't compile.
+  </div>
+  <p></p> 
+  <p>If a method throws two or more checked exceptions, they must be separated by a comma (<code class="language-java">,</code>) in the declaration:</p> 
+  <pre><code class="language-java">public static void method() throws ExceptionType1, ExceptionType2, ExceptionType3</code></pre> 
+  <p>If a method is declared as throwing an exception (i.e. <code class="language-java">BaseExceptionType</code>), it can also throw any subclass of the specified exception (i.e. <code class="language-java">SubClassExceptionType</code>):</p> 
+  <pre><code class="language-java">public static void method() throws BaseExceptionType</code></pre> 
+  <h5 style="text-align: center;">Throwing unchecked exceptions</h5> 
+  <p>Let's see how unchecked exceptions are thrown in a more real-life example. The <code class="language-java">Account</code> class contains the method called <code class="language-java">deposit</code>, that adds the specified amount to the current balance. If the amount is not positive or exceeds the limit, the method throws an <code class="language-java">IllegalArgumentException</code>.</p> 
+  <pre><code class="language-java">class Account {
+
+    private long balance = 0;
+    
+    public void deposit(long amount) {
+        if (amount &lt;= 0) {
+            throw new IllegalArgumentException("Incorrect sum " + amount);
+        }
+        
+        if (amount &gt;= 100_000_000L) {
+            throw new IllegalArgumentException("Too large amount");
+        }
+        
+        balance += amount;
+    }
+    
+    public long getBalance() {
+        return balance;
+    }
+}</code></pre> 
+  <p>The <code class="language-java">deposit</code> method is not declared as throwing an <code class="language-java">IllegalArgumentException</code>. The same is true for all other unchecked exceptions.</p> 
+  <p></p>
+  <div class="alert alert-warning">
+   If a method throws an unchecked exception, the keyword 
+   <code class="language-java">throws</code> is not required in the method declaration (but you still have to use
+   <code class="language-java">throw</code>!)
+  </div>
+  <p></p> 
+  <h5 style="text-align: center;">When to throw an exception?</h5> 
+  <p>As you can see, technically, throwing an exception is a rather straightforward task. But the question is, when do you need to do this? The answer is that it is not always obvious.</p> 
+  <p>The common practice is to throw an exception when and only when the method preconditions are broken, that is when it cannot be performed under the current conditions.</p> 
+  <p> There are different cases where you would want to throw an exception. Imagine a method that parses the input string in the dd-MM-yyyy format to get a month. Here, if the string is invalid, the method throws an <code class="language-java">InvalidArgumentException</code>. Another example is reading a non-existing file that will lead to a <code class="language-java">FileNotFoundException</code>. </p> 
+  <p>After some time of practice, identifying situations where you need an exception will become an easier task for you. It is recommended to throw exceptions that are most relevant (specific) to the problem: it is better to throw an object of <code class="language-java">InvalidArgumentException</code> than the base <code class="language-java">Exception</code> class.</p> 
+  <p>Another question is how to choose between checked and unchecked exceptions? There is a short guideline. If a client can reasonably be expected to recover from an exception, make it a checked exception. If a client cannot do anything to recover, make it an unchecked exception.</p> 
+  <p>In the next lessons, you will learn how to create your own classes of exceptions and use them inside an application.</p> 
+  <h5>Conclusion</h5> 
+  <p>In this topic, you've learned how and when to throw exceptions. You can throw any object of the <code class="language-java">Throwable</code> class and all its subclasses using the <strong>throw </strong>statement that consists of the <code class="language-java">throw</code> keyword and an object to be thrown. An exception is usually thrown when and only when the method preconditions are broken, and it cannot be performed under the current conditions.</p> 
+  <p>You've also learned the specifics of throwing checked and unchecked exceptions, and how to distinguish between them. In the next topics, you will learn how to create your own classes of exceptions and use them inside your app.</p>
+ </body>
+</html>

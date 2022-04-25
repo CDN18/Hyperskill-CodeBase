@@ -1,0 +1,48 @@
+<h2>Custom exceptions</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Java exceptions cover a lot of standard exceptions we have to deal with in programming. However, sometimes we might need to create them ourselves. One of the main reasons why is to handle logical exceptions which are specific to your program. Imagine you are implementing a client-server application. The server processes user information and validates its correctness, or throws an exception. An essential condition for the server to work properly is that it should validate all the fields with user data and not stop at the first incorrect one. If some fields turn out to be incorrect, we want to receive a detailed report about what went wrong. In this case, a standard exception like <code class="language-java">IllegalArgumentException</code> will not be enough for us, which means it's time to create a custom exception. </p> 
+  <h5>How to create and throw a custom exception</h5> 
+  <p>To create a custom exception you need to extend the <code class="language-java">Exception</code> (checked) or <code class="language-java">RuntimeException</code> (unchecked) classes.</p> 
+  <p>Here is an example:</p> 
+  <pre><code class="language-java">public class MyAppException extends Exception {
+
+    public MyAppException(String msg) {
+        super(msg);
+    }
+
+    public MyAppException(Exception cause) {
+        super(cause);
+    }
+}</code></pre> 
+  <p>In the example above, a new class of exceptions is declared. It is a checked exception because it extends the <code class="language-java">Exception</code> class. The declared class has two constructors for creating instances, and they call the corresponding constructor of the base class.</p> 
+  <p>Now, we can throw an instance of the class:</p> 
+  <pre><code class="language-java">public static void someMethod() throws MyAppException {
+    throw new MyAppException("Something bad");
+}</code></pre> 
+  <p>For more information about throwing exceptions, please refer to <a target="_blank" href="https://hyperskill.org/learn/step/3553" rel="noopener noreferrer nofollow">our topic</a> on the subject. </p> 
+  <p>Now let's learn some rules of creating custom exceptions.</p> 
+  <h5>Best practices for custom exceptions </h5> 
+  <p>First things first, make sure that your application will benefit from creating a custom exception. Otherwise, use standard Java exceptions.</p> 
+  <p>Secondly, follow the naming convention — end the class name with “Exception”, for example <code class="language-java">MyAppException</code><strong>.</strong></p> 
+  <p>Also, provide the constructor that sets a cause in case your program catches a standard exception before throwing a custom one.</p> 
+  <p>For example, let's look at the code snippet below. Here we capture the root cause of the exception with the <code class="language-java">Throwable</code> argument, which is passed to the parent class constructor.</p> 
+  <pre><code class="language-java">public class CustomException extends Exception {
+
+   public CustomException(String message, Throwable cause) {
+
+       super(message, cause);
+
+   }
+
+}</code></pre> 
+  <p>Is creating a custom exception always a good idea? Although the custom exception feature greatly enhances the error handling mechanism, its use is not always justified. We advise you to use standard exceptions whenever possible for a number of reasons, such as:</p> 
+  <ul> 
+   <li>Standard exceptions are widely known by other programmers. One can understand the type of problem just by looking at the name of the exception. </li> 
+   <li>By opting for standard exceptions, you follow the reusability principle. It makes your code clearer and more professional. </li> 
+  </ul> 
+  <h5>Conclusion</h5> 
+  <p>Custom exceptions are a great tool for handling inconsistencies in your program. In this topic, we learned how to create and throw them, along with some best practices to follow. However, we highly recommend creating a custom exception only when it is justified. Standard Java exceptions are often a safer and no less efficient choice. </p>
+ </body>
+</html>

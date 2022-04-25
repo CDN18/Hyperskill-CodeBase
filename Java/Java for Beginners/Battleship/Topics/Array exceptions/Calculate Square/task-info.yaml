@@ -1,0 +1,19 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class FixingExceptions {
+
+        public static void calculateSquare(int[] array, int index) {
+            // write your code here
+
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/12688#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Wed, 20 Apr 2022 03:45:22 UTC
+record: -1
