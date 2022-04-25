@@ -13,4 +13,4 @@ If you don't have much experience in programming, this track is the best way to 
 |  [Readability Score](./Readability%20Score/) | Challenging |
 | [Bulls and Cows](./Bulls%20and%20Cows/) | Hard (Graduate Project) |
 | [Battleship](./Battleship/) | Hard (Graduate Project) |
-| Coffee Machine | Medium (Graduate Project) |
+| [Coffee Machine](./Coffee%20Machine/) | Medium (Graduate Project) |
