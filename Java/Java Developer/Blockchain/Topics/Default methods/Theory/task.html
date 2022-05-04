@@ -1,0 +1,116 @@
+<h2>Default methods</h2>
+<html>
+ <head></head>
+ <body>
+  <p>As you probably remember, interface methods are abstract by default. It means that they can't have a body, instead, they just declare a signature. Some kind of methods can have a body nevertheless. Such methods are called <code class="language-java">default</code> and are available since Java 8.</p> 
+  <h5 style="text-align: center;" id="methods-with-a-body">Methods with a body</h5> 
+  <p>Default methods are opposite to abstract ones. They have an implementation:</p> 
+  <pre><code class="language-java">interface Feature {
+    default void action() {
+        System.out.println("Default action");
+    }
+}</code></pre> 
+  <p>To denote that a method is <code class="language-java">default</code>, the keyword <code class="language-java">default</code> is reserved. Remember that an interface method is treated as <code class="language-java">abstract</code> by default. So you need to indicate this explicitly by putting <code class="language-java">default</code> keyword before methods with a body, otherwise, a compilation error happens.</p> 
+  <p>Although default methods are implemented, you cannot invoke them directly from an interface like <code class="language-java">Feature.action()</code>. You still need to have an object of a class that implements the interface:</p> 
+  <pre><code class="language-java">class FeatureImpl implements Feature {
+}
+...
+
+Feature feature = new FeatureImpl();
+feature.action(); // Default action</code></pre> 
+  <p>If you want to customize a default method in a class, just override it like a regular method:</p> 
+  <pre><code class="language-java">class FeatureImpl implements Feature {
+    public void action() {
+        System.out.println("FeatureImpl specific action");
+    }
+}
+...
+
+Feature feature = new FeatureImpl();
+feature.action(); // FeatureImpl-specific action</code></pre> 
+  <p>Sometimes default methods are huge. To make it possible to decompose such methods, Java allows declaring private methods inside an interface:</p> 
+  <pre><code class="language-java">interface Feature {
+    default void action() {
+        String answer = subAction();
+        System.out.println(answer);
+    }
+
+    private String subAction() {
+        return "Default action";
+    }
+}</code></pre> 
+  <h5 style="text-align: center;" id="why-are-they-needed">Why are they needed</h5> 
+  <p>As it was mentioned in the Interface topic, the main idea of an interface is declaring functionality. Default methods extend that idea. They don't just declare functionality but also implement it. The main reason is supporting backward compatibility. Let's consider an example.</p> 
+  <p>Suppose you program a game that has several types of characters. These characters are able to move within a map. That is represented by <code class="language-java">Movable</code> interface:</p> 
+  <pre><code class="language-java">interface Movable {
+    void stepAhead();
+    void turnLeft();
+    void turnRight();
+}</code></pre> 
+  <p>So we have the interface and many classes that implement it. For example, a <code class="language-java">Batman</code> character:</p> 
+  <pre><code class="language-java">class Batman implements Movable {
+    public void stepAhead() {...}
+    public void turnLeft() {...}
+    public void turnRight() {...}
+}</code></pre> 
+  <p>Once you decide that characters should be able to turn around. It means you need to add <code class="language-java">turnAround</code> method to the <code class="language-java">Movable</code>. You may implement the method for all classes implementing the interface. Another way is declaring a <code class="language-java">default</code> method in the interface. Then you don't have to implement it in all classes.</p> 
+  <p>Another example when the situation is getting even worse is when we are talking about interfaces that are part of the Java standard library. Suppose Java maintainers decided to enhance a commonly used interface with a new method in the next release. It means if you are going to upgrade the Java version and there are classes implementing the interface in your code, you have to implement the new method. Otherwise, your code won't compile.</p> 
+  <p>Sometimes default methods help to avoid code duplication. Indeed in our case <code class="language-java">turnAround</code> methods may look the same for all classes.</p> 
+  <pre><code class="language-java">interface Movable {
+    void stepAhead();
+    void turnLeft();
+    void turnRight();
+
+    default void turnAround() {
+        turnLeft();
+        turnLeft();
+    }
+}</code></pre> 
+  <p>If you want to customize a default implementation for <code class="language-java">Batman</code>, just override it:</p> 
+  <pre><code class="language-java">class Batman implements Movable {
+    public void stepAhead() {...}
+    public void turnLeft() {...}
+    public void turnRight() {...}
+    public void turnAround() {
+        turnRight();
+        turnRight();
+    }
+}</code></pre> 
+  <h5 style="text-align: center;" id="the-diamond-problem">The diamond problem</h5> 
+  <p>Suppose we have another interface <code class="language-java">Jumpable</code> that represents the ability to jump. The interface contains abstract methods for jumping in place, jumping with turning left and right. It also has a <code class="language-java">default</code> method for a turnaround jumping with the same signature as <code class="language-java">Movable</code>.</p> 
+  <pre><code class="language-java">interface Jumpable {
+    void jump();
+    void turnLeftJump();
+    void turnRightJump();
+    default void turnAround() {
+        turnLeftJump();
+        turnLeftJump();
+    }
+}</code></pre> 
+  <p><code class="language-java">Spiderman</code> has both abilities of <code class="language-java">Movable</code> and <code class="language-java">Jumpable</code>, so its class implements both interfaces. Note, interfaces have <code class="language-java">default</code> method <code class="language-java">turnAround</code> with the same signature, but different implementations. Which one should be chosen for the class? To avoid ambiguity, the compiler forces a programmer to provide the implementation explicitly, otherwise it raises a compilation exception.</p> 
+  <pre><code class="language-java">class Spiderman implements Movable, Jumpable {
+    // define an implementation for abstract methods
+    public void stepAhead() {...}
+    public void turnLeft() {...}
+    public void turnRight() {...}
+    public void jump() {…}
+    public void turnLeftJump() {...}
+    public void turnRightJump() {...}
+
+    // define an implementation for conflicted default method
+    public void turnAround() {
+        // define turnaround for the spiderman
+    }
+}</code></pre> 
+  <p>You can also choose one of the default implementations instead of writing your own.</p> 
+  <pre><code class="language-java">class Spiderman implements Movable, Jumpable {
+    ...
+    public void turnAround() {
+        Movable.super.turnAround();
+    }
+}</code></pre> 
+  <p>The problem is known as <strong>the diamond problem</strong>.</p> 
+  <h5 style="text-align: center;" id="conclusion">Conclusion</h5> 
+  <p>Some interface methods have a body. Such methods are called default and have <code class="language-java">default</code> keyword before a signature. The main idea of supporting default methods is providing backward compatibility. That allows you to add new methods to the existing interface without changing all classes that implement the interface. Remember that if a class implements several interfaces and some of them have a default method with the same signature, you have to define implementation for the method in the class. This happens because the compiler cannot decide what implementation should be used.</p>
+ </body>
+</html>

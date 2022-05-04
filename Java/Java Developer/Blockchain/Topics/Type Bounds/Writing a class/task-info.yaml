@@ -1,0 +1,28 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: //write code of the Shelf class here
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/8219#comment
+status: Solved
+feedback:
+  message: |-
+    <html>Your code is right! That's how the sample of an answer looks like:
+
+    class Shelf<T extends Book> {
+
+        private T element;
+
+        T getElement() {
+            return element;
+        }
+
+        void setElement(T elem) {
+            this.element = elem;
+        }
+    }
+
+    </html>
+  time: Tue, 26 Apr 2022 04:33:10 UTC
+record: -1

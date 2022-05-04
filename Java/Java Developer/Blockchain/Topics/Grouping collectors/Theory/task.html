@@ -1,0 +1,112 @@
+<h2>Grouping collectors</h2>
+<html>
+ <head></head>
+ <body>
+  <p>We have learned how to accumulate stream elements into a collection or a single value by using <code class="language-java">collect</code> operation and <code class="language-java">Collectors</code> class. However, besides that, the <code class="language-java">collect</code> can offer other useful operations such as dividing stream elements into two or more groups or applying a collector to the result of another collector. In this topic, we will see how to sort the elements of a stream by using <code class="language-java">Collectors.partitioningBy</code> and <code class="language-java">Collectors.groupingBy</code> methods. We will also learn what a downstream collector is and how to use it.</p> 
+  <h5 id="partitioning">Partitioning</h5> 
+  <p>Imagine that we want to divide a collection of accounts into two groups: accounts whose balance is greater than or equal to 10000, and accounts with a balance lower than 10000. In other words, we need to partition accounts into two groups based on a specified condition. It becomes possible by using <em>a partitioning</em> operation.</p> 
+  <p>The partitioning operation is presented by the <code class="language-java">Collectors.partitioningBy</code> method that accepts a predicate. It splits input elements into a <code class="language-java">Map</code> of two lists: one list contains elements for which the predicate is true, and the other contains elements for which it is false. The keys of the <code class="language-java">Map</code> has the <code class="language-java">Boolean</code> type.</p> 
+  <p>To illustrate the idea, let's create the following list of accounts:</p> 
+  <pre><code class="language-java">List&lt;Account&gt; accounts = List.of(
+        new Account(3333, "530012"),
+        new Account(15000, "771843"),
+        new Account(0, "681891")
+);</code></pre> 
+  <p>And partition them into two lists by a <code class="language-java">balance &gt;= 10000</code> predicate:</p> 
+  <pre><code class="language-java">Map&lt;Boolean, List&lt;Account&gt;&gt; accountsByBalance = accounts.stream()
+        .collect(Collectors.partitioningBy(account -&gt; account.getBalance() &gt;= 10000));</code></pre> 
+  <p>The <code class="language-java">accountsByBalance</code> map contains the following entries:</p> 
+  <pre><code class="language-java">{
+    false=[Account{balance=3333, number='530012'}, Account{balance=0, number='681891'}], 
+    true=[Account{balance=15000, number='771843'}]
+}</code></pre> 
+  <p></p>
+  <div class="alert alert-warning">
+   The partitioning operation can produce a 
+   <code class="language-java">Map</code> with empty lists, but they will always exist.
+  </div>
+  <p></p> 
+  <h5 id="grouping">Grouping</h5> 
+  <p>The grouping operation is similar to the partitioning. However, instead of splitting data into two groups based on a predicate, the grouping operation can produce any number of groups based on a <em>classification function</em> that maps elements to some key.</p> 
+  <p>The grouping operation is presented by the <code class="language-java">Collectors.groupingBy</code> method that accepts a classification function. The collector <code class="language-java">groupingBy</code> also produces a <code class="language-java">Map</code>. The keys of the <code class="language-java">Map</code> are values produced by applying the classification function to the input elements. The corresponding values of the <code class="language-java">Map</code> are lists containing elements mapped by the classification function.</p> 
+  <p>Let's create the <code class="language-java">Status</code> enum and add field <code class="language-java">status</code> to the <code class="language-java">Account</code> class:</p> 
+  <pre><code class="language-java">enum Status {
+    ACTIVE,
+    BLOCKED,
+    REMOVED
+}
+
+public class Account {
+    private long balance;
+    private String number;
+    private Status status;
+    
+    // constructors
+    // getters and setters
+}</code></pre> 
+  <p>Also, let's update the list of accounts:</p> 
+  <pre><code class="language-java">List&lt;Account&gt; accounts = List.of(
+        new Account(3333L, "530012", Status.REMOVED),
+        new Account(15000L, "771843", Status.ACTIVE),
+        new Account(0L, "681891", Status.BLOCKED)
+);</code></pre> 
+  <p>Now, we can divide all account into groups by its <code class="language-java">status</code>:</p> 
+  <pre><code class="language-java">Map&lt;Status, List&lt;Account&gt;&gt; accountsByStatus = accounts.stream()
+        .collect(Collectors.groupingBy(Account::getStatus));</code></pre> 
+  <p>The <code class="language-java">accountsByStatus</code> map contains the following entries:</p> 
+  <pre><code class="language-java">{
+    BLOCKED=[Account{balance=0, number='681891'}], 
+    REMOVED=[Account{balance=3333, number='530012'}], 
+    ACTIVE=[Account{balance=15000, number='771843'}]
+}</code></pre> 
+  <p></p>
+  <div class="alert alert-warning">
+   The grouping operation produces entries when needed, which means that the resulting 
+   <code class="language-java">Map</code> may contain any number of entries. For example, if the input is an empty stream, the resulting 
+   <code class="language-java">Map</code> will contain no entries.
+  </div>
+  <p></p> 
+  <h5 id="downstream-collectors">Downstream collectors</h5> 
+  <p>In addition to a predicate or a classification function, <code class="language-java">partitioningBy</code> and <code class="language-java">groupingBy</code> collectors can accept a <strong>downstream</strong> collector. Such a collector is applied to the results of another collector. For instance, <code class="language-java">groupingBy</code> collector, which accepts a classification function and a downstream collector, groups elements according to a classification function, and then applies a specified downstream collector to the values associated with a given key.</p> 
+  <p>To illustrate how it works, let's create the following list of accounts:</p> 
+  <pre><code class="language-java">List&lt;Account&gt; accounts = List.of(
+        new Account(3333L, "530012", Status.ACTIVE),
+        new Account(15000L, "771843", Status.BLOCKED),
+        new Account(15000L, "234465", Status.ACTIVE),
+        new Account(8800L, "110011", Status.ACTIVE),
+        new Account(45000L, "462181", Status.BLOCKED),
+        new Account(0L, "681891", Status.REMOVED)
+);</code></pre> 
+  <p>And calculate the total balances of <code class="language-java">blocked</code>, <code class="language-java">active</code>, and <code class="language-java">removed</code> accounts using a downstream collector:</p> 
+  <pre><code class="language-java">Map&lt;Status, Long&gt; sumByStatuses = accounts.stream()
+        .collect(Collectors.groupingBy(
+                Account::getStatus, 
+                Collectors.summingLong(Account::getBalance))
+         );</code></pre> 
+  <p>The code above groups accounts by the <code class="language-java">status</code> field and applies a downstream <code class="language-java">summingLong</code> collector to the <code class="language-java">List</code> values created by the <code class="language-java">groupingBy</code> operator. The resulting map contains the following entries:</p> 
+  <pre><code class="language-java">{ REMOVED=0, ACTIVE=27133, BLOCKED=60000 }</code></pre> 
+  <p>The groupingBy method can also accept a supplier to provide an empty map into which the results will be inserted. It is useful if you wish to specify the exact implementation of the Map interface, for example:</p> 
+  <pre><code class="language-java">Map&lt;Status, Long&gt; sumByStatuses = accounts.stream()
+        .collect(Collectors.groupingBy(
+                Account::getStatus,
+                LinkedHashMap::new,
+                Collectors.summingLong(Account::getBalance))
+         );</code></pre> 
+  <h5 id="teeing-collector">Teeing collector</h5> 
+  <p>Java 12 introduced the <code class="language-java">teeing</code> collector which accepts two downstream collectors and a merger function as arguments and combines the results of the downstream collectors into the final result using the provided merger function. Let’s see how it works on an example using the same list of accounts as in the previous paragraph.</p> 
+  <p>Suppose we want to extract the following information from the collection of accounts: the number of blocked accounts and the total amount of balances of the blocked accounts.</p> 
+  <p>This is how we can use the teeing collector to solve our task:</p> 
+  <pre><code class="language-java">long[] countAndSum = accounts
+        .stream()
+        .filter(account -&gt; account.getStatus() == Status.BLOCKED)
+        .collect(Collectors.teeing(
+                Collectors.counting(),
+                Collectors.summingLong(Account::getBalance),
+                (count, sum) -&gt; new long[]{count, sum})
+        );</code></pre> 
+  <p>First, we filter the stream to get accounts with the <code class="language-java">BLOCKED</code> status. Then we use the <code class="language-java">teeing</code> collector and pass the <code class="language-java">counting</code> collector and the <code class="language-java">summingLong</code> collector to it to get the count of the filtered items and the sum of their balances. After that, we put the results of the downstream collectors to an array, which after the stream is processed will contain the following values: <code class="language-java">[2, 60000].</code></p> 
+  <p>In a similar way, we can use the teeing collector to return any two values from a single stream.</p> 
+  <h5 id="conclusion">Conclusion</h5> 
+  <p>To divide stream elements into exactly two groups based on a specified condition, we can use <code class="language-java">Collectors.partitioningBy</code> collector. It accepts a predicate and produces a <code class="language-java">Map</code> with <code class="language-java">Boolean</code> keys and <code class="language-java">List</code> values. If we need to divide stream elements into more than two groups, we can use <code class="language-java">Collectors.groupingBy</code> collector. It accepts a classification function and groups elements according to it. The <code class="language-java">groupingBy</code> also produces a <code class="language-java">Map</code> with <code class="language-java">Lists</code> values and keys whose type is a return type of the classification function. Both collectors can take a predicate or a classification function accordingly and a downstream collector that is applied to the results of partitioning or grouping.</p>
+ </body>
+</html>

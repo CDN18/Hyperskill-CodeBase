@@ -1,0 +1,20 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: "import java.util.Scanner;\nimport java.lang.ref.SoftReference;\nimport java.lang.ref.WeakReference;\n\
+    \npublic class Main {\n    public static void main(String[] args) {\n        Scanner\
+    \ scanner = new Scanner(System.in);\n        Integer num1 = scanner.nextInt();\
+    \   \n        Integer num2 = scanner.nextInt();\n\n        SoftReference<Integer>\
+    \ softReference = ... // inititalize an instance of SoftReference by passing num1\
+    \ to the constructor\n        WeakReference<Integer> weakReference = ... // inititalize\
+    \ an instance of WeakReference by passing num2 to the constructor\n\n        num1\
+    \ = null;\n        num2 = null;\n\n        System.out.println((int)Math.pow(/*\
+    \ print the sum here */, 2));        \n    }\n}"
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/18147#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Sun, 01 May 2022 07:23:05 UTC
+record: -1

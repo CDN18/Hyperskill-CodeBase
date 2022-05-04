@@ -1,0 +1,17 @@
+<h2>Password processing</h2>
+<html>
+ <head></head>
+ <body>
+  <p>The <code class="language-java">UserProfile</code> class is supposed to represent a user in a social network. It has the following fields:</p> 
+  <pre><code class="language-java">class UserProfile implements Serializable {
+
+    private String login;
+    private String email;
+    private transient String password;
+
+    // a constructor and getters
+}</code></pre> 
+  <p>You need to implement custom serialization and deserialization for objects of this class (see the methods <code class="language-java">readObject</code> and <code class="language-java">writeObject</code>).</p> 
+  <p>The serialization should save the fields <code class="language-java">login</code> and <code class="language-java">email</code> as is and encrypt the <code class="language-java">password</code> field. The encryption algorithm is very simple and we use it only for education purposes: each char of the string is shifted by 1 position according to the unicode table (i.e. <code class="language-java">123</code> -&gt; <code class="language-java">234</code>, <code class="language-java">abc</code> -&gt; <code class="language-java">bcd</code>). The deserialization should perform a reverse process to restore the original password.</p>
+ </body>
+</html><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 5 seconds</font><br><br>

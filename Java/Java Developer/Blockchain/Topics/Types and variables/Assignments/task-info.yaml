@@ -1,0 +1,23 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class Main {
+        public static void main(String[] args) {
+            // Assign values to these four variables
+            int one;
+            int two;
+            int three;
+            int four;
+
+            System.out.printf("%d %d %d %d", one, two, three, four);
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2486#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Wed, 27 Apr 2022 13:02:55 UTC
+record: -1

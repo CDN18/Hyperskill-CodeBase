@@ -1,0 +1,15 @@
+<h2>Strong Reference vs Soft Reference</h2>
+<html>
+ <head></head>
+ <body>
+   Suppose you have the following code:
+  <p></p> 
+  <pre><code class="language-java">public class ReferenceTypesDemo {
+    public static void main(String[] args) {
+        Integer num = 1995;
+        SoftReference&lt;Integer&gt; softReference = new SoftReference&lt;&gt;(num);
+    }
+}</code></pre> 
+  <p>Will the GC delete the <code class="language-java">num</code> variable object if the application is close to running out of memory?</p>
+ </body>
+</html>

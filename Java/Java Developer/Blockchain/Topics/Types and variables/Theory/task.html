@@ -1,0 +1,68 @@
+<h2>Types and variables</h2>
+<html>
+ <head></head>
+ <body>
+  <h5 style="text-align: center;" id="declaring-and-initializing">Declaring and initializing</h5> 
+  <p>A <strong>variable</strong> is a placeholder for storing a value of a particular <strong>type: </strong>a string, a number, or something else. Every variable has a <strong>name </strong>(also known as<strong> an identifier)</strong> to distinguish it from others. Before you start using a variable, you must declare it.</p> 
+  <p>The general form of declaration is the following:</p> 
+  <pre><code class="language-java">DataType variableName = initialization;</code></pre> 
+  <p>The left part of this statement describes the variable, and the right part describes something that is assigned to it.</p> 
+  <ul> 
+   <li>The <strong>type (</strong>or<strong> data type) </strong>of a variable determines what possible operations can be performed on the variable and which values can be stored in it. Here we use a non-existing data type (<strong>DataType</strong>) to demonstrate the general form of declaration.</li> 
+   <li>The <strong>name (</strong>or<strong> identifier)</strong> distinguishes the variable from others. The name of a variable cannot start with a digit; it usually starts with a letter. Always try to choose meaningful and readable names for variables to make your code easy to understand.</li> 
+   <li>The <strong>assignment</strong> <strong>operator</strong> denoted as <code class="language-java">=</code> is used to assign a single value or a result of an expression to a variable.</li> 
+   <li>The<strong> initialization</strong> is a value or a result of an expression that is assigned to the variable.</li> 
+  </ul> 
+  <p>According to this declaration, we can declare a variable of the type <strong>String</strong> and assign the word <strong>"java"</strong> to it:</p> 
+  <pre><code class="language-java">String language = "java";</code></pre> 
+  <p>We can also declare a variable of the type <code class="language-java">int</code> to store an integer number:</p> 
+  <pre><code class="language-java">int numberOfApples = 5;</code></pre> 
+  <p><span style="background-color: transparent; color: #000000; font-size: 11pt; font-variant: normal;"></span></p>
+  <div class="alert alert-warning">
+   The case in the name of a variable makes a difference: 
+   <code class="language-java">language</code> is not the same as 
+   <code class="language-java">Language</code>.
+   <span style="background-color: transparent; color: #000000; font-size: 11pt; font-variant: normal;"></span>
+  </div>
+  <p></p> 
+  <p>Variables can store not only strings and numbers, but also characters and other data types which we will learn about later in the next topics.</p> 
+  <h5 style="text-align: center;" id="accessing-the-value-of-a-variable">Accessing the value of a variable</h5> 
+  <p>Once a variable has been declared, its value can be accessed and modified using the name. In the example below, we declare a variable and then print it:</p> 
+  <pre><code class="language-java">String dayOfWeek = "Monday";
+System.out.println(dayOfWeek); // Monday</code></pre> 
+  <p>It is also possible to assign a value of one variable to another one:</p> 
+  <pre><code class="language-java">int one = 1;
+int num = one;
+System.out.println(num); // 1</code></pre> 
+  <p>One important feature of variables is that they can be changed. You don't need to declare a variable again to change its value; just assign a new value to it using the <code class="language-java">=</code> operator.</p> 
+  <p>Let's declare a variable named <code class="language-java">dayOfWeek</code> and print its value before and after changing:</p> 
+  <pre><code class="language-java">String dayOfWeek = "Monday";
+System.out.println(dayOfWeek); // Monday
+
+dayOfWeek = "Tuesday";
+System.out.println(dayOfWeek); // Tuesday</code></pre> 
+  <p>There is one restriction for variables: you can only assign a value of the same type as the type of the initial variable. So, the following code is not correct:</p> 
+  <pre><code class="language-java">int number = 10;
+number = 11; // ok
+number = "twelve"; // it does not work!</code></pre> 
+  <h5 style="text-align: center;" id="alternative-forms-of-declaration">Alternative forms of declaration</h5> 
+  <p>There are several alternative forms of declaration which are less commonly used in practice. Here are several of them in particular examples.</p> 
+  <ul> 
+   <li>Declaring several variables of the same type as a single statement:</li> 
+  </ul> 
+  <pre><code class="language-java">String language = "java", version = "8 or newer";</code></pre> 
+  <ul> 
+   <li>Separating declaration and initialization into statements:</li> 
+  </ul> 
+  <pre><code class="language-java">int age; // declaration
+age = 35; // initialization</code></pre> 
+  <p>However, as we have already noted, these forms are rarely used.</p> 
+  <h5 style="text-align: center;" id="type-inference">Type inference</h5> 
+  <p>Since Java 10, you can write <strong>var</strong> instead of a specific type to force automatic type inference based on the type of assigned value:</p> 
+  <pre><code class="language-java">var variableName = initialization;</code></pre> 
+  <p>Here are two examples below:</p> 
+  <pre><code class="language-java">var language = "Java"; // String
+var version = 10; // int</code></pre> 
+  <p>This feature can be a bit controversial: on the one hand, it allows your code to be more concise. On the other hand, since it doesn't indicate the type explicitly, it may affect the code readability in a bad way. For now, it's enough to understand the basic idea. We will not use type inference in our theory so that our educational platform is suitable for people who use earlier versions of Java. But if you would like to practice it, you may use type inference in our exercises as they fully support Java 10.</p>
+ </body>
+</html>

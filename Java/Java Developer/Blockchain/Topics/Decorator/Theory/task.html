@@ -1,0 +1,103 @@
+<h2>Decorator</h2>
+<html>
+ <head></head>
+ <body>
+  <h5 style="text-align: center;" id="design-problem">Design problem</h5> 
+  <p>Sometimes it is necessary to impose additional responsibilities on a separate object rather than the whole class. A library for building graphics in the user interface should be able to add a new property, say, frames or new behavior (for example, the ability to scroll to any element). Adding new responsibilities is permissible through inheritance. However, this solution is static, and therefore not flexible enough.</p> 
+  <h5 style="text-align: center;" id="decorator">Decorator</h5> 
+  <p>A more flexible approach is to put the component in another object called the <strong>decorator.</strong> The Decorator is a structural pattern used to add new responsibilities to an object dynamically without extending functionality. That lets you dynamically change the behavior of an object at runtime by wrapping it in an object of a decorator class.</p> 
+  <p>Decorators are used for adding some behavior that is not part of the core functionality to all interface methods. Decorator pattern perfectly suits the following tasks:</p> 
+  <ul> 
+   <li>caching the work results;</li> 
+   <li>measuring the execution time of methods;</li> 
+   <li>user access control.</li> 
+  </ul> 
+  <p>The decorator pattern has the following components:</p> 
+  <ul> 
+   <li><em>Component</em> is the interface for the objects that will get new responsibilities from the decorators;</li> 
+   <li><em>Concrete Component</em> defines objects which implement the Component interface and will get new responsibilities from the concrete decorators;</li> 
+   <li><em>Decorator</em> has reference to the Component and overridden component methods;</li> 
+   <li><em>Concrete Decorator</em> extends Decorator class and adds new functions, properties or state without creating new classes;</li> 
+  </ul> 
+  <p style="text-align: center;"><img alt="" height="602" src="https://ucarecdn.com/8422f83b-451b-442a-8588-86ec6507b72f/" width="760"></p> 
+  <p style="text-align: center;"> </p> 
+  <p><br> The decorator pattern in JDK:</p> 
+  <ul> 
+   <li>Streams: java.io package;</li> 
+   <li>Collections: java.util package.</li> 
+  </ul> 
+  <h5 style="text-align: center;" id="practical-example">Practical example</h5> 
+  <p>Let’s consider a more specific example. Our components are software developers that have to make some job, that’s why we create the Developer interface:</p> 
+  <pre><code class="language-java">public interface Developer {
+
+    public String makeJob();
+}</code></pre> 
+  <p>Next, we create a concrete developer:</p> 
+  <pre><code class="language-java">public class JavaDeveloper implements Developer {
+
+    public String makeJob() {
+        return "Write Java Code.";
+    }
+}</code></pre> 
+  <p>Now, describe the developer decorator to add functionality to our developers dynamically:</p> 
+  <pre><code class="language-java">public class DeveloperDecorator implements Developer {
+    private Developer developer;
+
+    public DeveloperDecorator(Developer developer) {
+        this.developer = developer;
+    }
+
+    public String makeJob() {
+        return developer.makeJob();
+    }
+}</code></pre> 
+  <p>The concrete decorator is the senior java developer who has an important additional responsibility: code review.</p> 
+  <pre><code class="language-java">public class SeniorJavaDeveloper extends DeveloperDecorator {
+
+    public SeniorJavaDeveloper(Developer developer) {
+        super(developer);
+    }
+
+ 
+    public String makeCodeReview() {
+        return "Make code review.";
+    }
+
+    public String makeJob() {
+        return super.makeJob() + " " + makeCodeReview();
+    }
+}</code></pre> 
+  <p>The second decorator is the team leader: being also a developer, the leader additionally has to communicate with customers and send weekly reports:</p> 
+  <pre><code class="language-java">public class JavaTeamLead extends DeveloperDecorator {
+
+    public JavaTeamLead(Developer developer) {
+        super(developer);
+    }
+
+    public String sendWeekReport() {
+        return "Send week report to customers.";
+    }
+
+    public String makeJob() {
+        return super.makeJob() + " " + sendWeekReport();
+    }
+}</code></pre> 
+  <p>Here is the final demo of the Decorator pattern:</p> 
+  <pre><code class="language-java">public class Task {
+
+    public static void main(String[] args) {
+        Developer developer = new JavaTeamLead(
+                                  new SeniorJavaDeveloper(
+                                      new JavaDeveloper()));
+        
+        System.out.println(developer.makeJob());
+    }
+}</code></pre> 
+  <h5 style="text-align: center;" id="conclusion">Conclusion</h5> 
+  <p>The decorator pattern is applicable in the following cases:</p> 
+  <ul> 
+   <li>When you want to add new properties and functions to the object dynamically;</li> 
+   <li>When the extension of classes is superfluous.</li> 
+  </ul>
+ </body>
+</html>

@@ -1,0 +1,26 @@
+<h2>Sort users</h2>
+<html>
+ <head></head>
+ <body>
+   We have the 
+  <code class="language-java">User</code> class shown in the following code snippet and we want to sort users by their names in the lexicographic order.
+  <p></p> 
+  <pre><code class="language-java">class User {
+    private String name;
+
+    public User(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+}</code></pre> 
+  <p>Implement <code class="language-java">UserComparator</code> that we will use to sort users. You don't need to read or write anything from or to the console, just implement the method.</p>
+ </body>
+</html><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">Mike Ginger Alice Bob<br></code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">Alice Bob Ginger Mike<br></code></pre><br><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">microprogrammer Moses Chloe user</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">Chloe Moses microprogrammer user</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 5 seconds</font><br><br>

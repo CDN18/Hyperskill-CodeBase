@@ -1,0 +1,23 @@
+type: choice
+is_multiple_choice: false
+options:
+- text: to provide backward compatibility
+- text: to avoid code duplication
+- text: to invoke code directly from an interface, without creating a class
+- text: to speed up code execution
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/11356#comment
+status: Solved
+record: -1
+custom_name: What is the reason for default methods?

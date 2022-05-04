@@ -1,0 +1,39 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    public class Main {
+        public static void main(String[] args) {
+            // create instances and start threads here
+        }
+    }
+
+    // Don't change the code below
+    class WorkerThread extends Thread {
+        private static final int NUMBER_OF_LINES = 3;
+
+        public WorkerThread(String name) {
+            super(name);
+        }
+
+        @Override
+        public void run() {
+            final String name = Thread.currentThread().getName();
+
+            if (!name.startsWith("worker-")) {
+                return;
+            }
+
+            for (int i = 0; i < NUMBER_OF_LINES; i++) {
+                System.out.println("do something...");
+            }
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2519#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Wed, 27 Apr 2022 20:03:35 UTC
+record: -1

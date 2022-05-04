@@ -1,0 +1,22 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: It can contain static methods
+- text: It can be empty (without methods at all)
+- text: It must contain only one abstract method (non-default)
+- text: It cannot contain default methods
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/11690#comment
+status: Solved
+record: -1

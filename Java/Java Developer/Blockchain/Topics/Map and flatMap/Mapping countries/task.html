@@ -1,0 +1,13 @@
+<h2>Mapping countries</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Given the following list of countries:</p> 
+  <pre><code class="language-java">List&lt;String&gt; countries = Arrays.asList("Costa Rica", "Hungary", "Saint Kitts and Nevis", "Norway");</code></pre> 
+  <p>Enter all elements of the list <code class="language-java">numbers</code> separated by spaces (for example: 1 2 3).</p> 
+  <pre><code class="language-java">List&lt;Integer&gt; numbers = countries.stream()
+        .map(country -&gt; country.split("\\s+"))
+        .map(country -&gt; country.length)
+        .collect(Collectors.toList());</code></pre>
+ </body>
+</html>

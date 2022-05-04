@@ -1,0 +1,38 @@
+<h2>Serialization mystery</h2>
+<html>
+ <head></head>
+ <body>
+  <p> What will the following code output?<br></p>
+  <pre><code class="language-java">import java.io.IOException;
+import java.io.Serializable;
+
+class CustomSerialization implements Serializable {
+  
+  private static final long serialVersionUID = -8385655899811016412L;
+  
+  private final int a;
+  private final int b;
+  
+  public CustomSerialization() {
+    a = 10;
+    b = 20;
+  }
+  
+  private void writeObject(java.io.ObjectOutputStream out) throws IOException {}
+  private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {}
+  
+  @Override
+  public String toString() {
+    return Integer.toString(a) + " " + Integer.toString(b);
+  }
+  
+  public static void main(String[] args) {
+    CustomSerialization customSerialization = new CustomSerialization();
+    // Function that serializes and deserializes object back and forth
+    customSerialization = Utils.serializeDeserialize(customSerialization);
+    System.out.println(customSerialization);
+  }
+}</code></pre>
+  <br>
+ </body>
+</html>

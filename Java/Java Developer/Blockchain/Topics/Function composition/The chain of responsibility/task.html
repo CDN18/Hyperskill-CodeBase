@@ -1,0 +1,60 @@
+<h2>The chain of responsibility</h2>
+<html>
+ <head></head>
+ <body>
+  <p></p>
+  <div class="alert alert-primary">
+   Wow! This problem is kind of tricky. If you're ready to put your thinking cap on, brace yourself and good luck! Otherwise, you can skip it for now and return any time later.
+  </div>
+  <p></p> 
+  <h5 style="text-align: center;" id="overview">Overview</h5> 
+  <p><a target="_blank" href="https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern" rel="noopener noreferrer nofollow"><strong>The chain of responsibility</strong></a> is an object-oriented design pattern that processes a request through a series of handlers (a chain). The request is passed from one handler to another and processed by one or all of these handlers in the chain.</p> 
+  <p>As a rule, an implementation of this pattern requires the following classes and methods:</p> 
+  <ul> 
+   <li><strong>a general handler</strong> is an abstract class or interface with a method <strong>handle/process/etc</strong> and a method to set the next handler;</li> 
+   <li>one or more <strong>concrete handlers </strong>that implement the general handler.</li> 
+  </ul> 
+  <p>The functional style allows us to implement this pattern easier. Instead of writing all concrete handlers we can write lambda expressions (or method references). For setting the next handler it's possible to use function composition in similar to functions way.</p> 
+  <h5 style="text-align: center;" id="problem">Problem</h5> 
+  <p>There is a class called <code class="language-xml">Request(data: String)</code> for representing some XML requests in a payment system. It has a getter for the data field and a constructor with a single argument.</p> 
+  <p>The following is what the value of <code class="language-xml">data</code> looks like in a human-readable format (it is a single line string when processing).</p> 
+  <pre><code class="language-xml">&lt;request&gt;
+  &lt;transaction&gt;
+    &lt;type&gt;payment&lt;/type&gt;
+    &lt;sum&gt;100000&lt;/sum&gt;
+    &lt;order_id&gt;e94dc619-6172-4ffe-aae8-63112c551570&lt;/order&gt;
+    &lt;desc&gt;We'd like to buy an elephant&lt;/desc&gt;
+  &lt;/transaction&gt;
+  &lt;digest&gt;CZVMYTgc3iiOdJjFP+6dhQ==&lt;/digest&gt;
+&lt;/request&gt;</code></pre> 
+  <p>You must implement <strong>the chain of responsibility pattern</strong> in the functional style for stage-by-stage request creating.</p> 
+  <p>1) Write the <code class="language-xml">RequestHandler</code> interface with a single abstract method called <code class="language-xml">handle</code><strong> </strong>and one default method; the first method is needed to use lambda expressions. It should accept a <code class="language-xml">Request</code> object and then return a new <code class="language-xml">Request</code> with changed data. The second method is used to combine several handlers into a single one.</p> 
+  <p>2) Create <code class="language-xml">commonRequestHandler</code> that is combined from three existing handlers: <code class="language-xml">wrapInTransactionTag</code>, <code class="language-xml">createDigest</code> and <code class="language-xml">wrapInRequestTag</code>.</p> 
+  <p></p>
+  <div class="alert alert-warning">
+   Use the provided template for your solution. Do not change it and read comments in the code. The template is long enough, scroll it to the bottom. 
+   <strong>All comments where your code is expected start with !!!</strong>
+  </div>
+  <p></p> 
+  <p>Further, you can read how the requests should be created. Keep in mind, all handlers have been already implemented and available for you. You need to write only a suitable functional interface and compose all existing handlers as functions into one <code class="language-xml">commonRequestHandler</code> to follow the described algorithm.</p> 
+  <h5 style="text-align: center;" id="the-algorithm-for-creating-a-xml-request">The algorithm for creating a XML request</h5> 
+  <p><strong></strong>0) Initial request data looks like shown below (it contains only business data).</p> 
+  <pre><code class="language-java">&lt;type&gt;payment&lt;/type&gt;&lt;sum&gt;100000&lt;/sum&gt;&lt;order_id&gt;e94dc619-6172-4ffe-aae8-63112c551570&lt;/order&gt;&lt;desc&gt;We'd like to buy an elephant&lt;/desc&gt;</code></pre> 
+  <p>1) First, a tag <em>&lt;transaction&gt;...&lt;/transaction&gt;</em> is added as border of the data (data is wrapped in the tag). The result:</p> 
+  <pre><code class="language-java">&lt;transaction&gt;&lt;type&gt;payment&lt;/type&gt;&lt;sum&gt;100000&lt;/sum&gt;&lt;order_id&gt;e94dc619-6172-4ffe-aae8-63112c551570&lt;/order&gt;&lt;desc&gt;We'd like to buy an elephant&lt;/desc&gt;&lt;/transaction&gt;</code></pre> 
+  <p>2) Then, a digest (MD5) is calculated for entire data created on the previous stage and added as a new tag. The result:</p> 
+  <pre><code class="language-java">&lt;transaction&gt;&lt;type&gt;payment&lt;/type&gt;&lt;sum&gt;100000&lt;/sum&gt;&lt;order_id&gt;e94dc619-6172-4ffe-aae8-63112c551570&lt;/order&gt;&lt;desc&gt;We'd like to buy an elephant&lt;/desc&gt;&lt;/transaction&gt;&lt;digest&gt;CZVMYTgc3iiOdJjFP+6dhQ==&lt;/digest&gt;</code></pre> 
+  <p>3) After that, the data is wrapped in a tag <em>&lt;request&gt;...&lt;/request&gt;</em> as shown below. The request is completed.</p> 
+  <pre><code class="language-java">&lt;request&gt;&lt;transaction&gt;&lt;type&gt;payment&lt;/type&gt;&lt;sum&gt;100000&lt;/sum&gt;&lt;order_id&gt;e94dc619-6172-4ffe-aae8-
+63112c551570&lt;/order&gt;&lt;desc&gt;We'd like to buy an elephant&lt;/desc&gt;&lt;/transaction&gt;
+&lt;digest&gt;CZVMYTgc3iiOdJjFP+6dhQ==&lt;/digest&gt;&lt;/request&gt;</code></pre> 
+  <p>So, if you have a request data as shown in stage 0, the algorithm should generate the result as shown in stage 3.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   Note, each stage is already implemented for you in a specific 
+   <code class="language-xml">RequestHandler</code>.
+  </div>
+  <p></p> 
+  <p></p>
+ </body>
+</html><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 5 seconds</font><br><br>

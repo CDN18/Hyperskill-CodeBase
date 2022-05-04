@@ -1,0 +1,31 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.io.BufferedReader;
+    import java.io.IOException;
+    import java.io.InputStreamReader;
+    import java.util.*;
+    import java.util.stream.*;
+
+    public class Main {
+
+        private static Stream<String> omitLongStrings(List<String> strings) {
+            // write your code here
+        }
+
+        public static void main(String[] args) throws IOException {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            String str = reader.readLine();
+            List<String> list = new ArrayList<>(Arrays.asList(str.split(" ")));
+            omitLongStrings(list).forEach(System.out::println);
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2425#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Sat, 30 Apr 2022 13:35:30 UTC
+record: -1

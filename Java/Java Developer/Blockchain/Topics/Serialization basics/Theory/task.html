@@ -1,0 +1,176 @@
+<h2>Serialization basics</h2>
+<html>
+ <head></head>
+ <body>
+  <p>The lifetime of all objects within a program is limited by the runtime. When we stop and then reopen the program, the information about previously created objects is lost. Imagine it happens in a computer game: this behavior is not what we actually need! Fortunately, a program can save objects to some permanent storage like a hard drive and read them back the next time the program starts. </p> 
+  <h5 style="text-align: center;" id="serialization-and-deserialization">Serialization and deserialization</h5> 
+  <p>There are two processes to save and restore the state of objects between program launches: <strong>serialization</strong> and <strong>deserialization</strong>.</p> 
+  <p><strong>Serialization </strong>is a process that converts the state of an object into a stream of bytes. Objects are saved to some permanent storage for reconstruction at a later time.</p> 
+  <p><strong>Deserialization </strong>is the reverse process when the serialized byte form is used to reconstruct the actual object.</p> 
+  <p>There are numerous ways to serialize Java objects into binary and text formats, for example, XML and JSON. The Java platform pays special attention to binary serialization and provides a default binary serialization protocol.</p> 
+  <p>The following picture shows that an object can be serialized into a byte stream to store the data in a file or a database and then reconstructed again to be used in a program.</p> 
+  <p style="text-align: center;"><img alt="" height="255" src="https://ucarecdn.com/f727023c-5e01-452d-90a3-33f95fa1455d/" width="749"></p> 
+  <p>An additional feature of serialization is the ability to send some serialized objects through the network and then deserialize and use them in another Java program. So, serialization makes it easy for objects to be used over connected systems.</p> 
+  <h5 style="text-align: center;" id="making-a-class-serializable">Making a class serializable</h5> 
+  <p>To make a class serializable, it must implement the <code class="language-java">Serializable</code> interface. This is a marker interface without methods. This is used to inform the compiler that the class implementing it has some special behavior.</p> 
+  <pre><code class="language-java">class SomeClass implements Serializable {
+    // fields and methods
+}</code></pre> 
+  <p>The class being serialized can contain any primitive type and any other class as its field. All related values and objects will also be serialized. You can easily <strong>prevent</strong> a field from being serialized with the <code class="language-java">transient</code> keyword:</p> 
+  <pre><code class="language-java">private transient String nonSerializedField;</code></pre> 
+  <p>There is a recommendation to add a special field called <code class="language-java">serialVersionUID</code> for every class that implements this interface. The field should be <code class="language-java">static</code>, <code class="language-java">final</code> and of the <code class="language-java">long</code> type:</p> 
+  <pre><code class="language-java">private static final long serialVersionUID = 7L;</code></pre> 
+  <p>The <code class="language-java">serialVersionUID</code> field is used to verify that the sender and the receiver of a serialized object are compatible and have loaded the classes for that object. If the version number of the sender and receiver classes don't match, then the runtime error <code class="language-java">InvalidClassException</code> occurs. The matching of this value happens “under the hood” during serialization and deserialization. An error occurs only in cases of mismatch.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   Although it's not required, it is strongly recommended for a serializable class to explicitly declare its own 
+   <code class="language-java">serialVersionUID</code>. Declaring and using this number guarantees a consistent 
+   <code class="language-java">serialVersionUID</code> value across different Java compiler implementations. At the same time, there is no need for two different classes to have unique values for this field.
+  </div>
+  <p></p> 
+  <h5 style="text-align: center;" id="streams-for-objects">Streams for objects</h5> 
+  <p>In Java, the serialization and deserialization mechanisms are based on the standard I/O system and byte streams. They use the <code class="language-java">ObjectOutputStream</code> and <code class="language-java">ObjectInputStream</code> classes accordingly.</p> 
+  <p>The first class provides a method called <code class="language-java">void writeObject(Object object)</code> which writes the state of the specified object to the stream . The second class has a corresponding method <code class="language-java">Object readObject()</code> to restore the object. Both methods throw exceptions when something is wrong.</p> 
+  <p>Here are two of our complete methods for serialization and deserialization put inside the <code class="language-java">SerializationUtils</code> class for convenience.</p> 
+  <pre><code class="language-java">class SerializationUtils {
+    /**
+     * Serialize the given object to the file
+     */
+    public static void serialize(Object obj, String fileName) throws IOException {
+        FileOutputStream fos = new FileOutputStream(fileName);
+        BufferedOutputStream bos = new BufferedOutputStream(fos);
+        ObjectOutputStream oos = new ObjectOutputStream(bos);
+        oos.writeObject(obj);
+        oos.close();
+    }
+
+    /**
+     * Deserialize to an object from the file
+     */
+    public static Object deserialize(String fileName) throws IOException, ClassNotFoundException {
+        FileInputStream fis = new FileInputStream(fileName);
+        BufferedInputStream bis = new BufferedInputStream(fis);
+        ObjectInputStream ois = new ObjectInputStream(bis);
+        Object obj = ois.readObject();
+        ois.close();
+        return obj;
+    }
+}</code></pre> 
+  <p>Both methods use streams of different types: file streams, buffered streams and object streams. Creating new stream objects based on other streams is a common practice in Java. They wrap each other adding new functionality according to <a target="_blank" href="https://hyperskill.org/learn/step/5216" rel="noopener noreferrer nofollow">the decorator pattern</a>. You can copy this code and try to change it to better understand the example.</p> 
+  <p>Here is a small description of the given code.</p> 
+  <ul> 
+   <li><code class="language-java">FileOutputStream</code> and <code class="language-java">FileInputStream</code> are used for working with a file;</li> 
+   <li><code class="language-java">BufferedInputStream</code> and <code class="language-java">BufferedOutputStream</code> are optional but useful for speeding up the I/O operations;</li> 
+   <li><code class="language-java">ObjectOutputStream</code> and <code class="language-java">ObjectInputStream</code> perform serialization and deserialization of objects and also invoke wrapped streams to work with the file;</li> 
+   <li>both methods also close the streams to avoid resource leaks.</li> 
+  </ul> 
+  <h5 style="text-align: center;" id="an-example-citizens">An example: citizens</h5> 
+  <p>Suppose, you need to develop an information system that persistently stores all citizens of a country. Here are two related classes for this system: <code class="language-java">Citizen</code> and <code class="language-java">Address</code>. Both classes implement the <code class="language-java">Serializable</code> interface and contain the <code class="language-java">serialVersionUID</code> fields.</p> 
+  <p>The <code class="language-java">Citizen</code> class represents a citizen of the country. It has a name, an address and a non-serializable field called <code class="language-java">passport</code>.</p> 
+  <pre><code class="language-java">public class Citizen implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    private String name;
+    private Address address;
+    private transient String passport;
+
+    // getters and setters
+
+    @Override
+    public String toString() {
+        return "Citizen{" +
+                "name='" + name + '\'' +
+                ", passport='" + passport + '\'' +
+                ", address=" + address +
+                '}';
+    }
+}</code></pre> 
+  <p>The <code class="language-java">Address</code> class represents an address in the country where the citizen lives. It has three string fields <code class="language-java">state</code>, <code class="language-java">city</code> and <code class="language-java">street</code>.</p> 
+  <pre><code class="language-java">class Address implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    private String state;
+    private String city;
+    private String street;
+
+    // getters and setters
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "state='" + state + '\'' +
+                ", city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                '}';
+    }
+}</code></pre> 
+  <p>We removed all getters and setters from the code snippets to keep them shorter.</p> 
+  <p></p>
+  <div class="alert alert-warning">
+   The value of 
+   <code class="language-java">serialVersionUID</code> of a class should be increased whenever you make a change that adds/updates/removes a field. Otherwise, you may encounter exceptions during the deserialization process for objects which were saved before this change.
+  </div>
+  <p></p> 
+  <ul> 
+  </ul> 
+  <h5 style="text-align: center;" id="serializing-and-deserializing-objects">Serializing and deserializing objects</h5> 
+  <p>Finally, it's time to see how serialization works. Here is a method that generates an array of citizens.</p> 
+  <pre><code class="language-java">public static Citizen[] initCitizens() {
+    Citizen mark = new Citizen();
+    mark.setName("Mark Olson");
+    mark.setPassport("503143798"); // the passport was set
+
+    Address markAddress = new Address();
+    markAddress.setState("Arkansas");
+    markAddress.setCity("Conway");
+    markAddress.setStreet("1661  Dawson Drive");
+
+    mark.setAddress(markAddress);
+
+    Citizen anna = new Citizen();
+    anna.setName("Anna Flores");
+    anna.setPassport("605143321"); // the passport was set
+
+    Address annaAddress = new Address();
+    annaAddress.setState("Georgia");
+    annaAddress.setCity("Atlanta");
+    annaAddress.setStreet("4353  Flint Street");
+
+    anna.setAddress(annaAddress);
+
+    return new Citizen[]{ mark, anna };
+}</code></pre> 
+  <p>Actually, there are only two citizens, which doesn't sound realistic. But it is enough for an example. Note, we set passports to both citizens.</p> 
+  <p>Here is the <code class="language-java">main</code> method which runs all the work and uses the <code class="language-java">SerializationUtils</code> class.</p> 
+  <pre><code class="language-java">public static void main(String[] args) {
+    String filename = "citizens.data";
+    try {
+        SerializationUtils.serialize(initCitizens(), filename);
+        Citizen[] citizens = (Citizen[]) SerializationUtils.deserialize(filename);
+        System.out.println(Arrays.toString(citizens));
+    } catch (IOException | ClassNotFoundException e) {
+        e.printStackTrace();
+    }
+}</code></pre> 
+  <p>It serializes two citizens in the file called <code class="language-java">citizens.data</code> and then load them from the file and prints to the standard output. Here we also organized a simple exception handling. But in real-world applications, you need to think it through better.</p> 
+  <p>As expected, the program outputs an array of two citizens with their fields.</p> 
+  <pre><code class="language-java">[Citizen{name='Mark Olson', passport='null', address=Address{state='Arkansas', city='Conway', street='1661  Dawson Drive'}}, 
+Citizen{name='Anna Flores', passport='null', address=Address{state='Georgia', city='Atlanta', street='4353  Flint Street'}}]</code></pre> 
+  <p>Both citizens were successfully deserialized from the file. The field <code class="language-java">passport</code> is <code class="language-java">null</code> since it was not serialized (<code class="language-java">transient</code>).</p> 
+  <p>You may be wondering what a serialized data in the file looks like. It is something like this:</p> 
+  <pre><code class="language-no-highlight">�� ur "[Lorg.hyperskill.problems.Citizen;i� �����  xp   sr  org.hyperskill.problems.Citizen        L addresst !Lorg/hyperskill/problems/Address;L namet Ljava/lang/String;xpsr  org.hyperskill.problems.Address        L cityq ~ L stateq ~ L streetq ~ xpt Conwayt Arkansast 1661  Dawson Drivet 
+Mark Olsonsq ~ sq ~ t Atlantat Georgiat 4353  Flint Streett  Anna Flores</code></pre> 
+  <p>It is possible to find some familiar parts here, but actually it is not a human-readable data format.</p> 
+  <p>The complete code example is <a target="_blank" href="https://github.com/hyperskill/hs-java-samples/tree/master/src/main/java/org/hyperskill/samples/serialization/basics" rel="noopener noreferrer nofollow">available on GitHub</a>. It has a slightly different package structure which is closer to a real project. You can navigate it in the GitHub web interface.</p> 
+  <h5 style="text-align: center;" id="conclusion">Conclusion</h5> 
+  <p>Now you are familiar with the concept of serialization and considered a specific example.</p> 
+  <p>Here are a few points to remember:</p> 
+  <ul> 
+   <li>a class to be serialized must implement the <code class="language-java">Serializable</code> interface;</li> 
+   <li>it is a good practice to add the <code class="language-java">serialVersionUID</code> field to be consistent with the versions during deserialization;</li> 
+   <li>you must specify in which place to save the state of objects using I/O streams;</li> 
+   <li>use <code class="language-java">writeObject</code> and <code class="language-java">readObject</code> methods to serialize and deserialize any objects;</li> 
+   <li>do not forget to handle exceptions in real-world applications.</li> 
+  </ul>
+ </body>
+</html>

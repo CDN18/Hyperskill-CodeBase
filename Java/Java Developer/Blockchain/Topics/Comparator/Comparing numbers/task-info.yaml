@@ -1,0 +1,23 @@
+type: choice
+is_multiple_choice: false
+options:
+- text: '[12, 2, 13, 4, 15, 6]'
+- text: '[2, 4, 6, 12, 13, 15]'
+- text: '[12, 2, 13, 15, 6, 4]'
+- text: '[13, 15, 2, 4, 6, 12]'
+- text: '[15, 13, 12, 6, 4, 2]'
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/12974#comment
+status: Solved
+record: -1

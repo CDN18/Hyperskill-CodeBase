@@ -1,0 +1,25 @@
+<h2>Threads executing methods</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Here is a class named <code class="language-java">SomeClass</code>:</p> 
+  <pre><code class="language-java">class SomeClass {
+
+    public static synchronized void method1() {
+        method2();
+    }
+
+    public static synchronized void method2() {
+        // do something useful
+    }
+
+    public synchronized void method3() {
+       // do something useful
+    }
+}</code></pre> 
+  <p>There is also one instance of this class:</p> 
+  <pre><code class="language-java">SomeClass instance = new SomeClass();</code></pre> 
+  <p>This instance is shared by several threads.</p> 
+  <p>Select all correct statements.</p>
+ </body>
+</html>

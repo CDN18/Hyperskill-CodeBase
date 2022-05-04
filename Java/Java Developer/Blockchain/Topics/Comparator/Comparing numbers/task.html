@@ -1,0 +1,14 @@
+<h2>Comparing numbers</h2>
+<html>
+ <head></head>
+ <body>
+   Take a look at the following code snippet:
+  <p></p> 
+  <pre><code class="language-java">List&lt;Integer&gt; numbers = Arrays.asList(12, 2, 13, 4, 15, 6);
+
+numbers.sort((i1, i2) -&gt; !i1.equals(i2) ? 0 : i2 - i1);
+
+System.out.println(numbers);</code></pre> 
+  <p>Which sequence of numbers will be printed to the console?</p>
+ </body>
+</html>

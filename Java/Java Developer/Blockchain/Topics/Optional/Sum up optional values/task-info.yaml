@@ -1,0 +1,45 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.List;
+    import java.util.Optional;
+
+    class Main {
+        public static void main(String[] args) {
+            ValueProvider provider = new ValueProvider();
+            // use provider.getValues() to get List<Optional<Integer>>
+        }
+    }
+
+    class ValueProvider {
+        private List<Optional<Integer>> opts; // cache to provide reproducing method invocation
+
+        public List<Optional<Integer>> getValues() {
+            if (opts != null) {
+                return opts;
+            }
+
+            java.util.Scanner scanner = new java.util.Scanner(System.in);
+            int number = scanner.nextInt();
+            opts = java.util.stream.IntStream
+                    .rangeClosed(1, number)
+                    .mapToObj(n -> {
+                        String val = scanner.next();
+                        return "null".equals(val) ?
+                            Optional.<Integer>empty() :
+                            Optional.of(Integer.valueOf(val));
+                    })
+                    .collect(java.util.stream.Collectors.toList());
+
+            return opts;
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/14367#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Fri, 29 Apr 2022 11:33:03 UTC
+record: -1

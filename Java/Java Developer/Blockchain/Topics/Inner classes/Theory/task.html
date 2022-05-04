@@ -1,0 +1,135 @@
+<h2>Inner classes</h2>
+<html>
+ <head></head>
+ <body>
+  <p>If you would like to create your own superhero, what would you do? Of course, you would open a favorite development environment and create a class <code class="language-java">Superhero</code>! </p> 
+  <p>To be a proper superhero, our character will need a set of special items, including, for example, a magic cloak or a hammer. Here we may have a problem. What is the best way to organize the classes describing the equipment? And how can we mark that only one class, that is <code class="language-java">Superhero</code>, can use them? </p> 
+  <p>Here appears our savior — an instrument called <strong>nested classes</strong>. They help us group classes logically and increase the encapsulation of our code.</p> 
+  <h5 style="text-align: center;" id="what-is-a-nested-class">What is a nested class?</h5> 
+  <p>Basically, you can call a class <strong>nested</strong> when it is declared inside another class.</p> 
+  <p>This is how our superhero would look like: </p> 
+  <pre><code class="language-java">class Superhero {
+    
+    class MagicCloak {
+        
+    }
+    
+    class Hammer {
+
+    }
+}</code></pre> 
+  <p>Both classes<code class="language-java">MagicCloak</code> and <code class="language-java">Hammer</code> are nested classes. The <code class="language-java">Superhero</code> class is often called an <strong>outer class</strong><em>,</em><strong><em> </em></strong>and a nested class is called a <strong>member </strong>of an outer class.</p> 
+  <p>In this topic, we are going to talk about <strong>non-static nested classes, </strong>which are commonly known as i<strong>nner classes</strong>.</p> 
+  <h5 style="text-align: center;" id="inner-class">Inner class</h5> 
+  <p>Let's move on to another example. Imagine that you are writing a class <code class="language-java">Cat</code> representing cats. The <code class="language-java">Cat</code> class may have a lot of fields and methods, but we may also use inner class structures. For example, let's say you want a cat to have a bow. Then you need to create a new class <code class="language-java">Bow</code>. This class <code class="language-java">Bow</code> would be quite small and specific, and you know you won't need a bow without a cat. The solution is to create the class <code class="language-java">Bow</code> inside the <code class="language-java">Cat</code> class:</p> 
+  <pre><code class="language-java">public class Cat {
+
+    private String name;
+
+    public Cat(String name) {
+        this.name = name;
+    }
+
+    public class Bow {
+        String color;
+
+        public Bow(String color) {
+            this.color = color;
+        }
+
+        public void printColor() {
+            System.out.println("Cat " + Cat.this.name + " has a " + this.color + " bow.");
+        }
+    }
+}</code></pre> 
+  <p>Let's create a cat <code class="language-java">Bob</code> with a red bow:</p> 
+  <pre><code class="language-java">public class Main {
+
+    public static void main(String[] args) {
+
+        Cat cat = new Cat("Bob");
+        Cat.Bow bow = cat.new Bow("red");
+
+        bow.printColor();
+    }
+}</code></pre> 
+  <p>Look, we have created an instance of <code class="language-java">Cat</code> and then created an instance of <code class="language-java">Bow</code> using quite an interesting syntax.</p> 
+  <p>Here, the output will be:</p> 
+  <pre><code class="language-java">Cat Bob has a red bow.</code></pre> 
+  <p>Remember that to use inner classes, we must <em>create an </em>instance of the outer class<em>. </em>In our example, we created a <code class="language-java">Cat</code>.</p> 
+  <h5 style="text-align: center;" id="scope-of-the-inner-class">Scope of the inner class</h5> 
+  <p>Now let's discuss what we can see from the inner class and who can access the inner class from outside.</p> 
+  <p>Here is our class <code class="language-java">Cat</code> with a new method <code class="language-java">sayMeow</code> and an inner class <code class="language-java">Bow</code> with a new method <code class="language-java">putOnABow</code> .</p> 
+  <pre><code class="language-java">public class Cat {
+
+    private String name;
+
+    public Cat(String name) {
+        this.name = name;
+    }
+
+    private void sayMeow() {
+        System.out.println(this.name + " says: \"Meow\".");
+    }
+
+    public class Bow {
+        String color;
+
+        public Bow(String color) {
+            this.color = color;
+        }
+
+        public void putOnABow() {            
+            Cat.this.sayMeow();
+            System.out.println("Bow is on!");
+        }
+
+        public void printColor() {
+            System.out.println("Cat " + Cat.this.name + " has a " + this.color + " bow.\n");
+        }
+    }
+}</code></pre> 
+  <p>Note, that inside the method <code class="language-java">putOnABow</code> of the class <code class="language-java">Bow</code>, we have access to the private method <code class="language-java">sayMeow</code> of the class <code class="language-java">Cat</code>. And, as you can see, in the method <code class="language-java">sayMeow</code>, we print the private field <code class="language-java">name</code> of the class <code class="language-java">Cat</code> and everything works fine.<br> Also, in the method <code class="language-java">printColor</code>, we have direct access to the private field <code class="language-java">name</code> of the class <code class="language-java">Cat</code>.</p> 
+  <p>How about creating a cat Princess with a golden bow to prove that our code works?</p> 
+  <pre><code class="language-java">Cat cat = new Cat("Princess");
+Cat.Bow bow = cat.new Bow("golden");
+
+bow.printColor();
+bow.putOnABow();</code></pre> 
+  <p>And, yes, the bow is on!</p> 
+  <pre><code class="language-java">Cat Princess has a golden bow.
+
+Princess says: "Meow".
+Bow is on!</code></pre> 
+  <p>As for the access from the outside world, remember that when you've instantiated an inner class, you can do whatever you want according to access modifiers.<br> Now let's collect all the rules together and put them to a "hard disk"!</p> 
+  <h5 style="text-align: center;" id="rules-for-inner-classes">Rules for Inner classes</h5> 
+  <p>From inside the inner class, we can see all methods and fields of the outer class even if they are <code class="language-java">private</code>. And don't forget that we can use everything else according to access modifiers as well.</p> 
+  <p>An inner class is associated with an instance of its enclosing class. So to instantiate an inner class and get access to it, you need to instantiate the outer class first:</p> 
+  <pre><code class="language-java">Outer outer = new Outer();
+Outer.InnerClass inner = outer.new InnerClass();</code></pre> 
+  <p></p>
+  <div class="alert alert-warning">
+   Remember about access modifiers
+   <strong>:</strong> if you make an inner class 
+   <code class="language-java">private</code>, then it can only be accessed from inside the outer class. The same works for fields and methods.
+  </div>
+  <p></p> 
+  <p>And be careful — there are always some restrictions!</p> 
+  <p>Inside an inner class, you <strong>cannot </strong>define: </p> 
+  <ul> 
+   <li>any static members;</li> 
+   <li>enums;</li> 
+   <li>an Interface.</li> 
+  </ul> 
+  <h5 style="text-align: center;" id="reasons-to-use-inner-classes">Reasons to use Inner Classes </h5> 
+  <p>Have you noticed what our two examples of <code class="language-java">Superhero</code> with the magic items and <code class="language-java">Cat</code> with a bow have in common? Sure you have — we hid our inner classes from the outside world so that only a Superhero may use a magic cloak and only a cat may put on a bow. Now, it will be easier to navigate between classes and to understand the structure of your code.</p> 
+  <p>And, at last, the formal (just a little bit) list of inner class benefits:</p> 
+  <ol> 
+   <li>They increase <strong>encapsulation. </strong>Our <code class="language-java">Bow</code> is only for <code class="language-java">Cat</code>. You can make a field (method) <code class="language-java">private</code> and hide it from other classes, using it only inside the inner class.</li> 
+   <li>Inner classes will <strong>organize </strong>your code and make your packages be more logical: all the magic equipment for <code class="language-java">Superhero</code> will be in one place. </li> 
+  </ol> 
+  <h5 style="text-align: center;" id="summary">Summary</h5> 
+  <p>You can create a class within another class, and such classes are called nested. A non-static nested class is called an inner class. We hope you are ready to use it. Just don't forget to instantiate the outer class first!</p> 
+  <p>The main idea of Inner classes is to hide some code from other classes and increase encapsulation.</p>
+ </body>
+</html>

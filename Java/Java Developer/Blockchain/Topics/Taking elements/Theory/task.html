@@ -1,0 +1,53 @@
+<h2>Taking elements</h2>
+<html>
+ <head></head>
+ <body>
+  <p>If you'd like to take only a certain number of elements from a stream or skip some of them, you can invoke the <code class="language-java">limit(n)</code> or <code class="language-java">skip(m)</code> methods. But what if you need to take or skip some elements until some condition is true? Starting from Java 9, streams have two convenient methods to do this. They can <em>take</em> or <em>drop</em> the longest contiguous subsequence of elements from the stream based on the given predicate.</p> 
+  <h5 style="text-align: center;" id="the-takewhile-method">The takeWhile method</h5> 
+  <p>The <code class="language-java">takeWhile</code> method takes elements from the stream until the first inappropriate element is encountered. This element and all the rest are discarded. Which element is inappropriate is determined by the predicate passed to this method. If all elements will match the predicate, the result will contain the same elements as the initial stream.</p> 
+  <p>In the following example, we create a stream of numbers and take elements while they are greater than zero.</p> 
+  <pre><code class="language-java">List&lt;Integer&gt; numbers =
+        Stream.of(3, 5, 1, 2, 0, 4, 5)
+                .takeWhile(n -&gt; n &gt; 0)
+                .collect(Collectors.toList());
+
+System.out.println(numbers); // [3, 5, 1, 2]</code></pre> 
+  <p>The <code class="language-java">takeWhile</code> method stops after taking the element <code class="language-java">0</code>, because the condition becomes <code class="language-java">false</code>.</p> 
+  <p>We believe that the method is clear enough not to dwell on it for a long time.</p> 
+  <h5 style="text-align: center;" id="the-dropwhile-method">The dropWhile method</h5> 
+  <p>There is also an opposite method called <code class="language-java">dropWhile</code>. It drops the elements which match the given predicate until the first element does not match it. This and all the remaining elements are included in the result. If all elements will match the predicate, the result will be an empty stream.</p> 
+  <p>Here is the same example as before, but with <code class="language-java">dropWhile</code> instead of <code class="language-java">takeWhile</code>.</p> 
+  <pre><code class="language-java">List&lt;Integer&gt; numbers =
+        Stream.of(3, 5, 1, 2, 0, 4, 5)
+                .dropWhile(n -&gt; n &gt; 0)
+                .collect(Collectors.toList());
+
+System.out.println(numbers); // [0, 4, 5]</code></pre> 
+  <p>The <code class="language-java">dropWhile</code> method stops dropping right after taking the element 0, because the condition becomes <code class="language-java">false</code>. The elements <code class="language-java">0</code>, <code class="language-java">4</code>, and <code class="language-java">5</code> remain in the stream.</p> 
+  <h5 style="text-align: center;" id="the-case-of-unordered-streams">The case of unordered streams</h5> 
+  <p>Both methods <code class="language-java">takeWhile</code> and <code class="language-java">dropWhile</code> work well in case of ordered streams. Such streams are created from ordered collections (e.g. lists) or obtained during operations (like sorting). But what if we are dealing with an unordered collection such as a set? It turns out that in this case the behavior of both operations is nondeterministic.</p> 
+  <p>As an example, suppose we have a set of Java conferences with one Kotlin conference. We can try to keep taking conferences names as long as they start with <code class="language-java">"J"</code> and stop at the first inappropriate conference.</p> 
+  <pre><code class="language-java">Set&lt;String&gt; conferences = Set.of(
+        "JokerConf", "JavaZone",
+        "KotlinConf", "JFokus"
+);
+
+conferences.stream()
+        .takeWhile(word -&gt; word.startsWith("J"))
+        .forEach(System.out::println);</code></pre> 
+  <p>Since we don't know the order of the names in the set, the result of this code may always be different, containing from 0 to 3 conference names. This is definitely not what we wanted here.</p> 
+  <p></p>
+  <div class="alert alert-warning">
+   Using 
+   <code class="language-java">takeWhile</code> and 
+   <code class="language-java">dropWhile</code> with unordered streams leads to nondeterministic behavior, and as a result, to bugs.
+  </div>
+  <p></p> 
+  <p>How to achieve repeatable results in this case?</p> 
+  <ul> 
+   <li>to use <code class="language-java">List</code> instead of <code class="language-java">Set</code>;</li> 
+   <li>to add the <code class="language-java">sorted()</code> method before <code class="language-java">takeWhile()</code> to keep always the same order of elements within the stream.</li> 
+  </ul> 
+  <p>This concludes our consideration of taking / dropping elements from a stream.</p>
+ </body>
+</html>

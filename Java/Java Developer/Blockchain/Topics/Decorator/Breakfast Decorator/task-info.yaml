@@ -1,0 +1,145 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class TestDrive {
+        public static void main(String[] args) {
+            Bread bagel = /* write your code here */;
+
+            bagel = new Butter(bagel);
+            bagel = new Butter(bagel);
+            bagel = new Ham(bagel);
+            bagel = new Cheese(bagel);
+
+            System.out.println(bagel);
+
+            Bread bun = /* write your code here */;
+            bun = new Butter(bun);
+            bun = new Jam(bun);
+            bun = new Jam(bun);
+
+            System.out.println(bun);
+        }
+    }
+
+    abstract class Bread {
+        String description;
+        int kcal;
+
+        String getDescription() {
+            return description;
+        }
+
+        int getKcal() {
+            return kcal;
+        }
+
+        @Override
+        public String toString() {
+            return getDescription() + ". kCal: " + getKcal();
+        }
+    }
+
+    class Bagel extends Bread {
+
+        Bagel() {
+            description = "Bagel";
+            kcal = 250;
+        }
+    }
+
+    class Bun extends Bread {
+
+        Bun() {
+            description = "Bun";
+            kcal = 150;
+        }
+    }
+
+    abstract class Decorator extends Bread {
+        abstract String getDescription();
+        abstract int getKcal();
+    }
+
+    class Butter extends Decorator {
+        private Bread bread;
+
+        Butter(Bread bread) {
+            this.bread = bread;
+        }
+
+        @Override
+        String getDescription() {
+            return /* write your code here */ + ", Butter";
+        }
+
+        @Override
+        int getKcal() {
+            return /* write your code here */ + 50;
+        }
+    }
+
+    class Jam extends Decorator {
+
+        private Bread bread;
+
+        Jam(Bread bread) {
+            this.bread = bread;
+        }
+
+        @Override
+        String getDescription() {
+            return /* write your code here */ + ", Jam";
+        }
+
+        @Override
+        int getKcal() {
+            return /* write your code here */ + 120;
+        }
+    }
+
+    class Cheese extends Decorator {
+
+        private Bread bread;
+
+        Cheese(Bread bread) {
+            this.bread = bread;
+        }
+
+        @Override
+        String getDescription() {
+            return /* write your code here */ + ", Cheese";
+        }
+
+        @Override
+        int getKcal() {
+            return /* write your code here */ + 40;
+        }
+    }
+
+    class Ham extends Decorator {
+
+        private Bread bread;
+
+        Ham(Bread bread) {
+            this.bread = bread;
+        }
+
+        @Override
+        String getDescription() {
+            return /* write your code here */ + ", Ham";
+        }
+
+        @Override
+        int getKcal() {
+            return /* write your code here */ + 2500;
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/6010#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Fri, 29 Apr 2022 13:18:47 UTC
+record: -1

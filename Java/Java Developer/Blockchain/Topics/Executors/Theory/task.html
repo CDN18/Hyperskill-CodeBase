@@ -1,0 +1,132 @@
+<h2>Executors</h2>
+<html>
+ <head></head>
+ <body>
+  <p>We've already learned how to create threads by extending the <code class="language-java">Thread</code> class or implementing the <code class="language-java">Runnable</code> interface. Both ways allow you to create an object that represents a thread and start it to perform a piece of code in a separated thread. While it is easy to create several threads and start them, it becomes a problem when your application has hundreds or even thousands of threads running concurrently.</p> 
+  <p>In addition, <code class="language-java">Thread</code> is a quite low-level class and mixing it with the high-level code of your application may lead to unreadable code and poor architecture in the future. It may also produce some well-known errors such as invoking <code class="language-java">run()</code> instead of <code class="language-java">start()</code>.</p> 
+  <h5 style="text-align: center;" id="tasks-and-executors">Tasks and executors</h5> 
+  <p>To simplify the development of multi-threaded applications, Java provides an abstraction called <code class="language-java">ExecutorService</code> (or simply <strong>executor</strong>). It encapsulates one or more threads into a single pool and puts submitted tasks in an internal queue to execute them by using the threads.</p> 
+  <p style="text-align: center;"><img alt="" height="249" src="https://ucarecdn.com/f77a4b54-a7b0-43f1-bd0a-d8693a72a4bd/" width="626"></p> 
+  <p>This approach clearly isolates tasks from threads and allows you to focus on tasks. You do not need to worry about creating and managing threads because the executor does it for you.</p> 
+  <h5 style="text-align: center;" id="creating-executors">Creating executors</h5> 
+  <p>All types of executors are located in the <code class="language-java">java.util.concurrent</code> package. You need to import it first. This package also contains a convenient utility class <code class="language-java">Executors</code> for creating different types of <code class="language-java">ExecutorService</code>'s.</p> 
+  <p>First of all, let's create an executor with exactly four threads in the pool:</p> 
+  <pre><code class="language-java">ExecutorService executor = Executors.newFixedThreadPool(4);</code></pre> 
+  <p>It can execute multiple tasks concurrently and speed up your program by performing somewhat parallel computations. If one of the threads dies, the executor creates a new one. We will further consider how to determine the required number of threads.</p> 
+  <h5 style="text-align: center;" id="submitting-tasks">Submitting tasks</h5> 
+  <p>An executor has the <code class="language-java">submit</code> method that accepts a <code class="language-java">Runnable</code> task to be executed. Since <code class="language-java">Runnable</code> is a functional interface, it is possible to use a lambda expression as a task.</p> 
+  <p>As an example, here we submit a task that prints <strong>"Hello!"</strong> to the standard output.</p> 
+  <pre><code class="language-java">executor.submit(() -&gt; System.out.println("Hello!"));</code></pre> 
+  <p>Of course, we can declare a class that implements <code class="language-java">Runnable</code> for our task, and then submit an object of this class. But it is very convenient to use lambda expressions together with <strong>executors</strong> for short tasks.</p> 
+  <p>After invoking <code class="language-java">submit</code>, the current thread does not wait for the task to complete. It just adds the task to the executor's internal queue to be executed asynchronously by one of the threads.</p> 
+  <p>The method also has several overloads which we will consider in the next topics.</p> 
+  <h5 style="text-align: center;" id="stopping-executors">Stopping executors</h5> 
+  <p>An executor continues to work after the completion of a task since threads in the pool are waiting for new coming tasks. Your program will never stop while at least one executor still works.</p> 
+  <p>There are two methods for stopping executors:</p> 
+  <ul> 
+   <li><code class="language-java">void shutdown()</code> waits until all running task are completed and prohibits submitting of new tasks;</li> 
+   <li><code class="language-java">List&lt;Runnable&gt; shutdownNow()</code> immediately stops all running tasks and returns a list of the tasks that were awaiting execution.</li> 
+  </ul> 
+  <p><strong>Note</strong> that <code class="language-java">shutdown()</code> does not block the current thread unlike <code class="language-java">join()</code> of <code class="language-java">Thread</code>. If you need to wait until the execution is complete, you can invoke <code class="language-java">awaitTermination(...)</code> with the specified waiting time.</p> 
+  <pre><code class="language-java">ExecutorService executor = Executors.newFixedThreadPool(4);
+
+// submitting tasks
+
+executor.shutdown();
+
+boolean terminated = executor.awaitTermination(60, TimeUnit.MILLISECONDS);
+
+if (terminated) {
+    System.out.println("The executor was successfully stopped");
+} else {
+    System.out.println("Timeout elapsed before termination");
+}</code></pre> 
+  <p> </p> 
+  <h5 style="text-align: center;" id="an-example-names-of-threads-and-tasks">An example: names of threads and tasks</h5> 
+  <p>In the following example, we create one executor with a pool consisting of four threads. We submit ten tasks to it and then analyze the results. Each task prints the name of a thread that executes it, as well as the name of the task.</p> 
+  <pre><code class="language-java">import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class ExecutorDemo {
+    private final static int POOL_SIZE = 4;
+    private final static int NUMBER_OF_TASKS = 10;
+    
+    public static void main(String[] args) {
+        ExecutorService executor = Executors.newFixedThreadPool(POOL_SIZE);
+
+        for (int i = 0; i &lt; NUMBER_OF_TASKS; i++) {
+            int taskNumber = i;
+            executor.submit(() -&gt; {
+                String taskName = "task-" + taskNumber;
+                String threadName = Thread.currentThread().getName();
+                System.out.printf("%s executes %s\n", threadName, taskName);
+            });
+        }
+
+        executor.shutdown();
+    }
+}</code></pre> 
+  <p>If you launch this program many times, you will get a different output. Below is one of the possible outputs:</p> 
+  <pre><code class="language-java">pool-1-thread-1 executes task-0
+pool-1-thread-2 executes task-1
+pool-1-thread-4 executes task-3
+pool-1-thread-3 executes task-2
+pool-1-thread-3 executes task-7
+pool-1-thread-3 executes task-8
+pool-1-thread-3 executes task-9
+pool-1-thread-1 executes task-6
+pool-1-thread-4 executes task-5
+pool-1-thread-2 executes task-4</code></pre> 
+  <p>It clearly demonstrates the executor uses all four threads to solve the tasks. The number of solved tasks by each thread can vary. There are no guarantees what we'll get.</p> 
+  <p>If you do not know how many threads are needed in your pool, you can take the number of available processors as the pool size.</p> 
+  <pre><code class="language-java">int poolSize = Runtime.getRuntime().availableProcessors();
+ExecutorService executor = Executors.newFixedThreadPool(poolSize);</code></pre> 
+  <p> </p> 
+  <h5 style="text-align: center;" id="types-of-executors">Types of executors</h5> 
+  <p>We have considered the most used executor with the fixed size of the pool. Here are a few more types:</p> 
+  <ul> 
+   <li><strong>An executor with a single thread</strong></li> 
+  </ul> 
+  <p>The simplest executor has only a single thread in the pool. It may be enough for async execution of rare submitted and small tasks.</p> 
+  <pre><code class="language-java">ExecutorService executor = Executors.newSingleThreadExecutor();</code></pre> 
+  <p><strong>Important:</strong> one thread may not have time to process all incoming tasks, and the queue will grow significantly, consuming all the memory.</p> 
+  <ul> 
+   <li><strong>An executor with the growing pool</strong></li> 
+  </ul> 
+  <p>There is also an executor that automatically increases the number of threads as it needed and reuse previously constructed threads.</p> 
+  <pre><code class="language-java">ExecutorService executor = Executors.newCachedThreadPool();</code></pre> 
+  <p>It can typically improve the performance of programs that perform many short-lived asynchronous tasks. But it can also lead to problems when the number of threads increases too much. It is preferable to choose the fixed thread-pool executor whenever possible.</p> 
+  <ul> 
+   <li><strong>An executor that schedules a task</strong></li> 
+  </ul> 
+  <p>If you need to perform the same task periodically or only once after the given delay, use the following executor:</p> 
+  <pre><code class="language-java">ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();</code></pre> 
+  <p>The method <code class="language-java">scheduleAtFixedRate</code> submits a periodic <code class="language-java">Runnable</code> task that becomes enabled first after the given <code class="language-java">initDelay</code>, and subsequently with the given <code class="language-java">period</code>.</p> 
+  <p>Here is a quick example with scheduling:</p> 
+  <pre><code class="language-java">ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+executor.scheduleAtFixedRate(() -&gt; 
+        System.out.println(LocalTime.now() + ": Hello!"), 1000, 1000, TimeUnit.MILLISECONDS);</code></pre> 
+  <p>Here is a fragment of the output:</p> 
+  <pre><code class="language-java">02:30:06.375392: Hello!
+02:30:07.375356: Hello!
+02:30:08.375376: Hello!
+...and even more...</code></pre> 
+  <p>It can be stopped as we did before.</p> 
+  <p>This kind of executor also has a method named <code class="language-java">schedule</code> that starts a task only once after the given delay and another method <code class="language-java">scheduleWithFixedDelay</code> that starts the task with a fixed wait after the previous one is completed.</p> 
+  <h5 style="text-align: center;" id="exception-handling">Exception handling</h5> 
+  <p>In our examples, we often ignore error handling to simplify code. Here we demonstrate one feature related to the handling of exceptions in executors (namely, unchecked).</p> 
+  <p>What do you think the following code will print?</p> 
+  <pre><code class="language-java">ExecutorService executor = Executors.newSingleThreadExecutor();
+executor.submit(() -&gt; System.out.println(2 / 0));</code></pre> 
+  <p>It does not print anything at all, including the exception! This is why it is common practice to wrap a task in the <code class="language-java">try-catch</code> block not to lose the exception.</p> 
+  <pre><code class="language-java">ExecutorService executor = Executors.newSingleThreadExecutor();
+executor.submit(() -&gt; {
+    try {
+        System.out.println(2 / 0);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+});</code></pre> 
+  <p>Now you will see the exception. In real applications, it is better to use some kind of logging to output it. Note that the executor will still work after the exception because it dynamically creates a new thread.</p>
+ </body>
+</html>

@@ -1,0 +1,9 @@
+<h2>Asynchronous email sending</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Some operations, like email sending, are often performed in a background thread. It allows reducing the load for main threads.</p> 
+  <p>Here is the <code class="java">MailSender</code> interface and the <code class="java">MockMailSender</code> class, which simulate mail sending.</p> 
+  <p>Implement the <code class="java">asyncSend</code> method by iterating through <code class="java">messages</code> and sending them via <code class="java">sender</code>. Use a single thread pool executor and do not forget to shut it down.</p>
+ </body>
+</html><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 5 seconds</font><br><br>

@@ -1,0 +1,35 @@
+<h2>Counting words</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Select all correct ways to count the number of occurrences of <code class="language-java">targetWord</code> in the list of strings <code class="language-java">words</code> ignoring the case.</p> 
+  <p> </p> 
+  <p>a)</p> 
+  <pre><code class="language-java">words.stream()
+             .filter(w -&gt; w.equals(targetWord.toUpperCase()))
+             .count();</code></pre> 
+  <p> </p> 
+  <p>b)</p> 
+  <pre><code class="language-java">words.stream()
+             .filter(w -&gt; w.equalsIgnoreCase(targetWord))
+             .count();</code></pre> 
+  <p> </p> 
+  <p>c)</p> 
+  <pre><code class="language-java">words.stream()
+             .filter(w -&gt; w.equals(targetWord.toUpperCase()))
+             .map(w -&gt; w.toUpperCase())
+             .count();</code></pre> 
+  <p> </p> 
+  <p>d)</p> 
+  <pre><code class="language-java">words.stream()
+             .map(w -&gt; w.toUpperCase())
+             .filter(w -&gt; w.equals(targetWord.toUpperCase()))
+             .count();</code></pre> 
+  <p> </p> 
+  <p>e)</p> 
+  <pre><code class="language-java">words.stream()
+             .filter(w -&gt; w.equalsIgnoreCase(targetWord))
+             .map(w -&gt; 1L)
+             .reduce(0L, (count, next) -&gt; count + 1);</code></pre>
+ </body>
+</html>

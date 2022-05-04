@@ -1,0 +1,15 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class SimpleCounter {
+        // write your code here
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/3315#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Wed, 27 Apr 2022 22:02:24 UTC
+record: -1

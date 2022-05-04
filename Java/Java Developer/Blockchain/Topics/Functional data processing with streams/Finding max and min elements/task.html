@@ -1,0 +1,12 @@
+<h2>Finding max and min elements</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Implement a method for finding min and max elements of a stream in accordance with a given comparator.</p> 
+  <p>The found elements pass to <strong>minMaxConsumer</strong> in the following way:</p> 
+  <pre><code class="language-java">minMaxConsumer.accept(min, max);</code></pre> 
+  <p>If the stream doesn't contain any elements, invoke:</p> 
+  <pre><code class="language-java">minMaxConsumer.accept(null, null);</code></pre> 
+  <p>Remember, that as soon as you call any terminal operation, the stream is closed and you can get <em>IllegalStateException</em>.</p>
+ </body>
+</html><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 5 seconds</font><br><br>

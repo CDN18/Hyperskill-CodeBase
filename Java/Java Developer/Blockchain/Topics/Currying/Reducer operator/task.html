@@ -1,0 +1,42 @@
+<h2>Reducer operator</h2>
+<html>
+ <head></head>
+ <body>
+  <p></p>
+  <div class="alert alert-primary">
+   Wow! This problem is kind of tricky. If you're ready to put your thinking cap on, brace yourself and good luck! Otherwise, you can skip it for now and return any time later.
+  </div>
+  <p></p> 
+  <p>In this problem, you need to complete the implementations of two functions.</p> 
+  <ol> 
+   <li>The <code class="language-java">reduceIntOperator</code> that accepts <strong>an initial value (seed)</strong> and a<strong> combiner function</strong> and returns a new function that combines all values from the given integer range into a single integer value (it's a simple form of <strong>reduction</strong>) using a given operator. The <strong>seed</strong> is used as the very first element in reducing.</li> 
+   <li>Based on <code class="language-java">reduceIntOperator</code>, implement the <code class="language-java">productOperator</code> operator <strong>that multiplies integer values in the range</strong>.</li> 
+  </ol> 
+  <p>There is also an example: the <code class="language-java">sumOperator</code> that is based on <code class="language-java">reduceIntOperator</code>. It uses <code class="language-java">0</code> as the <strong>seed</strong> value and the function <code class="language-java">x + y</code> and just sums numbers in the range.</p> 
+  <p>Let's take a look at two example of how the operators should work. <strong>The left boundary &lt;= the right boundary</strong>.<br> <br> <strong>Example 1.</strong> Left boundary = 1, right boundary = 4.</p> 
+  <p>To check <code class="language-java">reduceIntOperator</code> testing system creates and passes an object with type <code class="language-java">IntBinaryOperator</code> and a seed value. <code class="language-java">reduceIntOperator</code> produces an object of <code class="language-java">IntBinaryOperator</code> type, which is used to produce a final <code class="language-java">int</code> result.</p> 
+  <p>Passed <code class="language-java">IntBinaryOperator</code> is sum operator.</p> 
+  <pre><code class="language-java">IntBinaryOperator sum = (x, y) -&gt; x + y;
+IntBinaryOperator resultWithSumOperator = reduceIntOperator.apply(5, sum);
+resultWithSumOperator.applyAsInt(1, 4);   // 15 = 5 + (1 + 2 + 3 + 4)</code></pre> 
+  <p>Passed <code class="language-java">IntBinaryOperator</code> is production operator.</p> 
+  <pre><code class="language-java">IntBinaryOperator multiply = (x, y) -&gt; x * y;
+IntBinaryOperator resultWitMultiplyOperator = reduceIntOperator.apply(5, multiply);
+resultWitMultiplyOperator.applyAsInt(1, 4);   // 120 = 5 * (1 * 2 * 3 * 4)</code></pre> 
+  <p><code class="language-java">sumOperator</code> and <code class="language-java">productOperator</code> produces <code class="language-java">int</code> result:</p> 
+  <pre><code class="language-java">sumOperator.applyAsInt(1, 4);     // 10 = 1 + 2 + 3 + 4
+productOperator.applyAsInt(1, 4); // 24 = 1 * 2 * 3 * 4</code></pre> 
+  <p><strong>Example 2.</strong> Left boundary = 5, right boundary = 6.</p> 
+  <p>Passed <code class="language-java">IntBinaryOperator</code> is sum operator.</p> 
+  <pre><code class="language-java">IntBinaryOperator sum = (x, y) -&gt; x + y;
+IntBinaryOperator resultWithSumOperator = reduceIntOperator.apply(2, sum);
+resultWithSumOperator.applyAsInt(5, 6);   // 13 = 2 + (5 + 6)</code></pre> 
+  <p>Passed <code class="language-java">IntBinaryOperator</code> is production operator.</p> 
+  <pre><code class="language-java">IntBinaryOperator multiply = (x, y) -&gt; x * y;
+IntBinaryOperator resultWitMultiplyOperator = reduceIntOperator.apply(2, multiply);
+resultWitMultiplyOperator.applyAsInt(5, 6);   // 60 = 2 * (5 * 6)</code></pre> 
+  <p><code class="language-java">sumOperator</code> and <code class="language-java">productOperator</code> produces <code class="language-java">int</code> result:</p> 
+  <pre><code class="language-java">sumOperator.applyAsInt(5, 6);     // 11 = 5 + 6
+productOperator.applyAsInt(5, 6); // 30 = 5 * 6</code></pre>
+ </body>
+</html><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 5 seconds</font><br><br>

@@ -1,0 +1,89 @@
+<h2>Generic methods</h2>
+<html>
+ <head></head>
+ <body>
+  <p>In previous topics we have discussed generic classes and how one can use them. But Java also has generic methods that can be very useful. Generic methods allow type parameters to be passed to a method and used in its logic. They also allow a type parameter to be the return type.</p> 
+  <p>All methods can declare their own type parameters, regardless of the class they belong to. This means that a non-generic class can contain generic methods. </p> 
+  <p style="background-color: #ffffff;"><span style="background-color: transparent; color: #000000; font-size: 12pt; font-variant: normal;"></span></p>
+  <div class="alert alert-primary">
+   Static methods cannot use type parameters of their class! Type parameters of the class these methods belong to can only be used in instance methods. If you want to use type parameters in a static method, declare this method's own type parameters.
+   <span style="background-color: transparent; color: #000000; font-size: 12pt; font-variant: normal;"></span>
+  </div>
+  <p></p> 
+  <p style="background-color: #ffffff;">Let's take a look at examples of generic static and instance methods and find out how they are used.</p> 
+  <h5 style="text-align: center;" id="generic-static-methods">Generic static methods</h5> 
+  <p><span style="background-color: transparent; color: #000000; font-size: 12pt; font-variant: normal;">The following static method is declared as generic. The declaration of the generic type <code class="language-java">T</code> surrounded by angle brackets allows us to use this type in the method. We remind you that it can belong to a generic or a non-generic class because it does not matter for generic methods.</span></p> 
+  <pre><code class="language-java">public static &lt;T&gt; T doSomething(T t) {
+    return t;
+}</code></pre> 
+  <p>The type parameter <code class="language-java">T</code> can be used to declare the return type and the type of the method's arguments. A generic method can take or return values of non-generic types as well. For instance, the following method takes a generic array and returns its size as an <code class="language-java">int</code>.</p> 
+  <pre><code class="language-java">public static &lt;E&gt; int length(E[] array) {
+    return array.length;
+}</code></pre> 
+  <p>A generic method's body is declared like that of any other method.</p> 
+  <p>We can pass an array of integers to the method we defined earlier and find its length:</p> 
+  <pre><code class="language-java">Integer[] array = { 1, 2, 3, 4 };
+int len = length(array); // pass an array of Integers</code></pre> 
+  <p>We could use this same method to find the length of an array of Strings (or any other reference type).</p> 
+  <pre><code class="language-java">String[] stringArray = { "a", "b", "c", "d" };
+len = length(stringArray);</code></pre> 
+  <p></p>
+  <div class="alert alert-primary">
+   Recall that type parameters can represent only reference types, not primitive types.
+  </div>
+  <p></p> 
+  <p>As another example of a generic method, take a look at one that prints the elements of a generic array.</p> 
+  <pre><code class="language-java">public static &lt;E&gt; void print(E[] array) {
+    for (int i = 0; i &lt; array.length; i++) {
+        System.out.print(array[i] + " ");
+    }
+    System.out.println();
+}</code></pre> 
+  <p style="background-color: #ffffff;"><span style="background-color: transparent; color: #000000; font-size: 12pt; font-variant: normal;">Let's create an array and print it using this method.</span></p> 
+  <pre><code class="language-java">Character[] characters = { 'a', 'b', 'c' };
+print(characters);</code></pre> 
+  <p>The output will be:</p> 
+  <pre><code class="language-java">a b c</code></pre> 
+  <p style="background-color: #ffffff;"></p>
+  <div class="alert alert-primary">
+   In this example, we used the 
+   <code class="language-java">void</code> keyword in the declaration of the method because the method does not return anything.
+  </div>
+  <p></p> 
+  <p>Just like in generic classes, the type parameter section can contain multiple type parameters separated by commas.</p> 
+  <p>For instance, the following method declares two type parameters.</p> 
+  <pre><code class="language-java">public static &lt;T, U&gt; void method(T t, U u) {
+    // do something
+}</code></pre> 
+  <p>Static generic methods are often used to write generic algorithms that do not depend on the type they operate on. This can be convenient when the method has to be used independently from the class it belongs to. We frequently use generic static methods for different operations with arrays and collections: sorting an array, searching for a value in a collection, reversing an array, and so on.</p> 
+  <h5 style="text-align: center;" id="generic-instance-methods">Generic instance methods</h5> 
+  <p>Just like static methods, instance methods can have their own type parameters. There is no difference in their declaration compared to static methods, excluding the absence of the <code class="language-java">static</code> keyword.</p> 
+  <pre><code class="language-java">class SimpleClass {
+ 
+    public &lt;T&gt; T getParameterizedObject(T t) {
+        return t;
+    }
+}</code></pre> 
+  <p><span style="background-color: transparent; color: #000000; font-size: 12pt; font-variant: normal;">The class above does not provide a type parameter, so we have to specify the type parameter in the method declaration to make the method <code class="language-java">getParameterizedObject</code> generic. </span></p> 
+  <p><span style="background-color: transparent; color: #000000; font-size: 12pt; font-variant: normal;"></span></p>
+  <div class="alert alert-primary">
+   Note that in this example we cannot use 
+   <code class="language-java">T</code> as the type for a field in the class, because it belongs to the method rather than the class itself.
+   <span style="background-color: transparent; color: #000000; font-size: 12pt; font-variant: normal;"></span>
+  </div>
+  <p></p> 
+  <p>Now we can create an instance of the class and invoke the method. It will return a value that has the same type as the value that was passed in.</p> 
+  <pre><code class="language-java">SimpleClass instance = new SimpleClass();
+Integer value = instance.getParameterizedObject(601); // this will return 601</code></pre> 
+  <p style="background-color: #ffffff;">Although generic methods can belong to non-generic classes, it is more common for a generic method to belong to a class that is also generic. Below is an example of a generic class that contains a generic instance method.</p> 
+  <pre><code class="language-java">class SimpleClass&lt;T&gt; {
+ 
+    public &lt;U&gt; T getParameterizedObject(T t, U u) {
+        return t;
+    }
+}</code></pre> 
+  <p>The method receives arguments of both the class's type (<code class="language-java">T</code>) and the method's own type (<code class="language-java">U</code>). Because <code class="language-java">T</code> was already declared in the class header, the method only has to declare the generic type <code class="language-java">U</code>. The method returns the variable of type <code class="language-java">T</code>.</p> 
+  <h5 style="text-align: center;" id="conclusion">Conclusion</h5> 
+  <p>Generic methods are a must-have for programmers since they allow us to restrict the scope of type parameters to a single function. Type parameters in generic methods can be used as return types or as types for arguments passed to the function. Both static and instance methods can be generic.</p>
+ </body>
+</html>

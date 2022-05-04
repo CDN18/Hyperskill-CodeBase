@@ -1,0 +1,52 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.*;
+
+    class Originator {
+        private List<Integer> numbers = new ArrayList<>();
+
+        public void addNumber(Integer number) {
+            numbers.add(number);
+        }
+
+        public List<Integer> getNumbers() {
+            return numbers;
+        }
+
+        public /* specify type */ getMemento() {
+
+        }
+
+        public void setMemento(/* specify type */ memento) {
+
+        }
+    }
+
+    class Caretaker {
+        private final Originator originator;
+        private /* specify type */ snapshot = null;
+
+        Caretaker(Originator originator) {
+            this.originator = originator;
+        }
+
+        public void save() {
+            snapshot = originator.getMemento();
+        }
+
+        public void restore() {
+            if (snapshot != null) {
+                originator.setMemento(snapshot);
+            }
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/16538#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Tue, 26 Apr 2022 08:34:00 UTC
+record: -1

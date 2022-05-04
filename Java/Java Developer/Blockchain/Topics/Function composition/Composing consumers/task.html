@@ -1,0 +1,13 @@
+<h2>Composing consumers</h2>
+<html>
+ <head></head>
+ <body>
+  <p>You have the following part of code:</p> 
+  <pre><code class="language-java">Consumer&lt;Integer&gt; printer = System.out::println;
+Consumer&lt;Integer&gt; devNull = (val) -&gt; { int v = val * 2; };
+
+Consumer&lt;Integer&gt; combinedConsumer = devNull.andThen(devNull.andThen(printer));
+combinedConsumer.accept(100);</code></pre> 
+  <p><br> What does this code print?</p>
+ </body>
+</html>

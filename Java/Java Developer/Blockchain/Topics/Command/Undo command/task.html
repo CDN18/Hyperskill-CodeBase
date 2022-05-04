@@ -1,0 +1,28 @@
+<h2>Undo command</h2>
+<html>
+ <head></head>
+ <body>
+  <p></p>
+  <div class="alert alert-primary">
+   Wow! This problem is kind of tricky. If you're ready to put your thinking cap on, brace yourself and good luck! Otherwise, you can skip it for now and return any time later
+  </div>
+  <p></p> 
+  <p>Write two classes which represent the Command pattern, <code class="language-java">CommandMove</code> and <code class="language-java">CommandPutItem</code>.</p> 
+  <p>These classes should also support <em>undo</em>. They should implement the entity movement on the 2D and item putting. The x-axis on the map goes from left to right, the y-axis goes from bottom to top.</p> 
+  <p>The inventory of the entity has <code class="language-java">getInventoryLength()</code> slots starting from 0, and each slot can contain only one item. The entity should put an item into a slot with least possible index (slots with nothing inside is <code class="language-java">null</code>). If all slots of an entity are filled with some item, then entity should not place this item in its inventory.</p> 
+  <p>To undo, you should revert the changes made to the entity, so the coordinates and the inventory of the entity before <code class="language-java">execute()</code> and after <code class="language-java">undo()</code> should be the same.</p> 
+  <p>Note that you need to implement <code class="language-java">CommandMove</code> and <code class="language-java">CommandPutItem</code> classes only. You are free to add any new fields and use them. No need to implement <code class="language-java">Movable</code> and <code class="language-java">Storable</code> interfaces and set entity fields of <em>command</em> classes. The testing system does it for you.</p> 
+  <pre><code class="language-java">Command moveCommand = new CommandMove(); // Testing system creates instance of CommandMove
+moveCommand.entity = new TestMovable(); // and initializes entity field by testing entity
+
+// then tested methods are invoked 
+moveCommand.execute();
+moveCommand.undo();</code></pre> 
+  <p>The same logic works for testing <code class="language-java">CommandPutItem</code> class.</p> 
+  <p></p>
+  <div class="alert alert-warning">
+   There is no input data in this problem. Downloading the tests will give you an empty file.
+  </div>
+  <p></p>
+ </body>
+</html><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 5 seconds</font><br><br>

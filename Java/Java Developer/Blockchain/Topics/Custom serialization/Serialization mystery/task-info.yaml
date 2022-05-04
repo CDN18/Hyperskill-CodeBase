@@ -1,0 +1,23 @@
+type: choice
+is_multiple_choice: false
+options:
+- text: throws java.io.NotSerializableException
+- text: 0 0
+- text: throws java.lang.NullPointerException
+- text: 10 20
+- text: null null
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2819#comment
+status: Solved
+record: -1

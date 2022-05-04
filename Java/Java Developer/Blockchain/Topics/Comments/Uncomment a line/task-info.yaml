@@ -1,0 +1,25 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    /**
+     * The class implements a simple application with the main method.
+     */
+    class CommentedSimpleApplication {
+
+        public static void main(String[] args) {
+        /*
+          /* System.out.println(980233);
+          // System.out.println(893457); */
+          // System.out.println(789722);
+        */
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2501#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Wed, 27 Apr 2022 13:05:02 UTC
+record: -1

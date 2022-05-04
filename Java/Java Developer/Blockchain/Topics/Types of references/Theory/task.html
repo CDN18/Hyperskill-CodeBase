@@ -1,0 +1,71 @@
+<h2>Types of references</h2>
+<html>
+ <head></head>
+ <body>
+  <p><br> If you've already started studying the garbage collection process, you must have come across the statement that an object is not deleted from memory as long as it has at least one reference. This type of reference is called a <strong>Strong Reference</strong>. However, there are types of references that are weaker and do not guarantee the life of the object. Those references types are <strong>Soft Reference</strong>, <strong>Weak </strong><strong>Reference, </strong>and <strong>Phantom Reference</strong>. In this topic, we will explain what they are and how they differ from ordinary strong references.</p> 
+  <h5 id="strong-reference">Strong Reference</h5> 
+  <p>As a first step, let's briefly revise the idea of a strong reference. In most cases, we are dealing with this type. As long as there is a reference to the object, it remains in memory. If there are no references, the object is available for deletion.</p> 
+  <pre><code class="language-java">public class ReferenceTypesDemo {
+    public static void main(String[] args) {
+        Integer num = 1995;
+        num = null;
+
+        System.out.println(num); // null
+    }
+}</code></pre> 
+  <p>Here, we have created an object to store a number that is referenced by a single <code class="language-java">Integer</code> variable. Once we have assigned the <code class="language-java">null</code> value to it, nothing references the object anymore. You will no longer have access to the object and the garbage collector will delete it when it considers it unnecessary. </p> 
+  <p style="text-align: center;"><img alt="" height="302" name="strong.svg" src="https://ucarecdn.com/a7f029c3-27b2-40a9-b667-fabaa48057fa/" width="562"></p> 
+  <p>This is the default reference type. If you haven't specified the reference type or haven't used a class that is implemented with a different type, the strong reference will be used by default.</p> 
+  <h5 id="soft-reference">Soft Reference</h5> 
+  <p>Objects with soft references are removed by GC only if the application is close to running out of memory and throws an <code class="language-java">OutOfMemoryError</code>. To add a soft reference, you need to use the <code class="language-java">SoftReference</code> class, passing the object that is intended to have the desired reference type to its constructor. It is the strongest among the non-strong references.</p> 
+  <pre><code class="language-java">public class ReferenceTypesDemo {
+    public static void main(String[] args) {
+        Integer num = 1995;
+        SoftReference&lt;Integer&gt; softReference = new SoftReference&lt;&gt;(num);
+    }
+}</code></pre> 
+  <p>In this example, we have created two objects, the first for an <code class="language-java">Integer</code>, and the second for a <code class="language-java">SoftReference</code> that references an <code class="language-java">Integer</code> object by a soft reference. For the first object, the term is <strong>referent</strong> and the other one is called <strong>reference object</strong>.</p> 
+  <p style="text-align: center;"><img alt="" height="280" name="sr.svg" src="https://ucarecdn.com/69259ec4-af40-4051-b878-8624f89583f1/" width="587"></p> 
+  <p>This technique allows you to get an <code class="language-java">Integer</code> object even after its strong reference has been removed. Let's modify our code a bit to understand how that can happen:</p> 
+  <pre><code class="language-java">public class ReferenceTypesDemo {
+    public static void main(String[] args) {
+        Integer num = 1995;
+        SoftReference&lt;Integer&gt; softReference = new SoftReference&lt;&gt;(num);
+
+        num = null;
+        System.out.println(num); // null
+
+        num = softReference.get();
+        System.out.println(num); // 1995
+    }
+}</code></pre> 
+  <p>If we had only one strong reference to the <code class="language-java">Integer</code> object, we would no longer be able to get the value of its object after assigning <code class="language-java">null</code> to the <code class="language-java">num</code> variable.<br> Now let's see how the GC deletes an object with a soft reference. Imagine your application is one step away from throwing an <code class="language-java">OutOfMemoryError</code>. Let's analyze the in-memory sector where we have such a situation:</p> 
+  <p style="text-align: center;"><img alt="" height="319" name="soft.svg" src="https://ucarecdn.com/f2b7b77e-700b-446d-a7ee-00df8f4c8ea5/" width="593"></p> 
+  <p>Objects <code class="language-java">A</code> and <code class="language-java">C</code> will not be removed since they have strong references, whereas object <code class="language-java">B</code> might. That is, as soon as strong references are removed from the object and only one or more soft references remain, the GC can remove the object if the application is running out of memory.</p> 
+  <h5 id="weak-reference">Weak Reference</h5> 
+  <p>A <a target="_blank" href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/ref/WeakReference.html" rel="noopener noreferrer nofollow">weak reference</a> is weaker than a soft reference. While the presence of a soft reference allows the object to live until the application is almost out of memory, an object with only a weak reference can be removed during the first garbage collection after its creation. You can add this reference in the same way as you would add a soft reference and it also makes it possible to "resurrect" an object after removing its strong references.</p> 
+  <pre><code class="language-java">public class ReferenceTypesDemo {
+    public static void main(String[] args) {
+        Integer num = 1995;
+        WeakReference&lt;Integer&gt; weakReference = new WeakReference&lt;&gt;(num);
+
+        num = null;
+        num = weakReference.get();
+
+        System.out.println(num); // 1995
+    }
+}</code></pre> 
+  <p>When we pass the <code class="language-java">num</code> variable to the <code class="language-java">WeakReference</code> constructor, the same thing happens in memory as in the case of a soft reference. We've created a reference object with a weak reference to the referent.</p> 
+  <p style="text-align: center;"><img alt="" height="252" name="wr.svg" src="https://ucarecdn.com/6457186f-d2a4-4e27-8de2-c000aa21882f/" width="528"></p> 
+  <p>After the strong reference is removed from <code class="language-java">num</code>, only the weak reference to the object remains, and it can be deleted at any moment. </p> 
+  <p></p>
+  <div class="alert alert-primary">
+   Important note: if the object holds soft and weak references at the same time, it means that this object will survive garbage collections until the application runs out of memory.
+  </div>
+  <p></p> 
+  <h5 id="phantom-reference">Phantom Reference</h5> 
+  <p><a target="_blank" href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/ref/PhantomReference.html" rel="noopener noreferrer nofollow">Phantom</a> is the weakest reference type. This is an advanced topic, so we will not delve into the details for now. All you need to know is that phantom reference does not set any reachability level for objects. Its <code class="language-java">get()</code> method returns <code class="language-java">null</code> to prevent the "resurrection" of the object since the purpose of a phantom reference is to detect when an object was removed from memory.</p> 
+  <h5 id="conclusion">Conclusion</h5> 
+  <p>In this topic, you learned the basics about the four types of references in Java. Our goal was to provide some essential information that will help you understand the idea behind each type, but there is much more to this topic and you are welcome to explore it further. If you are interested, we recommend a read on the <a target="_blank" href="https://docs.oracle.com/en/java/javase/17/docs/api/index.html" rel="noopener noreferrer nofollow"><code class="language-java">Reference</code></a> class, a base class representing non-strong references. After that, you might want to learn about the role of a<strong> reference queue</strong>, which is represented by the <a target="_blank" href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Queue.html" rel="noopener noreferrer nofollow"><code class="language-java">ReferenceQueue</code></a> class. </p>
+ </body>
+</html>

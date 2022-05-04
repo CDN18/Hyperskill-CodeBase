@@ -1,0 +1,23 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: Decomposed program uses less memory.
+- text: The code is easier to reuse.
+- text: The code looks more readable.
+- text: Separate parts of code are easier to test.
+- text: Decomposed program works faster.
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/10571#comment
+status: Solved
+record: -1

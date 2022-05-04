@@ -1,0 +1,14 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: "class Invoker {\n\n    public static void invokeMethods(Thread t1, Thread\
+    \ t2, Thread t3) throws InterruptedException {\n        // start passed instances\
+    \ here \n    }\n}"
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2536#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Wed, 27 Apr 2022 20:12:44 UTC
+record: -1

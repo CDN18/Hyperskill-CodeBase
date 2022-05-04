@@ -1,0 +1,57 @@
+<h2>Built-in classes</h2>
+<html>
+ <head></head>
+ <body>
+  <p>In which cases can we replace an anonymous class with a lambda expression? All interfaces are from the standard java class library.</p> 
+  <p>a)</p> 
+  <pre><code class="language-java">final double variable = 10;
+Serializable serializable = new Serializable() {
+    double applyFun(double x) {
+        return x + variable;
+    }
+};</code></pre> 
+  <p></p>
+  <div class="alert alert-primary">
+   Note, the 
+   <code class="language-java">Serializable</code> is a standard 
+   <strong>marker</strong> interface that doesn't contain any methods.
+  </div>
+  <p></p> 
+  <p>b)</p> 
+  <pre><code class="language-java">Callable&lt;String&gt; callable = new Callable&lt;String&gt;() {
+    @Override
+    public String call() throws Exception {
+        Thread.sleep(100);
+        return "hello";
+    }
+};</code></pre> 
+  <p>c)</p> 
+  <pre><code class="language-java">Future&lt;Double&gt; future = new Future&lt;Double&gt;() {
+    @Override
+    public boolean cancel(boolean mayInterruptIfRunning) {
+        return false;
+    }
+            
+    @Override
+    public boolean isDone() {
+        return false;
+    }
+
+    @Override
+    public Double get() throws InterruptedException, ExecutionException {
+        return null;
+    }
+
+    // and other methods...
+};</code></pre> 
+  <p>d)</p> 
+  <pre><code class="language-java">// see NIO.2
+PathMatcher matcher = new PathMatcher() {
+    @Override
+    public boolean matches(Path path) {
+        return false;
+    }
+};</code></pre> 
+  <p>To solve this problem, it is recommended to try it in code or think well.</p>
+ </body>
+</html>

@@ -1,0 +1,25 @@
+type: choice
+is_multiple_choice: false
+options:
+- text: It will allow comparison of enums of different types which is meaningless
+- text: The lack of &#x27;extends&#x27; keyword effectively prevents abstract Enum
+    class from being extended / implemented
+- text: It will allow comparison of enums with objects of arbitrary classes (e.g.
+    Object)
+- text: This is a good idea! Just got rid of unnecessary complexity Java developers
+    are crazy about
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2608#comment
+status: Solved
+record: -1

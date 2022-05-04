@@ -1,0 +1,47 @@
+<h2>Application controller</h2>
+<html>
+ <head></head>
+ <body>
+  <p>The class <code class="language-java">AppController</code> is a singleton-class for controlling an application. It contains application configuration as a field:</p> 
+  <pre><code class="language-java">class AppController {
+    
+    private static AppController instance;
+    
+    public AppConfig config;
+    
+    private AppController(AppConfig config) { 
+        this.config = config;
+    } 
+    
+    public static AppController getInstance() {
+        if (instance == null) {
+            instance = new AppController(loadConfig());
+        }
+        return instance;
+    }
+    
+    private static AppConfig loadConfig() {
+        return new AppConfig(1000, "https://hyperskill.org");
+    }
+}
+
+class AppConfig {
+    
+    public int timeout;
+    public String serviceUrl;
+    
+    public AppConfig(int timeout, String serviceUrl) {
+        this.timeout = timeout;
+        this.serviceUrl = serviceUrl;
+    }
+}</code></pre> 
+  <p><br> What does the following code print?</p> 
+  <pre><code class="language-java">AppController controller = AppController.getInstance();
+controller.config.timeout = 2000;
+        
+AppController anotherOne = AppController.getInstance();
+controller.config = new AppConfig(anotherOne.config.timeout + 100, "https://hyperskill.org/topics/knowledge-graph");
+
+System.out.println(anotherOne.config.timeout + " " + controller.config.serviceUrl);</code></pre>
+ </body>
+</html>

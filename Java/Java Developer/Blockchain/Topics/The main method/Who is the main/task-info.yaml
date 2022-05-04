@@ -1,0 +1,23 @@
+type: choice
+is_multiple_choice: false
+options:
+- text: The application will print "I'm the boss"
+- text: The code will not compile
+- text: The code will compile but throw an error during runtime
+- text: The application will print "No! I'm still the boss!"
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2304#comment
+status: Solved
+record: -1
+custom_name: Who is the main?

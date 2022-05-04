@@ -1,0 +1,15 @@
+<h2>Ternary operator</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Let's create our own function using several standard functional interfaces.</p> 
+  <p>Implement a <code class="language-java">ternaryOperator</code> method that accepts a predicate <code class="language-java">condition</code>, and two functions <code class="language-java">ifTrue</code> and <code class="language-java">ifFalse</code> and returns a function. The returning function takes an argument, checks if <code class="language-java">condition</code> predicate is <code class="language-java">true</code> for this argument, and if it is — applies <code class="language-java">ifTrue</code> function to the argument, otherwise, it applies <code class="language-java">ifFalse</code> function.</p> 
+  <p>Here is an example:</p> 
+  <pre><code class="language-java">Predicate&lt;Object&gt; condition = Objects::isNull;
+Function&lt;Object, Integer&gt; ifTrue = obj -&gt; 0;
+Function&lt;CharSequence, Integer&gt; ifFalse = CharSequence::length;
+Function&lt;String, Integer&gt; safeStringLength = ternaryOperator(condition, ifTrue, ifFalse);</code></pre> 
+  <p>In the example above, the resulting function returns the length of a string if the reference to the string is not <code class="language-java">null</code>, otherwise, it returns 0.</p> 
+  <p>Note, it can be collapsed into a single line, but for clarity, additional variables are used.</p>
+ </body>
+</html><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 5 seconds</font><br><br>

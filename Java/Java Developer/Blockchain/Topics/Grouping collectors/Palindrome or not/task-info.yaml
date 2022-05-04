@@ -1,0 +1,33 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.*;
+
+
+    class CollectorPalindrome {
+
+        public static void main(String[] args) {
+
+            Scanner scanner = new Scanner(System.in);
+
+            String[] words = scanner.nextLine().split(" ");
+
+            Map<Boolean, List<String>> palindromeOrNo = Arrays.stream(words)
+                    .collect(
+                        // write your collector here
+                    );
+
+            palindromeOrNo = new LinkedHashMap<>(palindromeOrNo);
+
+            System.out.println(palindromeOrNo);
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2458#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Sun, 01 May 2022 02:59:32 UTC
+record: -1

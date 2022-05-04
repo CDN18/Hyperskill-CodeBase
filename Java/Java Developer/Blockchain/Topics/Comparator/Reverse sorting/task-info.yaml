@@ -1,0 +1,20 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.List;
+
+    class Utils {
+
+        public static void sortStrings(List<String> strings) {
+            // your code here
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/12973#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Sat, 30 Apr 2022 11:37:25 UTC
+record: -1

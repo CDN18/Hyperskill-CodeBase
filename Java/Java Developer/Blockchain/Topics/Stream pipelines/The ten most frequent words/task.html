@@ -1,0 +1,17 @@
+<h2>The ten most frequent words</h2>
+<html>
+ <head></head>
+ <body>
+  <p></p>
+  <div class="alert alert-primary">
+   Wow! This problem is kind of tricky. If you're ready to put your thinking cap on, brace yourself and good luck! Otherwise, you can skip it for now and return any time later.
+  </div>
+  <p></p> 
+  <p>Write a program that reads a text (in the UTF-8) from the standard input. The program must count the frequency of words in the text and print the 10 most frequent words.</p> 
+  <p>A word is a sequence of characters consisting only of digits and letters. For example, the string <code class="java">"Functions bring happiness!"</code> has three words: <code class="java">"Functions"</code>, <code class="java">"bring"</code>, <code class="java">"happiness"</code>.</p> 
+  <p>The counting words should be case-insensitive, i.e. <code class="java">"Functions"</code>, <code class="java">"functions"</code> and <code class="java">"FUNCTIONS"</code> are the same word. Output words in the lower case.</p> 
+  <p>If the text has less than 10 unique words, output as many as there are.</p> 
+  <p>If some words in the text have the same frequency, sort them according to <a target="_blank" href="https://en.wikipedia.org/wiki/Lexicographical_order" rel="noopener noreferrer nofollow">the lexicographical order</a>.</p> 
+  <p>The problem has a beautiful solution using streams without any loops and conditional operators. Try to write it.</p>
+ </body>
+</html><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">Functions bring happiness!</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">bring<br>functions<br>happiness</code></pre><br><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sodales consectetur purus at faucibus. Donec mi quam, tempor vel ipsum non, faucibus suscipit massa. Morbi lacinia velit blandit tincidunt efficitur. Vestibulum eget metus imperdiet sapien laoreet faucibus. Nunc eget vehicula mauris, ac auctor lorem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vel odio nec mi tempor dignissim.</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">consectetur<br>faucibus<br>ipsum<br>lorem<br>adipiscing<br>amet<br>dolor<br>eget<br>elit<br>mi</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 5 seconds</font><br><br>

@@ -1,0 +1,42 @@
+<h2>Stream filtering</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Filtering is an important operation that allows us to obtain only those elements of the collection that meet a specified condition. For example, to get songs over seven minutes long among all your music library, we can filter songs by their duration. In this topic, we'll figure out how to use Java Stream API intermediate filter operation to cope with such challenges.</p> 
+  <h5 id="the-filter-method">The filter method</h5> 
+  <p style="text-align: left;">To filter elements, streams provide the <code class="language-java">filter</code> method. It returns a new stream consisting only of those elements that match the given predicate.</p> 
+  <p style="text-align: center;"><img alt="" height="291" src="https://ucarecdn.com/680bfcba-ce0e-4633-af01-9e267214c296/" width="393"></p> 
+  <p style="text-align: left;">As an example, here is a list of prime numbers (a prime number is a whole number greater than 1 whose only factors are 1 and itself):</p> 
+  <pre><code class="language-java">List&lt;Integer&gt; primeNumbers = Arrays.asList(2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31);</code></pre> 
+  <p style="text-align: left;">We'd like to create a new list consisting of prime numbers that belong to the range from 11 to 23 (inclusively).</p> 
+  <pre><code class="language-java">List&lt;Integer&gt; filteredPrimeNumbers = primeNumbers.stream() // create a stream from the list
+        .filter(n -&gt; n &gt;= 11 &amp;&amp; n &lt;= 23) // filter elements
+        .collect(Collectors.toList());   // collect elements in a new list</code></pre> 
+  <p>So, the <code class="language-java">filteredPrimeNumbers</code> list is:</p> 
+  <pre><code class="language-java">[11, 13, 17, 19, 23]</code></pre> 
+  <p style="text-align: left;">Since the <code class="language-java">filter</code> method takes a predicate, it is possible to instantiate an object directly and pass it to the method.</p> 
+  <pre><code class="language-java">Predicate&lt;Integer&gt; between11and23 = n -&gt; n &gt;= 11 &amp;&amp; n &lt;= 23; // instantiate the predicate
+
+List&lt;Integer&gt; filteredPrimeNumbers = primeNumbers.stream() // create a stream from the list
+        .filter(between11and23)        // pass the predicate to the filter method
+        .collect(Collectors.toList()); // collect elements in a new list</code></pre> 
+  <p style="text-align: left;">Of course, the result is the same as before.</p> 
+  <h5 style="text-align: center;" id="using-multiple-filters">Using multiple filters</h5> 
+  <p style="text-align: left;">Sometimes, two or more filters are used together. For example:</p> 
+  <ul> 
+   <li style="text-align: left;">to separate a complex logic from a single filter;</li> 
+   <li style="text-align: left;">to filter the stream, then process it by other methods and then filter again.</li> 
+  </ul> 
+  <p style="text-align: left;">Let's consider an example. Given a list of programming languages with empty strings.</p> 
+  <pre><code class="language-java">List&lt;String&gt; programmingLanguages = Arrays.asList("Java", "", "scala", "Kotlin", "", "clojure");</code></pre> 
+  <p style="text-align: left;">We'd like to count how many programming languages start with an upper letter ignoring all the empty strings.</p> 
+  <pre><code class="language-java">long count = programmingLanguages.stream()
+        .filter(lang -&gt; lang.length() &gt; 0) // consider only non-empty strings
+        .filter(lang -&gt; Character.isUpperCase(lang.charAt(0)))
+        .count(); // count suitable languages</code></pre> 
+  <p style="text-align: left;">The count is 2 (<code class="language-java">"Java"</code>, <code class="language-java">"Kotlin"</code>).</p> 
+  <p style="text-align: left;">These two filter operations can be replaced with a single operation that takes a complex predicate:</p> 
+  <pre><code class="language-java">filter(lang -&gt; lang.length() &gt; 0 &amp;&amp; Character.isUpperCase(lang.charAt(0)))</code></pre> 
+  <p style="text-align: left;">But this code is a little less readable.</p>
+ </body>
+</html>

@@ -1,0 +1,19 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: "class ChristmasTree {\n\n    private String color;\n\n    public ChristmasTree(String\
+    \ color) {\n        this.color = color;\n    }\n\n    // create method putTreeTopper()\n\
+    \n    class TreeTopper {\n\n        private String color;        \n\n        public\
+    \ TreeTopper(String color) {\n            this.color = color;\n        }\n\n \
+    \       // create method sparkle()\n    }\n}\n\n// this code should work\nclass\
+    \ CreateHoliday {\n\n    public static void main(String[] args) {\n\n        ChristmasTree\
+    \ christmasTree = new ChristmasTree(\"green\");\n        christmasTree.putTreeTopper(\"\
+    silver\");\n    }\n}"
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/11512#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Mon, 25 Apr 2022 16:59:33 UTC
+record: -1

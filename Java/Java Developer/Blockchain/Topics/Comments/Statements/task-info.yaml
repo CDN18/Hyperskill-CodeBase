@@ -1,0 +1,24 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: Using javadoc tool it is possible to generate a documentation based on comments
+    like /** javadoc */
+- text: A multiple-line comment can't span only one line.
+- text: An end-of-line comment begins with // and lasts till the end of the current
+    line.
+- text: A multiple-line comment begins with /* and ends with */
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/1976#comment
+status: Solved
+record: -1

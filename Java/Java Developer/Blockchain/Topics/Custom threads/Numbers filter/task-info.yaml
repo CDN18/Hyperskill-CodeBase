@@ -1,0 +1,24 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.Scanner;
+
+    class NumbersFilter extends Thread {
+
+        /* use it to read numbers from the standard input */
+        private final Scanner scanner = new Scanner(System.in);
+
+        @Override
+        public void run() {
+            // implement this method
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2528#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Thu, 28 Apr 2022 05:01:29 UTC
+record: -1

@@ -1,0 +1,27 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.Scanner;
+
+    public class Main {
+
+        public static long factorial(long n) {
+            // write your code here
+        }
+
+        /* Do not change code below */
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+            long n = Integer.parseInt(scanner.nextLine().trim());
+            System.out.println(factorial(n));
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/10994#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Sun, 01 May 2022 08:08:38 UTC
+record: -1

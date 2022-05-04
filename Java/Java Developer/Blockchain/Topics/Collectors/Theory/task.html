@@ -1,0 +1,74 @@
+<h2>Collectors</h2>
+<html>
+ <head></head>
+ <body>
+  <p>So far we know how to produce a single value from a stream of elements by using <code class="language-java">reduce</code> operation. However, collecting stream elements into a collection such as a <code class="language-java">List</code> or a <code class="language-java">Set</code> is a much more popular scenario than reducing them to a single value. For that, Java Stream API provides a terminal operation called <code class="language-java">collect</code>. In a combination with a utility <code class="language-java">stream.Collectors</code> class that contains a lot of useful reduction operations, <code class="language-java">collect</code> allows us to easily produce collections from streams as well as single values like the <code class="language-java">reduce</code> operations do.</p> 
+  <h5 id="producing-collections">Producing collections</h5> 
+  <p>The <code class="language-java">collect</code> is a terminal reduction operation that can accept an object of the <code class="language-java">Collector</code> type. But instead of focusing on the <code class="language-java">Collector</code>, let's consider the <code class="language-java">Collectors</code> class more closely. It is important that the <code class="language-java">Collectors</code> class contains static methods that return the <code class="language-java">Collector</code> and implement functionality for accumulating stream elements into a collection, summarizing them, repacking to a single string, etc.</p> 
+  <p style="text-align: center;"><img alt="" height="227" src="https://ucarecdn.com/d0bdeff8-38ee-4f60-8a92-5b3ecc379a47/" width="423"></p> 
+  <p></p>
+  <div class="alert alert-warning">
+   Note that the 
+   <code class="language-java">collect</code> is a terminal operation, which means that it begins all evaluations with the stream and produces a final result.
+  </div>
+  <p></p> 
+  <p>To be more concrete, let's consider an example where the <code class="language-java">Account</code> class is given:</p> 
+  <pre><code class="language-java">public class Account {
+    private long balance;
+    private String number;
+
+    // getters and setters
+}</code></pre> 
+  <p>We want to produce a list of accounts from the stream of accounts <code class="language-java">Stream&lt;Account&gt; accountStream</code>. To do so, we can accumulate stream elements to the list using <code class="language-java">Collectors.toList</code> method:</p> 
+  <pre><code class="language-java">List&lt;Account&gt; accounts = accountStream.collect(Collectors.toList());</code></pre> 
+  <p>As you can see, the <code class="language-java">Collectors.toList</code> method did all the work for us. Similarly to producing a <code class="language-java">List</code> from a stream, we can produce a <code class="language-java">Set</code>. Again, we can delegate that responsibility to the <code class="language-java">Collectors</code> class and use <code class="language-java">Collectors.toSet</code> method:</p> 
+  <pre><code class="language-java">Set&lt;Account&gt; accounts = accountStream.collect(Collectors.toSet());</code></pre> 
+  <p>If you need more control over producing collections and want to accumulate stream elements to the particular collection that is not a <code class="language-java">List</code> or a <code class="language-java">Set</code>, than <code class="language-java">Collectors.toCollection</code> method may come in handy:</p> 
+  <pre><code class="language-java">LinkedList&lt;Account&gt; accounts = accountStream.collect(Collectors.toCollection(LinkedList::new));</code></pre> 
+  <p>The <code class="language-java">Collectors.toCollection</code> method accepts a function that generates a new collection of a specified type. In the example above, we've accumulated a stream of account numbers to the <code class="language-java">LinkedList&lt;Account&gt;</code> by providing a reference to its default constructor.</p> 
+  <h5 id="producing-values">Producing values</h5> 
+  <p>Similarly to the <code class="language-java">reduce</code> operation, <code class="language-java">collect</code> is able to accumulate stream elements into a single value. Here you can see some <code class="language-java">Collectors</code> methods that produce a single value:</p> 
+  <ul> 
+   <li><code class="language-java">summingInt</code>, <code class="language-java">summingLong</code>, <code class="language-java">summingDouble</code>;</li> 
+   <li><code class="language-java">averagingInt</code>, <code class="language-java">averagingLong</code>, <code class="language-java">averagingDouble</code>;</li> 
+   <li><code class="language-java">maxBy</code>, <code class="language-java">minBy</code>;</li> 
+   <li><code class="language-java">counting</code>.</li> 
+  </ul> 
+  <p>The names of the methods are quite self-explanatory regarding their purpose. We'll employ one in the example below.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   Note that you can make your code shorter and more clear by using static import of necessary collectors such as 
+   <code class="language-java">import static java.util.stream.Collectors.averagingLong;</code>
+  </div>
+  <p></p> 
+  <p>Now let's summarize balances on the accounts. We can use <code class="language-java">summingLong</code> method for that:</p> 
+  <pre><code class="language-java">long summary = accounts.stream()
+        .collect(summingLong(Account::getBalance));</code></pre> 
+  <p>Also, we can calculate the mean value:</p> 
+  <pre><code class="language-java">double average = accounts.stream()
+        .collect(averagingLong(Account::getBalance));</code></pre> 
+  <p></p>
+  <div class="alert alert-primary">
+   Note that all averaging collectors (
+   <code class="language-java">averagingLong</code>, 
+   <code class="language-java">averagingInt</code>, 
+   <code class="language-java">averagingDouble</code>) return a 
+   <code class="language-java">double</code> value.
+  </div>
+  <p></p> 
+  <p>If you need to perform more specific calculations, you can use <code class="language-java">Collectors.reducing</code> method. Similarly to the <code class="language-java">reduce</code> operation, <code class="language-java">Collectors.reducing</code> method implementations can accept an accumulator function or the identity value together with an accumulator. However, there is one additional implementation that accepts identity, <em>mapper</em>, and an accumulation function.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   It is notable that the mapper is a mapping function that is applied to stream elements, while the reducing accumulator function reduces the mapped values of a stream.
+  </div>
+  <p></p> 
+  <p>Let's consider an example:</p> 
+  <pre><code class="language-java">String megaNumber = accountStream.collect(Collectors.reducing("",
+        account -&gt; account.getNumber(),
+        (numbers, number) -&gt; numbers.concat(number)
+));</code></pre> 
+  <p>The code above maps each account to its number and concatenates all account numbers into one single number using a reducing collector.</p> 
+  <h5 id="conclusion">Conclusion</h5> 
+  <p>The <code class="language-java">collect</code> is a terminal operation that allows us to accumulate stream elements to a collection or a single value. The <code class="language-java">collect</code> method accepts the object of the <code class="language-java">Collector</code> type. Instead of implementing the <code class="language-java">Collector</code>, we can use the <code class="language-java">Collectors</code> class that contains useful methods that return a <code class="language-java">Collector</code> with already implemented logic. By using <code class="language-java">Collectors</code> we can accumulate stream elements into a <code class="language-java">List</code> or a <code class="language-java">Set</code> by using <code class="language-java">toList</code> and <code class="language-java">toSet</code> methods respectively. If we need to produce some other collection we can use the method called <code class="language-java">toCollection</code>. Besides producing collections, the <code class="language-java">collect</code> operation can be used for calculating such values as the average, summarized, maximum, minimum, etc.</p>
+ </body>
+</html>

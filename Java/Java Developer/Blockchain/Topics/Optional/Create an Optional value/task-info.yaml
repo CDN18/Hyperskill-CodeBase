@@ -1,0 +1,18 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: "import java.util.Optional;\n\nclass Main {\n    public static void main(String[]\
+    \ args) {\n        InputStringReader reader = new InputStringReader();       \
+    \ \n        Optional<String> value = reader.getValue();\n        if (value.isPresent())\
+    \ {\n            System.out.println(\"Value is present: \" + value.get());\n \
+    \       } else {\n            System.out.println(\"Value is empty\");\n      \
+    \  }\n    }\n}\n\nclass InputStringReader {\n    public Optional<String> getValue()\
+    \ {\n        // implement\n    }\n}"
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/14366#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Fri, 29 Apr 2022 11:29:13 UTC
+record: -1

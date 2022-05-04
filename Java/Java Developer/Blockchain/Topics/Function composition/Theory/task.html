@@ -1,0 +1,82 @@
+<h2>Function composition</h2>
+<html>
+ <head></head>
+ <body>
+  <p>In this topic, you will learn a new technique for working with functions called <strong>function composition</strong>. It is a mechanism for combining functions to obtain more complicated functions that originally comes from math. In a sense, it can be considered as a <strong>design pattern</strong> in functional programming. You can use this pattern to compose standard functions, operators, predicates and consumers (but not suppliers). Let's take a look at examples.</p> 
+  <h5 style="text-align: center;" id="composing-functions">Composing functions</h5> 
+  <p>The functional interface<strong> </strong><code class="language-java">Function&lt;T, R&gt;</code><strong> </strong>has two default methods <code class="language-java">compose</code> and <code class="language-java">andThen</code> for composing new functions. The main difference between these methods lies in the execution order.</p> 
+  <p>Generally, <code class="language-java">f.compose(g).apply(x)</code> is the same as <code class="language-java">f(g(x))</code><strong>,</strong> and <code class="language-java">f.andThen(g).apply(x)</code> is the same as <code class="language-java">g(f(x))</code>.</p> 
+  <p>Here is an example with two functions: <code class="language-java">adder</code> and <code class="language-java">multiplier</code>.</p> 
+  <pre><code class="language-java">Function&lt;Integer, Integer&gt; adder = x -&gt; x + 10;
+Function&lt;Integer, Integer&gt; multiplier = x -&gt; x * 5;
+
+// compose: adder(multiplier(5))
+System.out.println("result: " + adder.compose(multiplier).apply(5));
+
+// andThen: multiplier(adder(5))
+System.out.println("result: " + adder.andThen(multiplier).apply(5));</code></pre> 
+  <p>In this case, the <code class="language-java">compose</code> method returns a composed function that first applies <code class="language-java">multiplier</code><strong> </strong>to its input, and then applies <code class="language-java">adder</code> to the result. The <code class="language-java">andThen</code><strong> </strong> method returns a composed function that first applies<strong> </strong><code class="language-java">adder</code> to its input, and then applies <code class="language-java">multiplier</code> to the result.</p> 
+  <p>Here is the output:</p> 
+  <pre><code class="language-applescript">result: 35
+result: 75</code></pre> 
+  <p>Operators can be used in the same way as functions.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   The methods 
+   <code class="language-java">compose</code> and 
+   <code class="language-java">andThen</code> do not modify the functions that are combined. Instead, they return new functions. This is true for all the next examples.
+  </div>
+  <p></p> 
+  <h5 style="text-align: center;" id="composing-predicates">Composing predicates</h5> 
+  <p>All functional interfaces representing predicates (<code class="language-java">Predicate&lt;T&gt;</code>, <code class="language-java">IntPredicate</code> and others) have three methods for composing new predicates: <code class="language-java">and</code>, <code class="language-java">or</code> and <code class="language-java">negate</code>.</p> 
+  <p>There are two predicates in the example below:<strong> </strong><code class="language-java">isOdd</code> and <code class="language-java">lessThan11</code>.</p> 
+  <pre><code class="language-java">IntPredicate isOdd = n -&gt; n % 2 != 0; // it's true for 1, 3, 5, 7, 9, 11 and so on
+
+System.out.println(isOdd.test(10)); // prints "false"
+System.out.println(isOdd.test(11)); // prints "true"
+        
+IntPredicate lessThan11 = n -&gt; n &lt; 11; // it's true for all numbers &lt; 11
+
+System.out.println(lessThan11.test(10)); // prints "true"
+System.out.println(lessThan11.test(11)); // prints "false"</code></pre> 
+  <p>Let's negate the first predicate:</p> 
+  <pre><code class="language-java">IntPredicate isEven = isOdd.negate(); // it's true for 0, 2, 4, 6, 8, 10 and so on
+System.out.println(isEven.test(10)); // prints "true"
+System.out.println(isEven.test(11)); // prints "false"</code></pre> 
+  <p>Here we have a new predicate that tests whether the value is even rather than odd.</p> 
+  <p>Now let's combine both <code class="language-java">isOdd</code> and <code class="language-java">lessThan11</code> predicates together by using <code class="language-java">or</code> and <code class="language-java">and</code> methods:</p> 
+  <pre><code class="language-java">IntPredicate isOddOrLessThan11 = isOdd.or(lessThan11);
+
+System.out.println(isOddOrLessThan11.test(10)); // prints "true"
+System.out.println(isOddOrLessThan11.test(11)); // prints "true"
+System.out.println(isOddOrLessThan11.test(12)); // prints "false"
+System.out.println(isOddOrLessThan11.test(13)); // prints "true"
+
+IntPredicate isOddAndLessThan11 = isOdd.and(lessThan11);
+
+System.out.println(isOddAndLessThan11.test(8));  // prints "false"
+System.out.println(isOddAndLessThan11.test(9));  // prints "true"
+System.out.println(isOddAndLessThan11.test(10)); // prints "false"
+System.out.println(isOddAndLessThan11.test(11)); // prints "false"</code></pre> 
+  <p>As you can see, these methods are equivalent to logical operators <code class="language-java">&amp;&amp;</code> and <code class="language-java">||</code>, but they work with functions rather than their values.</p> 
+  <h5 style="text-align: center;" id="composing-consumers">Composing consumers</h5> 
+  <p>It can be a little surprising, but it is also possible to combine consumers by using the <code class="language-java">andThen</code> method. It just returns a new consumer that consumes the given value several times in a chain.</p> 
+  <p>In the following example, we use <code class="language-java">andThen</code> to print a value two times, but it is possible to do it more times.</p> 
+  <pre><code class="language-java">Consumer&lt;String&gt; consumer = System.out::println;
+Consumer&lt;String&gt; doubleConsumer = consumer.andThen(System.out::println);
+doubleConsumer.accept("Hi!");</code></pre> 
+  <p>Here is the output:</p> 
+  <pre><code class="language-java">Hi!
+Hi!</code></pre> 
+  <p>In a real situation, you could use it to output a value to different destinations, like a database or a logger.</p> 
+  <p></p>
+  <div class="alert alert-warning">
+   Although it is possible to combine 
+   <strong>consumers</strong>, it is not possible to combine 
+   <strong>suppliers</strong>.
+  </div>
+  <p></p> 
+  <h5 style="text-align: center;" id="conclusion">Conclusion</h5> 
+  <p>Function composition allows developers to build new functions from existing ones and use them whenever you want. All kinds of predicates, functions, operators, and consumers (except for suppliers) have methods for that purpose.</p>
+ </body>
+</html>

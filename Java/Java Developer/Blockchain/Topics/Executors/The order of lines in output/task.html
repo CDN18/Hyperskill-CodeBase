@@ -1,0 +1,24 @@
+<h2>The order of lines in output</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Here's a code snippet that creates an executor and submits two tasks to it:</p> 
+  <pre><code class="language-java">ExecutorService executor = Executors.newFixedThreadPool(4);
+
+for (int i = 1; i &lt;= 2; i++) {
+    int taskNumber = i;
+    executor.submit(() -&gt; System.out.println("Starting task-" + taskNumber));
+}
+
+TimeUnit.MILLISECONDS.sleep(50); // the current thread waits for 50 millis
+
+executor.shutdown();
+
+System.out.println("Main completed");</code></pre> 
+  <p>Here is an output of one execution of the program:</p> 
+  <pre><code class="language-java">Main completed
+Starting task-1
+Starting task-2</code></pre> 
+  <p>Select one correct statement about orders of lines in the output.</p>
+ </body>
+</html>

@@ -1,0 +1,36 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.List;
+    import java.util.Scanner;
+    import java.util.stream.Collectors;
+    import java.util.stream.Stream;
+
+    class GenerateCats {
+
+        public static List<Cat> generateNCats(int n) {
+            // write your code here
+        }
+
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+
+            List<Cat> cats = generateNCats(scanner.nextInt());
+
+            System.out.println(cats.size());
+        }
+    }
+
+    class Cat {
+        String name;
+        int age;
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/12519#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Sat, 30 Apr 2022 20:59:17 UTC
+record: -1

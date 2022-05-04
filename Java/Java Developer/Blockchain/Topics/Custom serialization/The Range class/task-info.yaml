@@ -1,0 +1,20 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: "/**\n    Represents inclusive integer range.\n*/\nclass Range implements\
+    \ Serializable {\n\n\tprivate static final long serialVersionUID = 1L;\n\n\t/**\
+    \ @serial */\n\tprivate final int from;\n\t/** @serial */\n\tprivate final int\
+    \ to;\n\n\t/**\n\t * Creates Range.\n\t * \n\t * @param from start \n\t * @param\
+    \ to end\n\t * @throws IllegalArgumentException if start is greater than end.\
+    \ \n\t */\n\tpublic Range(int from, int to) {\n\t\tif (from > to) {\n\t\t\tthrow\
+    \ new IllegalArgumentException(\"Start is greater than end\");\n\t\t}\n\t\tthis.from\
+    \ = from;\n\t\tthis.to = to;\n\t}\n\n\tpublic int getFrom() {\n\t\treturn from;\n\
+    \t}\n\n\tpublic int getTo() {\n\t\treturn to;\n\t}\n\n}"
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2821#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Tue, 26 Apr 2022 05:34:01 UTC
+record: -1

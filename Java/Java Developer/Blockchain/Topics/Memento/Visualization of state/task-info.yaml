@@ -1,0 +1,52 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: "import java.util.*;\nimport java.util.stream.Collectors;\nimport java.util.stream.IntStream;\n\
+    \ninterface Algorithm<S extends AlgorithmState> {\n\n    boolean hasNextStep();\n\
+    \n    void nextStep();\n\n    S getState();\n\n    void setState(S state);\n}\n\
+    \ninterface AlgorithmState { }\n\nclass SelectionSort<T extends Comparable<T>>\
+    \ implements Algorithm<SelectionSort.SortState<T>> {\n    private T[] array;\n\
+    \    private int currentIndex = 0;\n    private int comparedIndex = 0;\n    private\
+    \ int currentMinIndex = 0;\n\n    SelectionSort(T[] array) {\n        this.array\
+    \ = array.clone();\n    }\n\n    @Override\n    public void nextStep() {\n   \
+    \     if (comparedIndex == array.length - 1 && currentIndex != currentMinIndex)\
+    \ {\n            T tmp = array[currentIndex];\n            array[currentIndex]\
+    \ = array[currentMinIndex];\n            array[currentMinIndex] = tmp;\n     \
+    \       currentMinIndex = currentIndex;\n        } else if (comparedIndex == array.length\
+    \ - 1) {\n            currentIndex++;\n            if (currentIndex < array.length\
+    \ - 1) {\n                comparedIndex = currentIndex + 1;\n            }\n \
+    \           currentMinIndex = array[currentIndex]\n                    .compareTo(array[comparedIndex])\
+    \ > 0 ? comparedIndex : currentIndex;\n        } else {\n            comparedIndex++;\n\
+    \        }\n\n        if (array[comparedIndex].compareTo(array[currentMinIndex])\
+    \ < 0) {\n            currentMinIndex = comparedIndex;\n        }\n    }\n\n \
+    \   @Override\n    public boolean hasNextStep() {\n        return currentIndex\
+    \ < array.length - 1;\n    }\n\n    @Override\n    public String toString() {\n\
+    \        return IntStream.range(0, array.length).mapToObj(i -> {\n           \
+    \         String s = String.valueOf(array[i]);\n                    if (i == currentIndex)\
+    \ {\n                        s = \"{\" + s + \"}\"; // final place for min item\
+    \ in range\n                    }\n                    if (i == comparedIndex)\
+    \ {\n                        s = \"[\" + s + \"]\"; // candidate for min item\n\
+    \                    }\n                    if (i == currentMinIndex) {\n    \
+    \                    s = \"(\" + s + \")\"; // current min item in range\n   \
+    \                 }\n                    return s;\n                }).collect(Collectors.joining(\"\
+    \ \"));\n    }\n\n    @Override\n    public void setState(SortState<T> state)\
+    \ {\n        // TODO implement this method      \n    }\n\n    @Override\n   \
+    \ public SortState<T> getState() {\n        // TODO implement this method\n  \
+    \      return null;\n    }\n\n    static class SortState<T> implements AlgorithmState\
+    \ {\n        // TODO implement this class\n    }\n}\n\nclass AlgorithmVisualizer<T\
+    \ extends AlgorithmState> {\n    private final Algorithm<T> algorithm;\n    private\
+    \ final Deque<T> states = new ArrayDeque<>();\n\n    AlgorithmVisualizer(Algorithm<T>\
+    \ algorithm) {\n        this.algorithm = algorithm;\n    }\n\n    public void\
+    \ nextStep() {\n        if (algorithm.hasNextStep()) {\n            states.push(algorithm.getState());\n\
+    \            algorithm.nextStep();\n        }\n    }\n\n    public void prevStep()\
+    \ {\n        if (!states.isEmpty()) {\n            algorithm.setState(states.pop());\n\
+    \        }\n    }\n\n    public void showCurrentStep() {\n        System.out.println(algorithm);\n\
+    \    }\n}"
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/16536#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Tue, 26 Apr 2022 08:26:29 UTC
+record: -1

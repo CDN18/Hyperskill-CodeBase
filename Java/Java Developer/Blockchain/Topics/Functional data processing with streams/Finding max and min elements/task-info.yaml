@@ -1,0 +1,27 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.*;
+    import java.util.function.*;
+    import java.util.stream.*;
+
+
+    class MinMax {
+
+        public static <T> void findMinMax(
+                Stream<? extends T> stream,
+                Comparator<? super T> order,
+                BiConsumer<? super T, ? super T> minMaxConsumer) {
+
+            // your implementation here
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2388#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Sat, 30 Apr 2022 13:00:01 UTC
+record: -1

@@ -1,0 +1,91 @@
+<h2>Standard functional interfaces</h2>
+<html>
+ <head></head>
+ <body>
+  <p>You have already learned how to create and use functional interfaces. However, you don't have to create your own functional interface each time when you need it for a common use case. Instead, you could use built-in functional interfaces that were presented in Java 8 and can be found in the <code class="language-java">java.util.function</code> package. In this topic, you will learn about the built-in functional interfaces, their types and naming conventions, and how to use them.</p> 
+  <h5 id="groups-of-functional-interfaces">Groups of functional interfaces</h5> 
+  <p>All functional interfaces that are presented in the java.util.function package can be divided into five groups:</p> 
+  <ul> 
+   <li><strong>functions</strong> that accept arguments and produce results;</li> 
+   <li><strong>operators</strong> that produce results of the same type as their arguments (a special case of function);</li> 
+   <li><strong>predicates</strong> that accept arguments and return boolean values (boolean-valued function);</li> 
+   <li><strong>suppliers</strong> that accept nothing and return values;</li> 
+   <li><strong>consumers</strong> that accept arguments and return no result.</li> 
+  </ul> 
+  <p style="text-align: center;"><img alt="" height="393" src="https://ucarecdn.com/931e2353-3652-4275-a6b4-09694dd2e016/" width="700"></p> 
+  <p></p>
+  <div class="alert alert-primary">
+   Functional interfaces from the same group may differ in the number of arguments and be generic as well as non-generic.
+  </div>
+  <p></p> 
+  <h5 id="naming-convention">Naming convention</h5> 
+  <p>Thanks to the naming conventions of functional interfaces in the <code class="language-java">java.util.function</code> package, you can easily understand an interface characteristic just by looking at its name prefix, which may indicate the following:</p> 
+  <ul> 
+   <li>a number of parameters that are accepted by an operation. The prefix <em>Bi</em> indicates that a function, a predicate, or a consumer accepts two parameters. Similarly to the <em>Bi</em> prefix, <em>Unary</em> and <em>Binary</em> prefixes indicate that an operator accepts one and two parameters respectively.</li> 
+   <li>a type of input parameters. <em>Double</em>, <em>Long</em>, <em>Int</em>, and <em>Obj </em>prefixes indicate the type of input value. For example, the <code class="language-java">IntPredicate</code> interface represents a predicate that accepts the value of an <code class="language-java">Integer</code> type.</li> 
+   <li>a type of output parameter. <em>ToDouble</em>, <em>ToLong</em>, and <em>ToInt </em>prefixes indicate the type of output value. For example, the <code class="language-java">ToIntFunction&lt;T&gt;</code> interface represents a function that returns the value of an <code class="language-java">Integer</code> type.</li> 
+  </ul> 
+  <p></p>
+  <div class="alert alert-primary">
+   Note, that some functional interfaces have combined prefixes. It simply means that you need to apply the listed rules considering each prefix. For example, looking at the prefixes of the 
+   <code class="language-java">DoubleToIntFunction</code> interface, we can see that it accepts a value of 
+   <code class="language-java">Double</code> type and returns a value of 
+   <code class="language-java">Integer</code>type.
+  </div>
+  <p></p> 
+  <h5 id="standard-functional-interfaces-with-examples">Standard functional interfaces with examples</h5> 
+  <p>Let's look at examples for each of the five groups of the standard functional interfaces.</p> 
+  <p><strong>1) Functions</strong></p> 
+  <p>Each function accepts a value as a parameter and returns a single value. For example, the <code class="language-java">Function&lt;T, R&gt;</code> is a generic interface that represents a function that accepts a value of type <code class="language-java">T</code> and produces a result of type <code class="language-java">R</code>.</p> 
+  <pre><code class="language-java">// String to Integer function
+Function&lt;String, Integer&gt; converter = Integer::parseInt;
+converter.apply("1000"); // the result is 1000 (Integer)
+
+// String to int function
+ToIntFunction&lt;String&gt; anotherConverter = Integer::parseInt;
+anotherConverter.applyAsInt("2000"); // the result is 2000 (int)
+
+// (Integer, Integer) to Integer function
+BiFunction&lt;Integer, Integer, Integer&gt; sumFunction = (a, b) -&gt; a + b;
+sumFunction.apply(2, 3); // it returns 5 (Integer)</code></pre> 
+  <p><strong>2) Operators</strong></p> 
+  <p>Each operator takes and returns the values of the same type. For example, <code class="language-java">UnaryOperator&lt;T&gt;</code> represents an operator that accepts a value of type <code class="language-java">T</code> and produces a result of the same type <code class="language-java">T</code>.</p> 
+  <pre><code class="language-java">// Long to Long multiplier
+UnaryOperator&lt;Long&gt; longMultiplier = val -&gt; 100_000 * val;
+longMultiplier.apply(2L); // the result is 200_000L (Long)
+
+// int to int operator
+IntUnaryOperator intMultiplier = val -&gt; 100 * val;
+intMultiplier.applyAsInt(10); // the result is 1000 (int)
+
+// (String, String) to String operator
+BinaryOperator&lt;String&gt; appender = (str1, str2) -&gt; str1 + str2;
+appender.apply("str1", "str2"); // the result is "str1str2"</code></pre> 
+  <p><strong>3) Predicates</strong></p> 
+  <p>Each predicate accepts a value as a parameter and returns <code class="language-java">true</code> or <code class="language-java">false</code>. For example, the <code class="language-java">Predicate&lt;T&gt;</code> is a generic interface that represents a predicate that accepts a value of type <code class="language-java">T</code> and produces a boolean-valued result.</p> 
+  <pre><code class="language-java">// Character to boolean predicate
+Predicate&lt;Character&gt; isDigit = Character::isDigit;
+isDigit.test('h'); // the result is false (boolean)
+
+// int to boolean predicate
+IntPredicate isEven = val -&gt; val % 2 == 0;
+isEven.test(10); // the result is true (boolean)</code></pre> 
+  <p><strong>4) Suppliers</strong></p> 
+  <p>Each supplier accepts no parameters and returns a single value. For example, <code class="language-java">Supplier&lt;T&gt;</code> represents a supplier that accepts no arguments and returns a value of type <code class="language-java">T</code>.</p> 
+  <pre><code class="language-java">Supplier&lt;String&gt; stringSupplier = () -&gt; "Hello";
+stringSupplier.get(); // the result is "Hello" (String)
+
+BooleanSupplier booleanSupplier = () -&gt; true;
+booleanSupplier.getAsBoolean(); // the result is true (boolean)
+
+IntSupplier intSupplier = () -&gt; 33;
+intSupplier.getAsInt(); // the result is 33 (int)</code></pre> 
+  <p><strong>5) Consumers</strong></p> 
+  <p>Each consumer accepts a value as a parameter and returns no output. For example, the <code class="language-java">Consumer&lt;T&gt;</code> is an interface that represents a consumer that accepts a value of type <code class="language-java">T</code> and returns no result.</p> 
+  <pre><code class="language-java">// it prints a given string
+Consumer&lt;String&gt; printer = System.out::println;
+printer.accept("!!!"); // It prints "!!!"</code></pre> 
+  <h5 id="conclusion">Conclusion</h5> 
+  <p>In this topic, we have observed a set of built-in functional interfaces that can be divided into five groups. Each of them can be used as a lambda expression or a method reference. It is important that input parameters and returning value of a lambda expression (or a method reference) correspond to the input parameters and returning value of a single abstract method presented in the functional interface. Also, we have observed the interface naming conventions and figured out how the name prefixes indicate the number of input parameters and the type of input and output values. Further, we will observe how to use generic and primitive-specialized standard functional interfaces together.</p>
+ </body>
+</html>

@@ -1,0 +1,51 @@
+<h2>Type Bounds</h2>
+<html>
+ <head></head>
+ <body>
+  <h5 id="introduction">Introduction</h5> 
+  <p><strong>I</strong>n previous articles, we have mentioned that generics can accept any type of parameter and make it possible to reuse some code. Let's now consider an example that will reveal another aspect of generics. Imagine that we have a generic <code class="language-java">Storage&lt;T&gt;</code> class that can contain objects of any class. But there are some situations when we want to restrict these objects. We can say, for example, that the storage has to be able to contain only books. In these types of situations, we should use type bounds.</p> 
+  <h5 id="usage">Usage</h5> 
+  <p>Let us take a closer look at type bounds. Consider this code:</p> 
+  <pre><code class="language-java">class Storage&lt;T&gt; {
+    private T nameOfElements;
+    //other methods
+}</code></pre> 
+  <p>We can put any type of object inside <code class="language-java">Storage&lt;T&gt;</code>. As stated earlier, we would like to limit this class to be able to store only books. Let's assume we have a <code class="language-java">Books</code> class to represent all books. Then we can implement our limitation by adding <code class="language-java">&lt;T extends Books&gt;</code>:</p> 
+  <pre><code class="language-java">class Storage&lt;T extends Books&gt; {
+    private T nameOfElements;
+    //other methods
+}</code></pre> 
+  <p>Let us create three classes:</p> 
+  <pre><code class="language-java">public class Books { }
+public class Brochures extends Books { }
+public class Computers { }</code></pre> 
+  <p>Now creating three <code class="language-java">Storage</code> objects will lead to different results:</p> 
+  <pre><code class="language-java">Storage&lt;Books&gt; storage1 = new Storage&lt;&gt;(); //no problem
+Storage&lt;Brochures&gt; storage2 = new Storage&lt;&gt;(); //no problem
+Storage&lt;Computers&gt; storage3 = new Storage&lt;&gt;(); //a compile-time error</code></pre> 
+  <p>The first two lines will compile without problems. The third one, however, will return an error: <code class="language-java">Type parameter 'Computers' is not within its bound; should extend Books.</code> Since this is a compile-time error, we catch this problem before it can appear in a real application. For this reason, type bounds are safe to use. </p> 
+  <p></p>
+  <div class="alert alert-primary">
+   Note that 
+   <code class="language-java">extends</code> can mean not only an extension of a certain class but also an implementation of an interface. Generally speaking, this word is used as a replacement for an extension of normal classes, not generic classes. Trying to extend a generic class (for example, 
+   <code class="language-java">Storage&lt;Brochures&gt; extends Storage&lt;Books&gt;</code>) will lead to an error.
+  </div>
+  <p></p> 
+  <h5 id="principles">Principles</h5> 
+  <p>Type bounding involves two keywords, "extends" and "super", each with their own rules regulating their utilization. In this topic, however, we deal with the most common use of type bounds: setting an upper bound with the "extends" keyword. We will learn more about the principles underlying these keywords in the "Wildcards" topic. </p> 
+  <p>Note that under the hood, every type variable declared as a type parameter has a bound. If no bound is declared, <code class="language-java">Object</code> is the bound. For this reason,</p> 
+  <pre><code class="language-java">class SomeClass&lt;T&gt; {...}</code></pre> 
+  <p>is equivalent to</p> 
+  <pre><code class="language-java">class SomeClass&lt;T extends Object&gt; {...}</code></pre> 
+  <h5 id="multiple-bounds">Multiple bounds</h5> 
+  <p>A type variable may have a single type bound: </p> 
+  <pre><code class="language-java">&lt;T extends A&gt;</code></pre> 
+  <p>or have multiple bounds:</p> 
+  <pre><code class="language-java">&lt;T extends A &amp; B &amp; C &amp; ...&gt;</code></pre> 
+  <p>The first type bound ("A") can be a class or an interface. The rest of the type bounds ("B" onwards) must be interfaces.</p> 
+  <p>Note: if <code class="language-java">T</code> has a bound that is a class, this class must be specified first! Otherwise, a compile-time error arises:</p> 
+  <pre><code class="language-java">&lt;T extends B &amp; C &amp; A &amp; ...&gt; //an error if A is a class</code></pre> 
+  <h5 id="conclusion">Conclusion</h5> 
+  <p>Type bounds are widely used to restrict type parameters. The most common use of type bounds is to set upper bounds with the <code class="language-java">extends</code> keyword. Certain situations, however, require the use of wildcards, a topic closely related to type bounds. You will learn about wildcards in the next article.</p>
+ </body>
+</html>

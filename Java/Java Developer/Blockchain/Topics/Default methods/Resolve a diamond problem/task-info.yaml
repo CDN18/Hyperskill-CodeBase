@@ -1,0 +1,27 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class ConsoleWriter implements Printer, Notifier {
+        // override greeting method according to Printer default implementation
+    }
+
+    interface Printer {
+        default void greeting() {
+            System.out.println("Printer is ready");
+        }
+    }
+
+    interface Notifier {
+        default void greeting() {
+            System.out.println("Notifier is ready");
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/11361#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Wed, 27 Apr 2022 13:23:57 UTC
+record: -1

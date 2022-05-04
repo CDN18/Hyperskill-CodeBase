@@ -1,0 +1,33 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    public class Main {
+        public static void main(String[] args) {
+            // write your code
+        }
+    }
+
+    // An internal staff of the testing platform. Do not change it
+    class IPhone154 {
+        static double minCost = initCost();
+
+        static class PrototypeIPhone154 {
+            void printMinCost() {
+                System.out.println("The min cost of IPhone154 should be: $" + minCost);
+            }
+        }
+
+        private static double initCost() {
+            java.util.Scanner scanner = new java.util.Scanner(System.in);
+            return scanner.nextDouble();
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/11850#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Mon, 25 Apr 2022 17:31:16 UTC
+record: -1

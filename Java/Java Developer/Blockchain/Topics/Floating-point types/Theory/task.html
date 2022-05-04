@@ -1,0 +1,95 @@
+<h2>Floating-point types</h2>
+<html>
+ <head></head>
+ <body>
+  <p>A floating point numeral refers generally to the notation of a number which contains the integer part and the fractional part and their separator (for example 0.01 or 3.1415). Such numbers represent fractions which are often used in science, statistics, engineering, and many other fields.</p> 
+  <p>Java has two basic types to represent such numbers: <code class="language-java">float</code> and <code class="language-java">double</code>. They are called <strong>floating-point types</strong>. In fact, these types cannot represent an arbitrary decimal number, because they support only a limited number of significant decimal digits (6-7 for <code class="language-java">float</code>, and 14-16 for <code class="language-java">double</code>). In addition, <code class="language-java">double</code> can represent a wider range of numbers than <code class="language-java">float</code>.</p> 
+  <p>In practice, programmers mostly use the <code class="language-java">double</code> type and we recommend you to use it for our code challenges. But all the information below is valid for the <code class="language-java">float</code> type as well.</p> 
+  <h5 style="text-align: center;" id="declaring-variables-and-assigning-values">Declaring variables and assigning values</h5> 
+  <p>In a program, the <code class="language-java">double</code> literal looks like <code class="language-java">5.2</code> where the dot character separates the integer and fractional parts of a number.</p> 
+  <p>There are several initialized <code class="language-java">double</code> variables below:</p> 
+  <pre><code class="language-java">double zero = 0.0;
+double one = 1.0;
+double negNumber = -1.75;
+double pi = 3.1415;
+
+System.out.println(pi); // 3.1415</code></pre> 
+  <p>It is also possible to assign an integer value to a <code class="language-java">double</code> variable:</p> 
+  <pre><code class="language-java">double one = 1;
+System.out.println(one); // 1.0</code></pre> 
+  <p>If you want to declare and initialize a <code class="language-java">float</code> variable, you must mark the assigned value with the special letter <code class="language-java">f</code> (float literal):</p> 
+  <pre><code class="language-java">float pi = 3.1415f;
+float negValue = -0.15f;
+System.out.println(pi); // 3.1415 without f</code></pre> 
+  <p>Both types can store only a limited number of significant decimal digits:</p> 
+  <pre><code class="language-java">float f = 0.888888888888888888f; // a value with a lot of decimal digits
+System.out.println(f);           // it only prints 0.8888889</code></pre> 
+  <p>Floating-point types have a specific way to mark values with a mantissa:</p> 
+  <pre><code class="language-java">double eps = 5e-3; // means 5 * 10^(-3) = 0.005
+double n = 0.01e2; // means 0.01 * 10^2 = 1.0</code></pre> 
+  <h5 style="text-align: center;" id="arithmetic-operations">Arithmetic operations</h5> 
+  <p>You can perform all types of arithmetic operations with floating-point types.</p> 
+  <pre><code class="language-java">double one = 1.0;
+double number = one + 1.5; // 2.5
+
+double a = 1.75;
+double b = 5.0;
+double c = b - a; // 3.25
+
+double pi = 3.1415;
+double squaredPi = pi * pi; // 9.86902225</code></pre> 
+  <p>For <code class="language-java">double</code> and <code class="language-java">float</code> operands, the operator <code class="language-java">/</code> performs a division, not an integer division.</p> 
+  <pre><code class="language-java">System.out.println(squaredPi / 2); // 4.934511125</code></pre> 
+  <p><strong>Pay attention</strong> to an important thing that beginners often miss:</p> 
+  <pre><code class="language-java">double d1 = 5 / 4; // 1.0
+double d2 = 5.0 / 4; // 1.25</code></pre> 
+  <p>In the first case, we perform integer division that produces an integer result and then assign the result to <code class="language-java">d1</code>. In the second case, we perform a real division that produces a double value and then assign the value to <code class="language-java">d2</code>.</p> 
+  <h5 style="text-align: center;" id="errors-during-computations">Errors during computations</h5> 
+  <p>Be careful! Operations with floating-point numbers can produce an inaccurate result:</p> 
+  <pre><code class="language-java">System.out.println(3.3 / 3); // prints 1.0999999999999999</code></pre> 
+  <p>Errors can accumulate during computation. In the following example we calculate the sum of ten decimals <strong>0.1</strong>:</p> 
+  <pre><code class="language-java">double d = 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1;
+System.out.println(d); // it prints 0.9999999999999999</code></pre> 
+  <p>Such errors happen because floating point numbers are actually stored and operated in binary form and not all real numbers can be represented exactly (similarly, we cannot represent the exact value of the 1/3 fraction in decimal form). In the following topics, we will find out how to deal with this issue. For now, just take it into consideration.</p> 
+  <p>If you want to learn more about floating-point numbers, you may read <a target="_blank" href="https://introcs.cs.princeton.edu/java/91float/" rel="noopener noreferrer nofollow">this article</a> as an addition.</p> 
+  <h5 style="text-align: center;" id="reading-floating-point-numbers">Reading floating-point numbers</h5> 
+  <p>You can use <code class="language-java">Scanner</code> to read the values of both floating-point types from the standard input.</p> 
+  <pre><code class="language-java">Scanner scanner = new Scanner(System.in);
+
+float f = scanner.nextFloat();
+double d = scanner.nextDouble();</code></pre> 
+  <p>As mentioned above, we recommend you use <code class="language-java">double</code> to solve our programming problems.</p> 
+  <p>As an example, consider a program that calculates the <code class="language-java">area</code> of a triangle. To find it, the program reads the <code class="language-java">base</code> and the <code class="language-java">height</code> from the standard input, then multiplies them, and divides by 2. Note that the base and the height are perpendicular to each other.</p> 
+  <pre><code class="language-java">import java.util.Scanner;
+
+public class AreaOfTriangle {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        double base = scanner.nextDouble();
+        double height = scanner.nextDouble();
+
+        double area = (base * height) / 2;
+
+        System.out.println(area);
+    }
+}</code></pre> 
+  <p>Let's calculate the area of a triangle with a base of 3.3 meters and a height of 4.5 meters.</p> 
+  <p><strong>Input 1:</strong></p> 
+  <pre><code class="language-css">3.3 4.5</code></pre> 
+  <p><strong>Output 1:</strong></p> 
+  <pre><code class="language-css">7.425</code></pre> 
+  <p>As you can see, it's area is 7.425 square meters!</p> 
+  <p><strong>Keep in mind</strong> that the output of this program may have a lot of zeros like the output below because an operation with floating-point numbers can produce inaccurate results.</p> 
+  <p><strong>Input 2:</strong></p> 
+  <pre><code class="language-css">2.2 4.01</code></pre> 
+  <p><strong>Output 2:</strong></p> 
+  <pre><code class="language-css">4.4110000000000005</code></pre> 
+  <p>It is possible to round or format a double result, but we will not do it in this lesson. In the coding problems, output a result as-is.</p> 
+  <h5 style="text-align: center;" id="the-decimal-separator">The decimal separator</h5> 
+  <p>If you solve our coding problems locally or try to repeat our examples, you may encounter a problem with your computer having different locale settings. In this case, the <strong>Scanner</strong> cannot read floating-point numbers with the dot character (<strong>3.1415</strong>). Try to input numbers written with the comma separator (<strong>3,1415</strong>).</p> 
+  <p>If you want to use the dot character without modifying your local settings, try using the following code to create a scanner:</p> 
+  <pre><code class="language-java">Scanner scanner = new Scanner(System.in).useLocale(Locale.US);</code></pre> 
+  <p>You do not need to change anything when submitting your solutions in our forms.</p>
+ </body>
+</html>

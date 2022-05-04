@@ -1,0 +1,77 @@
+<h2>Singleton</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Sometimes we need to have only a single instance of a class shared across an entire application. There is a special design pattern called <strong>Singleton</strong> that restricts the instantiation of a class to one object. The pattern ensures that there is only one instance of the class and provides global access to it for the outer world.</p> 
+  <p style="text-align: center;"><img alt="" height="195" src="https://ucarecdn.com/c4c50aab-5b46-4d4d-81c4-4699808d8ffa/" width="437"></p> 
+  <p style="text-align: center;">The same instance is used by different clients (classes, methods)</p> 
+  <p>Singletons often control access to resources such as database connections or sockets.</p> 
+  <p>For example, a class that keeps the connection to the database can be written as a singleton: creating a connection object time after time will be quite bulky in terms of memory. If it is a singleton, then your application will work better and faster.</p> 
+  <p>Another example is a class that provides a universal logger for an application. It keeps the shared log-file as the resource.</p> 
+  <p>In this topic, we will consider only the basic singleton implementation.</p> 
+  <h5 style="text-align: center;" id="basic-singleton-in-java">Basic singleton in Java</h5> 
+  <p>The standard way to write a class according to the singleton pattern includes:</p> 
+  <ul> 
+   <li>a private constructor to defeat the creation of instances using the keyword <code class="language-java">new</code>;</li> 
+   <li>a private static variable of the class that is the only instance of the class;</li> 
+   <li>a public static method to return the same instance of the class; this is a global access point to the instance.</li> 
+  </ul> 
+  <p>The following code implements these concepts:</p> 
+  <pre><code class="language-java">class Singleton {
+
+    private static final Singleton INSTANCE = new Singleton();
+
+    private Singleton() { }
+
+    public static Singleton getInstance() {
+        return INSTANCE;
+    }
+}</code></pre> 
+  <p>That class is quite simple, but let's take a closer look at it.</p> 
+  <p>The class <code class="language-java">Singleton</code> is a basic implementation of the considered pattern. The field <code class="language-java">INSTANCE</code> stores only a single instance of the class. The constructor is declared as <code class="language-java">private</code> to defeat instantiation. The static method <code class="language-java">getInstance</code> returns the same instance of the class.</p> 
+  <p>Let's create three variables, assign an instance to each of them and then compare the variables by references:</p> 
+  <pre><code class="language-java">Singleton s1 = Singleton.getInstance();
+Singleton s2 = Singleton.getInstance();
+Singleton s3 = Singleton.getInstance();
+        
+System.out.println(s1 == s2); // true because s1 and s2 refer the same object
+System.out.println(s2 == s3); // true because s2 and s3 refer the same object</code></pre> 
+  <p> </p> 
+  <p>As you can see, the variables <code class="language-java">s1</code><code class="language-java">s2</code>, and <code class="language-java">s3</code> refer the same object that is stored in the static field of <code class="language-java">Singleton</code>.</p> 
+  <p>Usually, singletons have additional instance fields to store values (global variables) to share them across your application as well as methods to have a behavior.</p> 
+  <h5 style="text-align: center;" id="lazy-initialization">Lazy initialization</h5> 
+  <p>The singleton above loads the instance when the class is loaded. But sometimes the initialization of a singleton can take much time: for example, to load the values of the fields from a file or a database.</p> 
+  <p>The following implementation loads the instance only if it is needed by a client (who calls <code class="language-java">getInstance</code>):</p> 
+  <pre><code class="language-java">class Singleton {
+    
+    private static Singleton instance;
+    
+    private Singleton () { }
+
+    public static Singleton getInstance() {
+        if (instance == null) {
+            instance = new Singleton();
+        }
+        return instance;
+    }
+}</code></pre> 
+  <p> </p> 
+  <p>Even though the implementation of a singleton pattern contains few lines of code, it has an important feature: lazy initialization. It means that the singleton instance is not created until the <code class="language-java">getInstance</code> method is called for the first time. This technique ensures that singleton instances are created only when needed.</p> 
+  <p></p>
+  <div class="alert alert-warning">
+    Note that you should use the provided singleton class only in one-thread environments because it is prone to multithreading issues. In other topics, we will consider techniques to write thread-safe singletons. 
+  </div>
+  <p></p> 
+  <h5 style="text-align: center;" id="singleton-pattern-in-java-libraries">Singleton pattern in Java libraries</h5> 
+  <p>There are a lot of Singleton examples in the Java Class Library:</p> 
+  <ul> 
+   <li><a target="_blank" href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runtime.html#getRuntime--" rel="nofollow noopener noreferrer"><code class="language-java">java.lang.Runtime.getRuntime()</code></a></li> 
+   <li><a target="_blank" href="http://docs.oracle.com/javase/8/docs/api/java/awt/Desktop.html#getDesktop--" rel="nofollow noopener noreferrer"><code class="language-java">java.awt.Desktop.getDesktop()</code></a></li> 
+   <li><code class="language-java">java.lang.System.getSecurityManager()</code></li> 
+  </ul> 
+  <p>To determine a singleton, see a static creational method which always returns the same instance of a class.</p> 
+  <p>Popular frameworks for developing enterprise applications (such as Spring, Java EE) also use singletons.</p> 
+  <h5 style="text-align: center;" id="criticism">Criticism</h5> 
+  <p>Some criticize the singleton pattern and consider it to be an anti-pattern: it is frequently used where it is not beneficial, it imposes unnecessary restrictions in some situations and introduces global state into an application. Hence the wisdom: use the pattern wisely when you really need a singleton.</p>
+ </body>
+</html>

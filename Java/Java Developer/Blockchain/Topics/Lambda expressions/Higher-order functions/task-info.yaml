@@ -1,0 +1,22 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: Function&lt;T, R&gt; method(Function&lt;T, R&gt; f,  int n)
+- text: void method(Function&lt;T, R&gt; f)
+- text: int method(int n)
+- text: Function&lt;T, R&gt; method(int n)
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2361#comment
+status: Solved
+record: -1

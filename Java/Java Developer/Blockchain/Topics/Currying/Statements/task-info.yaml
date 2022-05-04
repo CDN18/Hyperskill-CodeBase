@@ -1,0 +1,24 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: The interface Function&lt;Function&lt;Long, Long&gt;, Long&gt; can be used
+    to instantiate a curried function.
+- text: The interface Function&lt;Integer, Function&lt;Integer, Integer&gt;&gt; can
+    be used to instantiate a curried function.
+- text: To return a lambda expression from a method, it should return a value of a
+    suitable functional interface type.
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2429#comment
+status: Solved
+record: -1

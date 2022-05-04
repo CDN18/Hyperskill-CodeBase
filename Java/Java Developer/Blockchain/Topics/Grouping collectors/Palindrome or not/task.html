@@ -1,0 +1,58 @@
+<h2>Palindrome or not</h2>
+<html>
+ <head></head>
+ <body>
+  <div>
+   <span>Write a collector that partitions all words in a stream into two groups: </span>
+   <b>palindromes (true)</b>
+   <span> and</span>
+   <b> usual words (false)</b>
+   <span>. The collector should return </span>
+   <b>Map&lt;Boolean, List&lt;String&gt;&gt;</b>
+   <span>. All input words will be in the same case (lower).</span>
+   <br>
+  </div>
+  <br>Let's remind, a 
+  <b>palindrome</b> is a word or phrase which reads the same backward or forward, such as 
+  <i>noon</i> or 
+  <i>level</i>. In our case, a palindrome is always a word. For details, see 
+  <a target="_blank" href="https://en.wikipedia.org/wiki/Palindrome" rel="nofollow noopener noreferrer">https://en.wikipedia.org/wiki/Palindrome</a>
+  <br>
+  <div>
+   <br>
+   <b>Hint:</b> the method 
+   <b>reverse() </b>of StringBuilder
+   <b></b> may help you.
+   <br>
+   <br>
+   <div>
+    <b>Important.</b> You should write only the collector in 
+    <b>any valid formats but without ; on the end.</b>
+    <br>
+   </div>
+   <div>
+    <b></b>It will be passed as an argument to the 
+    <b>collect()</b> method of a stream as shown below.
+    <b><br></b>
+   </div>
+   <div>
+    <br>
+   </div>
+   <div>
+    <pre><code class="language-java">String[] words = ...
+Map&lt;Boolean, List&lt;String&gt;&gt; palindromeOrNoMap = 
+        Arrays.stream(words)
+              .collect(...your_collector_will_be_passed_here...);</code></pre> 
+   </div>
+   <br>
+   <b>Examples</b> of the valid solution formats: 
+   <b>Collectors.reducing(...)</b> or 
+   <b><b>reducing(...)</b></b>
+   <div>
+    <div>
+     <b></b>
+    </div>
+   </div>
+  </div>
+ </body>
+</html><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">aaaa aaa a aa<br></code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">{false=[], true=[aaaa, aaa, a, aa]}</code></pre><br><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">level bbaa ac<br></code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">{false=[bbaa, ac], true=[level]}</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 5 seconds</font><br><br>

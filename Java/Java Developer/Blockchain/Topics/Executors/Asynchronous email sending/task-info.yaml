@@ -1,0 +1,49 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.ArrayList;
+    import java.util.List;
+    import java.util.Scanner;
+    import java.util.concurrent.ExecutorService;
+    import java.util.concurrent.Executors;
+
+    class Main {
+        // Do not change it
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+            int messageCounts = scanner.nextInt();
+            List<String> messages = new ArrayList<>();
+            for (int i = 0; i < messageCounts; ++i) {
+                messages.add(scanner.next());
+            }
+
+            MailSender sender = new MockMailSender();
+            asyncSend(sender, messages);
+        }
+
+        static void asyncSend(MailSender sender, List<String> messages) {
+            // TODO
+        }
+    }
+
+    // Do not change it
+    interface MailSender {
+        void send(String message);
+    }
+
+    // The class simulates mail sending
+    // Do not change it
+    class MockMailSender implements MailSender {
+        public void send(String message) {
+            System.out.println("Message " + message + " was sent");
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/13648#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Wed, 27 Apr 2022 21:42:02 UTC
+record: -1

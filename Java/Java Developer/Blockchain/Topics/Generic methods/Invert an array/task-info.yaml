@@ -1,0 +1,21 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    // do not remove imports
+    import java.util.ArrayList;
+    import java.util.List;
+    import java.util.Scanner;
+    import java.util.function.Function;
+
+    class ArrayUtils {
+        // define invert method here
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/11025#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Mon, 25 Apr 2022 18:29:31 UTC
+record: -1

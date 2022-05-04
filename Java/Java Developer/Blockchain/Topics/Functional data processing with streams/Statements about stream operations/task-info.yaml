@@ -1,0 +1,24 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: Only terminal operations begin evaluations.
+- text: Any intermediate operation returns a primitive type or an object (even a collection)
+    or nothing (void).
+- text: Some operations return streams.
+- text: A stream allows using any number of intermediate operations.
+- text: Stream has intermediate, terminal and semi-intermediate operations.
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2378#comment
+status: Solved
+record: -1

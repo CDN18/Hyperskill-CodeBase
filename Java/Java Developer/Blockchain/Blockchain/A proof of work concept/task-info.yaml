@@ -1,0 +1,415 @@
+type: edu
+custom_name: stage2
+files:
+- name: src/blockchain/Main.java
+  visible: true
+  text: |
+    package blockchain;
+
+    public class Main {
+        public static void main(String[] args) {
+            System.out.println("Hello World!");
+        }
+    }
+  learner_created: false
+- name: test/BlockchainTest.java
+  visible: false
+  text: |
+    import org.hyperskill.hstest.stage.StageTest;
+    import org.hyperskill.hstest.testcase.CheckResult;
+    import org.hyperskill.hstest.testcase.TestCase;
+
+    import java.util.ArrayList;
+    import java.util.List;
+    import java.util.stream.Collectors;
+
+
+    class BlockParseException extends Exception {
+        BlockParseException(String msg) {
+            super(msg);
+        }
+    }
+
+
+    class Block {
+
+        int id;
+        long timestamp;
+        long magic;
+        String hashprev;
+        String hash;
+
+        static Block parseBlock(String strBlock) throws BlockParseException {
+            if (strBlock.length() == 0) {
+                return null;
+            }
+
+            if (!(strBlock.contains("Block:")
+                && strBlock.contains("Timestamp:"))) {
+
+                return null;
+            }
+
+            Block block = new Block();
+
+            List<String> lines = strBlock
+                .lines()
+                .map(String::strip)
+                .filter(e -> e.length() > 0)
+                .collect(Collectors.toList());
+
+            if (lines.size() != 9) {
+                throw new BlockParseException("Every block should " +
+                    "contain 9 lines of data");
+            }
+
+            if (!lines.get(0).equals("Block:")) {
+                throw new BlockParseException("First line of every block " +
+                    "should be \"Block:\"");
+            }
+
+            if (!lines.get(1).startsWith("Id:")) {
+                throw new BlockParseException("Second line of every block " +
+                    "should start with \"Id:\"");
+            }
+
+            String id = lines.get(1).split(":")[1]
+                .strip().replace("-", "");
+            boolean isNumeric = id.chars().allMatch(Character::isDigit);
+
+            if (!isNumeric) {
+                throw new BlockParseException("Id should be a number");
+            }
+
+            block.id = Integer.parseInt(id);
+
+
+
+            if (!lines.get(2).startsWith("Timestamp:")) {
+                throw new BlockParseException("Third line of every block " +
+                    "should start with \"Timestamp:\"");
+            }
+
+            String timestamp = lines.get(2).split(":")[1]
+                .strip().replace("-", "");
+            isNumeric = timestamp.chars().allMatch(Character::isDigit);
+
+            if (!isNumeric) {
+                throw new BlockParseException("Timestamp should be a number");
+            }
+
+            block.timestamp = Long.parseLong(timestamp);
+
+
+            if (!lines.get(3).startsWith("Magic number:")) {
+                throw new BlockParseException("4-th line of every block " +
+                    "should start with \"Magic number:\"");
+            }
+
+            String magic = lines.get(3).split(":")[1]
+                .strip().replace("-", "");
+            isNumeric = magic.chars().allMatch(Character::isDigit);
+
+            if (!isNumeric) {
+                throw new BlockParseException("Timestamp should be a number");
+            }
+
+            block.magic = Long.parseLong(magic);
+
+
+
+            if (!lines.get(4).equals("Hash of the previous block:")) {
+                throw new BlockParseException("5-th line of every block " +
+                    "should be \"Hash of the previous block:\"");
+            }
+
+            if (!lines.get(6).equals("Hash of the block:")) {
+                throw new BlockParseException("7-th line of every block " +
+                    "should be \"Hash of the block:\"");
+            }
+
+            String prevhash = lines.get(5).strip();
+            String hash = lines.get(7).strip();
+
+            if (!(prevhash.length() == 64 || prevhash.equals("0"))
+                || !(hash.length() == 64)) {
+
+                throw new BlockParseException("Hash length should " +
+                    "be equal to 64 except \"0\"");
+            }
+
+            block.hash = hash;
+            block.hashprev = prevhash;
+
+            return block;
+        }
+
+
+        static List<Block> parseBlocks(String output) throws BlockParseException {
+            String[] strBlocks = output.substring(
+                output.indexOf("Block:")).split("\n\n");
+
+            List<Block> blocks = new ArrayList<>();
+
+            for (String strBlock : strBlocks) {
+                Block block = parseBlock(strBlock.strip());
+                if (block != null) {
+                    blocks.add(block);
+                }
+            }
+
+            return blocks;
+        }
+    }
+
+    class Clue {
+        String zeros;
+        Clue(int n) {
+            zeros = "0".repeat(n);
+        }
+    }
+
+
+    public class BlockchainTest extends StageTest<Clue> {
+
+        List<String> previousOutputs = new ArrayList<>();
+
+        @Override
+        public List<TestCase<Clue>> generate() {
+            return List.of(
+                new TestCase<Clue>().setInput("0").setAttach(new Clue(0)),
+                new TestCase<Clue>().setInput("1").setAttach(new Clue(1)),
+                new TestCase<Clue>().setInput("2").setAttach(new Clue(2)),
+                new TestCase<Clue>().setInput("0").setAttach(new Clue(0)),
+                new TestCase<Clue>().setInput("1").setAttach(new Clue(1)),
+                new TestCase<Clue>().setInput("2").setAttach(new Clue(2))
+            );
+        }
+
+        @Override
+        public CheckResult check(String reply, Clue clue) {
+
+            if (previousOutputs.contains(reply)) {
+                return new CheckResult(false,
+                    "You already printed this text in the previous tests");
+            }
+
+            previousOutputs.add(reply);
+
+            List<Block> blocks;
+            try {
+                blocks = Block.parseBlocks(reply);
+            } catch (BlockParseException ex) {
+                return new CheckResult(false, ex.getMessage());
+            } catch (Exception ex) {
+                return CheckResult.wrong("");
+            }
+
+            if (blocks.size() != 5) {
+                return new CheckResult(false,
+                    "You should output 5 blocks, found " + blocks.size());
+            }
+
+            for (int i = 1; i < blocks.size(); i++) {
+                Block curr = blocks.get(i - 1);
+                Block next = blocks.get(i);
+
+                if (curr.id + 1 != next.id) {
+                    return new CheckResult(false,
+                        "Id`s of blocks should increase by 1");
+                }
+
+                if (next.timestamp < curr.timestamp) {
+                    return new CheckResult(false,
+                        "Timestamp`s of blocks should increase");
+                }
+
+                if (!next.hashprev.equals(curr.hash)) {
+                    return new CheckResult(false, "Two hashes aren't equal, " +
+                        "but should");
+                }
+
+                if (!next.hash.startsWith(clue.zeros)) {
+                    return new CheckResult(false,
+                        "Hash should start with some zeros");
+                }
+            }
+
+
+            return CheckResult.correct();
+        }
+    }
+  learner_created: false
+- name: src/blockchain/Utils.java
+  visible: true
+  text: |
+    package blockchain;
+
+    import java.security.MessageDigest;
+
+    public class Utils {
+        /* Applies Sha256 to a string and returns a hash. */
+        public static String Sha256(String input){
+            try {
+                MessageDigest digest = MessageDigest.getInstance("SHA-256");
+                /* Applies sha256 to our input */
+                byte[] hash = digest.digest(input.getBytes("UTF-8"));
+                StringBuilder hexString = new StringBuilder();
+                for (byte elem: hash) {
+                    String hex = Integer.toHexString(0xff & elem);
+                    if(hex.length() == 1) hexString.append('0');
+                    hexString.append(hex);
+                }
+                return hexString.toString();
+            }
+            catch(Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        public static long getTimeStamp() {
+            return System.currentTimeMillis();
+        }
+    }
+  learner_created: true
+- name: src/blockchain/BlockChain.java
+  visible: true
+  text: |
+    package blockchain;
+
+    import java.util.ArrayList;
+    import static blockchain.Utils.*;
+
+    public class BlockChain {
+        ArrayList<Block> chain;
+
+        public BlockChain() {
+            chain = new ArrayList<Block>();
+        }
+
+        public void generateBlock(String data) {
+            Block newBlock = new Block(chain.size() + 1, getTimeStamp(), data, chain.size() == 0 ? "0" : chain.get(chain.size() - 1).getHash());
+            chain.add(newBlock);
+        }
+
+        public void generateBlock() {
+            generateBlock("");
+        }
+
+        public void printChain() {
+            for (Block block : chain) {
+                System.out.println(block.toString());
+            }
+        }
+
+        public void addBlock(Block b) {
+            chain.add(b);
+        }
+
+        public Block getBlock(int index) {
+            return chain.get(index);
+        }
+
+        public int getChainSize() {
+            return chain.size();
+        }
+
+        public boolean isValid() {
+            if (chain.size() == 0) {
+                return true;
+            }
+            if (!chain.get(0).getHash().equals(chain.get(0).calculateHash())) {
+                return false;
+            }
+            for (int i = 1; i < chain.size(); i++) {
+                Block current = chain.get(i);
+                Block previous = chain.get(i - 1);
+
+                if (!current.getHash().equals(current.calculateHash())) {
+                    return false;
+                }
+
+                if (!previous.getHash().equals(previous.calculateHash())) {
+                    return false;
+                }
+
+                if (!previous.getHash().equals(current.getPreviousHash())) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    }
+  learner_created: true
+- name: src/blockchain/Block.java
+  visible: true
+  text: |
+    package blockchain;
+
+    import static blockchain.Utils.Sha256;
+
+    public class Block {
+        long id;
+        long timestamp;
+        String data;
+        String previousHash;
+        String hash;
+
+        public Block(long id, long timestamp, String data, String previousHash) {
+            this.id = id;
+            this.timestamp = timestamp;
+            this.data = data;
+            this.previousHash = previousHash;
+            this.hash = Sha256(String.valueOf(id) + String.valueOf(timestamp) +
+                    data + previousHash);
+        }
+
+        public long getId() {
+            return id;
+        }
+
+        public long getTimestamp() {
+            return timestamp;
+        }
+
+        public String getData() {
+            return data;
+        }
+
+        public String getPreviousHash() {
+            return previousHash;
+        }
+
+        public String getHash() {
+            return hash;
+        }
+
+        public String toString() {
+            return "Block:\n" +
+                    "Id: " + this.getId() + "\n" +
+                    "Timestamp: " + this.getTimestamp() + "\n" +
+                    // "Data='" + this.getData() + '\'' + "\n" +
+                    "Hash of the previous block:\n" + this.getPreviousHash() + "\n" +
+                    "Hash of the block:\n" + this.getHash() + "\n";
+        }
+
+        public String calculateHash() {
+            return Sha256(String.valueOf(id) + String.valueOf(timestamp) +
+                    data + previousHash);
+        }
+
+        public boolean isValid() {
+            return hash.equals(calculateHash());
+        }
+    }
+  learner_created: true
+- name: blockchain.data
+  visible: true
+  learner_created: true
+feedback_link: https://hyperskill.org/learn/step/5414#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Wed, 27 Apr 2022 05:19:14 UTC
+record: 2

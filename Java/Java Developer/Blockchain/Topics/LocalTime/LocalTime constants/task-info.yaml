@@ -1,0 +1,24 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: LocalTime.MIN; // 00:00
+- text: LocalTime.MIDDAY; // 12:00
+- text: LocalTime.MIDNIGHT; // 23:59
+- text: LocalTime.MAX; // 23:59:59.999999999
+- text: LocalTime.HOUR; // 01:00
+- text: LocalTime.MINUTE; // 00:01
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2876#comment
+status: Solved
+record: -1

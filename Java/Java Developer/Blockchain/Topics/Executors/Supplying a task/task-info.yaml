@@ -1,0 +1,23 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: This executor does not stop after completing both tasks
+- text: The <b>main</b> thread will not wait for the completion of submitted tasks
+- text: This executor can perform both tasks in parallel
+- text: This code will not work if we create an executor with four threads in the
+    pool instead of this executor
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/4897#comment
+status: Solved
+record: -1

@@ -1,0 +1,28 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: <b>Order 1</b><br>Hello Main<br>Hello from Thread-2<br>Hello from Thread-1<br>Hello
+    from Thread-2
+- text: <b>Order 2</b><br>Hello from Thread-2<br>Hello from Thread-2<br>Hello from
+    Thread-1<br>Hello Main
+- text: <b>Order 3</b><br>Hello from Thread-2<br>Hello from Thread-1<br>Hello from
+    Thread-2<br>Hello Main
+- text: <b>Order 4</b><br>Hello Main<br>Hello from Thread-2<br>Hello from Thread-2<br>Hello
+    from Thread-1
+- text: <b>Order 5</b><br>Hello Main<br>Hello from Thread-1<br>Hello from Thread-2<br>Hello
+    from Thread-2
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2524#comment
+status: Solved
+record: -1

@@ -1,0 +1,39 @@
+<h2>Threads as objects</h2>
+<html>
+ <head></head>
+ <body>
+  <h5 style="text-align: center;" id="threads-in-java">Threads in Java</h5> 
+  <p>Java was originally designed with built-in multithreading support. Threads are supported at the level of JVM, at the level of language by special keywords and at the level of the standard library. Every Java program has at least one thread, that is called <strong>main,</strong> created automatically by the JVM process to execute statements inside the <code class="language-java">main</code> method. Any Java program has some other default threads as well (for example, a separate thread for the garbage collector).</p> 
+  <p>Throughout all stages of development of the Java language, the approach to multithreading has changed from the using of low-level threads to some high-level abstractions. However, understanding the fundamental base remains very important for a good developer.</p> 
+  <h5 style="text-align: center;" id="a-class-for-threads">A class for threads</h5> 
+  <p>Each thread is represented by an object that is an instance of the <code class="language-java">java.lang.Thread</code> class (or its subclass). This class has a static method named <code class="language-java">currentThread</code> to obtain a reference to the currently executing thread object:</p> 
+  <pre><code class="language-java">Thread thread = Thread.currentThread(); // the current thread</code></pre> 
+  <p>Any thread has a name, an identifier (<code class="language-java">long</code>), a priority, and some other characteristics that can be obtained through its methods.</p> 
+  <h5 style="text-align: center;" id="the-information-about-the-main-thread">The information about the main thread</h5> 
+  <p>The example below demonstrates how to obtain the characteristics of the <strong>main </strong>thread by making reference to it through an object of the <code class="language-java">Thread</code>class.</p> 
+  <pre><code class="language-java">public class MainThreadDemo {
+    public static void main(String[] args) {
+        Thread t = Thread.currentThread(); // main thread
+
+        System.out.println("Name: " + t.getName());
+        System.out.println("ID: " + t.getId());
+        System.out.println("Alive: " + t.isAlive());
+        System.out.println("Priority: " + t.getPriority());
+        System.out.println("Daemon: " + t.isDaemon());
+
+        t.setName("my-thread");
+        System.out.println("New name: " + t.getName());
+    }
+}</code></pre> 
+  <p>All statements in this program are executed by the <strong>main</strong> thread.</p> 
+  <p><br> The invocation <code class="language-java">t.isAlive()</code> returns whether the thread has been started and hasn't died yet. Every thread has a <strong>priority</strong>, and the <code class="language-java">getPriority()</code> method returns the priority of a given thread. Threads with a higher priority are executed in preference to threads with lower priorities. The invocation <code class="language-java">t.isDaemon()</code> checks whether the thread is a <strong>daemon</strong>. A daemon thread (comes from UNIX terminology) is a low priority thread that runs in the background to perform tasks such as garbage collection and so on. JVM does not wait for daemon threads before exiting while it waits for non-daemon threads.</p> 
+  <p>The output of the program will look like:</p> 
+  <pre><code class="language-java">Name: main
+ID: 1
+Alive: true
+Priority: 5
+Daemon: false
+New name: my-thread</code></pre> 
+  <p>The same code can be applied to any current thread, not just <strong>main</strong>.</p>
+ </body>
+</html>

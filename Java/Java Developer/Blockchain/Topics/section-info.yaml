@@ -1,0 +1,52 @@
+content:
+- LocalTime
+- LocalDate
+- LocalDateTime
+- Inner classes
+- Nested classes
+- Generic methods
+- Type Bounds
+- Serialization basics
+- Custom serialization
+- Memento
+- Abstract factory
+- Processing strings
+- Anonymous classes
+- Printing data
+- Types and variables
+- Comments
+- Default methods
+- Lambda expressions
+- Functional interfaces
+- Threads as objects
+- Custom threads
+- Thread management
+- Thread synchronization
+- Executors
+- Singleton
+- Command
+- The for-loop
+- Standard functional interfaces
+- Optional
+- Function composition
+- Decorator
+- Comparator
+- Functional data processing with streams
+- Stream filtering
+- Map and flatMap
+- Reduction methods
+- Collectors
+- Infinite streams
+- Taking elements
+- Streams of primitives
+- Stream pipelines
+- Parallel streams
+- Grouping collectors
+- Facade
+- Types of references
+- Floating-point types
+- The while and do-while loops
+- Declaring a method
+- The main method
+- Functional decomposition
+- Currying

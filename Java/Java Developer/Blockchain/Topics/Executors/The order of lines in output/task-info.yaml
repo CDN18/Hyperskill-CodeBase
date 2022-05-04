@@ -1,0 +1,24 @@
+type: choice
+is_multiple_choice: false
+options:
+- text: The order of lines is always the same
+- text: <b>"Main completed"</b> always goes first, but <b>"Starting task-1"</b> and
+    <b>"Starting task-2"</b> can be in any order
+- text: <b>"Starting task-1"</b> is always before <b>"Starting task-2"</b>, but <b>"Main
+    completed"</b> can be in any position
+- text: All lines can be in absolutely different positions
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/4896#comment
+status: Solved
+record: -1

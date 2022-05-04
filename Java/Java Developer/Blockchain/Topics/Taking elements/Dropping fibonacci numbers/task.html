@@ -1,0 +1,15 @@
+<h2>Dropping fibonacci numbers</h2>
+<html>
+ <head></head>
+ <body>
+  <p>There is a snippet of code with the <code class="language-java">dropWhile</code> method.</p> 
+  <pre><code class="language-java">List&lt;Integer&gt; fibonacci = List.of(0, 1, 1, 2, 3, 5, 8, 13);
+
+List&lt;Integer&gt; result = fibonacci.stream()
+        .dropWhile(n -&gt; n &gt; 5)
+        .collect(Collectors.toList());</code></pre> 
+  <p>Enter all the elements which are contained in the <code class="language-java">result</code> list. Separate the elements with a single space like in the following example:</p> 
+  <pre><code class="language-java">1 2 3 5</code></pre> 
+  <p>You may be a little surprised at the answer. If you cannot solve the problem manually, just start this code and then try to understand it.</p>
+ </body>
+</html>

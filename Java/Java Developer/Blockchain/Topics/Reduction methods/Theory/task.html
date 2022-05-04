@@ -1,0 +1,60 @@
+<h2>Reduction methods</h2>
+<html>
+ <head></head>
+ <body>
+  <p>While dealing with collections in Java, you can often face the challenge of reducing all collection elements to a single result. The example of such a problem is finding a bank account with the maximum amount of money among the collection of accounts or reducing account transaction values to the total amount of transferred money. Java Stream API provides several <em>terminal</em> operations that allow us to solve this problem in a functional way. These operations combine stream elements and return a single value.</p> 
+  <h5 id="the-reduce-operation">The reduce operation</h5> 
+  <p><code class="language-java">reduce</code> is a method of a <code class="language-java">Stream</code> class that combines elements of a stream into a <em>single value</em>. The result can be a value of a primitive type or a complex object.</p> 
+  <p style="text-align: center;"><img alt="" height="225px" src="https://ucarecdn.com/4edd4d8a-3586-49d1-95bb-80ba7b1d039f/" width="423px"></p> 
+  <p></p>
+  <div class="alert alert-warning">
+   Note that 
+   <code class="language-java">reduce</code> is a terminal operation, which means that it begins all evaluations with the stream and produces a final result.
+  </div>
+  <p></p> 
+  <p>Let's consider two of the most common uses of the Java Stream API <code class="language-java">reduce</code> operation:</p> 
+  <p>1) In the simplest case, the <code class="language-java">reduce</code> method accepts a two-argument <strong>accumulator</strong> function. The first argument of the accumulator is a partial result of the reduction, while the second one is the next element of a stream. The accumulator should return a reduction value that will be assigned to the partial result. Let's consider the following list of transactional values:</p> 
+  <pre><code class="language-java">List&lt;Integer&gt; transactions = List.of(20, 40, -60, 5);</code></pre> 
+  <p>Now we sum up all transaction values to get the total amount of transferred money by using <code class="language-java">reduce</code> operation:</p> 
+  <pre><code class="language-java">transactions.stream().reduce((sum, transaction) -&gt; sum + transaction);</code></pre> 
+  <p>At the first iteration of the reduction, the <code class="language-java">sum</code> argument equals to the first element of the stream whose value is 20. The <code class="language-java">transaction</code> argument represents the next element of the stream whose value is 40. After the first iteration, the <code class="language-java">sum</code> accumulates the current value of the <code class="language-java">transaction</code> argument and will be equal to 20 + 40 = 60. In the table below you can see the values of <code class="language-java">sum</code> and <code class="language-java">transaction</code> arguments on each iteration:</p> 
+  <p style="text-align: center;"><img alt="" height="345" src="https://ucarecdn.com/44148655-981d-4135-80fa-e4434b7db61a/" width="320"></p> 
+  <p></p>
+  <div class="alert alert-primary">
+   The 
+   <code class="language-java">reduce</code> operation that accepts the accumulator function returns 
+   <code class="language-java">Optional</code> type. In the example above the 
+   <code class="language-java">reduce</code> method returns a container 
+   <code class="language-java">Optional&lt;Integer&gt;</code> that contains an 
+   <code class="language-java">Integer</code> value of 5.
+  </div>
+  <p></p> 
+  <p>2) Another <code class="language-java">reduce</code> implementation has one additional parameter: identity<strong> </strong>value or seed. The <strong>identity</strong> value represents the initial value for the reduction operation. Let's rewrite our previous example using <code class="language-java">identity</code> argument:</p> 
+  <pre><code class="language-java">transactions.stream().reduce(0, (sum, transaction) -&gt; sum + transaction);</code></pre> 
+  <p>Now, the initial value of the partial result <code class="language-java">sum</code> is 0 and the initial value of the <code class="language-java">transaction</code> element is 20.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   Note, that if a 
+   <code class="language-java">reduce</code> method accepts both identity value and accumulator function, it will return a primitive type or an object, but not an 
+   <code class="language-java">Optional</code> container. If the stream is empty, the 
+   <code class="language-java">reduce</code> operation will return identity value.
+  </div>
+  <p></p> 
+  <h5 id="other-reduction-operations">Other reduction operations</h5> 
+  <p>While the <code class="language-java">reduce</code> is a generally purposed operation, Stream API provides many specific reduction operations such as <code class="language-java">sum</code>, <code class="language-java">min</code>, <code class="language-java">max</code>, etc. Similar to the <code class="language-java">reduce</code> operation they are terminal operations that produce a single value. Let's consider an example with a generic stream, assuming that we need to find the maximum value from the list of given balances. We can do it by using reduce operation:</p> 
+  <pre><code class="language-java">transactions.stream().reduce((t1, t2) -&gt; t2 &gt; t1 ? t2 : t1)</code></pre> 
+  <p>The code above compares a partial result <code class="language-java">t1</code> with the next element of the stream <code class="language-java">t2</code> and assigns the value of <code class="language-java">t2</code> to <code class="language-java">t1</code> if <code class="language-java">t2</code> is numerically greater than <code class="language-java">t1</code>. We can get the same result in a more elegant way using the <code class="language-java">max</code> method:</p> 
+  <pre><code class="language-java">transactions.stream().max(Integer::compareTo);</code></pre> 
+  <p>As you may notice the method <code class="language-java">max</code> of the <code class="language-java">Stream&lt;T&gt;</code> class accepts a comparison function in order to find a maximum element among stream elements since we need to specify how exactly to compare generic type. Unlike the generic streams, primitive-specialized streams such as <code class="language-java">IntStream</code> or <code class="language-java">LongStream</code> already "know" the type of their elements. That is why their <code class="language-java">max</code> and <code class="language-java">min</code> functions do not require any comparison function:</p> 
+  <pre><code class="language-java">IntStream.of(20, 40, -60, 5).max();</code></pre> 
+  <p></p>
+  <div class="alert alert-primary">
+   Because of type awareness, primitive-specialized streams have numerically specialized functions such as 
+   <code class="language-java">average</code> and 
+   <code class="language-java">sum</code>, which cannot be provided by generic streams.
+  </div>
+  <p></p> 
+  <h5 id="conclusion">Conclusion</h5> 
+  <p>The <code class="language-java">reduce</code> is a terminal operation that produces a single value result by combining stream elements. It can accept the accumulator function only or in combination with identity value. The accumulator function takes two arguments: partial result and the next element of a stream. If the identity value is provided, the initial value of the partial result will be equal to that value. Otherwise, the partial result's initial value will be equal to the first element of a stream. Besides the <code class="language-java">reduce</code>, primitive-specialized streams provide more reduction operations that depend on the numeric type.</p>
+ </body>
+</html>

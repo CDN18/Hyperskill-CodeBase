@@ -1,0 +1,181 @@
+<h2>Nested classes</h2>
+<html>
+ <head></head>
+ <body>
+  <p>As you know, there are inner classes that you create inside the outer classes. But have you wondered if there are any other ways to create a new class inside the other? Today you will meet the different two types of nested classes. Our lovely heroes are called <strong>static nested class </strong>and <strong>local inner class.</strong> What's more, after completing this topic, you'll have the whole picture of the hierarchy of nested classes.</p> 
+  <h5 style="text-align: center;" id="types-of-nested-classes">Types of nested classes</h5> 
+  <p>As you remember, a class is called <strong>nested</strong> when it's declared within another class. Let's look into the types of nested classes. There are four types of nested classes.</p> 
+  <p>You can find the hierarchy in the picture, where the blue ones are these types. </p> 
+  <p><img alt="" height="363" src="https://ucarecdn.com/ca82ed31-d283-48c2-992a-0b3fb28adee2/" width="550"></p> 
+  <p>First, all nested classes are divided into static and non-static ones. As you can see, only one type has the <code class="language-java">static</code> keyword. </p> 
+  <p>In Java documentation, you also may see that the non-static group includes local inner classes and anonymous inner classes along with the inner classes you know about.</p> 
+  <p>Let's now take a closer look at <strong>static nested classes</strong> and<strong> local inner classes</strong>.</p> 
+  <h5 style="text-align: center;" id="static-nested-class">Static nested class</h5> 
+  <p>Imagine, that one day you woke up and decided to draw. Obviously, with the help of some Java code. Your ultimate goal is to draw a painting. But how to create a masterpiece? That'll require doing some sketches first.</p> 
+  <p>How would you organize your code? It's a good idea to use a nested class here. But if you choose to employ an inner class then a <code class="language-java">Sketch</code> would only exist if the <code class="language-java">Painting</code> was instantiated previously. So, we'd prefer something different. And the <strong>static nested class</strong> is going to help us. </p> 
+  <p>It allows us to create a <code class="language-java">Sketch</code> first, and then, only if you're ready to become an author of a masterpiece, you can create a <code class="language-java">Painting</code>. </p> 
+  <pre><code class="language-java">public class Painting {
+
+    private String name;
+
+    public static class Sketch {
+        
+        private int id; 
+
+        public Sketch(int id) {
+            this.id = id;
+        }
+
+        public void drawSketch() {
+            drawForest();
+            drawBear();
+        }
+
+        private void drawForest() {
+             System.out.println("Forest was drawn in a sketch!");
+            }
+        }
+
+        private void drawBear() {
+            System.out.println("Bear was drawn in a sketch!");
+        }
+    }
+}</code></pre> 
+  <p>Let's try it:</p> 
+  <pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+
+        Painting.Sketch sketch = new Painting.Sketch(0);
+
+        sketch.drawSketch();
+    }
+}</code></pre> 
+  <p>Greetings to our bear in a forest!</p> 
+  <pre><code class="language-java">Forest was drawn in a sketch!
+Bear was drawn in a sketch!</code></pre> 
+  <h5 style="text-align: center;" id="scope-of-static-nested-class">Scope of static nested class</h5> 
+  <p>Let's modify our example a little bit with <code class="language-java">Sketch</code> and <code class="language-java">Painting</code> and talk about their scope.</p> 
+  <pre><code class="language-java">public class Painting {
+
+    private String name;
+
+    private static double length;
+    private static double width;
+
+    public static void setLength(double length) {
+        Painting.length = length;
+    }
+
+    public static void setWidth(double width) {
+        Painting.width = width;
+    }
+
+    public static class Sketch {
+
+        private int id;
+
+        public Sketch(int id) {
+            this.id = id;
+        }
+
+        public void drawSketch() {
+            drawForest();
+            drawBear();
+        }
+
+        private void drawForest() {
+            if (Painting.length &gt; 5 &amp;&amp; Painting.width &gt; 3) {
+                System.out.println("Big forest was drawn in a sketch!");
+            } else {
+                System.out.println("Small forest was drawn in a sketch!");
+            }
+        }
+
+        private void drawBear() {
+            System.out.println("Bear was drawn in a sketch!");
+        }
+    }
+}</code></pre> 
+  <p>We've added two <code class="language-java">static</code> fields into <code class="language-java">Painting</code> class, namely <code class="language-java">length</code> and <code class="language-java">width</code>. And we've also added condition into the method <code class="language-java">drawForest</code> of class <code class="language-java">Sketch</code>.</p> 
+  <p>With setters, we decide what sizes our <code class="language-java">Painting</code> will be and then use that information inside the method <code class="language-java">drawForest</code>.</p> 
+  <pre><code class="language-java">public class Main {
+
+    public static void main(String[] args) {
+
+        Painting.setLength(10);
+        Painting.setWidth(7);
+
+        Painting.Sketch sketch = new Painting.Sketch(1);
+        sketch.drawSketch();
+    }
+}</code></pre> 
+  <p>And here is a big forest with a bear:</p> 
+  <pre><code class="language-java">Big forest was drawn in a sketch!
+Bear was drawn in a sketch!</code></pre> 
+  <p>So, we've got access to<strong> </strong><code class="language-java">private static</code> fields from a static nested class!</p> 
+  <p>And is there anything that we <em>can't </em>see? Yes, instance variables and methods of an outer class, including the field <code class="language-java">name</code> in our example.</p> 
+  <p>From outside everything<strong> </strong>works as usual: we create an instance of a static nested class and good luck! Just mind the syntax:</p> 
+  <pre><code class="language-java">OuterClass.NestedClass nested = new OuterClass.NestedClass();</code></pre> 
+  <p>Remember about<strong> </strong><em>access modifiers</em><strong>:</strong> if you make a static nested class <code class="language-java">private</code>, then it can only be accessed inside the outer class. The same works with fields and methods.</p> 
+  <h5 style="text-align: center;" id="local-inner-class">Local inner class</h5> 
+  <p>In real life, you won't face local inner classes often, but it is worth knowing how to use them if you want to be a proper programmer.</p> 
+  <p>You can define a local inner class<em> inside any block</em>. But, usually, local inner classes are defined inside a method body.<br> Let's move to an example now:</p> 
+  <pre><code class="language-java">public class Outer {
+
+    private int number = 10;
+
+    void someMethod() {
+
+        class LocalInner {
+
+            private void print() {
+                System.out.println("number = " + Outer.this.number);
+            }
+        }
+
+        LocalInner inner = new LocalInner();
+        inner.print();
+    }
+
+    public static void main(String[] args) {
+        Outer outer = new Outer();
+        outer.someMethod();
+    }
+}</code></pre> 
+  <p>Here we have an outer class <code class="language-java">Outer</code> and a method <code class="language-java">someMethod</code> in it. We define our local inner class inside <code class="language-java">someMethod</code> and we also create an instance of <code class="language-java">LocalInner</code> there.</p> 
+  <p>Have you noticed that our class <code class="language-java">LocalInner</code> <em>doesn't have</em> an access modifier? And it can't!</p> 
+  <p>There are other restrictions<strong>. </strong>Inside a local inner class you <em>cannot</em><strong> </strong>define any static members, enums, interfaces.</p> 
+  <h5 style="text-align: center;" id="scope-of-local-inner-class">Scope of Local Inner class</h5> 
+  <p>The scope of the local inner class is restricted within the block, which is <code class="language-java">someMethod</code> in our example.</p> 
+  <pre><code class="language-java">public class Outer {
+
+    private int number = 10;
+
+    void someMethod() {
+        final int x = 5;
+
+        class Inner {
+            private void print() {
+                System.out.println("x = " + x);
+                System.out.println("number = " + Outer.this.number);
+            }
+        }
+
+        Inner inner = new Inner();
+        inner.print();
+    }
+
+    public static void main(String[] args) {
+        Outer outer = new Outer();
+        outer.someMethod();
+    }
+}</code></pre> 
+  <p>What can we<em> </em>see inside the local inner class? Members of an outer class, including the field <code class="language-java">number</code>. And local variables of the enclosing block, such as void <code class="language-java">someMethod</code>. Local variables must be declared as <code class="language-java">final</code> or be effectively final, the latter means their value is never changed after initialization and there's no need for the keyword <code class="language-java">final</code>.<br> <br> Remember, that local inner class can be instantiated only <em>within the block</em> where the inner class is defined.<br> So other parts of the code <em>don't know</em> that it exists.</p> 
+  <h5 style="text-align: center;" id="summary">Summary</h5> 
+  <p>If you want something close to a nested class, but don't want to instantiate an outer class — a static nested class is always there for you!<br> Static nested classes add functionality to an outer class and may be used for different purposes: usually, as a special structure that is connected with the outer class.</p> 
+  <ul> 
+  </ul> 
+  <p>And have you heard about a class in a block? Yeah, you are a good student and you know, that it is called local inner class and its scope is restricted within a block.</p> 
+  <p>Finally, nested classes <strong>organize </strong>code and help your package be more reasonable, increase <strong>encapsulation</strong>, since you can hide some code in a nested class, and the last point is that small classes may provide more <strong>readable</strong> code.</p>
+ </body>
+</html>

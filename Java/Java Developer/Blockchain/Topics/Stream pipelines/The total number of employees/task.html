@@ -1,0 +1,41 @@
+<h2>The total number of employees</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Let's say you are developing employee management system for your company. It has two classes:</p> 
+  <ul> 
+   <li><code class="language-java">Employee</code> with the fields <code class="language-java">name</code> (<code class="language-java">String</code>) and <code class="language-java">salary</code> (<code class="language-java">Long</code>)</li> 
+   <li><code class="language-java">Department</code><strong> </strong>with the fields <code class="language-java">name</code> (<code class="language-java">String</code>), <code class="language-java">code</code> (<code class="language-java">String</code>), and <code class="language-java">employees</code> (<code class="language-java">List&lt;Employee&gt;</code>).</li> 
+  </ul> 
+  <p>Both classes have getters for all fields with the corresponding names (<code class="language-java">getName()</code>, <code class="language-java">getSalary()</code>, <code class="language-java">getEmployees()</code> and so on).</p> 
+  <p>Using Stream API, implement a method that calculates <strong>the total number of employees</strong> with <code class="language-java">salary &gt;= threshold</code> for all departments whose code starts with the string <code class="language-java">"111-"</code><strong> </strong>(without <code class="language-java">""</code>). Perhaps, the <code class="language-java">flatMap</code> method can help you to implement it.</p> 
+  <p><strong>Important. </strong>Use the given template for your method. Pay attention to type of an argument and the returned value. Please, use only Stream API without loops.</p> 
+  <p><strong>Examples:</strong> there are 2 departments (in JSON notation) below and threshold = 20 000. The result is 1 (because there is only one suitable employee).</p> 
+  <pre><code class="language-java">[
+  {
+    "name": "dep-1",
+    "code": "111-1",
+    "employees": [
+      {
+        "name": "William",
+        "salary": 20000
+      },
+      {
+        "name": "Sophia",
+        "salary": 10000
+      }
+    ]
+  },
+  {
+    "name": "dep-2",
+    "code": "222-1",
+    "employees": [
+      {
+        "name": "John",
+        "salary": 50000
+      }
+    ]
+  }
+]</code></pre>
+ </body>
+</html><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 5 seconds</font><br><br>

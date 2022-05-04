@@ -1,0 +1,22 @@
+type: choice
+is_multiple_choice: false
+options:
+- text: Use a lambda expression
+- text: Use an anonymous class
+- text: Create a direct instance of this interface
+- text: Declare a class that inherits it and then create an object of this class
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/11689#comment
+status: Solved
+record: -1

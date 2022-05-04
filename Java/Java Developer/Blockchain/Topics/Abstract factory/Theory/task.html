@@ -1,0 +1,121 @@
+<h2>Abstract factory</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Imagine that you are the boss of a factory<em>, </em>any factory producing any product you could imagine. You have a perfect creational algorithm that is being used. However, one day you decide to expand your business and open one more factory in another city. That means that you have to encapsulate your creational algorithm for old and new factories. This is what the <em>Abstract Factory</em> is about.</p> 
+  <h5 style="text-align: center;" id="the-abstract-factory-pattern">The Abstract Factory pattern</h5> 
+  <p><strong>Abstract Factory</strong> is one of the creational patterns. It encapsulates the creational process of related or dependent objects. The most interesting thing here is that there is no need to specify the concrete classes of these objects.</p> 
+  <p><img alt="" src="https://ucarecdn.com/832526da-d80c-454c-8baa-b4203db94645/"></p> 
+  <p>Let's get down to business and create a <em>TableFactory</em>. We want to be an outstanding company, so like IKEA, we will be producing something that is easy to build. For this reason, it is also necessary to create the <em>ToolsFactory</em>. Before we begin implementing, it is important to clarify the definition of <em>Abstract Factory. </em>This pattern is creational, so in general, it should not modify the provided objects, it should just provide them in a simple manner.</p> 
+  <h5 style="text-align: center;" id="example-tablefactory">Example: TableFactory</h5> 
+  <p>First of all, let's define our <em>Table</em><strong> </strong>interface and <em>Kitchen</em> and <em>Office</em> implementations of it:</p> 
+  <pre><code class="language-java">interface Table {
+    String getTable();
+}
+
+public class KitchenTable implements Table {
+    @Override
+    public String getTable() {
+        return "There is a kitchen table";
+    }
+}
+
+public class OfficeTable implements Table {
+    @Override
+    public String getTable() {
+        return  "There is an office table";
+    }
+}</code></pre> 
+  <p>Secondly, we need tools which we will provide for the full kit:</p> 
+  <pre><code class="language-java">interface TableTools {
+    String getTool();
+}
+
+public class KitchenTableTool implements TableTools {
+    @Override
+    public String getTool() {
+        return "These are kitchen table tools";
+    }
+}
+
+public class OfficeTableTool implements TableTools {
+    @Override
+    public String getTool() {
+        return "These are office table tools";
+    }
+}</code></pre> 
+  <p>Third things third, it is time to create an <em>AbstractFactory</em>. We have all the pieces we need for our relational objects. For example, <em>KitchenTableTools </em>are related to <em>KitchenTable.</em> That means that we need to encapsulate the creational process in a <em>TableFactory</em> and we will finally get the <strong>Abstract Factory </strong>pattern.</p> 
+  <pre><code class="language-java">interface TableFactory {
+    Table makeTable();
+    TableTools makeTableTools();
+}
+
+public class KitchenTableFactory implements TableFactory {
+    @Override
+    public Table makeTable() {
+        return new KitchenTable();
+    }
+
+    @Override
+    public TableTools makeTableTools() {
+        return new KitchenTableTool();
+    }
+}
+
+public class OfficeTableFactory implements TableFactory {
+    @Override
+    public Table makeTable() {
+        return new OfficeTable();
+    }
+
+    @Override
+    public TableTools makeTableTools() {
+        return new OfficeTableTool();
+    }
+}</code></pre> 
+  <p>Finally, let's test what we have created. Two lucky customers come to our shop, a<em> cook </em>and an <em>office manager. </em>They want to buy tables for work.</p> 
+  <pre><code class="language-java">Table table;
+TableTools tableTools;
+
+TableFactory kitchenTableFactory = new KitchenTableFactory();
+TableFactory officeTableFactory = new OfficeTableFactory();
+
+System.out.println("-I work as a cook. I need a kitchen table");
+System.out.println("-Got It! Give me a sec,- Calling the KitchenTableFactory. - Bring me the KitchenTable with KitchenTableTools");
+Thread.sleep(5000);
+        
+table = kitchenTableFactory.makeTable();
+tableTools = kitchenTableFactory.makeTableTools();
+
+System.out.println(table.getTable() + "\n" + tableTools.getTools());
+System.out.println("-There they are!\n");
+Thread.sleep(5000);
+
+System.out.println("-I am an office manager. I need an office table");
+System.out.println("-Got It! Give me a sec,- Calling the OfficeTableFactory. - Bring me the OfficeTable with OfficeTableTools");
+Thread.sleep(5000);
+        
+table = officeTableFactory.makeTable();
+tableTools = officeTableFactory.makeTableTools();
+
+System.out.println(table.getTable() + "\n" + tableTools.getTool());
+System.out.println("-There they are!");</code></pre> 
+  <p>And the final output is: </p> 
+  <pre><code class="language-no-highlight">-I work as a cook. I need a kitchen table
+-Got It! Give me a sec,- Calling the KitchenTableFactory. - Bring me the KitchenTable with KitchenTableTools
+There is a kitchen table
+These are kitchen table tools
+-There they are!
+
+-I am an office manager. I need an office table
+-Got It! Give me a sec,- Calling the OfficeTableFactory. - Bring me the OfficeTable with OfficeTableTools
+There is an office table
+These are office table tools
+-There they are!</code></pre> 
+  <h5 style="text-align: center;" id="conclusion">Conclusion</h5> 
+  <p>We’ve implemented a <em>TableFactory</em> that controls the creational process. Each factory implementation encapsulated its product. For example, <em>KitchenFactory </em>encapsulated <em>KitchenTable </em>and <em>KitchenTableTools. </em>One of the benefits is that we can be sure that we will get the correct <em>TableTools</em> with the corresponding <em>Table. </em></p> 
+  <p>1) Abstract Factory provides an interface (or abstract class) for creating a family of related objects without specifying their concrete classes.</p> 
+  <p>2) Abstract Factory is based on composition: object creation occurs in a method that is accessed through the factory interface (or abstract class).</p> 
+  <p>3) Abstract Factory ensures low coupling<em> </em>by decreasing concrete dependencies of classes in the running code.</p>
+ </body>
+</html>

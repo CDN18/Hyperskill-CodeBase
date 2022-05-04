@@ -1,0 +1,25 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: When extending the class <b>Thread</b>, it's necessary to override the method
+    <b>start</b> to write some logic here
+- text: If we invoke the method <b>run</b> of an instance of the class <b>Thread</b>,
+    no new threads will be spawned
+- text: A thread can be started multiple times
+- text: An instance of the class <b>Thread</b> has methods <b>start</b> and <b>run</b>.
+    If we invoke the first one, it calls the second one in a new thread
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2523#comment
+status: Solved
+record: -1

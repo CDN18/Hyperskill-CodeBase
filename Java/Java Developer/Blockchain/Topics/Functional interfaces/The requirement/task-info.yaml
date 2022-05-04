@@ -1,0 +1,23 @@
+type: choice
+is_multiple_choice: false
+options:
+- text: It has the @FunctionalInterface annotation
+- text: It has one default method
+- text: It extends the Function interface
+- text: It isn't implemented by a class
+- text: It contains only a single abstract method
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/11691#comment
+status: Solved
+record: -1

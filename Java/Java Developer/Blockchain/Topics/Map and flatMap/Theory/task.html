@@ -1,0 +1,115 @@
+<h2>Map and flatMap</h2>
+<html>
+ <head></head>
+ <body>
+  <p>One of the most common tasks in programming is converting collections of objects to the new ones by applying the same function to each element in the collection. This task can be solved with a functional approach. Since you already know about Java Stream API, we are ready to take a closer look at the <code class="language-java">map</code> and <code class="language-java">flatMap</code> intermediate operations.</p> 
+  <h5 id="the-map-operation">The map operation</h5> 
+  <p>The <code class="language-java">map</code> is a method of a <code class="language-java">Stream</code> class that takes a one-argument function as a parameter. The main purpose of the <code class="language-java">map</code> operation is to apply that function to each element of the stream and return a resulting stream that has the same amount of elements.</p> 
+  <p style="text-align: center;"><img alt="" height="295px" src="https://ucarecdn.com/84faa296-1a6d-411a-84e3-01f22ca85313/" width="430px"></p> 
+  <p></p>
+  <div class="alert alert-warning">
+   Note that the 
+   <code class="language-java">map</code> is an intermediate operation, which means that it returns a new stream.
+  </div>
+  <p></p> 
+  <p>Let's have a look at several examples where we can use the <code class="language-java">map</code> operation:</p> 
+  <p>1) One of the common uses of the <code class="language-java">map</code> operation is applying a given function to each element of a stream of values. Consider the following list of numbers:</p> 
+  <pre><code class="language-java">List&lt;Double&gt; numbers = List.of(6.28, 5.42, 84.0, 26.0);</code></pre> 
+  <p>Let's divide each number by 2. For that, we can <em>map</em> each element of the stream to the element divided by 2 and <em>collect</em> it to the new list:</p> 
+  <pre><code class="language-java">List&lt;Double&gt; famousNumbers = numbers.stream()
+        .map(number -&gt; number / 2) // divide each number in the stream by 2
+        .collect(Collectors.toList()); // collect transformed numbers to a new list</code></pre> 
+  <p>The resulting list is:</p> 
+  <pre><code class="language-java">[3.14, 2.71, 42.0, 13.0]</code></pre> 
+  <p></p>
+  <div class="alert alert-primary">
+   Note, the 
+   <code class="language-java">map</code> method doesn't do any evaluations. Each number divided by 2 will be collected to the new 
+   <code class="language-java">famousNumbers</code> list after calling 
+   <code class="language-java">collect(Collectors.toList())</code>
+   <strong> </strong>only.
+  </div>
+  <p></p> 
+  <p>2) <code class="language-java">map</code> is often used to get a stream of properties from а stream of objects. For example, given a class <code class="language-java">Job</code>:</p> 
+  <pre><code class="language-java">public class Job {
+    private String title;
+    private String description;
+    private double salary;
+
+    // getters and setters
+}</code></pre> 
+  <p>We can get the list of job titles from a given list of jobs by using the <code class="language-java">map</code> method:</p> 
+  <pre><code class="language-java">List&lt;String&gt; titles = jobs.stream()
+        .map(Job::getTitle) // get title of each job
+        .collect(Collectors.toList()); // collect titles to a new list</code></pre> 
+  <p>The code above will call the method <code class="language-java">getTitle</code> of each <code class="language-java">Job</code> object and collect the resulting list to the new one.</p> 
+  <p>3) Another common use case is obtaining a list of some objects from the list of other objects. Let's assume we have the following classes:</p> 
+  <pre><code class="language-java">class User {
+    private long id;
+    private String firstName;
+    private String lastName;
+}
+
+class Account {
+    private long id;
+    private boolean isLocked;
+    private User owner;
+}
+
+class AccountInfo {
+    private long id;
+    private String ownerFullName;
+}</code></pre> 
+  <p>And we would like to get a list of <code class="language-java">AccountInfo</code> objects from a list of <code class="language-java">Account</code> objects. We can do it by using the <code class="language-java">map</code> method:</p> 
+  <pre><code class="language-java">List&lt;AccountInfo&gt; infoList = accounts.stream()
+        .map(acc -&gt; {
+                AccountInfo info = new AccountInfo();
+                info.setId(acc.getId());
+                String ownerFirstName = acc.getOwner().getFirstName();
+                String ownerLastName = acc.getOwner().getLastName();
+                info.setOwnerFullName(ownerFirstName + " " + ownerLastName);
+                return info;
+        }).collect(Collectors.toList());</code></pre> 
+  <p>The code above will <em>map</em> each <code class="language-java">Account</code> object to the new <code class="language-java">AccountInfo</code> object and <em>collect</em> it to the new list of <code class="language-java">AccountInfo</code> objects.</p> 
+  <h5 id="primitive-specialized-types-of-the-map-operation">Primitive-specialized types of the map operation</h5> 
+  <p>Primitive-specialized streams such as <code class="language-java">IntStream</code>, <code class="language-java">LongStream</code>, or <code class="language-java">DoubleStream</code> also have the <code class="language-java">map</code> method that maps the primitive value to another primitive of the same type. However, it is useful to have a way to map a primitive value to an object. For that primitive-specialized streams have the <code class="language-java">mapToObj</code><strong> </strong>method.</p> 
+  <p>Let's consider an example where a class <code class="language-java">Planet</code> is given:</p> 
+  <pre><code class="language-java">class Planet {
+    private String name;
+    private int orderFromSun;
+
+    public Planet(int orderFromSun) {
+        this.orderFromSun = orderFromSun;
+    }
+}</code></pre> 
+  <p>Now we can map <code class="language-java">int</code> elements of the <code class="language-java">IntStream</code> to the stream of objects using <code class="language-java">mapToObj</code> method and collect the resulting stream to the list of <code class="language-java">Planet</code> objects:</p> 
+  <pre><code class="language-java">List&lt;Planet&gt; planets = IntStream.of(1, 2, 3, 4, 5, 6, 7, 8)
+        .mapToObj(Planet::new)
+        .collect(Collectors.toList());</code></pre> 
+  <h5 id="the-flatmap-operation">The flatMap operation</h5> 
+  <p>The map operation works great for streams of primitives and objects, but the input can also be a stream of collections. For example, the method <code class="language-java">stream()</code> of a <code class="language-java">List&lt;List&lt;String&gt;&gt;</code> returns a <code class="language-java">Stream&lt;List&lt;String&gt;&gt;</code>. In that case, we often need to <em>flatten</em> a stream of collections to a stream of elements from these collections.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   Flattening refers to merging elements of a list of lists to a single list. For example, if we flatten a 
+   <code class="language-java">[["a", "b"], ["c"], ["d", "e"]]</code> list of lists, we will get 
+   <code class="language-java">["a", "b", "c", "d", "e"]</code> list.
+  </div>
+  <p></p> 
+  <p>In such cases, a <code class="language-java">flatMap</code> method can be useful. It takes and applies a one-argument function in order to transform each stream element into a new stream and concatenates these streams together.</p> 
+  <p style="text-align: center;"><img alt="" height="354px" src="https://ucarecdn.com/df188227-b694-435c-b287-98145e0f8ae1/" width="499px"></p> 
+  <p>Let's consider an example with java books. Each book has a title, a publishing year, and a list of authors:</p> 
+  <pre><code class="language-java">List&lt;Book&gt; javaBooks = List.of(
+        new Book("Java EE 7 Essentials", 2013, List.of("Arun Gupta")),
+        new Book("Algorithms", 2011, List.of("Robert Sedgewick", "Kevin Wayne")),
+        new Book("Clean code", 2014, List.of("Robert Martin"))
+);</code></pre> 
+  <p>Now we can obtain a list of all authors from the list of java books by using <code class="language-java">flatMap</code> method:</p> 
+  <pre><code class="language-java">List&lt;String&gt; authors = javaBooks.stream()
+        .flatMap(book -&gt; book.getAuthors().stream())
+        .collect(Collectors.toList());</code></pre> 
+  <p>The resulting list is:</p> 
+  <pre><code class="language-java">["Arun Gupta", "Robert Sedgewick", "Kevin Wayne", "Robert Martin"]</code></pre> 
+  <h5 id="conclusion">Conclusion</h5> 
+  <p>The <code class="language-java">map</code> is an intermediate operation that allows us to apply a given one-argument function to each element of the stream and produce a new stream with the same number of elements. Primitive-specialized streams also have a <code class="language-java">map</code> method that maps a stream primitive value to another primitive value of the same type. In addition to the <code class="language-java">map</code>, primitive-specialized streams provide a <code class="language-java">mapToObj</code> method that produces an object-valued stream. Java Stream API also provides a <code class="language-java">flatMap</code> method that applies a given function that converts a stream element to the new stream and concatenates all obtained stream to a single one.</p>
+ </body>
+</html>

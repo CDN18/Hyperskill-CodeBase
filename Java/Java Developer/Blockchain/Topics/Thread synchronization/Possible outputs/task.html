@@ -1,0 +1,26 @@
+<h2>Possible outputs</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Here's a class named <code class="language-java">SomeClass</code>:</p> 
+  <pre><code class="language-java">public class SomeClass {
+
+    public synchronized void method1() {
+        System.out.println("a thread entered method1");
+        method2();
+        System.out.println("a thread left method1");
+    }
+
+    public synchronized void method2() {
+        System.out.println("a thread entered method2");
+        System.out.println("a thread left method2");
+    }
+
+    public synchronized void method3() {
+        System.out.println("a thread entered method3");
+        System.out.println("a thread left method3");
+    }
+}</code></pre> 
+  <p>Two threads have a reference to one instance of the class. The first thread invokes <code class="language-java">method1</code>, the second thread invokes <code class="language-java">method3</code> at the same time. Select all possible outputs:</p>
+ </body>
+</html>

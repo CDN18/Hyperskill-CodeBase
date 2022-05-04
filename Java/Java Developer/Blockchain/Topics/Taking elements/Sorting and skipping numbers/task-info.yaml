@@ -1,0 +1,35 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.*;
+    import java.util.stream.Collectors;
+
+    class ProcessNumbers {
+
+        public static List<Integer> processNumbers(Collection<Integer> numbers) {
+            // write your code here
+        }
+
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+
+            Collection<Integer> numbers = Arrays.stream(scanner.nextLine().split("\\s+"))
+                    .map(Integer::parseInt)
+                    .collect(Collectors.toCollection(HashSet::new));
+
+            String result = processNumbers(numbers).stream()
+                    .map(String::valueOf)
+                    .collect(Collectors.joining(" "));
+
+            System.out.println(result);
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/12517#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Sat, 30 Apr 2022 22:15:58 UTC
+record: -1

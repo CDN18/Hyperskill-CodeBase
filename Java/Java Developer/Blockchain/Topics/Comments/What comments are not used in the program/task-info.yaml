@@ -1,0 +1,22 @@
+type: choice
+is_multiple_choice: false
+options:
+- text: Standard multi-line comments
+- text: End-of-line comments
+- text: All types of comments are used here
+- text: Javadoc comments
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2502#comment
+status: Solved
+record: -1

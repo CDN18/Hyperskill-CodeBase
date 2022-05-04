@@ -1,0 +1,109 @@
+<h2>Streams of primitives</h2>
+<html>
+ <head></head>
+ <body>
+  <p>The generic <code class="language-java">Stream&lt;T&gt;</code> class is used to process objects which are always represented by reference types. For example, to work with integers, it's possible to create <code class="language-java">Stream&lt;Integer&gt;</code> that wraps primitive <code class="language-java">int</code>'s into the <code class="language-java">Integer</code> class. But this is not an efficient way to work with integers, since it needs additional wrapper objects. Fortunately, there are three primitive specialized types called <code class="language-java">IntStream</code>, <code class="language-java">LongStream</code>, and <code class="language-java">DoubleStream</code> which can effectively process primitive values without extra boxing.</p> 
+  <p></p>
+  <div class="alert alert-warning">
+   There is no 
+   <code class="language-java">CharStream</code>, 
+   <code class="language-java">ByteStream</code>, 
+   <code class="language-java">ShortStream</code>, 
+   <code class="language-java">FloatStream</code> and 
+   <code class="language-java">BooleanStream</code>.
+  </div>
+  <p></p> 
+  <ul> 
+  </ul> 
+  <h5 style="text-align: center;" id="creating-primitive-type-streams">Creating primitive type streams</h5> 
+  <p>There are lots of ways to create primitive type streams. Some of the ways are suitable for all streams while others are not.</p> 
+  <ul> 
+   <li>Passing elements in the <code class="language-java">of</code> method:</li> 
+  </ul> 
+  <pre><code class="language-java">IntStream ints = IntStream.of(1, 2, 3);
+LongStream longs = LongStream.of(1, 2, 3);
+DoubleStream doubles = DoubleStream.of(12.2, 18.1);</code></pre> 
+  <p>This looks quite similar to collections. It is also possible to create an empty stream invoking <code class="language-java">IntStream.of()</code> or <code class="language-java">IntStream.empty()</code>.</p> 
+  <ul> 
+   <li>From an array of primitives:</li> 
+  </ul> 
+  <pre><code class="language-java">IntStream numbers = Arrays.stream(new int[]{1, 2, 3});</code></pre> 
+  <p>This way works for all types of primitive specialized streams. It is also possible to specify <code class="language-java">start</code> (inclusive) and <code class="language-java">end</code> (exclusive) positions to create a stream only from a subarray.</p> 
+  <ul> 
+   <li>For <code class="language-java">IntStream</code> and <code class="language-java">LongStream</code> it's possible to invoke <code class="language-java">range()</code> and <code class="language-java">rangeClosed()</code> to create streams from ranges.</li> 
+  </ul> 
+  <pre><code class="language-java">IntStream numbers = IntStream.range(10, 15); // from 10 (incl) to 15 (excl)
+LongStream longs = LongStream.rangeClosed(1_000_000, 2_000_000); // it includes both borders</code></pre> 
+  <p>The difference is the method <code class="language-java">rangeClosed</code> includes its upper bound while <code class="language-java">range</code> does not.</p> 
+  <ul> 
+   <li>Getting <code class="language-java">IntStream</code> from a string:</li> 
+  </ul> 
+  <pre><code class="language-java">IntStream stream = "aibohphobia".chars(); // It returns IntStream!</code></pre> 
+  <p>This only works for <code class="language-java">IntStream</code> since characters can be represented as <code class="language-java">int</code>'s.</p> 
+  <p>Other ways to create primitive type streams are the same as for generic streams: <code class="language-java">generate</code>, <code class="language-java">iterate</code>, <code class="language-java">concat</code> and so on. Here is an example of generating <code class="language-java">DoubleStream</code> with ten random numbers and printing them:</p> 
+  <pre><code class="language-java">DoubleStream.generate(Math::random)
+        .limit(10)
+        .forEach(System.out::println);</code></pre> 
+  <p>Now let's look at some operations with primitive streams.</p> 
+  <h5 style="text-align: center;" id="additional-operations">Additional operations</h5> 
+  <p>The primitive streams have all the same methods as generic streams, but their methods accept primitive specialized functions as arguments. For example the <code class="language-java">forEach</code> method of <code class="language-java">IntStream</code> takes <code class="language-java">IntConsumer</code>, but not <code class="language-java">Consumer&lt;Integer&gt;</code>. Fortunately, this does not affect the possibilities of the streams.</p> 
+  <p>There are a few additional aggregating operations such as <code class="language-java">min</code>, <code class="language-java">max</code>, <code class="language-java">average</code> and <code class="language-java">sum</code>. The first three return an optional object which represents a result or nothing since the initial stream can be empty.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   Note, actually 
+   <code class="language-java">Stream&lt;T&gt;</code> also provides 
+   <code class="language-java">min</code> and 
+   <code class="language-java">max</code> but its methods need a comparator as the argument.
+  </div>
+  <p></p> 
+  <p>The following code demonstrates the methods:</p> 
+  <pre><code class="language-java">int[] numbers = { 10, 11, 25, 14, 22, 21, 18 };
+
+int max = IntStream.of(numbers).max().getAsInt();
+System.out.println(max); // 25
+
+int min = IntStream.of(numbers).min().getAsInt();
+System.out.println(min); // 10
+
+double avg = IntStream.of(numbers).average().orElse(0.0);
+System.out.println(avg); // 17.2857...
+
+int sum = IntStream.of(numbers).sum();
+System.out.println(sum); // 121</code></pre> 
+  <p>It is also possible to calculate these aggregates at once using a single invocation of the <code class="language-java">summaryStatistics</code> method.</p> 
+  <pre><code class="language-java">IntSummaryStatistics stat = IntStream.rangeClosed(1, 55_555).summaryStatistics();
+
+System.out.println(String.format("Count: %d, Min: %d, Max: %d, Avg: %.1f",
+        stat.getCount(), stat.getMin(), stat.getMax(), stat.getAverage()));</code></pre> 
+  <p>Here are the results:</p> 
+  <pre><code class="language-java">Count: 55555, Min: 1, Max: 55555, Avg: 27778.0</code></pre> 
+  <p>Wow! And no loops here.</p> 
+  <h5 style="text-align: center;" id="transforming-streams">Transforming streams</h5> 
+  <p>You can perform various transformations of primitive type streams.</p> 
+  <ul> 
+   <li><strong> Transforming a primitive type stream to another one</strong> using <code class="language-java">asDoubleStream()</code> for <code class="language-java">IntStream</code> and <code class="language-java">LongStream</code>, or <code class="language-java">asLongStream()</code> for <code class="language-java">IntStream</code> only.</li> 
+  </ul> 
+  <p>Here is an example which converts a stream of integers into a stream of doubles:</p> 
+  <pre><code class="language-java">IntStream.of(1, 2, 3, 4)
+        .asDoubleStream()
+        .forEach(System.out::println); // it prints doubles 1.0, 2.0, ...</code></pre> 
+  <ul> 
+   <li><strong>Transforming a primitive type stream into the generalized stream</strong> using the <code class="language-java">boxed()</code> method (i.e., <code class="language-java">IntStream</code> → <code class="language-java">Stream&lt;Integer&gt;</code>). All the primitive type streams have this.</li> 
+  </ul> 
+  <pre><code class="language-java">Stream&lt;Integer&gt; streamOfNumbers = IntStream.range(1, 10).boxed();</code></pre> 
+  <ul> 
+   <li><strong>Transforming a generalized stream into a stream of primitives</strong> can be done invoking one of <code class="language-java">mapToInt()</code>, <code class="language-java">mapToLong()</code> or <code class="language-java">mapToDouble()</code> methods with the <code class="language-java">i -&gt; i</code> lambda expression as the argument:</li> 
+  </ul> 
+  <pre><code class="language-java">List&lt;Integer&gt; numbers = List.of(1, 5, 9);
+int sum = numbers.stream().mapToInt(i -&gt; i).sum(); // 15</code></pre> 
+  <p>This can be especially useful when you want to invoke one of the specific primitive stream's methods.</p> 
+  <h5 style="text-align: center;" id="summary">Summary</h5> 
+  <p>We've considered three primitive specialized streams which are similar to the generalized stream but have some features:</p> 
+  <ul> 
+   <li>their methods take primitive specialized functions as arguments;</li> 
+   <li>they have additional methods such as <code class="language-java">range</code>, <code class="language-java">sum</code>, <code class="language-java">average</code>, <code class="language-java">summaryStatistics</code> and some others;</li> 
+   <li>they have the performance benefits since there is no need to perform boxing/unboxing operations;</li> 
+   <li>they can be converted in the generalized stream and vice versa.</li> 
+  </ul>
+ </body>
+</html>

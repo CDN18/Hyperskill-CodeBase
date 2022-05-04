@@ -1,0 +1,22 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: They allow you to precisely set any decimal number in the range [0, 1].
+- text: It is not possible to assign an integer value to <b>double</b>.
+- text: Operations with them can produce an inaccurate result.
+- text: The <b>double</b> type can store more significant digits than <b>float</b>.
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/1991#comment
+status: Solved
+record: -1

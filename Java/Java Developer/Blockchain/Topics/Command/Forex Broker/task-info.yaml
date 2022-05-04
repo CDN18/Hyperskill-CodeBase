@@ -1,0 +1,87 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.Scanner;
+
+    public class Main {
+        public static void main(String[] args) {
+            int[] amountList = new int[3];
+
+            Scanner scanner = new Scanner(System.in);
+            for (int i = 0; i < 3; i++) {
+                amountList[i] = scanner.nextInt();
+            }
+
+            Broker broker = new Broker();
+            for (int i = 0; i < 3; i++) {
+                Option option = new Option(amountList[i]);
+                Command command;
+                if (amountList[i] > 0) {
+                    /* write your code here */
+                } else {
+                    /* write your code here */
+                }
+                broker.setCommand(command);
+                broker.executeCommand();
+            }
+        }
+    }
+
+    class Option {
+        private int amount;
+
+        Option(int amount) {
+            this.amount = amount;
+        }
+
+        void buy() {
+            System.out.println(amount + " was bought");
+        }
+
+        void sell() {
+            /* write your code here */
+        }
+    }
+
+    interface Command {
+        /* write your code here */
+    }
+
+    class BuyCommand implements Command {
+        private Option option;
+
+        BuyCommand(Option option) {
+            this.option = option;
+        }
+
+        /* write your code here */
+    }
+
+    class SellCommand implements Command {
+        private Option option;
+
+        SellCommand(Option option) {
+            this.option = option;
+        }
+
+        /* write your code here */
+    }
+
+    class Broker {
+        private Command command;
+        void setCommand(Command command) {
+            /* write your code here */
+        }
+        void executeCommand() {
+            /* write your code here */
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/7767#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Wed, 27 Apr 2022 22:42:16 UTC
+record: -1

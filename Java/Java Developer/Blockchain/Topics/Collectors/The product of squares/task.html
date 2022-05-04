@@ -1,0 +1,12 @@
+<h2>The product of squares</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Write a collector that evaluates the product of squares of integer numbers in a <strong>Stream&lt;Integer&gt;</strong>.</p> 
+  <p><strong>Important.</strong> You should write only the collector in <strong>any valid formats but without ; on the end.</strong></p> 
+  <p>It will be passed as an argument to the <strong>collect() </strong>method of a stream as shown below.</p> 
+  <pre><code class="language-java">List&lt;Integer&gt; numbers = ...
+long val = numbers.stream().collect(...your_collector_will_be_passed_here...);</code></pre> 
+  <p><strong>Examples</strong> of the valid solution formats: <strong>Collectors.reducing(...)</strong><strong> </strong>or<strong> reducing(...).</strong></p>
+ </body>
+</html><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">0 1 2 3<br></code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">0</code></pre><br><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">1 2<br></code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">4</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 5 seconds</font><br><br>

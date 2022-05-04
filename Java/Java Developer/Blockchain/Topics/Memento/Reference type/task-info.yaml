@@ -1,0 +1,60 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.*;
+
+    class Originator {
+        private int[][] array;
+
+        public Originator(int[][] array) {
+            this.array = array.clone();
+        }
+
+        public void setNumber(int position, int number) {
+            array[position / array[0].length][position % array[0].length] = number;
+        }
+
+        public int[][] getArray() {
+            return array.clone();
+        }
+
+        public Memento getMemento() {
+            // TODO implement this method
+        }
+
+        public void setMemento(Memento memento) {
+            // TODO implement this method
+        }
+
+        static class Memento {
+            // TODO implement this class
+        }
+    }
+
+    class Caretaker {
+        private final Originator originator;
+        private Originator.Memento snapshot = null;
+
+        public Caretaker(Originator originator) {
+            this.originator = originator;
+        }
+
+        public void save() {
+            snapshot = originator.getMemento();
+        }
+
+        public void restore() {
+            if (snapshot != null) {
+                originator.setMemento(snapshot);
+            }
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/16535#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Tue, 26 Apr 2022 08:45:36 UTC
+record: -1

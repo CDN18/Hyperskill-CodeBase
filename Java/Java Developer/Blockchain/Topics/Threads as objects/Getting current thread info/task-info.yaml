@@ -1,0 +1,18 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class Info {
+
+        public static void printCurrentThreadInfo() {
+            // get the thread and print its info
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2521#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Wed, 27 Apr 2022 19:42:12 UTC
+record: -1

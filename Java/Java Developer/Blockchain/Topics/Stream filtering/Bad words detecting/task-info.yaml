@@ -1,0 +1,24 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: "import java.util.Arrays;\nimport java.util.Collections;\nimport java.util.List;\n\
+    import java.util.Scanner;\nimport java.util.stream.*;\n\nclass BadWordsDetector\
+    \ {\n\n    private static Stream<String> createBadWordsDetectingStream(String\
+    \ text, \n                                                                List<String>\
+    \ badWords) {\n        // write your code here\n        return Stream.of();\n\
+    \    }\n\n    /* Do not change the code below */\n    public static void main(String[]\
+    \ args) {\n        Scanner scanner = new Scanner(System.in);\n        String[]\
+    \ parts = scanner.nextLine().split(\";\");\n\n        // the first part is a text\n\
+    \        String text = parts[0];\n\n        // the second part is a bad words\
+    \ dictionary\n        List<String> dict = parts.length > 1 ?\n               \
+    \ Arrays.asList(parts[1].split(\" \")) :\n                Collections.singletonList(\"\
+    \");\n\n        System.out.println(createBadWordsDetectingStream(text, dict).collect(Collectors.toList()));\n\
+    \    }\n\n}"
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2422#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Sat, 30 Apr 2022 13:29:39 UTC
+record: -1

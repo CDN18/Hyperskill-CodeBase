@@ -1,0 +1,29 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class Pumpkin {
+
+        private boolean forHalloween;
+
+        public Pumpkin(boolean forHalloween) {
+            this.forHalloween = forHalloween;
+        }
+
+        // create method addCandle()
+
+        class Candle {
+
+            void burning() {
+                System.out.println("The candle is burning! Boooooo!");
+            }
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/11513#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Wed, 27 Apr 2022 05:49:14 UTC
+record: -1

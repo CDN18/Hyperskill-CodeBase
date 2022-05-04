@@ -1,0 +1,15 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: "import java.util.Scanner;\n\nclass MultipleFunction {\n\n    public static\
+    \ void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n\
+    \        double x = scanner.nextDouble();\n        System.out.println(f(x));\n\
+    \    }\n\n    public static double f(double x) {\n        //call your implemented\
+    \ methods here.    \n    }\n\n    //implement your methods here\n    public static\
+    \ double f1 ...\n\n    public static double f2 ...\n\n    public static double\
+    \ f3 ...\n}"
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/10578#comment
+status: Solved
+record: -1

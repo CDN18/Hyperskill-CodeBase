@@ -1,0 +1,25 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: "import java.util.Scanner;     \n\nclass ArrayCalc {\n\n    // static nested\
+    \ class\n    public static class MinMaxPair {\n        private int min;\n    \
+    \    private int max;\n\n        public MinMaxPair(int first, int second) {\n\
+    \            this.min = first;\n            this.max = second;\n        }\n\n\
+    \        public int getMin() {\n            return min;\n        }\n\n       \
+    \ public int getMax() {\n            return max;\n        }\n    }\n\n    // find\
+    \ min and max elements\n    public static MinMaxPair findMinMax(int[] array) {\n\
+    \n        // write your code\n\n        return new MinMaxPair(min, max);\n   \
+    \ }\n}\n\nclass Main {\n\n    public static void main(String[] args) {\n     \
+    \   Scanner scanner = new Scanner(System.in);\n\n        // input array \n   \
+    \     int[] array = new int[10];\n        for (int i = 0; i < 10; i++) {\n   \
+    \         array[i] = scanner.nextInt();\n        }\n\n        ArrayCalc.MinMaxPair\
+    \ p = ArrayCalc.findMinMax(array);\n\n        System.out.println(\"min = \" +\
+    \ p.getMin());\n        System.out.println(\"max = \" + p.getMax());\n    }\n}"
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/11852#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Mon, 25 Apr 2022 17:28:47 UTC
+record: -1

@@ -6,7 +6,7 @@ Choose this track to learn more about Java, one of the most popular programming 
 
 | Project | Difficulty |
 | -- | -- |
-| Blockchain | Challenging |
+| [Blockchain](./Blockchain/) | Challenging |
 | Guess the Animal | Challenging |
 | Contacts | Hard(Graduate Project) |
 | Budget Manager | Hard(Graduate Project) |

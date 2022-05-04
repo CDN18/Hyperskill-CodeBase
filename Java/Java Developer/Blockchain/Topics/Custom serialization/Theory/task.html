@@ -1,0 +1,68 @@
+<h2>Custom serialization</h2>
+<html>
+ <head></head>
+ <body>
+  <p>We have discussed the default serialization of objects. To disable serialization of fields we used the <code class="language-java">transient</code> keyword. But sometimes this is not enough. You may need some kind of validation fields when deserializing a project. To achieve it, you should prefer to use <strong>custom serialization</strong>. There can be some design constraints as well: the class is expected to be changed in future releases which could break the deserialization of previously serialized objects.</p> 
+  <h5 style="text-align: center;" id="how-to-customize-serialization">How to customize serialization?</h5> 
+  <p>Java gives us two methods that we can use to customize the serialization process. These methods are:</p> 
+  <ul> 
+   <li><code class="language-java">writeObject()</code></li> 
+   <li><code class="language-java">readObject()</code></li> 
+  </ul> 
+  <p>Now, this could be a bit strange to you. This is just a built-in feature of Java serialization. None of these methods are inherited, overridden or overloaded. You simply have to implement these two methods in your serializing class with your custom logic for serialization. This is how it should look:</p> 
+  <pre><code class="language-java">public class ClassName implements Serializable {
+    
+    // transient and non-transient fields
+
+    private void writeObject(ObjectOutputStream oos) throws Exception {
+       // write the custom serialization code here
+    }
+
+    private void readObject(ObjectInputStream ois) throws Exception {
+       // write the custom deserialization code here
+    }
+}</code></pre> 
+  <p>When you call the <code class="language-java">oos.writeObject()</code> method, <strong>JVM</strong> first checks whether you have implemented the <code class="language-java">writeObject()</code> method in your serializing class. If so, JVM executes the code inside that method instead of doing default serialization. Similarly, JVM will call the <code class="language-java">readObject()</code> method in the serializing class when you call the <code class="language-java">ois.readObject()</code> method. </p> 
+  <h5 style="text-align: center;" id="initialize-transient-variables">Initialize transient variables</h5> 
+  <p>As you know, the <code class="language-java">oos.writeObject()</code> doesn't serialize <code class="language-java">transient</code> fields. In the following example, we are solving this problem by initializing the password with an empty string when deserializing the object by means of the methods described above.</p> 
+  <pre><code class="language-java">public class User implements Serializable {
+    String userName = "admin";
+    transient String password = "password";
+  
+    private void readObject(ObjectInputStream ois) throws Exception {
+        ois.defaultReadObject();
+        password = new String(" ");
+    } 
+}</code></pre> 
+  <p>Here, we don’t have to implement the <code class="language-java">writeObject()</code> method as we don't want to add anything to the serialization process. We only have to implement the <code class="language-java">readObject()</code> method. Our first line is <code class="language-java">ois.defaultReadObject()</code> which will perform the default deserialization. It means that after the <code class="language-java">ois.defaultReadObject()</code> method you have the normal values for non-transient fields and <code class="language-java">null</code> values for transient fields. Next, we instantiate the password with <code class="language-java">password = new String(" ")</code>. The code in the <code class="language-java">User</code> class will remain the same.</p> 
+  <h5 style="text-align: center;" id="more-examples-of-custom-serialization">More examples of custom serialization</h5> 
+  <p>There are many other reasons to use custom serialization. For example:</p> 
+  <ul> 
+   <li>When you want to <strong>encrypt </strong>important fields of a class</li> 
+   <li>When you want to use a more <strong>compressed </strong>serialization. </li> 
+  </ul> 
+  <p>Let’s see how to encrypt the fields of a class. We have two functions, <code class="language-java">encrypt</code> and <code class="language-java">decrypt</code>, that we can use for encryption. Their implementations are not of importance here, let's just assume that they are available to us.</p> 
+  <p>This code uses both <code class="language-java">writeObject()</code> and <code class="language-java">readObject()</code> methods: </p> 
+  <pre><code class="language-java">public class User implements Serializable {
+    String userName = "admin";
+    transient String password = "password";
+
+    private void writeObject(ObjectOutputStream oos) throws Exception {
+        oos.defaultWriteObject();
+        String encryptPassword = encrypt(password);
+        oos.writeObject(encryptPassword);
+    }
+
+    private void readObject(ObjectInputStream ois) throws Exception {
+        ois.defaultReadObject();
+        password = decrypt((String) ois.readObject());
+    }
+}</code></pre> 
+  <p>First, <code class="language-java">oos.defaultWriteObject()</code> in <code class="language-java">writeObject()</code> method will perform the default serialization on non-transient fields. Then we will encrypt the password using <code class="language-java">encrypt()</code> method. Next, we will serialize the encrypted password. Likewise, <code class="language-java">ois.defaultReadObject()</code> method will deserialize non-transient fields. Then using the <code class="language-java">readObject()</code> method, you can retrieve the <code class="language-java">encryptPassword</code> field. Finally, use the <code class="language-java">decrypt()</code> method to decrypt the variable. </p> 
+  <h5 style="text-align: center;" id="processing-standard-data-types">Processing standard data types</h5> 
+  <p>Both <code class="language-java">ObjectOutputStream</code> and <code class="language-java">ObjectInputStream</code> provide useful methods to serialize standard types <code class="language-java">String</code>, <code class="language-java">int</code>, <code class="language-java">boolean</code>, and others. The methods are <code class="language-java">ois.readUTF()</code>, <code class="language-java">oos.writeUTF()</code>, <code class="language-java">ois.readInt()</code>, <code class="language-java">oos.writeInt()</code>, <code class="language-java">ois.readBoolean()</code>, <code class="language-java">oos.writeBoolean()</code>, and so on. </p> 
+  <p>In some cases, several methods may be applied. For strings, you can use either read/write UTF or read/write object methods. There is only one restriction: use the same consistent way of serializing and deserializing to avoid problems.</p> 
+  <h5 style="text-align: center;" id="conclusion">Conclusion</h5> 
+  <p>In this topic, we've covered a couple of things. First, we've explained why we need to prevent some fields from being serialized and how the <code class="language-java">transient</code> keyword can help you do that. Next, we've discussed custom serialization and how to implement it with just two methods. It's obvious that Java provides us with an easy way to customize the serialization, but what matters is how we can write an effective code for custom serialization. </p>
+ </body>
+</html>

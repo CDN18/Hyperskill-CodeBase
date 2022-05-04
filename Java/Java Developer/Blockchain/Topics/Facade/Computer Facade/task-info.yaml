@@ -1,0 +1,82 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class ComputerFacadeTestDrive {
+        public static void main(String[] args) {
+            /* Your subsystems */
+
+            ComputerFacade computerFacade = /* Write your code here */
+
+            computerFacade.turnOnComputer();
+            computerFacade.turnOffComputer();
+        }
+    }
+
+    class ComputerFacade {
+        /* Your subsystems */
+
+        public ComputerFacade(/* Write your code here */) {
+            /* Write your code here */
+        }
+
+        public void turnOnComputer() {
+            /* Write your code here */
+        }
+
+        public void turnOffComputer() {
+            /* Write your code here */
+        }
+    }
+
+    class Processor {
+        /* Your subsystem description */
+
+        public void on() {
+            /* Write your code here */
+        }
+
+        public void off() {
+            /* Write your code here */
+        }
+    }
+
+    class Monitor {
+        /* Your subsystem description */
+
+        public void on() {
+            /* Write your code here */
+        }
+
+        public void off() {
+            /* Write your code here */
+        }
+    }
+
+    class Keyboard {
+        /* Your subsystem description */
+
+        public void on() {
+            /* Write your code here */
+        }
+
+        public void off() {
+            /* Write your code here */
+        }
+
+        private void turnOnBacklight() {
+            /* Write your code here */
+        }
+
+        private void turnOffBacklight() {
+            /* Write your code here */
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/5532#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Sun, 01 May 2022 03:31:15 UTC
+record: -1

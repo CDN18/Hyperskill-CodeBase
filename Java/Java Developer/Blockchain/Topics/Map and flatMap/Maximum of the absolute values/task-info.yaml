@@ -1,0 +1,33 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.Arrays;
+    import java.util.Scanner;
+
+    public class Main {
+
+        /**
+         * Returns the largest absolute value in the array of numbers.
+         *
+         * @param numbers the input array of String integer numbers
+         * @return the maximum integer absolute value in the array
+         */
+        public static int maxAbsValue(String[] numbers) {
+            // write your code here
+        }
+
+        // Don't change the code below
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println(maxAbsValue(scanner.nextLine().split("\\s+")));
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/3828#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Sat, 30 Apr 2022 13:56:55 UTC
+record: -1

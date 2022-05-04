@@ -1,0 +1,68 @@
+<h2>Infinite streams</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Collections in Java always have a finite number of elements because the memory of a computer is limited. However, Stream API allows us to operate on infinite streams of elements. It is possible due to the lazy nature of streams: creating an infinite stream is an intermediate operation, so it actually does not create elements until a terminal operation is executed. It is supposed that a stream has already become finite at this moment.</p> 
+  <p>In this topic, we will learn how to create infinite streams by using <code class="language-java">generate</code> and <code class="language-java">iterate</code> methods, and how they can be used.</p> 
+  <h5 style="text-align: center;" id="generating-a-stream-of-objects">Generating a stream of objects</h5> 
+  <p>The first method we consider is <code class="language-java">generate</code>. It takes a <strong>supplier function</strong> that produces an object that'll be a part of the stream.</p> 
+  <pre><code class="language-java">Stream&lt;T&gt; generate(Supplier&lt;T&gt; supplier)</code></pre> 
+  <p>In the example below, we create an infinite stream of random numbers by using the reference to the <code class="language-java">random</code> method of the <code class="language-java">Math</code> class.</p> 
+  <pre><code class="language-java">Stream&lt;Double&gt; randomNumbers = Stream.generate(Math::random);</code></pre> 
+  <p>The supplier function can be a constructor of a class as well:</p> 
+  <pre><code class="language-java">Stream&lt;User&gt; userStream = Stream.generate(User::new);</code></pre> 
+  <p>It generates a stream of <code class="language-java">User</code> objects employing its no-argument constructor.</p> 
+  <p>Depending on how the <strong>supplier function</strong> works all the elements of such a stream may be different or the same.</p> 
+  <p>But why don't we try to print the elements of an infinite stream by using the <code class="language-java">forEach</code> method? Well, it's not a good idea. Your computer simply does not have enough memory to do that.</p> 
+  <p></p>
+  <div class="alert alert-warning">
+   No matter how you've created an infinite stream you have to make it finite by using 
+   <code class="language-java">limit</code> before invoking a terminal operation or to invoke only special kind of terminal operations like 
+   <code class="language-java">findFirst</code> / 
+   <code class="language-java">findAny</code> that does not try to generate all the elements in the infinite stream.
+  </div>
+  <p></p> 
+  <p>In the following example, we create an infinite stream and take only the first five elements from it:</p> 
+  <pre><code class="language-java">Stream.generate(Math::random)
+        .limit(5) // don't miss it
+        .forEach(System.out::println);</code></pre> 
+  <p>It generates and prints five random numbers. Your output may look like the following:</p> 
+  <pre><code class="language-java">0.9700910364529439
+0.04347176223398197
+0.2887419669771004
+0.32376617731162183
+0.22532773260604255</code></pre> 
+  <p>Of course, we can also use a variable to produce an arbitrary number of elements, instead of a specific constant.</p> 
+  <p>Let's look at another example that applies the <code class="language-java">findAny</code> method. This method just returns a single element from a stream.</p> 
+  <pre><code class="language-java">double randomNumber = Stream.generate(Math::random).findAny().get();</code></pre> 
+  <p>This code works perfectly because the <code class="language-java">findAny</code> method causes only one element to be generated. It doesn't try to create the whole infinite stream.</p> 
+  <h5 style="text-align: center;" id="iterations">Iterations</h5> 
+  <p>The second method we consider is <code class="language-java">iterate</code>. It is a complete alternative to standard loops.</p> 
+  <p>It takes a starting value (a <strong>seed</strong>) and an <strong>operator function</strong> to generate the next value based on the previous one.</p> 
+  <pre><code class="language-java">Stream&lt;T&gt; iterate(T seed, UnaryOperator&lt;T&gt; next)</code></pre> 
+  <p>As an example, here is an infinite stream of odd numbers:</p> 
+  <pre><code class="language-java">Stream&lt;Integer&gt; oddNumbersStream = Stream.iterate(1, x -&gt; x + 2); // 1, 3, 5, ...</code></pre> 
+  <p>Here the starting value is <code class="language-java">1</code>, and the function to produce the next values is <code class="language-java">x -&gt; x + 2</code>.</p> 
+  <p>Similarly to the <code class="language-java">generate</code> method, this stream is infinite. If we'd like to obtain the values, we should make this stream finite.</p> 
+  <p>In the following example, we print the first five odd numbers using the <code class="language-java">iterate</code> method.</p> 
+  <pre><code class="language-java">Stream.iterate(1, x -&gt; x + 2)
+        .limit(5)
+        .forEach(System.out::println); // 1 3 5 7 9</code></pre> 
+  <p>If we use the <code class="language-java">findFirst</code> method as the terminal operation instead of <code class="language-java">forEach</code>, we can skip the <code class="language-java">limit</code> operation because it is obvious that the first element is 1 (the seed).</p> 
+  <p>Interestingly, the following code will lead to an error. Try to guess why!</p> 
+  <pre><code class="language-java">int min = Stream.iterate(1, x -&gt; x + 1).min(Comparator.naturalOrder()).get();</code></pre> 
+  <p>To us, it is obvious that the smallest element here is 1. But the computer does not know the properties of the function that is used to produce the next values and cannot comprehend that the function will not create another minimum value. The same mistake will occur if we try to perform any operation that formally requires processing all elements of the infinite stream.</p> 
+  <p>In addition, the <code class="language-java">iterate</code> method has an overloaded version that generates a finite stream. It takes a <strong>predicate</strong> to determine whether the stream has the next element.</p> 
+  <pre><code class="language-java">Stream&lt;T&gt; iterate(T seed, Predicate&lt;T&gt; hasNext, UnaryOperator&lt;T&gt; next)</code></pre> 
+  <p>In the following example, we use this method to print the odd numbers that are less than 10:</p> 
+  <pre><code class="language-java">Stream.iterate(1, x -&gt; x &lt; 10, x -&gt; x + 2)
+        .forEach(System.out::println); // 1 3 5 7 9</code></pre> 
+  <p>Look! It is a complete alternative to the classic <code class="language-java">for</code> loop.</p> 
+  <pre><code class="language-java">for (int i = 1; i &lt; 10; i += 2) {
+    System.out.println(i);
+}</code></pre> 
+  <p>By this, we are completing our consideration of infinite streams and methods to produce them.</p> 
+  <h5 style="text-align: center;" id="conclusion">Conclusion</h5> 
+  <p>We have considered two methods to produce infinite streams: <code class="language-java">generate</code> and <code class="language-java">iterate</code>. The first one generates a stream of objects, while the second one creates iterations by using a counter and can be used as an alternative to loops. When working with infinite streams, do not forget to limit them or use only suitable terminal operations that do not process all elements of the stream.</p>
+ </body>
+</html>

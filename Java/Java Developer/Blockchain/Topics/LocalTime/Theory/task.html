@@ -1,0 +1,51 @@
+<h2>LocalTime</h2>
+<html>
+ <head></head>
+ <body>
+  <p>There's a special class to represent the time of day in Java. The<code class="language-java">LocalTime</code> class represents daytime in the hours-minutes-seconds format, such as <code class="language-java">06:30</code> or <code class="language-java">11:45:30</code>. It doesn't store information about the date or the time zone. Time is stored with nanosecond precision (for example, <code class="language-java">13:45:30.123456789</code>). The<code class="language-java">LocalTime</code> class could be used to store things like the opening and closing hours of a shop or a train schedule. </p> 
+  <p>This class belongs to the <code class="language-java">java.time</code> package and pretty much resembles the <code class="language-java">LocalDate</code> class. </p> 
+  <h5 style="text-align: center;" id="creating-localtime-current-time-and-constants">Creating LocalTime, current time and constants</h5> 
+  <p>First of all, let's see how we create an instance of the <code class="language-java">LocalTime</code> class. An instance that stores the current time can be created as shown below:</p> 
+  <pre><code class="language-java">LocalTime now = LocalTime.now();</code></pre> 
+  <p>If we want to pass a specific time to an instance, we should employ either of the two static methods <code class="language-java">of</code> and <code class="language-java">parse</code> to create an instance of <code class="language-java">LocalTime</code> :</p> 
+  <pre><code class="language-java">LocalTime.of(11, 45);        // 11:45
+LocalTime.of(11, 45, 30);    // 11:45:30
+LocalTime.parse("11:45:30"); // 11:45:30 (hours, minutes, seconds)</code></pre> 
+  <p>In the first line, second and nanosecond fields will be set to zero.</p> 
+  <p>The hour of a day is an <code class="language-java">int</code> number from 0 to 23, while minutes and seconds are numbers from 0 to 59. Nanoseconds can be any integer numbers from 0 to 999,999,999. The following code throws an exception:</p> 
+  <pre><code class="language-java">LocalTime.of(24, 1, 1); // it throws DateTimeException (24 is an invalid value for hours)</code></pre> 
+  <p>It's also possible to create an instance of <code class="language-java">LocalTime</code> by using static methods <code class="language-java">ofSecondOfDay</code> and <code class="language-java">ofNanoOfDay</code>. In this case, we should indicate seconds and nanoseconds of a day respectively:</p> 
+  <pre><code class="language-java">LocalTime time = LocalTime.ofSecondOfDay(12345); // 03:25:45
+LocalTime nanotime = LocalTime.ofNanoOfDay(1234567890); // 00:00:01.234567890</code></pre> 
+  <p>There are some predefined constants in the <code class="language-java">LocalTime</code> class as well :</p> 
+  <pre><code class="language-java">LocalTime.MIN; // 00:00
+LocalTime.MAX; // 23:59:59.999999999
+LocalTime.NOON; // 12:00
+LocalTime.MIDNIGHT; // 00:00</code></pre> 
+  <p>Remember that it is a good practice to use constants whenever it is possible! </p> 
+  <h5 style="text-align: center;" id="localtime-hours-minutes-and-seconds">LocalTime: hours, minutes and seconds</h5> 
+  <p>Now let's discuss a bunch of useful methods of the <code class="language-java">LocalTime</code> class.</p> 
+  <p>Let's suppose we have an instance of <code class="language-java">LocalTime</code> :</p> 
+  <pre><code class="language-java">LocalTime time = LocalTime.of(11, 45, 30); // 11:45:30</code></pre> 
+  <p>By using the following methods we can get hours, minutes, seconds, and nanoseconds of it:</p> 
+  <pre><code class="language-java">time.getHour();   // 11
+time.getMinute(); // 45
+time.getSecond(); // 30
+time.getNano();   // 0, nanoseconds</code></pre> 
+  <p>Another useful method is <code class="language-java">toSecondOfDay</code>. It returns the time in seconds of the day from the given <code class="language-java">LocalTime</code> instance. For our example, it'll be:</p> 
+  <pre><code class="language-java">time.toSecondOfDay(); // 42330</code></pre> 
+  <h5 style="text-align: center;" id="arithmetic-methods-of-localtime">Arithmetic methods of LocalTime</h5> 
+  <p>The class also has methods to add and subtract hours, minutes, seconds, and nanoseconds:</p> 
+  <pre><code class="language-java">LocalTime time1 = time.plusHours(5); // 16:45:30
+LocalTime time2 = time.plusHours(22); // 09:45:30
+LocalTime time3 = time.minusMinutes(10); // 11:35:30
+LocalTime time4 = time.minusSeconds(30); // 11:45</code></pre> 
+  <p>The following methods return a copy of an instance with one altered part:</p> 
+  <pre><code class="language-java">LocalTime time1 = time.withHour(23); // 23:45:30
+LocalTime time2 = time.withMinute(50); // 11:50:30
+LocalTime time3 = time.withSecond(0); // 11:45</code></pre> 
+  <h5 style="text-align: center;" id="conclusion">Conclusion</h5> 
+  <p>Keep in mind that <code class="language-java">LocalTime</code> class is <strong>immutable </strong>and all considered methods return a new instance.</p> 
+  <p>As you can see, the <code class="language-java">LocalTime</code> class provides enough methods that will simplify your job and save your time when you'll have to deal with hours, minutes, and seconds. </p>
+ </body>
+</html>

@@ -1,0 +1,31 @@
+<h2>The total sum of transaction by each account</h2>
+<html>
+ <head></head>
+ <body>
+  <p><span>You have two classes:</span><br></p>
+  <ul>
+   <li><b>Account: </b>number: String, balance: Long<br></li>
+   <li><b>Transaction: </b>uuid: String, sum: Long, account: Account<br></li>
+  </ul>Both classes have getters for all fields with the corresponding names (getNumber(), getSum(), getAccount() and so on).
+  <br>
+  <p>Write a collector that calculates <b>the total sum of transactions (<b>long type, not integer</b>) by each account</b> <b>(i.e. by account number</b>).<b> </b>The collector will be applied to <b>a stream of transactions.</b><br></p>
+  <p>Classes<b> Transaction</b> and <b>Account</b><b> </b>will be available during testing. You can create your own classes for local testing.</p>
+  <div>
+   <b>Important. </b>You should write only the collector in 
+   <b>any valid formats but without ; on the end.</b>
+   <br>It will be passed as an argument to the 
+   <b>collect() </b>method of a stream as shown below.
+   <br>
+   <br>
+   <pre><code class="language-java">List&lt;Transaction&gt; transactions = ...
+Map&lt;String, Long&gt; totalSumOfTransByEachAccount = 
+        transactions.stream()
+                    .collect(...your_collector_will_be_passed_here...);</code></pre> 
+   <br>
+   <b>Examples</b> of the valid solution formats: 
+   <b>Collectors.reducing(...)</b> or 
+   <b><b>reducing(...)</b></b>
+  </div>
+  <div></div>
+ </body>
+</html><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 5 seconds</font><br><br>

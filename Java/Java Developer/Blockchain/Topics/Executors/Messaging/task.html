@@ -1,0 +1,41 @@
+<h2>Messaging</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Write a program that simulates a simple transactions system. Each transactions has three fields: <code class="language-java">from</code>, <code class="language-java">to</code> and <code class="language-java">text</code>.</p>
+  <p>The interface <code class="language-java">AsyncMessageSender</code> describes an abstraction that can send messages and stop its work.</p> 
+  <pre><code class="language-java">interface AsyncMessageSender {
+    public void sendMessages(Message[] messages);
+    public void stop();
+}</code></pre> 
+  <p>The class <code class="language-java">AsyncMessageSenderImpl</code> implements this interface and repeats each transactions several times (according to a variable).</p>
+  <p>Complete this class:</p> 
+  <ul> 
+   <li>it should use <code class="language-java">ExecutorService</code> to send multiple messages in parallel;</li> 
+   <li>implement repeating of messages in the <code class="language-java">sendMessage</code> method;</li> 
+   <li>implement the <code class="language-java">stop</code> method to shut down the executor and wait until it stops (it means it blocks a thread that invokes it).</li> 
+  </ul> 
+  <p>Here is an example of a testing code that should successfully work with your implementation.</p> 
+  <pre><code class="language-java">AsyncMessageSender sender = new AsyncMessageSenderImpl(3);
+       
+Message[] messages = {
+
+    new Message("John", "Mary", "Hello!"),
+    new Message("Clara", "Bruce", "How are you today?")
+};
+
+sender.sendMessages(messages);
+sender.stop();
+
+notifyAboutEnd(); // it prints something after the sender successfully stop</code></pre> 
+  <p>Here is the output:</p> 
+  <pre><code class="language-java">(John&gt;Mary): Hello!
+(John&gt;Mary): Hello!
+(John&gt;Mary): Hello!
+(Clara&gt;Bruce): How are you today?
+(Clara&gt;Bruce): How are you today?
+(Clara&gt;Bruce): How are you today?
+Completed.</code></pre> 
+  <p>The order of the sent messages may be different, but the last line must remain the last.</p>
+ </body>
+</html><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 5 seconds</font><br><br>

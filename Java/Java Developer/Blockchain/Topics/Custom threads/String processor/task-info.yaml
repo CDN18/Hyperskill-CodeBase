@@ -1,0 +1,23 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.Scanner;
+
+    class StringProcessor extends Thread {
+
+        final Scanner scanner = new Scanner(System.in); // use it to read string from the standard input
+
+        @Override
+        public void run() {
+            // implement this method
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2526#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Wed, 27 Apr 2022 19:59:56 UTC
+record: -1

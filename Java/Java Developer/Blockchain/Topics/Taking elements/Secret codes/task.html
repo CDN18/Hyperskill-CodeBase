@@ -1,0 +1,13 @@
+<h2>Secret codes</h2>
+<html>
+ <head></head>
+ <body>
+   You've found a sequence of codes on the Internet in the HEX format (hexadecimal numbers). You have an assumption that this sequence has a secret subsequence enclosed between 
+  <code class="java">"#0000"</code> and 
+  <code class="java">"#FFFF"</code>. Apply your knowledge of Stream API to extract all codes between them (excluding both 
+  <code class="java">"#0000"</code> and 
+  <code class="java">"#FFFF"</code>).
+  <p></p> 
+  <p>Please, try to use <code class="java">takeWhile</code> and <code class="java">dropWhile</code> methods as well as some predicate to solve this problem.</p>
+ </body>
+</html><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">#88D4 #0000 #ACCD #444C #FFFF #5E62</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">#ACCD #444C</code></pre><br><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">#0000 #AAAA #FFFF</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">#AAAA</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 5 seconds</font><br><br>

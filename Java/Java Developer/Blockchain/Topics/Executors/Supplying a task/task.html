@@ -1,0 +1,22 @@
+<h2>Supplying a task</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Suppose you have an instance of <code class="language-java">ExecutorService</code>.</p> 
+  <pre><code class="language-java">ExecutorService executor = Executors.newSingleThreadExecutor();</code></pre> 
+  <p>The <code class="language-java">main</code> thread supplies two tasks to it:</p> 
+  <pre><code class="language-java">Runnable task = () -&gt; {
+    try {
+        TimeUnit.MILLISECONDS.sleep(1000);
+        System.out.println("Hello!");
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+};
+
+executor.submit(task);
+executor.submit(task);</code></pre> 
+  <p> </p> 
+  <p>Select all correct statements:</p>
+ </body>
+</html>

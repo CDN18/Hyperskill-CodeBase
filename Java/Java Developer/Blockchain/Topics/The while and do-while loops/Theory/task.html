@@ -1,0 +1,109 @@
+<h2>The while and do-while loops</h2>
+<html>
+ <head></head>
+ <body>
+  <p>There are a number of approaches to repeat a fragment of the code while a certain condition is <code class="language-java">true</code>. In this lesson, we will learn how to do it by using two kinds of loops. They differ in the order of the repeated fragment execution and condition evaluation.</p> 
+  <h5 style="text-align: center;" id="the-while-loop">The while loop</h5> 
+  <p>The <strong>while</strong> loop consists of a block of code and a condition (a Boolean expression). If the condition is <code class="language-java">true</code>, the code within the block is executed. This code repeats until the condition becomes <code class="language-java">false</code>. Since this loop checks the condition before the block is executed, the control structure is also known as a <strong>pre-test loop</strong>. You can think of the <strong>while</strong> loop as a repetitive conditional statement.</p> 
+  <p>The basic syntax of the <strong>while</strong> loop is the following:</p> 
+  <pre><code class="language-java">while (condition) {
+    // body: do something repetitive
+}</code></pre> 
+  <p>A loop's body can contain any correct Java statements including conditional statements and even other loops, the latter being called nested loops.</p> 
+  <p>It is also possible to write an <strong>infinite loop</strong> if the condition is invariably <code class="language-java">true</code>:</p> 
+  <pre><code class="language-java">while (true) {
+    // body: do something indefinitely
+}</code></pre> 
+  <p>The application of infinite loops will be considered in the following topics.</p> 
+  <p><strong>Example 1.</strong> The following loop prints integer numbers while a variable is less than 5.</p> 
+  <pre><code class="language-java">int i = 0;
+while (i &lt; 5) {
+    System.out.println(i);
+    i++;
+}
+// next statement</code></pre> 
+  <p>Let's explain how this loop works. First, the value 0 is assigned to the variable <code class="language-java">i</code>. Before the first execution of the loop's body, the program checks if the condition <code class="language-java">i &lt; 5</code> is true. In our case, <code class="language-java">i</code> is 0, so the condition is true and the body of the loop starts executing. The body has two statements: displaying the current value of <code class="language-java">i</code> and incrementing it by 1. After this is done, the expression <code class="language-java">i &lt; 5</code> is evaluated again. Now <code class="language-java">i</code> equals 1, so the condition is still <code class="language-java">true</code>, and the loop's body is repeated again. This is repeated until <code class="language-java">i</code> has taken the value 5, after which the expression <code class="language-java">i &lt; 5</code> ceases to be <code class="language-java">true</code>, and the execution of this loop terminates. The program proceeds to the next statement after the loop.</p> 
+  <p><strong>The output:</strong></p> 
+  <pre><code class="language-java">0
+1
+2
+3
+4</code></pre> 
+  <p>Note, that the last value of <code class="language-java">i</code>, that is 5, is not printed.</p> 
+  <p><strong>Example 2. </strong>The following program displays English letters in a single line.</p> 
+  <pre><code class="language-java">public class WhileDemo {
+
+    public static void main(String[] args) {
+        char letter = 'A';
+        while (letter &lt;= 'Z') {
+            System.out.print(letter);
+            letter++;
+        }
+    }
+}</code></pre> 
+  <p>The program takes the first letter <code class="language-java">'A'</code> and then goes on like this:</p> 
+  <ul> 
+   <li>if the <code class="language-java">letter</code> is less than or equal to <code class="language-java">'Z'</code> the program goes to the loop's body;</li> 
+   <li>inside the body, it prints the current character and <code class="language-java">letter</code> takes the next alphabet letter.</li> 
+  </ul> 
+  <p>The program prints:</p> 
+  <pre><code class="language-java">ABCDEFGHIJKLMNOPQRSTUVWXYZ</code></pre> 
+  <p></p>
+  <div class="alert alert-primary">
+   Remember that it is possible to get the next character according to the Unicode table by using the increment operator. After the code execution, the 
+   <code class="language-java">letter</code> will equal 
+   <code class="language-java">[</code>.
+  </div>
+  <p></p> 
+  <h5 style="text-align: center;" id="the-do-while-loop">The do-while loop</h5> 
+  <p>In the <strong>do-while</strong> loop, the body is executed first, while the condition is tested afterward. If the condition is <code class="language-java">true</code>, statements within the block are executed again. This repeats until the condition becomes <code class="language-java">false</code>. Because <strong>do-while</strong> loops check the condition after the block is executed, the control structure is often also known as a <strong>post-test loop</strong>. In contrast to the <strong>while </strong>loop, which tests the condition before the code within the block is executed, the <strong>do-while</strong> loop is an exit-condition loop. So, the code within the block is always executed at least once.</p> 
+  <p>This loop contains three parts: the <code class="language-java">do</code> keyword, a body, and <code class="language-java">while(condition)</code>:</p> 
+  <pre><code class="language-java">do {
+    // body: do something
+} while (condition);</code></pre> 
+  <p>A good example of using it is a program that reads data from the standard input until a user enters a certain number or string. The following program reads integer numbers from the standard input and displays them. If the number 0 is entered, the program prints it and then stops. The following example demonstrates the <strong>do-while</strong> loop:</p> 
+  <pre><code class="language-java">public class DoWhileDemo {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int value;
+        do {
+            value = scanner.nextInt();
+            System.out.println(value);
+        } while (value != 0);
+    }
+}</code></pre> 
+  <p>Input numbers:</p> 
+  <pre><code class="language-java">1 2 4 0 3</code></pre> 
+  <p>The program prints:</p> 
+  <pre><code class="language-java">1
+2
+4
+0</code></pre> 
+  <p></p>
+  <div class="alert alert-primary">
+   Note, that as well as the 
+   <strong>while </strong>loop, the 
+   <strong>do-while</strong> loop can be infinite.
+  </div>
+  <p></p> 
+  <p>In practice, the <strong>do-while</strong> loop is used less than the <strong>while </strong>loop. It is used when code inside the loop must be executed at least once.</p> 
+  <h5 style="text-align: center;" id="reading-a-sequence-with-an-unknown-length">Reading a sequence with an unknown length</h5> 
+  <p>The <code class="language-java">while</code> loop can also be used to read a sequence of characters of an arbitrary length. For that, we can invoke the <code class="language-java">hasNextInt()</code> method of <code class="language-java">Scanner</code> inside the condition. The method returns <code class="language-java">true</code> if the next element is an integer number and <code class="language-java">false</code> otherwise.</p> 
+  <p>Here is a code that calculates the sum of all elements from the provided sequence:</p> 
+  <pre><code class="language-java">Scanner scanner = new Scanner(System.in);
+
+int sum = 0;
+while (scanner.hasNextInt()) {
+    int elem = scanner.nextInt();
+    sum += elem;
+}
+
+System.out.println(sum);</code></pre> 
+  <p>If the input sequence is <code class="language-java">1 2 3</code>, the code prints <code class="language-java">6</code>, if it is <code class="language-java">5 18 9 23 4</code>, the code prints <code class="language-java">59</code>.</p> 
+  <p>As you see, the <strong>while</strong> loop can be used to solve different interesting tasks in your programs.</p> 
+  <h5 id="conclusion">Conclusion</h5> 
+  <p>There are different ways to perform some fragment of your code several times. In this topic, we've discussed two alternative ways to use loops that are based on conditional statement evaluation. If you want to check the condition first, and based on the result perform the operations or ignore them at all, the <strong>while </strong>loop is your choice. If you want to do one iteration of the loop in any case and then evaluate the condition for repetition, then choose <strong>do-while</strong>. Both types of loops can be used to read a sequence from the standard input: for <strong>do-while</strong>, you may use some stop value to terminate the loop, for <strong>while</strong>, use the <code class="language-java">hasNext()</code> method to check that the input is over.</p>
+ </body>
+</html>

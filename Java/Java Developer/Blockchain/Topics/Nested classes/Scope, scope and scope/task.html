@@ -1,0 +1,31 @@
+<h2>Scope, scope and scope</h2>
+<html>
+ <head></head>
+ <body>
+  <p>What will be the output of this code?</p> 
+  <pre><code class="language-java">public class Outer {
+
+    private int x = 5;
+
+    void someMethod() {
+
+        final int x = 10;
+
+        public class LocalInner {
+
+            private void print() {
+                System.out.println("x = " + x);
+            }
+        }
+
+        LocalInner inner = new LocalInner();
+        inner.print();
+    }
+
+    public static void main(String[] args) {
+        Outer outer = new Outer();
+        outer.someMethod();
+    }
+}</code></pre>
+ </body>
+</html>

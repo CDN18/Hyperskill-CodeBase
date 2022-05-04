@@ -1,0 +1,22 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: A variable has a type
+- text: A variable has a name (identifier)
+- text: A variable's name can be changed at runtime
+- text: A variable can store a value
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2082#comment
+status: Solved
+record: -1

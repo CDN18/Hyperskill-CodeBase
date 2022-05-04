@@ -1,0 +1,17 @@
+<h2>Multiple threads</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Here's a class that extends the <strong>Thread</strong> class.</p> 
+  <pre><code class="language-java">class WorkerThread extends Thread {
+    
+    @Override
+    public void run() {
+        // the method does something
+    }
+}</code></pre> 
+  <p>1) Create two instances of the given class and set the names like <strong>"worker-X"</strong>, where X is any suffix (use the constructor to set name).</p> 
+  <p>2) Start created threads. The method <strong>run</strong> of each instance must be executed in a new thread.</p> 
+  <p><strong>Note: </strong>the given class will be added to your solution automatically.</p>
+ </body>
+</html><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 5 seconds</font><br><br>

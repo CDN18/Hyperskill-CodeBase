@@ -1,0 +1,155 @@
+<h2>Custom threads</h2>
+<html>
+ <head></head>
+ <body>
+  <p>The <strong>main</strong> thread is a starting place from which you may spawn new threads to perform your tasks. To do that you have to write code to be executed in a separated thread and then start it.</p> 
+  <h5 style="text-align: center;" id="create-custom-threads">Create custom threads</h5> 
+  <p>Java has two primary ways to create a new thread that performs a task you need.</p> 
+  <ul> 
+   <li>by extending the <code class="language-java">Thread</code> class and overriding its <code class="language-java">run</code> method;</li> 
+  </ul> 
+  <pre><code class="language-java">class HelloThread extends Thread {
+
+    @Override
+    public void run() {
+        String helloMsg = String.format("Hello, i'm %s", getName());
+        System.out.println(helloMsg);
+    }
+}</code></pre> 
+  <ul> 
+   <li>by implementing the <code class="language-java">Runnable</code> interface and passing the implementation to the constructor of the <code class="language-java">Thread</code> class.</li> 
+  </ul> 
+  <pre><code class="language-java">class HelloRunnable implements Runnable {
+
+    @Override
+    public void run() {
+        String threadName = Thread.currentThread().getName();
+        String helloMsg = String.format("Hello, i'm %s", threadName);
+        System.out.println(helloMsg);
+    }
+}</code></pre> 
+  <p>In both cases, you should override the <code class="language-java">run</code> method, which is a regular Java method and contains code to perform a task. What approach to choose depends on the task and on your preferences. If you extend the <code class="language-java">Thread</code> class, you can accept fields and methods of the base class, but you cannot extend other classes since Java doesn't have multiple-inheritance of classes.</p> 
+  <p>Here are two objects obtained by the approaches described above accordingly:</p> 
+  <pre><code class="language-java">Thread t1 = new HelloThread(); // a subclass of Thread
+
+Thread t2 = new Thread(new HelloRunnable()); // passing runnable</code></pre> 
+  <p>And here's another way to specify a name of your thread by passing it to the constructor:</p> 
+  <pre><code class="language-java">Thread myThread = new Thread(new HelloRunnable(), "my-thread");</code></pre> 
+  <p>If you are already familiar with lambda expressions, you may do the whole thing like this:</p> 
+  <pre><code class="language-java">Thread t3 = new Thread(() -&gt; {
+    System.out.println(String.format("Hello, i'm %s", Thread.currentThread().getName()));
+});</code></pre> 
+  <p>Now you've created objects for threads, but you're not done yet. To perform the tasks you need, you'll have to start them.</p> 
+  <h5 style="text-align: center;" id="starting-threads">Starting threads</h5> 
+  <p>The class <code class="language-java">Thread</code> has a method called <code class="language-java">start()</code> that is used to start a thread. At some point after you invoke this method, the method <code class="language-java">run</code> will be invoked automatically, but it'll not happen immediately.</p> 
+  <p>Let's suppose that inside the <strong>main</strong> method you create an object of <code class="language-java">HelloThread</code> named <code class="language-java">t</code> and start it.</p> 
+  <pre><code class="language-java">Thread t = new HelloThread(); // an object representing a thread
+t.start();</code></pre> 
+  <p>Eventually, it prints something like:</p> 
+  <pre><code class="language-no-highlight">Hello, i'm Thread-0</code></pre> 
+  <p>Here's a picture that explains how a thread actually starts and why it is not happening immediately.</p> 
+  <p> </p> 
+  <p style="text-align: center;"><img alt="" height="95px" src="https://ucarecdn.com/9dfe86a1-1880-4e14-9635-015d0091c70c/" width="373px"></p> 
+  <p> </p> 
+  <p>As you may see, there is some delay between starting a thread and the moment when it really starts working (running).</p> 
+  <p>By default, a new thread is running in <strong>non-daemon</strong> mode. Reminder: the difference between the <strong>daemon</strong> and the <strong>non-daemon</strong> mode is that JVM will not terminate the running program while there're still <strong>non-daemon</strong> threads left, while the <strong>daemon</strong> threads won't prevent JVM from terminating.</p> 
+  <p></p>
+  <div class="alert alert-warning">
+    Do not confuse methods 
+   <code class="language-java">run</code> and 
+   <code class="language-java">start</code>. You must invoke 
+   <code class="language-java">start</code> if you'd like to execute your code inside 
+   <code class="language-java">run</code> in a separate thread. If you invoke 
+   <code class="language-java">run</code> directly, the code will be executed in the same thread.
+  </div>
+  <p></p> 
+  <p></p>
+  <div class="alert alert-warning">
+   <strong> </strong>If you try to start a thread more than once, the 
+   <code class="language-java">start</code> throws 
+   <code class="language-java">IllegalThreadStateException</code>.
+  </div>
+  <p></p> 
+  <p>Despite the fact that within a single thread all statements are executed sequentially, it is impossible to determine the relative order of statements between multiple threads without additional measures that we will not consider in this lesson. </p> 
+  <p>Consider the following code:</p> 
+  <pre><code class="language-java">public class StartingMultipleThreads {
+
+    public static void main(String[] args) {
+        Thread t1 = new HelloThread();
+        Thread t2 = new HelloThread();
+
+        t1.start();
+        t2.start();
+
+        System.out.println("Finished");
+    }
+}</code></pre> 
+  <p>The order of displaying messages may be different. Here is one of them:</p> 
+  <pre><code class="language-no-highlight">Hello, i'm Thread-1
+Finished
+Hello, i'm Thread-0</code></pre> 
+  <p>It is even possible that all threads may print their text after the <strong>main</strong> thread prints <strong>"Finished":</strong></p> 
+  <pre><code class="language-no-highlight">Finished
+Hello, i'm Thread-0
+Hello, i'm Thread-1</code></pre> 
+  <p>This means that even though we call the <code class="language-java">start</code> method sequentially for each thread, we do not know when the <code class="language-java">run</code> method will be actually called.</p> 
+  <p></p>
+  <div class="alert alert-warning">
+    Do not rely on the order of execution of statements between different threads, unless you've taken special measures.
+  </div>
+  <p></p> 
+  <h5 style="text-align: center;" id="a-simple-multithreaded-program">A simple multithreaded program</h5> 
+  <p>Let's consider a simple multithreaded program with two threads. The first thread reads numbers from the standard input and prints out their squares. At the same time, the <strong>main</strong> thread occasionally prints messages to the standard output. Both threads work simultaneously.</p> 
+  <p>Here is a thread that reads numbers in a loop and squares them. It has a break statement to stop the loop if the given number is 0.</p> 
+  <pre><code class="language-java">class SquareWorkerThread extends Thread {
+    private final Scanner scanner = new Scanner(System.in);
+
+    public SquareWorkerThread(String name) {
+        super(name);
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            int number = scanner.nextInt();
+            if (number == 0) {
+                break;
+            }
+            System.out.println(number * number);
+        }
+        System.out.println(String.format("%s finished", getName()));
+    }
+}</code></pre> 
+  <p>Inside the <code class="language-java">main</code> method, the program starts an object of <code class="language-java">SquareWorkerThread</code> class that writes messages to the standard output from the <strong>main</strong> thread.</p> 
+  <pre><code class="language-java">public class SimpleMultithreadedProgram {
+
+    public static void main(String[] args) {
+        Thread worker = new SquareWorkerThread("square-worker");
+        worker.start(); // start a worker (not run!)
+
+        for (long i = 0; i &lt; 5_555_555_543L; i++) {
+            if (i % 1_000_000_000 == 0) {
+                System.out.println("Hello from the main!");
+            }
+        }
+    }
+}</code></pre> 
+  <p>Here is an example of inputs and outputs with comments:</p> 
+  <pre><code class="language-java">Hello from the main!   // the program outputs it
+2                      // the program reads it
+4                      // the program outputs it
+Hello from the main!   // outputs it
+3                      // reads it
+9                      // outputs it
+5                      // reads it
+Hello from the main!   // outputs it
+25                     // outputs it
+0                      // reads it
+square-worker finished // outputs it
+Hello from the main!   // outputs it
+Hello from the main!   // outputs it
+
+Process finished with exit code 0</code></pre> 
+  <p>As you can see, this program performs two tasks <strong>"at the same time"</strong>:<strong> </strong>one in the <strong>main </strong>thread and another one in the <strong>worker</strong> thread. It may not be <strong>"the same time"</strong> in the physical sense, however, both tasks are given some time to be executed.</p>
+ </body>
+</html>
