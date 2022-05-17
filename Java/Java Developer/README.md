@@ -7,7 +7,7 @@ Choose this track to learn more about Java, one of the most popular programming 
 | Project | Difficulty |
 | -- | -- |
 | [Blockchain](./Blockchain/) | Challenging |
-| Guess the Animal | Challenging |
+| [Guess the Animal](./Guess%20the%20Animal/) | Challenging |
 | Contacts | Hard(Graduate Project) |
 | Budget Manager | Hard(Graduate Project) |
 | JSON Database | Hard(Graduate Project) |

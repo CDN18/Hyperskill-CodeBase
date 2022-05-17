@@ -1,0 +1,9 @@
+type: framework
+content:
+- Validate the answer
+- Animal facts
+- Guessing game
+- Long-term memory
+- Knowledge base
+- Ĉu ĝi estas la kato
+current_task: 5

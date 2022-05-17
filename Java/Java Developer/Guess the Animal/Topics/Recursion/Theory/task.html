@@ -1,0 +1,83 @@
+<h2>Recursion</h2>
+<html>
+ <head></head>
+ <body>
+  <h5 id="recursion-basics" style="text-align: center;">Recursion basics</h5> 
+  <p>As you know, a method can call another method. What is even more interesting, a method can call itself. This possibility is known as <strong>recursion</strong> and the method calling itself is named <strong>recursive method</strong>.</p> 
+  <p>As any regular method, a <strong>recursive method</strong> can contain parameters and return something, or it can take or return nothing.</p> 
+  <p>But how many times should a method call itself? It should be limited. The method must have a special condition to stop the recursion, otherwise, the call stack will overflow and the execution will stop with an error.</p> 
+  <p>To write <strong>recursive methods</strong> you should consider the solution of a problem as a smaller version of the same problem.</p> 
+  <h5 id="the-factorial-example" style="text-align: center;">The factorial example</h5> 
+  <p>The classic example of the recursion is a math function calculating <strong>the factorial</strong>.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   If you have forgotten or did not know, the 
+   <strong>factorial</strong> of a non-negative integer 
+   <strong>n</strong> is the product of all positive integers from 
+   <strong>1</strong> to 
+   <strong>n</strong> inclusively. E.g., the factorial of 4 is 1 * 2 * 3 * 4 = 24. The factorial of 0 equals 1.
+  </div>
+  <p></p> 
+  <p>Here is a recursive method which does the same using <strong>the recursive call</strong>:</p> 
+  <pre><code class="language-java">public static long factorial(long n) {
+    if (n == 0 || n == 1) {
+        return 1; // the trivial case
+    } else {
+        return n * factorial(n - 1); // the recursive call
+    }
+}</code></pre> 
+  <p>This method has one long parameter and returns a long result. The implementation includes:</p> 
+  <ul> 
+   <li>the trivial case that returns the value <strong>1</strong> without any recursive calls;</li> 
+   <li>the reduction step with the recursive call to simplify the problem.</li> 
+  </ul> 
+  <p>We suppose, the <strong>passed argument &gt;= 0</strong>. If the passed value is <strong>0</strong> or <strong>1</strong>, the result is <strong>1</strong>, otherwise, we invoke the same method decreasing the argument by one.</p> 
+  <p>Let's invoke the method passing different arguments:</p> 
+  <pre><code class="language-java">long fact0 = factorial(0); // 1 (by definition)
+long fact1 = factorial(1); // 1
+long fact2 = factorial(2); // 2 (1 * 2)
+long fact3 = factorial(3); // 6 (1 * 2 * 3)
+long fact4 = factorial(4); // 24 (1 * 2 * 3 * 4)</code></pre> 
+  <p>As you can see, it returns the expected results.</p> 
+  <p>But what happens if a recursive method never reaches a base case? The stack will never stop growing. If a program's stack exceeds the limit size, the <code class="language-java">StackOverflowError</code> occurs. It will crash the execution.</p> 
+  <h5 id="replacing-recursion-by-a-loop" style="text-align: center;">Replacing recursion by a loop</h5> 
+  <p>Every recursive method can be written iteratively using a loop.</p> 
+  <p>Let's rewrite the factorial method in this way:</p> 
+  <pre><code class="language-java">public static long factorial(long n) {
+    int result = 1;
+    for (int i = 1; i &lt;= n; i++) {
+        result *= i;
+    }
+    return result;
+}</code></pre> 
+  <p>You can be sure that the result will be the same.</p> 
+  <h5 id="types-of-recursions" style="text-align: center;">Types of recursions</h5> 
+  <p>There are several types of recursions.</p> 
+  <p><strong>1) Direct recursion.</strong> A method invokes itself like the considered factorial method.</p> 
+  <p><strong>2) Indirect recursion.</strong> A method invokes another method that invokes the original method.</p> 
+  <p><strong>3) Tail-recursion.</strong> A call is tail-recursive if nothing has to be done after the call returns. I.e. when the call returns, the result is immediately returned from the calling method.</p> 
+  <p>In other words, <strong>tail recursion</strong> is when the recursive call is the last statement in the method.</p> 
+  <p>The considered recursive method for calculating factorial is not tail-recursion because after the recursive call it multiplies the result by a value. But it can be written as a tail recursive function. The general idea is to use an additional argument to accumulate the factorial value. When <strong>n</strong> reaches <strong>0</strong>, the method should return the accumulated value.</p> 
+  <pre><code class="language-java">public static long factorialTailRecursive(long n, long accum) {
+    if (n == 0) {
+        return accum;
+    }
+    return factorialTailRecursive(n - 1, n * accum);
+}</code></pre> 
+  <p>And write a special wrapper to invoke it in a more convenient way:</p> 
+  <pre><code class="language-java">public static long factorial(long n) {
+    return factorialTailRecursive(n, 1);
+}</code></pre> 
+  <p><strong>4) Multiple recursion.</strong> A method invokes itself recursively multiple times. The well-known example is calculating the <strong>N-th</strong> Fibonacci number using the recursion.</p> 
+  <p>The recurrent formula:</p> 
+  <pre><code class="language-java">Fib(n) = Fib(n - 1) + Fib(n - 2); Fib(0) = 0, Fib(1) = 1.</code></pre> 
+  <p>The Fibonacci sequence starts with: <code class="language-java">0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, ...</code></p> 
+  <pre><code class="language-java">public static int fib(int n) {
+    if (n &lt;= 1) {
+        return n;
+    }
+    return fib(n - 1) + fib(n - 2);
+}</code></pre> 
+  <p>This solution is very inefficient, it's just an example of <strong>multiple recursion</strong>. Try to start the method passing <strong>45</strong> as the argument. It takes too much time. If you replace the recursion with a loop it will work much faster. Another possible optimization is the technique named <a target="_blank" href="https://dzone.com/articles/memoized-fibonacci-numbers" rel="nofollow noopener noreferrer">memoization</a>.</p>
+ </body>
+</html>

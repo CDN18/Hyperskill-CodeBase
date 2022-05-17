@@ -1,0 +1,87 @@
+<h2>Currying</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Since functions can be considered as<strong> </strong>objects, they can be returned as results from other functions. It allows us to use a special style of programming where we convey arguments to a function one by one and obtain functions as intermediate results. This is a fairly advanced technique, so you won't have to use it every time you can, but it is useful to be aware of such an option.</p> 
+  <h5 id="returning-functions" style="text-align: center;">Returning functions</h5> 
+  <p>When we consider a function as an object we can accept it as an argument and return it as a value.</p> 
+  <p>Here's an example:</p> 
+  <pre><code class="language-java">public static IntBinaryOperator sumF(IntUnaryOperator f) {
+    return (a, b) -&gt; f.applyAsInt(a) + f.applyAsInt(b);
+}</code></pre> 
+  <p>The <code class="language-java">sumF</code> method accepts an operator <code class="language-java">f</code> with an integer argument and returns another operator with two integer arguments. In the method body, an anonymous function that takes two arguments is constructed and returned. This function applies <code class="language-java">f</code> to each of its arguments and summarizes the results.</p> 
+  <p>What can we do now? Let's just return the function from the method, save it to the <code class="language-java">sumF</code> variable and apply some values to it:</p> 
+  <pre><code class="language-java">// build a new sumOfSquares operator
+IntBinaryOperator sumOfSquares = sumF(x -&gt; x * x);
+
+// the sum is equal to 125 (5 * 5 + 10 * 10)
+long sum = sumOfSquares.applyAsInt(5, 10);</code></pre> 
+  <p>Here are some more examples:</p> 
+  <pre><code class="language-java">// sum of two identities: 0 + 10 = 10
+long sumOfIdentities = sumF(x -&gt; x).applyAsInt(0, 10);
+
+// sum with coefficients: 10 * 2 + 11 * 2 = 42
+long sumWithCoefficient = sumF(x -&gt; x * 2).applyAsInt(10, 11);
+
+// sum of two cubes: 3 * 3 * 3 + 8 * 8 * 8 = 539
+long sumOfCubes = sumF(x -&gt; x * x * x).applyAsInt(3, 8);</code></pre> 
+  <p>As you can see, the possibility of returning functions provides an easy way to build complex and generalized functions.</p> 
+  <h5 id="currying-functions" style="text-align: center;">Currying functions</h5> 
+  <p><strong>Currying</strong> is a technique for translating the evaluation of a function that takes multiple parameters into evaluating a sequence of functions, each with a single argument. The technique is called after mathematician <a target="_blank" href="https://en.wikipedia.org/wiki/Haskell_Curry" rel="noopener noreferrer nofollow">Haskell Curry</a> who originally developed it. Let's see how to use it in Java.</p> 
+  <p>First, let's compare a regular function and a curried function:</p> 
+  <pre><code class="language-java">IntBinaryOperator notCurriedFun = (x, y) -&gt; x + y; // not a curried function
+
+IntFunction&lt;IntUnaryOperator&gt; curriedFun = x -&gt; y -&gt; x + y; // a curried function</code></pre> 
+  <p>We can define a curried function with three arguments and then apply arguments one by one:</p> 
+  <pre><code class="language-java">// curried function
+IntFunction&lt;IntFunction&lt;IntFunction&lt;Integer&gt;&gt;&gt; fff = x -&gt; y -&gt; z -&gt; x * y + z;
+
+// fff returns a curried function y -&gt; z -&gt; 2 * y + z
+IntFunction&lt;IntFunction&lt;Integer&gt;&gt; ff = fff.apply(2);
+
+// ff returns a curried function z -&gt; 2 * 3 + z
+IntFunction&lt;Integer&gt; f = ff.apply(3);
+
+// f returns 7
+int result = f.apply(1);</code></pre> 
+  <p>A shorter example:</p> 
+  <pre><code class="language-java">// here the result is equal to 153
+int anotherResult = fff.apply(10).apply(15).apply(3);</code></pre> 
+  <p>Let's rewrite the <code class="language-java">sumF</code> method from the earlier example. Instead of returning a function from it, we can write a curried function and then use it in the same way:</p> 
+  <pre><code class="language-java">Function&lt;IntUnaryOperator, IntBinaryOperator&gt; sumF = 
+        (f) -&gt; (a, b) -&gt; f.applyAsInt(a) + f.applyAsInt(b);
+
+// build a new sumOfSquares operator in terms of sumF
+IntBinaryOperator sumOfSquares = sumF.apply(x -&gt; x * x);
+
+// the sum is equal to 125 again
+long sum = sumOfSquares.applyAsInt(5, 10);</code></pre> 
+  <p>As you see, <strong>returning functions</strong> and <strong>currying</strong> are very close concepts and both are based on <strong>closures</strong>.</p> 
+  <h5 id="an-example-of-currying" style="text-align: center;">An example of currying</h5> 
+  <p>Suppose we would like to say <code class="language-java">"Hi"</code> to our friends and <code class="language-java">"Hello"</code> to our business partners. We can create a function that has two arguments: <code class="language-java">what</code><strong> </strong>and <code class="language-java">who</code>. The function will apply <code class="language-java">what</code> depending on the context.</p> 
+  <pre><code class="language-java">Function&lt;String, Consumer&lt;String&gt;&gt; say = what -&gt; who -&gt; System.out.println(what + ", " + who);</code></pre> 
+  <p>The friends' context:</p> 
+  <pre><code class="language-java">List&lt;String&gt; friends = Arrays.asList("John", "Neal", "Natasha");
+Consumer&lt;String&gt; sayHi = say.apply("Hi");
+
+// many lines of code...
+
+friends.forEach(sayHi);</code></pre> 
+  <p>The partner's context:</p> 
+  <pre><code class="language-java">List&lt;String&gt; partners = Arrays.asList("Randolph Singleton", "Jessie James");
+Consumer&lt;String&gt; sayHello = say.apply("Hello");
+
+// many lines of code...
+
+partners.forEach(sayHello);</code></pre> 
+  <p>The result:</p> 
+  <pre><code class="language-java">Hi, John
+Hi, Neal
+Hi, Natasha
+Hello, Randolph Singleton
+Hello, Jessie James</code></pre> 
+  <p>In the real situation, we can get the list of persons from a database and pass the consumer as an argument from another part of our program.</p> 
+  <h5 id="conclusion" style="text-align: center;">Conclusion</h5> 
+  <p>We learned how to return functions from other functions and what currying is. You can use this knowledge to create general functions and detail them depending on your needs.</p>
+ </body>
+</html>

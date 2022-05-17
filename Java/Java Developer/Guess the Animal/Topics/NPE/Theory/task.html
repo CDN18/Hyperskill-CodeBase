@@ -1,0 +1,61 @@
+<h2>NPE</h2>
+<html>
+ <head></head>
+ <body>
+  <h5 id="what-is-npe" style="text-align: center;">What is NPE</h5> 
+  <p>Java provides a special type of value called <code class="language-java">null</code> to indicate that no actual value is assigned to a reference variable. This value may cause one of the most frequent exceptions called <code class="language-java">NullPointerException</code> (often referred to as <strong>NPE </strong>for short). It occurs when a program attempts to use a variable with the <code class="language-java">null</code> value. To avoid an <strong>NPE</strong>, the programmer must ensure that the objects are initialized before their use.</p> 
+  <p>Here is one interesting fact about the concept of a <code class="language-java">null</code> reference and errors associated with it. Not only is it not unique for Java, but in 2009, Tony Hoare, a British Computer Scientist who invented the concept of <code class="language-java">null</code> reference, described it as a <strong>"billion-dollar mistake"</strong>:</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   I call it my billion-dollar mistake. It was the invention of the null reference in 1965. At that time, I was designing the first comprehensive type system for references in an object-oriented language (
+   <a target="_blank" href="https://en.wikipedia.org/wiki/ALGOL_W" rel="noopener noreferrer nofollow" title="ALGOL W">ALGOL W</a>). My goal was to ensure that all use of references should be absolutely safe, with checking performed automatically by the compiler. But I couldn't resist the temptation to put in a null reference, simply because it was so easy to implement. This has led to innumerable errors, vulnerabilities, and system crashes, which have probably caused a billion dollars of pain and damage in the last forty years.
+  </div>
+  <p></p> 
+  <p>Let's look at some situations where an <strong>NPE</strong> might occur and find out how to avoid it.</p> 
+  <h5 id="npe-when-invoking-a-method" style="text-align: center;">NPE when invoking a method</h5> 
+  <p>Since <code class="language-java">String</code> is a regular reference type, its variables can be <code class="language-java">null</code>. If we invoke a method or apply an operation to such a variable, the code throws an <strong>NPE</strong>.</p> 
+  <p>In the following code, an uninitialized variable of <code class="language-java">String</code> is created and then the method <code class="language-java">length()</code> is invoked. The code throws an <strong>NPE</strong> because the object <code class="language-java">str</code> is actually <code class="language-java">null</code>.</p> 
+  <pre><code class="language-java">String someString = null; // a reference type can be null
+
+int size = someString.length(); // NullPointerException (NPE)</code></pre> 
+  <p>The same exception will occur if we use uninitialized variables of any other reference type, not only <code class="language-java">String</code>.</p> 
+  <p>To avoid the exception we should explicitly check whether a string is <code class="language-java">null</code> or not and depending on the result perform different code. It's similar to the default value.</p> 
+  <pre><code class="language-java">int size = someString != null ? someString.length() : 0; // if the string is empty, the size is 0</code></pre> 
+  <p>In the code above, when the given string is <code class="language-java">null</code>, the size is set as 0. This way we won't get any exceptions.</p> 
+  <h5 id="comparing-strings" style="text-align: center;">Comparing strings</h5> 
+  <p>A very common situation occurs when we try to compare a <code class="language-java">String</code> variable and a string literal.</p> 
+  <pre><code class="language-java">String str = null;
+
+if (str.equals("abc")) { // it throws an NPE
+    System.out.println("The same");
+}</code></pre> 
+  <p>To avoid an <strong>NPE</strong> here we can use Yoda notation and call the equals method on the literal rather than the object:</p> 
+  <pre><code class="language-java">String str = null;
+
+if ("abc".equals(str)) { // no NPE here
+    System.out.println("The same");
+}</code></pre> 
+  <p>But what if we have two variables of the type <code class="language-java">String</code>? Any of them may happen to be <code class="language-java">null</code>. In this case, we can use the special auxiliary class <code class="language-java">java.util.Objects</code>.</p> 
+  <pre><code class="language-java">String s1 = null;
+String s2 = null;
+        
+if (Objects.equals(s1, s2)) { // no NPE here
+    System.out.println("Strings are the same");
+}</code></pre> 
+  <p>This approach is recommended in modern Java programming since it is easy for reading and does not throw an <strong>NPE</strong>.</p> 
+  <h5 id="rules-for-avoiding-npe" style="text-align: center;">Rules for avoiding NPE</h5> 
+  <p>We've considered a few cases in which an <strong>NPE</strong> may occur. Actually, there are more of such situations, and we will consider them in the next topics.</p> 
+  <p>Here are several general rules on how to avoid an <strong>NPE</strong> in your programs:</p> 
+  <ul> 
+   <li>for reference types, use a conditional statement to check whether the given variable is <code class="language-java">null</code> before using it;</li> 
+   <li>try to avoid assigning <code class="language-java">null</code> to variables whenever possible;</li> 
+   <li>use NPE-safe features from the standard library.</li> 
+  </ul> 
+  <p>These simple rules will help to reduce the number of places in your code that could throw this exception.</p> 
+  <p> </p> 
+  <h5 id="conclusion">Conclusion</h5> 
+  <p>You may face an NPE if you are trying to invoke a method or apply an operation to a variable with the null value. For example, if you use uninitialized variables of String type or other reference types.</p> 
+  <p>Besides, this exception may occur when we compare a String variable and a string literal. In this case, we should call the <code class="language-java">equals</code> method on the literal. There is also a special auxiliary class <code class="language-java">java.util.Objects</code> that we use to compare two variables of the String type.</p> 
+  <p>Follow simple rules: don't assign null to a variable or make sure that the given one is not null, use NPE-safe features.</p>
+ </body>
+</html>

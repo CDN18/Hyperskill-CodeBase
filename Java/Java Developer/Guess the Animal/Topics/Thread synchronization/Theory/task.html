@@ -1,0 +1,231 @@
+<h2>Thread synchronization</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Working concurrently with shared data from multiple threads may cause unexpected or erroneous behavior. Fortunately, Java provides a mechanism to control the access of multiple threads to a shared resource of any type. The mechanism is known as <strong>thread synchronization</strong>. </p> 
+  <h5 id="important-terms-and-concepts" style="text-align: center;">Important terms and concepts</h5> 
+  <p>Before we start using synchronization in our code, let's introduce terms and concepts we're going to use.</p> 
+  <p>1) A <strong>critical</strong><strong> section</strong> is a region of code that accesses shared resources and should not be executed by more than one thread at the same time. A shared resource may be a variable, file, input/output port, database or something else.</p> 
+  <p>Let's consider an example. A class has a static field named <code class="language-java">counter</code>:</p> 
+  <pre><code class="language-java">public static long counter = 0;</code></pre> 
+  <p>Two threads increment the field (increase by 1) 10 000 000 times concurrently. The final value should be 20 000 000. But, as we've discussed in previous topics, the result often might turn out wrong, for example, 10 999 843.</p> 
+  <p>This happens because sometimes a thread does not see changes of shared data performed by another thread, and sometimes a thread may see an intermediate value of the non-atomic operation. Those are visibility and atomicity problems we deal with while working with shared data.</p> 
+  <p>This is why increasing value by multiple threads is a <strong>critical section</strong>. Of course, this example is very simple, a critical section may be way more complicated.</p> 
+  <p>2)<strong> </strong>The<strong> monitor </strong>is a special mechanism to control concurrent access to an object. In Java, each object and class has an associated implicit monitor. A thread can acquire a monitor, then other threads cannot acquire this monitor at the same time. They will wait until the owner (the thread that acquired the monitor) releases it.</p> 
+  <p>Thus, a thread can be locked by the <strong>monitor</strong> of an object and wait for its release. This mechanism allows programmers to protect <strong>critical sections </strong>from being accessed<strong> </strong>by multiple threads concurrently.</p> 
+  <h5 id="the-synchronized-keyword" style="text-align: center;">The synchronized keyword</h5> 
+  <p>The "classic" and simplest way to protect code from being accessed by multiple threads concurrently is using the keyword <strong>synchronized</strong>.</p> 
+  <p>It is used in two different forms:</p> 
+  <ul> 
+   <li>synchronized method (a static or an instance method)</li> 
+   <li>synchronized blocks or statements (inside a static or an instance method)</li> 
+  </ul> 
+  <p>A synchronized method or block needs an object for locking threads. The monitor associated with this object controls concurrent access to the specified critical section. Only one thread can execute code in a synchronized block or method at the same time. Other threads are blocked until the thread inside the synchronized block or method exits it.</p> 
+  <h5 id="static-synchronized-methods" style="text-align: center;">Static synchronized methods</h5> 
+  <p>When we synchronize static methods using the <strong>synchronized</strong> keyword the monitor is the class itself. Only one thread can execute the body of a synchronized static method at the same time. This can be summarized as <em>"one thread per class"</em>.</p> 
+  <p>Here is an example of a class with a single synchronized static method named <code class="language-java">doSomething</code>. </p> 
+  <pre><code class="language-java">class SomeClass {
+
+    public static synchronized void doSomething() {
+        
+        String threadName = Thread.currentThread().getName();
+        System.out.println(String.format("%s entered the method", threadName));
+        System.out.println(String.format("%s leaves the method", threadName));
+    }
+}</code></pre> 
+  <p>The method <code class="language-java">doSomething</code> is declared as synchronized. It can be invoked only from one thread at the same time. The method is synchronized on the class the static method belongs to (the monitor is<strong> </strong><code class="language-java">SomeClass</code>).</p> 
+  <p>Let's call the method from two threads concurrently. The result will always be similar to:</p> 
+  <pre><code class="language-java">Thread-0 entered the method
+Thread-0 leaves the method
+Thread-1 entered the method
+Thread-1 leaves the method</code></pre> 
+  <p>It's impossible for more than one thread to execute code inside the method.</p> 
+  <h5 id="instance-synchronized-methods" style="text-align: center;">Instance synchronized methods</h5> 
+  <p>Instance methods are synchronized on the instance (object). The monitor is the current object (<code class="language-java">this</code>) that owns the method. If we have two instances of a class, each instance has a monitor for synchronizing.</p> 
+  <p>Only one thread can execute code in a synchronized instance method of a particular instance. But different threads can execute methods of different objects at the same time. This can be summarized as <em>"one thread per instance"</em>.</p> 
+  <p>Here is an example of a class with a single synchronized instance method named <code class="language-java">doSomething</code>. The class also has a constructor for distinguishing instances.</p> 
+  <pre><code class="language-java">class SomeClass {
+
+    private String name;
+
+    public SomeClass(String name) {
+        this.name = name;
+    }
+
+    public synchronized void doSomething() {
+
+        String threadName = Thread.currentThread().getName();
+        System.out.println(String.format("%s entered the method of %s", threadName, name));
+        System.out.println(String.format("%s leaves the method of %s", threadName, name));
+    }
+}</code></pre> 
+  <p>Let's create two instances of the class and three threads invoking <code class="language-java">doSomething</code>. The first and second threads take the same instance of the class, and the third thread takes another one.</p> 
+  <pre><code class="language-java">SomeClass instance1 = new SomeClass("instance-1");
+SomeClass instance2 = new SomeClass("instance-2");
+
+MyThread first = new MyThread(instance1);
+MyThread second = new MyThread(instance1);
+MyThread third = new MyThread(instance2);
+
+first.start();
+second.start();
+third.start();</code></pre> 
+  <p>The result will look like this:</p> 
+  <pre><code class="language-java">Thread-0 entered the method of instance-1
+Thread-2 entered the method of instance-2
+Thread-0 leaves the method of instance-1
+Thread-1 entered the method of instance-1
+Thread-2 leaves the method of instance-2
+Thread-1 leaves the method of instance-1</code></pre> 
+  <p>As you can see, there are no threads executing the code in <code class="language-java">doSomething</code> of the <code class="language-java">instance-1</code> at the same time. Try running it many times.</p> 
+  <h5 id="synchronized-blocks-statements" style="text-align: center;">Synchronized blocks (statements)</h5> 
+  <p>Sometimes you need to synchronize only a part of a method. This is possible by using synchronized blocks (statements). They must specify an object for locking threads.</p> 
+  <p>Here is a class with a static and an instance method. Both methods are unsynchronized but have synchronized parts inside.</p> 
+  <pre><code class="language-java">class SomeClass {
+
+    public static void staticMethod() {
+
+        // unsynchronized code
+                
+        synchronized (SomeClass.class) { // synchronization on the class
+            // synchronized code
+        }
+    }
+
+    public void instanceMethod() {
+
+        // unsynchronized code
+
+        synchronized (this) { // synchronization on this instance
+            // synchronized code
+        }
+    }
+}</code></pre> 
+  <p>The block inside <code class="language-java">staticMethod</code> is synchronized on the class, which means only one thread can execute code in this block.</p> 
+  <p>The block inside <code class="language-java">instanceMethod</code> is synchronized on <code class="language-java">this</code> instance, which means only one thread can execute the block of the instance. But some other thread is able to execute the block of different instances at the same time.</p> 
+  <p>Synchronized blocks may resemble synchronized methods, but they allow programmers to synchronize only necessary parts of methods.</p> 
+  <h5 id="synchronization-and-visibility-of-changes" style="text-align: center;">Synchronization and visibility of changes</h5> 
+  <p>The <em>Java Language Specification</em> guarantees that changes performed by a thread are visible to other threads if they are synchronized on the same monitor. More precisely, if a thread has changed shared data (for example, a variable) inside a synchronized block or a method and released the monitor, other threads can see all changes after acquiring the same monitor.</p> 
+  <h5 id="example-a-synchronized-counter" style="text-align: center;">Example: a synchronized counter</h5> 
+  <p>Here is an example. It's a synchronized counter with two synchronized instance methods: <code class="language-java">increment</code> and <code class="language-java">getValue</code>.</p> 
+  <pre><code class="language-java">class SynchronizedCounter {
+    
+    private int count = 0;
+
+    public synchronized void increment() {
+        count++;
+    }
+
+    public synchronized int getValue() {
+        return count;
+    }
+}</code></pre> 
+  <p>When multiple threads invoke <code class="language-java">increment</code> on the same instance, no problem arises because the <strong>synchronized</strong> keyword protects the shared field. Only one thread can change the field. Other threads will wait until the thread releases the monitor. All changes of the variable <code class="language-java">count</code><strong> </strong>are visible.</p> 
+  <p>The method <code class="language-java">getValue</code> doesn't modify the field. It only reads the current value. The method is synchronized so that the reading thread always reads the actual value; otherwise, there is no guarantee that the reading thread will see the <code class="language-java">count</code> as it is after it's changed.</p> 
+  <p>Here is a class called <code class="language-java">Worker</code> that extends <code class="language-java">Thread</code>. The class takes an instance of <code class="language-java">SynchronizedCounter</code> and calls the method <code class="language-java">increment</code> 10 000 000 times.</p> 
+  <pre><code class="language-java">class Worker extends Thread {
+
+    private final SynchronizedCounter counter;
+
+    public Worker(SynchronizedCounter counter) {
+        this.counter = counter;
+    }
+
+    @Override
+    public void run() {
+        for (int i = 0; i &lt; 10_000_000; i++) {
+            counter.increment();
+        }
+    }
+}</code></pre> 
+  <p>The following code creates an instance of <code class="language-java">SynchronizedCounter</code>, starts threads and prints the result.</p> 
+  <pre><code class="language-java">SynchronizedCounter counter = new SynchronizedCounter();
+
+Worker worker1 = new Worker(counter);
+Worker worker2 = new Worker(counter);
+
+worker1.start();
+worker2.start();
+
+worker1.join();
+worker2.join();
+
+System.out.println(counter.getValue()); // the result is 20_000_000</code></pre> 
+  <p>Sometimes, however, there's no need to synchronize methods that only read shared data (including getters):</p> 
+  <ul> 
+   <li>If we have a guarantee that the reading thread successfully returns from <code class="language-java">join</code> on all writing threads when it reads a field. That's true about the code above and we can remove the synchronized keyword from the declaration of <code class="language-java">getValue</code>.</li> 
+  </ul> 
+  <ul> 
+   <li>If a shared field is declared with the <code class="language-java">volatile</code> keyword.<strong> </strong>In that case, we will always see the actual value of this field.</li> 
+  </ul> 
+  <p>Be extra careful when you decide not to synchronize read methods.</p> 
+  <h5 id="one-monitor-and-multiple-synchronized-methods-and-blocks" style="text-align: center;">One monitor and multiple synchronized methods and blocks</h5> 
+  <p><strong>Important:</strong> an object or a class that has only one monitor and only one thread can execute synchronized code on the same monitor.</p> 
+  <p>It means that if a class has several synchronized instance methods and a thread invokes one of them, other threads cannot execute either of these methods on the same instance until the first thread releases the monitor of the instance.</p> 
+  <p>Here is an example: a class with three instance methods. Two methods are synchronized and the third one has an internal synchronized block. Both methods and the block are synchronized on the monitor of <code class="language-java">this</code> instance.</p> 
+  <pre><code class="language-java">class SomeClass {
+
+    public synchronized void method1() {
+        // do something useful
+    }
+
+    public synchronized void method2() {
+        // do something useful
+    }
+    
+    public void method3() {
+        synchronized (this) {
+            // do something useful
+        }
+    }
+}</code></pre> 
+  <p>If a thread invokes <code class="language-java">method1</code> and executes statements inside the method, no other thread can execute statements inside <code class="language-java">method2</code> or in the synchronized block in <code class="language-java">method3</code> because <code class="language-java">this</code> monitor is already acquired. The threads will wait for the release of the monitor.</p> 
+  <p>The same behavior is correct when a class monitor is used.</p> 
+  <h5 id="reentrant-synchronization" style="text-align: center;">Reentrant synchronization</h5> 
+  <p>A thread cannot acquire a lock owned by another thread. But a thread can acquire a lock that it already owns. This behavior is called <strong>reentrant synchronization</strong>.</p> 
+  <p>Take a look at the following example:</p> 
+  <pre><code class="language-java">class SomeClass {
+
+    public static synchronized void method1() {
+        method2(); // legal invocation because a thread has acquired monitor of SomeClass
+    }
+
+    public static synchronized void method2() {
+        // do something useful
+    }
+}</code></pre> 
+  <p>The code above is correct. When a thread is inside <code class="language-java">method1</code> it can invoke <code class="language-java">method2</code> because both methods are synchronized on the same object (<code class="language-java">SomeClass</code>).</p> 
+  <h5 id="fine-grained-synchronization" style="text-align: center;">Fine-grained synchronization</h5> 
+  <p>Sometimes a class has several fields that are never used together. It's possible to protect these fields by using the same monitor, but in this case, only one thread will be able to access one of these fields, despite their independence. To improve the concurrency rate it's possible to use an idiom with additional objects as monitors.</p> 
+  <p>Here is an example: a class with two methods. The class stores the number of calls to each method in a special field.</p> 
+  <pre><code class="language-java">class SomeClass {
+
+    private int numberOfCallingMethod1 = 0;
+    private int numberOfCallingMethod2 = 0;
+
+    final Object lock1 = new Object(); // an object for locking
+    final Object lock2 = new Object(); // another object for locking
+
+    public void method1() {
+        System.out.println("method1...");
+
+        synchronized (lock1) {
+            numberOfCallingMethod1++;
+        }
+    }
+
+    public void method2() {
+        System.out.println("method2...");
+        
+        synchronized (lock2) {
+            numberOfCallingMethod2++;
+        }
+    }
+}</code></pre> 
+  <p>As you can see, the class has two additional fields that are the locks for separating monitors for each critical section.</p> 
+  <p>If we have an instance of the class, one thread may work inside the synchronized block of the first method and, at the same time, another thread may work inside the synchronized block of the second method.</p> 
+  <h5 id="synchronization-and-performance-of-programs" style="text-align: center;">Synchronization and performance of programs</h5> 
+  <p>Remember, the code protected by the synchronization mechanism can be executed only by one thread at the same time. It reduces the parallelism and responsiveness of the program.</p> 
+  <p>Do not synchronize all your code. Try to use synchronization only when it really is necessary. Determine small parts of the code to be synchronized. Sometimes it's better to use a synchronization block instead of synchronizing a whole method (if the method is complex).</p>
+ </body>
+</html>

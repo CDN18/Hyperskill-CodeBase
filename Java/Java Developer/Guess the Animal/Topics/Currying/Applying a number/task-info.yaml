@@ -1,0 +1,23 @@
+type: choice
+is_multiple_choice: false
+options:
+- text: LongFunction&lt;Long&gt;
+- text: CurriedLongFunction
+- text: Long
+- text: Function&lt;Long&gt;
+- text: LongFunction&lt;LongFunction&lt;Long&gt;&gt;
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2428#comment
+status: Solved
+record: -1

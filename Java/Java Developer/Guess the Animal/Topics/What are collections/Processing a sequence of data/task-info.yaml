@@ -1,0 +1,22 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: There are mutable collections which are good when the size is not fixed.
+- text: Collections have a rich set of embedded operations for processing elements.
+- text: It is possible to choose the most effective collection for this problem.
+- text: They are part of the standard library.
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/8345#comment
+status: Solved
+record: -1

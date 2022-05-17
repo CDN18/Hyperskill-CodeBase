@@ -1,0 +1,23 @@
+type: choice
+is_multiple_choice: false
+options:
+- text: thread.join();
+- text: TimeUnit.SECONDS.sleep(5);
+- text: Thread.sleep(5);
+- text: thread.interrupt();
+- text: thread.join(5000);
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2544#comment
+status: Solved
+record: -1

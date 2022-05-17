@@ -1,0 +1,22 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: 10
+- text: A runtime exception occurred
+- text: An exception occurred
+- text: Finally!
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2475#comment
+status: Solved
+record: -1

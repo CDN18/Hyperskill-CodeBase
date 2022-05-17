@@ -1,0 +1,43 @@
+<h2>VeganPizza</h2>
+<html>
+ <head></head>
+ <body>
+  <p>You've decided to cook a vegan pizza and now you need to perform the following steps in the <strong>right order </strong>(like in the sample output<em>)</em>. Correct the mistake in the program and cook your pizza!</p> 
+  <p><strong>Note</strong>: go through these classes to understand the code better.</p> 
+  <pre><code class="language-java">class Base extends Thread {    
+    @Override
+    public void run() {
+        System.out.println("cook base");
+    }
+}
+
+class Tomatoes extends Thread {
+    @Override
+    public void run() {
+        for (int i = 3; i &gt;= 1; i--) {
+            System.out.println("slice tomatoes " + i);
+        }
+    }
+}
+
+class Tofu extends Thread {
+    @Override
+    public void run() {
+        System.out.println("fry tofu");
+    }
+}
+class Bake extends Thread{
+    @Override
+    public void run() {
+        for (int i = 4; i &gt;= 0; i--) {
+            if (i == 0) {
+                System.out.println("Your pizza is ready!");
+                break;
+            }
+            System.out.println("to bake..." + i + " min");
+
+        }
+    }
+}</code></pre>
+ </body>
+</html><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">cook Pizza</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">cook base<br>slice tomatoes 3<br>slice tomatoes 2<br>slice tomatoes 1<br>fry tofu<br>to bake...4 min<br>to bake...3 min<br>to bake...2 min<br>to bake...1 min<br>Your pizza is ready!</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 5 seconds</font><br><br>

@@ -1,0 +1,22 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: An abstract strategy can be implemented by multiple concrete strategies.
+- text: ' A concrete strategy cannot have any additional fields.'
+- text: The context holds a reference to a strategy.
+- text: A strategy has 0 or 1 method.
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/3316#comment
+status: Solved
+record: -1

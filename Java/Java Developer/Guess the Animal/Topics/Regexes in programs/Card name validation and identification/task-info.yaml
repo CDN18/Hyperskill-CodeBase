@@ -1,0 +1,34 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.*;
+
+    class BankCard {
+        public static void main(String[] args) {
+            Scanner scn = new Scanner(System.in);
+            String numbers = scn.nextLine();
+            String card = numbers.replaceAll("\\s", "");
+            String visaRegex = // put your code here
+            String masterCardRegex = // put your code here
+            String americanExpressRegex = // put your code here
+
+            if (card.matches(visaRegex)) {
+                System.out.println("Visa");
+            } else if (card.matches(masterCardRegex)) {
+                System.out.println("MasterCard");
+            } else if (card.matches(americanExpressRegex)) {
+                System.out.println("AmericanExpress");
+            } else {
+                System.out.println("Card number does not exist");
+            }
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/16168#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Sun, 08 May 2022 20:08:08 UTC
+record: -1

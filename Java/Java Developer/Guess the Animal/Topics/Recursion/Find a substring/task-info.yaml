@@ -1,0 +1,18 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class Util {
+        public static int indexOf(String src, String tgt) {
+            // your code here
+            return -1;
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/13822#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Fri, 13 May 2022 10:11:54 UTC
+record: -1

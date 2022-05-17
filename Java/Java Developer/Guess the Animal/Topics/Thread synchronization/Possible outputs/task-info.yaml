@@ -1,0 +1,33 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: <b>Output:</b><br>a thread entered method1<br>a thread entered method2<br>a
+    thread left method2<br>a thread left method1<br>a thread entered method3<br>a
+    thread left method3
+- text: <b>Output:</b><br>a thread entered method3<br>a thread left method3<br>a thread
+    entered method1<br>a thread entered method2<br>a thread left method1<br>a thread
+    left method2
+- text: <b>Output:</b><br>a thread entered method1<br>a thread left method1<br>a thread
+    entered method2<br>a thread left method2<br>a thread entered method3<br>a thread
+    left method3
+- text: <b>Output:</b><br>a thread entered method1<br>a thread entered method2<br>a
+    thread entered method3<br>a thread left method3<br>a thread left method2<br>a
+    thread left method1
+- text: <b>Output:</b><br>a thread entered method3<br>a thread left method3<br>a thread
+    entered method1<br>a thread entered method2<br>a thread left method2<br>a thread
+    left method1
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2655#comment
+status: Solved
+record: -1

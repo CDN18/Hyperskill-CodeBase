@@ -1,0 +1,45 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: "import java.util.Scanner; \n\n/** Product - Robot */\nabstract class Robot\
+    \ {\n    private int power;\n\n    Robot(int power) {\n        this.power = power;\n\
+    \    }\n\n    public abstract String getName();\n\n    public abstract String\
+    \ getDescription();\n\n    public int getPower() {\n        return power;\n  \
+    \  }\n\n    @Override\n    public String toString() {\n        return \"robot:\
+    \ {\\n\\t\" +\n                   \"name : \" + getName() + \"\\n\\t\" + \n  \
+    \                 \"description : \" + getDescription() + \"\\n\\t\" + \n    \
+    \                \"power : \" + getPower() + \"\\n}\";\n    }\n}\n\n/** Robot\
+    \ types */\nenum RobotType {\n    ROBOT_CLEANER,\n    /**  write your code here\
+    \ ... */\n}\n\n/** Concrete Product - Robot Cleaner */\nclass RobotCleaner extends\
+    \ Robot {\n    private String name;\n    private String description;\n\n    public\
+    \ RobotCleaner(String name, String description, int power) {\n        super(power);\n\
+    \        this.name = name;\n        this.description = description;\n    }\n\n\
+    \    @Override\n    public String getName() {\n        return this.name;\n   \
+    \ }\n\n    @Override\n    public String getDescription() {\n        return this.description;\n\
+    \    }\n\n    @Override\n    public String toString() {\n        return \"cleaner-\"\
+    \ + super.toString();\n    }\n\n}\n\n/** Concrete Product - Robot Guardian */\n\
+    class RobotGuardian extends Robot {\n    /**  write your code here ... */\n}\n\
+    \nclass RobotFactory {\n\n    /** Factory method */\n    public Robot getRobot(RobotType\
+    \ type, String name, String description, int power) {\n        /**  write your\
+    \ code here ... */\n    }\n}\n\nclass RobotDemo {\n    private static final int\
+    \ CLEANER_POWER = 100;\n    private static final int GUARDIAN_POWER = 200;\n\n\
+    \    public static void main(String[] args) {\n\n        RobotFactory robotFactory\
+    \ = new RobotFactory();\n        Scanner scanner = new Scanner(System.in);\n\n\
+    \        String nameCleaner = scanner.nextLine();\n        Robot robotCleaner\
+    \ = robotFactory.getRobot(RobotType.ROBOT_CLEANER, nameCleaner, \n           \
+    \                                        \"Robot will clean my room and dry my\
+    \ socks\",\n                                                   CLEANER_POWER);\n\
+    \n        String nameGuardian = scanner.nextLine();\n        Robot robotGuardian\
+    \ = robotFactory.getRobot(RobotType.ROBOT_GUARDIAN, nameGuardian,\n          \
+    \                                          \"Knight will secure my daughter while\
+    \ she sleeping\",\n                                                    GUARDIAN_POWER);\n\
+    \n        System.out.println(robotCleaner);\n        System.out.println(robotGuardian);\n\
+    \n        scanner.close();\n    }\n}"
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/5765#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Sun, 08 May 2022 19:11:22 UTC
+record: -1

@@ -1,0 +1,21 @@
+<h2>Instance without type argument</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Consider the following generic class:</p> 
+  <pre><code class="language-java">class MyClass&lt;T&gt; {
+
+    private T t;
+
+    public MyClass(T t) {
+        this.t = t;
+    }
+
+    public T get() {
+        return t;
+    }
+}</code></pre> 
+  <p>What will the <code class="language-java">get</code> method return if you create an instance but don't specify the type argument?</p> 
+  <pre><code class="language-java">MyClass instance = new MyClass("Hello!");</code></pre>
+ </body>
+</html>

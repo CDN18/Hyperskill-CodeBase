@@ -1,0 +1,22 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: An interface can be implemented only by one anonymous class.
+- text: An anonymous class is declared and instantiated in a single statement.
+- text: To declare an anonymous class, its superclass should have at least one method.
+- text: An anonymous class always implements an interface or extends a class.
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2556#comment
+status: Solved
+record: -1

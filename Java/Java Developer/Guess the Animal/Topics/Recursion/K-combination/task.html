@@ -1,0 +1,17 @@
+<h2>K-combination</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Let's introduce the term <strong>k-combination</strong>. It is a subset of <strong>k</strong> distinct elements of a given set.</p> 
+  <p>Two combinations are called <strong>different</strong> if one of the combinations contains an element, which is not present in the other combination.</p> 
+  <p>The number of <strong>k-combinations</strong> of a set of <strong>n</strong> elements is the number of different such combinations. Let’s write this number as <strong>C(n, k)</strong>.</p> 
+  <ol> 
+   <li>It is easy to understand that <strong>C(n, 0) = 1</strong>, as you can select <strong>0</strong> elements from the set of <strong>n</strong> elements by the only way: namely, by not choosing anything.</li> 
+   <li>Also, it is easy to understand that if <strong>k &gt; n</strong>, then <strong>C(n, k)</strong> <strong>= 0</strong>, as it is impossible, for example, to choose five elements from the three given ones.</li> 
+   <li>The following recurrent formula is used to calculate <strong>C(n, k)</strong> in the other cases: <strong>C(n, k) = C(n – 1, k) + C(n – 1, k – 1)</strong>.</li> 
+  </ol> 
+  <p>You need to implement a method, which calculates <strong>C(n, k)</strong> for the specified <strong>n</strong> and <strong>k</strong>. It should use the recurrent formula to calculate <strong>C(n, k).</strong></p> 
+  <p><strong>Example:</strong></p> 
+  <p>Let <strong>n</strong> = <strong>3</strong>, i.e. there are three elements <strong>(1, 2, 3)</strong>. Let <strong>k </strong>= <strong>2</strong>.<br> All the different 2-combination of <strong>3</strong> elements: <strong>(1, 2)</strong>, <strong>(1, 3)</strong>, <strong>(2, 3)</strong>.<br> There are three different combinations, thus <strong>C(3, 2)</strong> = <strong>3</strong>.</p>
+ </body>
+</html><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">3 2<br></code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">3</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 5 seconds</font><br><br>

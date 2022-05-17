@@ -1,0 +1,172 @@
+#
+# There is a scenario of parameterized test for Esperanto language.
+#
+---
+- [start, "-type {0}"] # We will test three different file formats: JSON, YAML, XML
+- - contains
+  - "kiun beston vi plej ŝatas?"
+  - "[Esperanto] When no Knowledge Tree is created yet the program should ask for a favourite animals at first."
+- [input, kato]
+- - contains
+  - bonvenon al la sperta sistemo de la besto!
+  - "[Esperanto] After entering the favourite animal the program should welcome the user and represent itself as an expert system"
+
+#
+# Start the menu
+#
+- - matches
+  - (?si).*Ludi.*Listo.*Serĉi.*Kalkuli.*Eliri.*
+  - "[Esperanto] The program should display the menu"
+
+#
+# Let's play the game!
+#
+- [input, 1]
+- - contains
+  - vi pensu pri besto, kaj mi divenos ĝin.
+  - "[Esperanto] The program should asks the user to think of an animal"
+- - contains
+  - premu enen kiam vi pretas.
+  - "[Esperanto] The computer should make a pause before the game."
+- [input, ""]
+
+#
+# After user press Enter the game started!
+#
+- - contains
+  - ĉu ĝi estas kato?
+  - "[Esperanto] The very first question in the very first game should undoubtedly be about a beloved animal."
+- [input, ne] # We think of about other animal, not about the cat
+- - contains
+  - mi rezignas. kiun beston vi havas en la kapo?
+  - "[Esperanto] If the program cannot guess the animal, it must give up."
+- [input, hundo] # Of course, our second animal is a dog!
+- - contains
+  - indiku fakton, kiu distingas kato de hundo
+  - "[Esperanto] The program should find out how one animal differs from another."
+- - input
+  - ĝi povas surgrimpi arbon
+- - contains
+  - ĉu la aserto ĝustas por la hundo?
+  - "[Esperanto] The program should clarify if the statement is correct for a dog."
+- [input, ne]
+
+- - contains
+  - la kato povas surgrimpi arbon
+  - The program must generate the correct fact for the first animal.
+
+- - contains
+  - la hundo ne povas surgrimpi arbon
+  - "[Esperanto] The program must generate the correct fact for the second animal."
+
+- - matches
+  - "(?is).*(denove|ripeti|ankoraŭ).*"
+  - "[Esperanto] The program should ask the user to play again"
+- [input, jes] # Yes, we will play once again
+- [input, ""] # Press ENTER
+- - contains
+  - povas surgrimpi arbon?
+  - "[Esperanto] After the first game, the starting question should be the question of fact."
+- [input, jes]
+- [contains, "ĉu ĝi estas kato?", "[Esperanto] The program must assume that the animal is a cat."]
+- - input
+  - |
+    ne
+    linko
+    ĝi loĝas en la arbaro
+    jes
+    ne
+# We finish the game.
+- - matches
+  - (?si).*Ludi.*Listo.*Serĉi.*Kalkuli.*Eliri.*
+  - "[Esperanto] The program should display the menu"
+- [input, "0"] # Exit from the application
+- - matches
+  - "(?si).*(ĝis|estis).*"
+  - "[Esperanto] How about to say goodbye to the user?"
+- [finish, "The program should finish when user exit"]
+- - file exists
+  - "animals_eo.{0}"
+  - "The program should save knowledge tree to animals_eo.{0} file."
+#
+# After the first session the program created and save the Knowledge Tree
+# We will run the program again to make sure that all data was saved and restored correctly.
+#
+- [start, "-type {0}"]
+- - not contains
+  - kiun beston vi plej ŝatas?
+  - "[Esperanto] If the tree of knowledge exists, then the program should not ask the user about his favorite animal."
+- - contains
+  - bonvenon al la sperta sistemo de la besto!
+  - "[Esperanto] The program should immediately greet the user after starting."
+- - matches
+  - (?si).*Ludi.*Listo.*Serĉi.*Kalkuli.*Eliri.*
+  - "[Esperanto] The program should display the menu"
+
+#
+# Let's check which animals are now in our knowledge tree.
+#
+- [input, "2"]
+- - matches
+  - (?si).*hundo.*kato.*linko.*
+  - "[Esperanto] The program should print a list of all animals in alphabetical order."
+
+#
+# Check the facts about the animal
+#
+- [input, "3"]
+- - find
+  - enigu .* besto
+  - "[Esperanto] The program should ask the user to enter the name of the animal"
+- [input, linko]
+- - contains
+  - faktoj pri la linko
+  - "[Esperanto] The program must find the animal that is in the knowledge tree."
+- - contains
+  - ĝi povas surgrimpi arbon
+  - "[Esperanto] The program did not print the first fact about the animal"
+- - contains
+  - ĝi loĝas en la arbaro
+  - "[Esperanto] The program did not print the second fact about the animal"
+
+#
+# Check the knowledge tree statistics
+#
+- [input, "4"]
+- [contains, "la statistiko", "The header for the table must be printed"]
+
+- - matches
+  - (?is).*radika nodo.*povas surgrimpi arbon.*
+  - "[Esperanto] The root element in our tree must be a statement"
+
+- - matches
+  - (?is).*nombro de nodoj[^\\R]*5.*
+  - "[Esperanto] The total number of nodes in the tree is not counted correctly."
+
+- - matches
+  - (?is).*nombro de bestoj[^\\R]*3.*
+  - "[Esperanto] The total number of animals in the tree is not counted correctly."
+
+- - matches
+  - (?is).*nombro de deklaroj[^\\R]*2.*
+  - "[Esperanto] The total number of animals in the tree is not counted correctly."
+
+- - matches
+  - (?is).*alteco de la arbo[^\\R]*2.*
+  - "[Esperanto] The tree depth was calculated incorrectly."
+
+- - matches
+  - (?is).*minimuma profundo[^\\R]*1.*
+  - "[Esperanto] The minimum tree depth was calculated incorrectly."
+
+- - matches
+  - (?is).*averaĝa profundo[^\\R]*1[,.]7.*
+  - "[Esperanto] The average tree depth was calculated incorrectly."
+
+- [input, "0"] # Exit from the application
+- [finish, "The program should finish when user exit"]
+- - file delete
+  - "animals_eo.{0}"
+  - "[Esperanto] The test can't delete animals_eo.{0} file."
+
+

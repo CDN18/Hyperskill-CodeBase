@@ -1,0 +1,23 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: list1.equals(list1)
+- text: list1.equals(list2)
+- text: list1.equals(list3)
+- text: list2.equals(list3)
+- text: list3.equals(list4)
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2328#comment
+status: Solved
+record: -1

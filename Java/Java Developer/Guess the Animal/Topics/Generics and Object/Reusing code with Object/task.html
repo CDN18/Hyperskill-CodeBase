@@ -1,0 +1,22 @@
+<h2>Reusing code with Object</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Take a look at the following non-generic class:</p> 
+  <pre><code class="language-java">class NonGenericClass {
+
+    private Object val;
+
+    public NonGenericClass(Object val) {
+        this.val = val;
+    }
+
+    public Object get() {
+        return val;
+    }
+}</code></pre> 
+  <p>And here is the instance of this class:</p> 
+  <pre><code class="language-java">NonGenericClass instance = new NonGenericClass("Hello");</code></pre> 
+  <p>Now we want to get the string back. When will the code throw a <strong>runtime exception</strong>?</p>
+ </body>
+</html>

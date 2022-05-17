@@ -1,0 +1,25 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: <b>set(int index, Object o)</b> inserts passed element to the specified position
+    of the collection
+- text: <b>new ArrayList&lt;&gt;(50)</b> creates an instance containing a single element
+    50
+- text: <b>add(Object o)</b> adds a passed element to list
+- text: <b>indexOf(Object o)</b> returns the index of the first occurrence of an element,
+    or -1 if the element wasn't found
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/3486#comment
+status: Solved
+record: -1

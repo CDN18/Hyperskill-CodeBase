@@ -1,0 +1,25 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.*;
+    import java.util.regex.*;
+
+    public class Main {
+
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+            String part = scanner.nextLine();
+            String line = scanner.nextLine();
+
+            // write your code here
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/4349#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Sun, 08 May 2022 21:27:26 UTC
+record: -1

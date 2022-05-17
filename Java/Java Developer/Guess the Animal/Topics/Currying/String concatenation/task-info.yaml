@@ -1,0 +1,32 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.Scanner;
+    import java.util.function.Function;
+
+    class CurryConcat {
+
+        public static String calc(String str1, String str2, String str3, String str4) {
+
+            Function<String, Function<String, Function<String, Function<String, String>>>> stringFun = // write your code here
+
+            return stringFun.apply(str1).apply(str2).apply(str3).apply(str4);
+        }
+
+        // Don't change the code below
+        public static void main(String[] args) {
+
+            Scanner scanner = new Scanner(System.in);
+            String[] values = scanner.nextLine().split(" ");
+            System.out.println(calc(values[0], values[1], values[2], values[3]));
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2433#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Fri, 06 May 2022 07:22:50 UTC
+record: -1

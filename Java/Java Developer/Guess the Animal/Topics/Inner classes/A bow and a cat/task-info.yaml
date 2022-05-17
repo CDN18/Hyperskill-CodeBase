@@ -1,0 +1,26 @@
+type: choice
+is_multiple_choice: false
+options:
+- text: Cat Bob is red. The size of Bob is 15. Cat Bob has red bow. The size of bow
+    is 15.
+- text: Cat Bob is white. The size of Bob is 15. Cat Bob has white bow. The size of
+    bow is 10.
+- text: Cat Bob is white. The size of Bob is 10. Cat Bob has red bow. The size of
+    bow is 15.
+- text: Cat Bob is red. The size of Bob is 10. Cat Bob has white bow. The size of
+    bow is 10.
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/11508#comment
+status: Solved
+record: -1

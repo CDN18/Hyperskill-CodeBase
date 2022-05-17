@@ -1,0 +1,15 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class EnjoyVehicle {
+
+        public static void startVehicle() {
+            // start your vehicle
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/11509#comment
+status: Solved
+record: -1

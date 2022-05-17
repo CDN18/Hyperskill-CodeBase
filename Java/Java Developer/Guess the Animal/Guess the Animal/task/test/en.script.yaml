@@ -1,0 +1,177 @@
+#
+# There is a scenario of parameterized test for English language.
+#
+---
+- [start, "-type {0}"] # We will test three different file formats: JSON, YAML, XML
+- - contains
+  - which animal
+  - When no Knwoledge Tree is created yet the program should ask for a favourite animals at first.
+- [input, cat]
+- - contains
+  - welcome to the animal
+  - After entering the favourite animal the program should welcom the user and represent itself as an expert system
+
+#
+# Start the menu
+#
+- - matches
+  - "(?si).*play.*list.*search.*stat.*print.*exit.*"
+  - The program should display the menu
+
+#
+# Let's play the game!
+#
+- [input, 1]
+- - contains
+  - you think of an animal, and i guess it.
+  - The program should asks the user to think of an animal
+- - contains
+  - press enter
+  - The computer should make a pause before the game.
+- [input, ""]
+
+#
+# After user press Enter the game started!
+#
+- - contains
+  - is it a cat?
+  - The very first question in the very first game should undoubtedly be about a beloved animal.
+- [input, No] # We think of about other animal, not about the cat
+- - contains
+  - i give up
+  - If the program cannot guess the animal, it must give up.
+- [input, dog] # Of course, our second animal is a dog!
+- - contains
+  - distinguishes
+  - The program should find out how one animal differs from another.
+- - input
+  - it can climb trees
+- - find
+  - is .+ correct for a dog?
+  - The program should clarify if the statement is correct for a dog.
+- [input, no]
+
+- - contains
+  - "cat can climb trees"
+  - The program must generate the correct fact for the first animal.
+
+- - contains
+  - "the dog "
+  - The program must generate the correct fact for the second animal.
+
+- - matches
+  - "(?is).*(again|repeat|one more).*"
+  - The program should ask the user to play again
+- [input, yes] # Yes, we will play once again
+- [input, ""] # Press ENTER
+- - contains
+  - can it climb trees?
+  - After the first game, the starting question should be the question of fact.
+- [input, yes]
+- [contains, "is it a cat?", "The program must assume that the animal is a cat."]
+- - input
+  - |
+    no
+    lynx
+    it is living in the forest
+    yes
+    no
+# We finish the game.
+
+- - matches
+  - "(?si).*play.*list.*search.*stat.*print.*exit.*"
+  - The program should display the menu
+
+- [input, "0"] # Exit from the application
+- - matches
+  - "(?si).*(bye|later|soon|off|see|!).*"
+  - How about to say goodbye to the user?
+- [finish, "The program should finish when user exit"]
+- - file exists
+  - "animals.{0}"
+  - "The program should save knowledge tree to animals.{0} file."
+#
+# After the first session the program created and save the Knowledge Tree
+# We will run the program again to make sure that all data was saved and restored correctly.
+#
+- [start, "-type {0}"]
+- - not contains
+  - which animal do you like most?
+  - If the tree of knowledge exists, then the program should not ask the user about his favorite animal.
+- - find
+  - welcome to the animal(.s)? expert system
+  - The program should immediately greet the user after starting.
+#
+# Start the menu
+#
+- - matches
+  - "(?si).*play.*list.*search.*stat.*print.*exit.*"
+  - The program should display the menu
+
+#
+# Let's check which animals are now in our knowledge tree.
+#
+- [input, "2"]
+- - matches
+  - (?si).*cat.*dog.*lynx.*
+  - The program should print a list of all animals in alphabetical order.
+
+#
+# Check the facts about the animal
+#
+- [input, "3"]
+- - find
+  - enter.* animal
+  - The program should ask the user to enter the name of the animal
+- [input, lynx]
+- - contains
+  - facts about the lynx
+  - The program must find the animal that is in the knowledge tree.
+- - contains
+  - it can climb trees
+  - The program did not print the first fact about the animal
+- - contains
+  - it is living in the forest
+  - The program did not print the second fact about the animal
+
+#
+# Check the knowledge tree statistics
+#
+- [input, "4"]
+- [contains, "knowledge tree", "The header for the table must be printed"]
+
+- - find
+  - (?i)root node.*It can climb trees
+  - The root element in our tree must be a statement
+
+- - find
+  - number of nodes.*\b5\b
+  - The total number of nodes in the tree is not counted correctly.
+
+- - find
+  - number of animals\D*3\b
+  - The total number of animals in the tree is not counted correctly.
+
+- - find
+  - number of statements\D*2\b
+  - The total number of animals in the tree is not counted correctly.
+
+- - find
+  - height of the tree\D*2\b
+  - The tree depth was calculated incorrectly.
+
+- - find
+  - minimum\D*1\b
+  - The minimum tree depth was calculated incorrectly.
+
+- - find
+  - average\D*1[,.]7
+  - The average tree depth was calculated incorrectly.
+
+- [input, "0"] # Exit from the application
+- [finish, "The program should finish when user exit"]
+- - file delete
+  - "animals.{0}"
+  - "The test can't delete animals.{0} file."
+
+

@@ -1,0 +1,21 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class ClassCountingInstances {
+
+        private static long numberOfInstances;
+
+        public ClassCountingInstances() {
+            // write the increment here
+        }
+
+        public static synchronized long getNumberOfInstances() {
+            return numberOfInstances;
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2653#comment
+status: Solved
+record: -1

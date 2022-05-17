@@ -1,0 +1,24 @@
+type: choice
+is_multiple_choice: false
+options:
+- text: Threads will be merged into one
+- text: <b>thread</b> waits for the completion of the current thread
+- text: It stops the current thread until <b>continue</b> is called
+- text: The current thread waits for the completion of <b>thread</b>
+- text: It's impossible to call the join on an object of another thread, only on the
+    current thread
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2532#comment
+status: Solved
+record: -1

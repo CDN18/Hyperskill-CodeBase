@@ -1,0 +1,25 @@
+type: choice
+is_multiple_choice: false
+options:
+- text: throws IllegalStateException
+- text: returns 3
+- text: returns 0
+- text: returns false
+- text: returns 30
+- text: returns 10
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/3720#comment
+status: Solved
+record: -1
+custom_name: What do we get?

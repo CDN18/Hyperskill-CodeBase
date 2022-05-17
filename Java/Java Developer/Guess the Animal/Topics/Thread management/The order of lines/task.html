@@ -1,0 +1,33 @@
+<h2>The order of lines</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Here's a class that extends <code class="language-java">Thread</code> and overrides the <code class="language-java">run</code> method:</p> 
+  <pre><code class="language-java">class MyThread extends Thread {
+
+    @Override
+    public void run() {
+        System.out.println("Hello from " + getName());
+    }
+}</code></pre> 
+  <p><br> And a snippet of code:</p> 
+  <p> </p> 
+  <pre><code class="language-java">MyThread t1 = new MyThread();
+t1.setName("My-thread-1");
+t1.start();
+
+t1.join();
+
+MyThread t2 = new MyThread();
+t2.setName("My-thread-2");
+t2.start();
+        
+System.out.println("output-1");
+        
+t2.join();
+        
+System.out.println("output-2");</code></pre> 
+  <p> </p> 
+  <p>In what order may the strings be printed out? Select all possible cases.</p>
+ </body>
+</html>

@@ -1,0 +1,69 @@
+<h2>What are collections</h2>
+<html>
+ <head></head>
+ <body>
+  <h5 id="when-arrays-are-not-enough">When arrays are not enough</h5> 
+  <p>The Java language supports arrays to store multiple values or objects of the same type together. An array is initialized with a predefined size during creation. The size cannot be changed in the future, and that imposes some limitations on their use for solving business problems. If we want to store more data, we need to create a new larger array and then copy the data in this array manually. This can be inefficient for programs that process a lot of data.</p> 
+  <h5 id="different-collections">Different collections</h5> 
+  <p>Fortunately, there is a set of containers called <strong>collections</strong> for grouping elements into a single unit. They are used to store, retrieve, manipulate, and communicate aggregated data.</p> 
+  <p><strong>Collections</strong> are more sophisticated and flexible than arrays. First of all, they are <strong>resizable</strong>: you can add any number of elements to a collection. A collection will automatically handle the deletion of an element from any position. The second point is collections provide a rich set of <strong>methods</strong> that are already implemented for you.</p> 
+  <p>There are several types of collections with different internal storage structure. You can choose a collection type best matching your problem so that your most frequent operations will be convenient and efficient.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   Actually, collections are representations of different data structures and abstract data types from computer science. It is good to understand the relationship between them and collections in Java. This will help you in programming interviews, and in working to select an appropriate collection.
+  </div>
+  <p></p> 
+  <h5 id="features-of-collections">Features of collections</h5> 
+  <p>There are several specific features of collections in Java:</p> 
+  <ol> 
+   <li>They are represented by different classes from the Java Standard Library.</li> 
+   <li>All modern collections are <strong>generic types</strong> while old collections are <strong>non-generic</strong>. We will only focus on new collections. As regular generics, they can store any reference types including classes defined by you (like <code class="language-java">Person</code> or something else).</li> 
+   <li>Collections can be <strong>mutable</strong> (possible to add and remove elements) and <strong>immutable</strong> (impossible to do that).</li> 
+  </ol> 
+  <p>In addition to standard collections, there are a number of external libraries with collections. One of such libraries is Guava Collections which was developed by Google. It can be used if standard collections are not enough for solving your problems.</p> 
+  <h5 id="the-simplest-collection-example">The simplest collection example</h5> 
+  <p>There is an example of a simple collection called <code class="language-java">ArrayList</code>. To use it, make the following import:</p> 
+  <pre><code class="language-java">java.util.ArrayList;</code></pre> 
+  <p>It works in a similar way to a regular array, but you do not have to manually resize it to add and remove elements.</p> 
+  <pre><code class="language-java">ArrayList&lt;String&gt; list = new ArrayList&lt;&gt;();
+
+list.add("first");
+list.add("second");
+list.add("third");
+
+System.out.println(list); // [first, second, third]
+
+System.out.println(list.get(0)); // first
+System.out.println(list.get(1)); // second
+System.out.println(list.get(2)); // third
+
+list.remove("first");
+
+System.out.println(list); // [second, third]
+
+System.out.println(list.size()); // 2</code></pre> 
+  <p></p>
+  <div class="alert alert-primary">
+   Note, in this example we used the 
+   <code class="language-java">get</code> method to access an element by its index. Unlike arrays, collections do not have the 
+   <code class="language-java">[]</code> operator.
+  </div>
+  <p></p> 
+  <p>We hope this is enough for the first acquaintance with the collections. In further topics, you will learn different kinds of collections in more detail. Now the main thing to understand is that using collections is not more difficult than using a regular array.</p> 
+  <p></p>
+  <div class="alert alert-warning">
+   All modern collections are generic, so you can specify any reference type as a generic parameter and store it in a collection. But there is one restriction, collections cannot store primitive values at all (
+   <code class="language-java">int</code>, 
+   <code class="language-java">long</code>, 
+   <code class="language-java">char</code>, 
+   <code class="language-java">double</code> and so on). You should use one of the wrapper classes (
+   <code class="language-java">Integer</code>, 
+   <code class="language-java">Long</code>, 
+   <code class="language-java">Character</code>, 
+   <code class="language-java">Double</code> or another one) instead.
+  </div>
+  <p></p> 
+  <h5 id="conclusion">Conclusion</h5> 
+  <p>Sometimes arrays are not flexible enough to store and manipulate your data. For that, Java provides collections — mostly generic classes from the Java Standard Library or external libraries, either mutable or immutable, that are more adjusted to store objects for specific complicated purposes. It'll take you more than one topic to learn even about basic types of collections that represent different data structures and serve different purposes. Stay tuned!</p>
+ </body>
+</html>

@@ -1,0 +1,22 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: Function&lt;String, Function&lt;String, String&gt;&gt;
+- text: ' Function&lt;Integer, Function&lt;Integer, Integer&gt;&gt;'
+- text: ' Function&lt;Long, Function&lt;Long, Function&lt;Long, Long&gt;&gt;&gt;'
+- text: Function&lt;Double, Function&lt;Double, Double&gt;&gt;
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2426#comment
+status: Solved
+record: -1

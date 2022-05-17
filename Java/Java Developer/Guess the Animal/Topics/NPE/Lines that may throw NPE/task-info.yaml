@@ -1,0 +1,22 @@
+type: choice
+is_multiple_choice: false
+options:
+- text: Objects.equals(city, "Melbourne")
+- text: city.equals("Sydney")
+- text: Objects.equals(city, capital)
+- text: if (city != null) { System.out.println(city.substring(0, 2)); }
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/1944#comment
+status: Solved
+record: -1

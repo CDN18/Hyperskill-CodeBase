@@ -1,0 +1,15 @@
+type: hyperskill
+title: Guess the Animal
+language: English
+summary: 'Artificial intelligence is not just a smart system: it''s a smart system
+  capable of self-learning. In this project, you will create a simple interactive
+  game where the computer will try to guess the animal that the person has in mind
+  with the help of yes or no questions. During the game, the computer will extend its
+  knowledge base by learning new facts about animals and using this information in
+  the next game.<br/><br/>Learn more at <a href="https://hyperskill.org/projects/132?utm_source=ide&utm_medium=ide&utm_campaign=ide&utm_content=project-card">https://hyperskill.org/projects/132</a>'
+programming_language: Java
+programming_language_version: 11
+content:
+- Topics
+- Guess the Animal
+mode: Study

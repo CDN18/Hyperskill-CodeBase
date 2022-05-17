@@ -1,0 +1,32 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.ArrayList;
+
+    class Main {
+        ArrayList<String> list = new ArrayList<>();
+
+        void init() {
+            // add "one", "two", "three" to list field in this order
+        }
+    }
+
+    class Test {
+        public static void main(String[] args) {
+            Main main = new Main();
+            main.init();
+
+            for (String str : main.list) {
+                System.out.println(str);
+            }
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/11574#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Thu, 05 May 2022 13:19:30 UTC
+record: -1

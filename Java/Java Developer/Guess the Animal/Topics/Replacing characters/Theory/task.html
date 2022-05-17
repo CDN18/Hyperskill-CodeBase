@@ -1,0 +1,62 @@
+<h2>Replacing characters</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Sometimes we may need to replace a substring with another string. Java provides us with several convenient methods to do this, and regular expressions play an important role in this process.</p> 
+  <h5 id="the-methods-replacefirst-and-replaceall-of-a-string" style="text-align: center;">The methods replaceFirst and replaceAll of a string</h5> 
+  <p>There are two strings methods for substring replacement:</p> 
+  <ul> 
+   <li><code class="language-java">String replaceFirst(String regex, String replacement)</code> replaces the first occurrence of <code class="language-java">regex</code> in the string with <code class="language-java">replacement</code>;</li> 
+   <li><code class="language-java">String replaceAll(String regex, String replacement)</code> replaces all occurrences of <code class="language-java">regex</code> in the string with <code class="language-java">replacement</code>;</li> 
+  </ul> 
+  <p>where</p> 
+  <ul> 
+   <li><code class="language-java">regex</code> is a regular expression matching the substrings that are to be replaced;</li> 
+   <li><code class="language-java">replacement</code> is a string that will replace a substring matching the regex (it should be just a string, not a regex!).</li> 
+  </ul> 
+  <p>Since strings are immutable objects, both methods return a new string with necessary modifications.</p> 
+  <p>Be careful, the <code class="language-java">replace</code> method performs a similar kind of operation but it does <strong>NOT</strong> support regular expressions.</p> 
+  <p>Let's look at the examples below.</p> 
+  <pre><code class="language-java">String digitRegex = "\\d"; // a regex to match a digit
+
+String str = "ab73c80abc9"; // a string consisting of letters and digits
+
+String result1 = str.replaceAll(digitRegex, "#"); // it replaces each digit with #
+
+System.out.println(result1); // "ab##c##abc#"
+
+String result2 = str.replaceFirst(digitRegex, "#"); // it replaces only the first digit with #
+
+System.out.println(result2); // "ab#3c80abc9"</code></pre> 
+  <p>It is possible to use any regex as the first argument of these methods. The following example demonstrates how to replace all sequences of uppercase Latin letters in a string with a single dash character.</p> 
+  <pre><code class="language-java">String regex = "[A-Z]+";
+
+String str = "aBoeQNmDFEFu";
+
+String result = str.replaceAll(regex, "-"); // "a-oe-m-u"</code></pre> 
+  <p>The Matcher class, however, has the same methods. Let's take a quick look at them.</p> 
+  <h5 id="the-methods-replacefirst-and-replaceall-of-a-matcher" style="text-align: center;">The methods replaceFirst and replaceAll of a matcher</h5> 
+  <p>An object of <code class="language-java">Matcher</code> also has two methods for replacing a substring found by means of a regular expression:</p> 
+  <ul> 
+   <li><code class="language-java">Matcher replaceFirst(String replacement)</code>;</li> 
+   <li><code class="language-java">Matcher replaceAll(String replacement)</code>.</li> 
+  </ul> 
+  <p>The difference between string methods and these ones is that the <code class="language-java">Matcher</code>'s methods do not take regexes as their arguments: any <code class="language-java">Matcher</code> object gets its regex when being initiated. See the example below.</p> 
+  <pre><code class="language-java">Pattern pattern = Pattern.compile("\\d"); // a regex to match a digit
+
+String str = "ab73c80abc9"; // a string consisting of letters and digits
+
+Matcher matcher = pattern.matcher(str);
+
+System.out.println(matcher.replaceAll("#"));   // ab##c##abc#
+System.out.println(matcher.replaceFirst("#")); // ab#3c80abc9</code></pre> 
+  <p>As you can see, the replacement works quite simple, the main goal is to write a correct regular expression.</p> 
+  <h5 id="conclusions" style="text-align: center;">Conclusions</h5> 
+  <p>In this topic, we've learned:</p> 
+  <ul> 
+   <li>we can replace a substring with any other string by means of <code class="language-java">replaceFirst</code> and <code class="language-java">replaceAll</code> methods belonging either to <code class="language-java">String</code> objects or <code class="language-java">Matcher</code> objects;</li> 
+   <li>string methods accept two arguments: a regular expression matching substrings that have to be replaced and a string that's going to replace them;</li> 
+   <li><code class="language-java">Matcher</code> methods accept only the second argument (the replacement string).</li> 
+  </ul>
+ </body>
+</html>

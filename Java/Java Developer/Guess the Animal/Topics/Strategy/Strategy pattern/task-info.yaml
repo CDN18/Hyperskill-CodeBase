@@ -1,0 +1,22 @@
+type: choice
+is_multiple_choice: false
+options:
+- text: A strategy holds a reference to the context.
+- text: It represents algorithms (behavior) as classes with a common interface.
+- text: It does not allow to choose an algorithm at runtime, only at compile-time.
+- text: It complicates the addition of new algorithms in a program.
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/3318#comment
+status: Solved
+record: -1

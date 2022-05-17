@@ -1,0 +1,79 @@
+<h2>Patterns and Matcher</h2>
+<html>
+ <head></head>
+ <body>
+  <p style="text-align: left;">The Java Class Library has two special classes possessing advanced features for work with regular expressions: <code class="language-java">java.util.regex.Pattern</code> and <code class="language-java">java.util.regex.Matcher</code>. A <code class="language-java">Matcher</code> object provides us with many useful methods to handle regexes, while a <code class="language-java">Pattern</code> object represents a regular expression itself.</p> 
+  <h5 id="matching-a-regex" style="text-align: center;">Matching a regex</h5> 
+  <p>Suppose we have a text stored in a string variable:</p> 
+  <pre><code class="language-java">String text = "We use Java to write modern applications";</code></pre> 
+  <p>We want to use a regular expression to check whether the text contains substrings <strong>"Java"</strong> or <strong>"java"</strong>. We can carry this out in three simple steps by means of<code class="language-java">Pattern</code> and <code class="language-java">Matcher</code> classes.</p> 
+  <p>1. Create an object of the <code class="language-java">Pattern</code> class by passing a regex string to the <code class="language-java">compile</code> method:</p> 
+  <pre><code class="language-java">Pattern pattern = Pattern.compile(".*[Jj]ava.*"); // regex to match "java" or "Java" in a text</code></pre> 
+  <p>2. Create a <code class="language-java">Matcher</code> by invoking the <code class="language-java">matcher</code> method of the <code class="language-java">Pattern</code> and creating an object for the given string:</p> 
+  <pre><code class="language-java">Matcher matcher = pattern.matcher(text); // it will match the passed text</code></pre> 
+  <p>3. Invoke the <code class="language-java">matches</code> method of the matcher to match the string:</p> 
+  <pre><code class="language-java">boolean matches = matcher.matches(); // true</code></pre> 
+  <p>The method <code class="language-java">matches</code> of a <code class="language-java">Matcher</code> works exactly the same way as the method <code class="language-java">matches</code> of the <code class="language-java">String</code>, with which we are already familiar.</p> 
+  <h5 id="advantages-of-pattern-and-matcher-classes" style="text-align: center;">Advantages of Pattern and Matcher classes</h5> 
+  <p>For the moment it may seem that there's no point in <code class="language-java">Pattern</code> and <code class="language-java">Matcher</code> since we already have simple string regex representation. However, there are two main reasons to pay attention to these classes:</p> 
+  <ul> 
+   <li><strong>Performance. </strong>Actually, the <code class="language-java">matches</code> method of the <code class="language-java">String</code> internally invokes the <code class="language-java">matches</code> method of the <code class="language-java">Matcher</code>, but it also invokes <code class="language-java">Pattern.compile(...)</code> every time it is executed. That's not efficient. If the same pattern is used multiple times, compiling it once will be more reasonable.</li> 
+  </ul> 
+  <ul> 
+   <li><strong>Rich API.</strong> The <code class="language-java">Matcher</code> class has more to offer than a single <code class="language-java">matches</code> method: there are a lot of useful methods to process strings and a <code class="language-java">Pattern</code> provides us with the opportunity to configure it in detail, for example, enable case-insensitive matching.</li> 
+  </ul> 
+  <p>So, if you plan on reusing your regex several times and/or need more elaborate methods for text and pattern comparison, it is more preferable to use <code class="language-java">Pattern</code> and <code class="language-java">Matcher</code> rather than <code class="language-java">String</code>.</p> 
+  <h5 id="patterns-and-modes" style="text-align: center;">Patterns and Modes</h5> 
+  <p>As you know, a <code class="language-java">Pattern</code> is used to create an object of <code class="language-java">Matcher</code>. If we aren't going to reuse our regex, though, we can simply invoke the <code class="language-java">matches</code> method of the <code class="language-java">Pattern</code> class in a single line.</p> 
+  <pre><code class="language-java">Pattern.matches(".*[Jj]ava.*", "We use Java to write modern applications"); // true</code></pre> 
+  <p>It is similar to invoking the <code class="language-java">matches</code> method of a <code class="language-java">String</code> but has the same performance problem.</p> 
+  <p>Consider the previous example again. It cannot match words like <strong>"JAVA"</strong> because it does not ignore the case, as all regular expressions do by default. Fortunately, there is a special mode <code class="language-java">Pattern.CASE_INSENSITIVE</code> that can be set during the compilation of the <code class="language-java">Pattern</code>. It allows your regex to match strings without taking the case into account.</p> 
+  <pre><code class="language-java">Pattern pattern = Pattern.compile(".*java.*", Pattern.CASE_INSENSITIVE);
+
+String text = "We use Java to write modern applications";
+
+Matcher matcher = pattern.matcher(text);
+
+System.out.println(matcher.matches()); // true</code></pre> 
+  <p>Another mode you may want to remember is <code class="language-java">Pattern.DOTALL</code> that makes the dot metacharacter <code class="language-java">.</code> match all characters, including the line break <code class="language-java">\n</code>.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   Case-insensitive mode is available even without the 
+   <code class="language-java">Matcher</code>. You just need to add 
+   <code class="language-java">(?i)</code> at the beginning of your regex. To make the dot character match the newline character, add 
+   <code class="language-java">(?s)</code>. You can enable both modes by writing
+   <code class="language-java">(?is)</code>.
+  </div>
+  <p></p> 
+  <p>Take a look at how this works:</p> 
+  <pre><code class="language-java">Pattern.matches("(?is).*java.*", "\n\nJAVA\n\n"); // true</code></pre> 
+  <p>There are also other modes, but we will not consider them here. See <a target="_blank" href="https://docs.oracle.com/javase/10/docs/api/java/util/regex/Pattern.html" rel="nofollow noopener noreferrer">documentation</a> for details.</p> 
+  <h5 id="the-matches-and-find-methods" style="text-align: center;">The matches and find methods</h5> 
+  <p>An instance of <code class="language-java">Matcher</code> provides us with curious methods for pattern/string matching. In this lesson, we will consider only one of them.</p> 
+  <p>Just as the <code class="language-java">matches</code> method of the <code class="language-java">String</code>, method <code class="language-java">matches</code> of the <code class="language-java">Matcher</code> returns <code class="language-java">true</code> only when the pattern matches the whole string, otherwise, it returns <code class="language-java">false</code>. That's not very convenient in some situations, right? For example, if we want to check whether there is a particular substring somewhere in our text, we have to add <code class="language-java">.*</code> at the beginning and at the end of the pattern. </p> 
+  <p>Thanks to the <code class="language-java">Matcher</code> , we can also apply the <code class="language-java">find</code> method. It is similar to the <code class="language-java">matches</code> , but instead of checking the match with the whole string, it tries to find a substring that matches the pattern. Look at the following example to understand the difference between these methods:</p> 
+  <pre><code class="language-java">String text = "Regex is a powerful tool for programmers";
+
+Pattern pattern = Pattern.compile("tool");
+Matcher matcher = pattern.matcher(text);
+
+System.out.println(matcher.matches()); // false, the whole string does not match the pattern
+System.out.println(matcher.find()); // true, there is a substring that matches the pattern</code></pre> 
+  <p>Remember the boundary characters we've learned before? They can be applied to modify the behavior of the <code class="language-java">find</code> method to make it work somewhat similar to the<code class="language-java">matches</code> method. To make sure that the <code class="language-java">find</code> method will match a substring located at the beginning of the string, we can add the hat character <code class="language-java">^</code> at the start of the regex. To make it match a substring at the end of the string, we can add the dollar character <code class="language-java">$</code> at the end of the regex. By combining these symbols, we make out of <code class="language-java">find</code> a copy of <code class="language-java">matches</code>:</p> 
+  <pre><code class="language-java">Pattern pattern = Pattern.compile("^tool$");
+Matcher matcher = pattern.matcher(text);
+
+System.out.println(matcher.matches()); // false
+System.out.println(matcher.find());   // false</code></pre> 
+  <p>By default, both methods <code class="language-java">matches</code> and <code class="language-java">find</code> work with the whole string. It is possible, though, to narrow down their scope by invoking the <code class="language-java">region</code> method that allows us to specify the first (inclusive) and the last (exclusive) indices of the substring that we want our methods to consider.</p> 
+  <pre><code class="language-java">String text = "Regex is a powerful tool for programmers";
+Matcher matcher = Pattern.compile("tool").matcher(text);
+
+matcher.region(10, 20); // start index = 10, end index = 20
+System.out.println(matcher.find()); // false
+matcher.region(20, 30); // start index = 20, end index = 30
+System.out.println(matcher.find()); // true</code></pre> 
+  <h5 id="conclusion" style="text-align: center;">Conclusion</h5> 
+  <p>There are two ways to process regexes: by calling the method of the <code class="language-java">String</code>, and by using <code class="language-java">Pattern</code> and <code class="language-java">Matcher</code> classes. The second way is more efficient, and it also provides a set of useful methods and configurations for string processing. There are two main methods, <code class="language-java">matches</code> and <code class="language-java">find</code> , with a key difference. The <code class="language-java">matches</code> method matches the whole string, while the <code class="language-java">find</code> method looks for a substring matching the regex.</p>
+ </body>
+</html>

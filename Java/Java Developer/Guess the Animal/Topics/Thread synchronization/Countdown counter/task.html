@@ -1,0 +1,11 @@
+<h2>Countdown counter</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Here's a class named <code class="java">CountDownCounter</code>. The class has a single field <code class="java">count</code>. An instance of the class is used by different threads concurrently. Each thread invokes the method <code class="java">decrement</code><strong> </strong>to decrease the field many times.</p> 
+  <p>After the completion of all threads, the field has an incorrect value.</p> 
+  <p>Fix the code, so that is can work correctly with multiple threads. Do not make the class public.</p> 
+  <p><strong>Example</strong></p> 
+  <p>Let's assume we have one instance of <code class="java">CountDownCounter</code> and four threads. The initial value of <code class="java">count</code> is 100000. If each thread invokes the method <code class="java">decrement</code> 10000 times, after the completion of all threads the <code class="java">count</code> must be 60000.</p>
+ </body>
+</html><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 5 seconds</font><br><br>

@@ -1,0 +1,15 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class Util {
+        // correct this method to avoid NPE
+        public static void printLength(String name) {
+            System.out.println(name.length());
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/13821#comment
+status: Solved
+record: -1

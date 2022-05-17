@@ -1,0 +1,16 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class Counter {
+
+        public static boolean checkTheSameNumberOfTimes(int elem, List<Integer> list1, List<Integer> list2) {
+            // implement the method
+            return false;
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2503#comment
+status: Solved
+record: -1

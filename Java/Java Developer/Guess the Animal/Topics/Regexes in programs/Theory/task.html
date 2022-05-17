@@ -1,0 +1,47 @@
+<h2>Regexes in programs</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Regular expressions have a very wide scope of application. They're used in text editors and in implementations of programming languages, for parsing and syntax highlighting, for extraction of useful information from files and web sites. In this lesson, we would like to show you an example of a simple yet powerful program using a regular expression for string processing.</p> 
+  <h5 id="program-with-a-regular-expression" style="text-align: center;">Program with a regular expression </h5> 
+  <p>Let's consider a program that checks whether the input string is a valid login. We assume that login can contain any Latin letter, a number, the underscore character <code class="language-java">_</code>, and the dollar sign <code class="language-java">$</code>. The length must be no less than 5 characters and no more than 12 characters.</p> 
+  <p>There is one additional feature: we should ignore all whitespace characters in the beginning and the end of the input string.</p> 
+  <pre><code class="language-java">import java.util.Scanner;
+
+class CheckLoginProblem {
+
+    public static void main(String[] args) {
+
+       /* The scanner object to read data from the standard input */
+       Scanner scanner = new Scanner(System.in);
+       
+       /* The common pattern for valid logins */
+       String loginRegex = "\\s*[a-zA-Z0-9_$]{5,12}\\s*";
+
+       /* The read string which may be a login */
+       String mayBeLogin = scanner.nextLine();
+
+       boolean isLogin = mayBeLogin.matches(loginRegex);
+
+       System.out.println(isLogin);
+    }
+}</code></pre> 
+  <p>Remember, the regex <code class="language-java">"\\s*"</code> is a very useful practical tool for finding whitespace characters. It's preferable to use this shorthand instead of directly typing <code class="language-java">" "</code>.</p> 
+  <p>Let's try different inputs and test our program.</p> 
+  <p><strong>The input-output pair 1:</strong></p> 
+  <pre><code class="language-java">testuser7
+true</code></pre> 
+  <p><strong>The input-output pair 2:</strong></p> 
+  <pre><code class="language-java">test  
+false</code></pre> 
+  <p><strong>The input-output pair 3:</strong></p> 
+  <pre><code class="language-java">user!!!
+false</code></pre> 
+  <p><strong>The input-output pair 4:</strong></p> 
+  <pre><code class="language-java">$test_user
+true</code></pre> 
+  <p>As you can see, by using a simple regular expression we can write a quite powerful program for a real-life problem. If you wish, you can rewrite this regex using other special characters.</p> 
+  <h5 id="conclusion" style="text-align: center;">Conclusion</h5> 
+  <p>In this lesson, we've seen a small example of how regular expressions can help us in string processing. You can experiment further and implement other regular expressions to check whether the login meets stricter requirements.</p>
+ </body>
+</html>

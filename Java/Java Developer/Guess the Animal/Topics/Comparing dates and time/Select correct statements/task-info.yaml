@@ -1,0 +1,23 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: <b>time1.isBefore(time1)</b> returns <b>false</b>
+- text: <b>time2.compareTo(time1)</b> returns <b>0</b>
+- text: <b>time1.equals(time1)</b> returns <b>true</b>
+- text: <b>time1.compareTo(time2)</b> returns a positive number
+- text: <b>time1.isAfter(time2)</b> returns <b>false</b>
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2901#comment
+status: Solved
+record: -1

@@ -1,0 +1,9 @@
+<h2>Calculate the number of distinct characters</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Below is the code that reads a string from the standard input and calculates the number of distinct characters in the string. For some reason, the developer Rebecca decided to perform calculations in a new thread. Sadly, her solution doesn't work correctly. Try to fix it.</p> 
+  <p><strong>Additional explanations:</strong> the implemented class <strong>SlowStringProcessor</strong> extends <strong>Thread</strong> and overrides the method <strong>run</strong>. It calculates the number of distinct characters passed to the constructor. The class has a getter <strong>getNumberOfUniqueCharacters()</strong> that returns the calculated number or 0 if the thread has not calculated the number yet. Keep in mind that <strong>SlowStringProcessor </strong>works quite slow.</p> 
+  <p><strong>Note:</strong> you don't need to write <strong>SlowStringProcessor</strong>. It will be added to your solution automatically.</p>
+ </body>
+</html><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">multithreading</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">12</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 5 seconds</font><br><br>

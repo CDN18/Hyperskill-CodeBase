@@ -1,0 +1,26 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: If one thread executes <b>method2</b>, no other thread can execute <b>method3</b>
+    at the same time
+- text: If one thread executes <b>method3</b>, no other thread can execute <b>method1</b>
+    and <b>method2</b> at the same time
+- text: If one thread executes <b>method3</b>, no other thread can execute the same
+    method at the same time
+- text: If one thread executes <b>method2</b>, no other thread can execute <b>method1</b>
+    at the same time
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2649#comment
+status: Solved
+record: -1

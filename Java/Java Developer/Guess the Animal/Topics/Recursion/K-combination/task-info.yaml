@@ -1,0 +1,28 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.Scanner;
+
+    public class Main {
+
+        public static int comb(int n, int k) {
+            // write your code here
+        }
+
+        /* Do not change code below */
+        public static void main(String[] args) {
+            final Scanner scanner = new Scanner(System.in);
+            final int n = scanner.nextInt();
+            final int k = scanner.nextInt();
+            System.out.println(comb(n, k));
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/3124#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Fri, 13 May 2022 10:19:21 UTC
+record: -1

@@ -1,0 +1,24 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: ' LocalDateTime.of(2020, 1, 1, 0, 1, 1).minusSeconds(61);'
+- text: LocalDateTime.parse("2019-12-31T23:59").withSecond(59);
+- text: LocalDateTime.of(LocalDate.of(2020, 1, 1), LocalTime.MIDNIGHT).minusSeconds(1);
+- text: ' LocalDateTime.parse("2017-12-31T23:59").withYear(2019);'
+- text: LocalDateTime.of(2020, 12, 31, 23, 59, 59).minusYears(1);
+- text: LocalDateTime.of(LocalDate.of(2019, 12, 31), LocalTime.MAX);
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/8435#comment
+status: Solved
+record: -1

@@ -1,0 +1,152 @@
+<h2>Exception handling</h2>
+<html>
+ <head></head>
+ <body>
+  <p>As you already know, an exception interrupts the normal execution of a program. Normally this is not what we want to happen. Luckily, it is possible to write some code that will handle the exception without stopping the whole program. To do that, Java provides an <strong>exception handling</strong> mechanism that works with both <strong>checked</strong> and <strong>unchecked</strong> exceptions.</p> 
+  <h5 id="how-to-handle-an-exception" style="text-align: center;">How to handle an exception</h5> 
+  <p>After a line of code throws an exception, the Java runtime system attempts to find a suitable handler for it. Such a handler can be located in the same method where the exception occurred or in the calling method. As soon as a suitable handler is found and executed, the exception is considered as handled and the program runs normally.</p> 
+  <p>Technically, an exception can be handled in the method where it occurs or in the calling method. The best approach to handle an exception is to do it in a method that has sufficient information to make the correct decision based on this exception.</p> 
+  <p>Let's now learn three keywords for handling exceptions: <code class="language-java">try</code>, <code class="language-java">catch</code> and <code class="language-java">finally</code>.</p> 
+  <h5 id="the-try-catch-statement" style="text-align: center;">The try-catch statement</h5> 
+  <p>Here is a simple <code class="language-java">try-catch</code> template for handling exceptions:</p> 
+  <pre><code class="language-java">try {
+    // code that may throw an exception
+} catch (Exception e) {
+    // code for handling the exception
+}</code></pre> 
+  <p>The <code class="language-java">try</code> block is used to wrap the code that may throw an exception. This block can include all lines of code, including method calls.</p> 
+  <p>The <code class="language-java">catch</code> block is a handler for the specified type of exception and all of its subclasses. This block is executed when an exception of the corresponding type occurs in the <code class="language-java">try</code> block.</p> 
+  <p></p>
+  <div class="alert alert-warning">
+   Note that the specified type in a 
+   <code class="language-java">catch</code> block must extend the 
+   <code class="language-java">Throwable</code> class.
+  </div>
+  <p></p> 
+  <p>In the presented template, the <code class="language-java">catch</code> block can handle exceptions of the <code class="language-java">Exception</code> class and all classes derived from it.</p> 
+  <p>The following example demonstrates the execution flow with <code class="language-java">try</code> and <code class="language-java">catch</code>.</p> 
+  <pre><code class="language-java">System.out.println("before the try-catch block"); // it will be printed
+
+try {
+    System.out.println("inside the try block before an exception"); // it will be printed
+
+    System.out.println(2 / 0); // it throws ArithmeticException
+
+    System.out.println("inside the try block after the exception"); // it won't be printed
+} catch (Exception e) {
+    System.out.println("Division by zero!"); // it will be printed
+}
+
+System.out.println("after the try-catch block"); // it will be printed</code></pre> 
+  <p>The output:</p> 
+  <pre><code class="language-no-highlight">before the try-catch block
+inside the try block before an exception
+Division by zero!
+after the try-catch block</code></pre> 
+  <p>The program does not print <code class="language-java">"inside the try block after the exception"</code> since the <code class="language-java">ArithmeticException</code> aborted the normal flow of the execution. Instead, it executes the print statement in the <code class="language-java">catch</code> block. After completion of the <code class="language-java">catch</code> block, the program executes the next statement (printing <code class="language-java">"after the try-catch block"</code>) without returning to the <code class="language-java">try</code> block again.</p> 
+  <p>Replacing <code class="language-java">Exception</code> with <code class="language-java">ArithmeticException</code> or <code class="language-java">RuntimeException</code> in the <code class="language-java">catch</code> statement does not change the execution flow of the program. But replacing it with <code class="language-java">NumberFormatException</code> will make the handler unsuitable for the exception and the program will fail.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   As we noted earlier, the 
+   <code class="language-java">try-catch</code> statement can handle both checked and unchecked exceptions. But there is a difference: checked exceptions must be wrapped with a 
+   <code class="language-java">try-catch</code> block or declared to be thrown in the method, while unchecked exceptions don't have to.
+  </div>
+  <p></p> 
+  <h5 id="getting-info-about-an-exception" style="text-align: center;">Getting info about an exception</h5> 
+  <p>When an exception is caught by a <code class="language-java">catch</code> block, it is possible to get some information on it:</p> 
+  <pre><code class="language-java">try {
+    double d = 2 / 0;
+} catch (Exception e) {
+    System.out.println(e.getMessage());
+}</code></pre> 
+  <p>This code prints:</p> 
+  <pre><code class="language-java">An exception occured: / by zero</code></pre> 
+  <h5 id="catching-multiple-exceptions" style="text-align: center;">Catching multiple exceptions</h5> 
+  <p>It is always possible to use a single handler for all types of exceptions:</p> 
+  <pre><code class="language-java">try {
+    // code that may throw exceptions
+} catch (Exception e) {
+    System.out.println("Something goes wrong");
+}</code></pre> 
+  <p>Obviously, this approach does not allow us to perform different actions depending on the type of exception that has occurred. Fortunately, Java supports the use of several handlers inside the same <code class="language-java">try</code> block.</p> 
+  <pre><code class="language-java">try {
+    // code that throws exceptions
+} catch (IOException e) {
+    // handling the IOException and its subclasses    
+} catch (Exception e) {
+    // handling the Exception and its subclasses
+}</code></pre> 
+  <p>When an exception occurs in the <code class="language-java">try</code> block, the runtime system determines the first suitable <code class="language-java">catch</code> block according to the type of the exception. Matching goes from top to bottom.</p> 
+  <p></p>
+  <div class="alert alert-warning">
+   Important, the 
+   <code class="language-java">catch</code> block with the base class has to be written below all blocks with subclasses. In other words, the more specialized handlers (like 
+   <code class="language-java">IOException</code>) must be written before the more general ones (like 
+   <code class="language-java">Exception</code>). Otherwise, the code won't compile.
+  </div>
+  <p></p> 
+  <p>Since Java 7, you can use a <strong>multi-catch </strong>syntax to have several exceptions handled in the same way:</p> 
+  <pre><code class="language-java">try {
+    // code that may throw exceptions
+} catch (SQLException | IOException e) {
+    // handling SQLException, IOException and their subclasses
+    System.out.println(e.getMessage());
+} catch (Exception e) {
+    // handling any other exceptions
+    System.out.println("Something goes wrong");
+}</code></pre> 
+  <p>In the code above <code class="language-java">SQLException</code> and <code class="language-java">IOException</code> (alternatives) are separated by the <strong><code class="language-java">|</code> </strong>character. They will be handled in the same way.</p> 
+  <p></p>
+  <div class="alert alert-warning">
+   Note that alternatives in a multi-catch statement cannot be each other's subclasses.
+  </div>
+  <p></p> 
+  <h5 id="the-finally-block" style="text-align: center;">The finally block</h5> 
+  <p>There is another possible block called <code class="language-java">finally</code>. All statements present in this block will always execute regardless of whether an exception occurs in the <code class="language-java">try</code> block or not.</p> 
+  <pre><code class="language-java">try {
+    // code that may throw an exception
+} catch (Exception e) {
+    // exception handler
+} finally {
+    // code always be executed
+}</code></pre> 
+  <p>The following example illustrates the order of execution of the <code class="language-java">try-catch-finally</code> statement.</p> 
+  <pre><code class="language-java">try {
+    System.out.println("inside the try block");
+    Integer.parseInt("101abc"); // throws NumberFormatException
+} catch (Exception e) {
+    System.out.println("inside the catch block");
+} finally {
+    System.out.println("inside the finally block");
+}
+
+System.out.println("after the try-catch-finally block");</code></pre> 
+  <p>The output:</p> 
+  <pre><code class="language-no-highlight">inside the try block
+inside the catch block
+inside the finally block
+after the try-catch-finally block</code></pre> 
+  <p>If we remove the line that throws <code class="language-java">NumberFormatException</code>, the <code class="language-java">finally</code> block is still executed after the <code class="language-java">try</code> block.</p> 
+  <pre><code class="language-no-highlight">inside the try block
+inside the finally block
+after the try-catch-finally block</code></pre> 
+  <p></p>
+  <div class="alert alert-primary">
+   Interesting: the 
+   <code class="language-java">finally</code> block is executed even if an exception occurs in the 
+   <code class="language-java">catch</code> block.
+  </div>
+  <p></p> 
+  <p>It is also possible to write <code class="language-java">try</code> and <code class="language-java">finally</code> without a <code class="language-java">catch</code> block at all.</p> 
+  <pre><code class="language-java">try {
+    // code that may throw an exception
+} finally {   
+    // code always be executed
+}</code></pre> 
+  <p>In this template, the <code class="language-java">finally</code> block is executed right after the <code class="language-java">try</code> block.</p> 
+  <h5 id="conclusion">Conclusion</h5> 
+  <p>The <code class="language-java">try-catch</code> statement allows us to handle both checked and unchecked exceptions . </p> 
+  <p>The <code class="language-java">try</code> block wraps the code that may throw an exception while the <code class="language-java">catch</code> block handles this exception in case it occurs, also allowing us to get some information about it. It is possible to use several handlers to provide different scenarios for different types of exceptions. </p> 
+  <p>Finally, there's an optional <code class="language-java">finally</code> block that is always executed. Its main feature is that it executes even if we fail to handle an exception at all.</p>
+ </body>
+</html>

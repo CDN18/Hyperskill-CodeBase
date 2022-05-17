@@ -1,0 +1,24 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: To create a parallel stream you can invoke the parallelStream() method
+- text: Parallel streams are always faster than equivalent sequential streams.
+- text: If we call the parallel() method twice, we get more internal threads for the
+    stream.
+- text: The performance of parallel streams depend on the size of data, the number
+    of availabe cores, the type of datasource and other factors.
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/8420#comment
+status: Solved
+record: -1

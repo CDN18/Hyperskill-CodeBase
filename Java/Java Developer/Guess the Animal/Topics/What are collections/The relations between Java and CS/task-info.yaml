@@ -1,0 +1,21 @@
+type: choice
+is_multiple_choice: false
+options:
+- text: Collections are list-like data structures.
+- text: Collections are representations of different data structures.
+- text: Data structures are special kinds of collections.
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/8343#comment
+status: Solved
+record: -1

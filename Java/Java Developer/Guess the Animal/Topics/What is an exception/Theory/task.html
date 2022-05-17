@@ -1,0 +1,119 @@
+<h2>What is an exception</h2>
+<html>
+ <head></head>
+ <body>
+  <p><span style="color: #000000;">Some errors in your code do not prevent the program from running. In this case, the program will only crash while trying to execute a "broken" line: a line with an error called an </span><span style="color: #000000;"><strong>exception</strong>. Thus, exceptions are the errors detected during the program <strong>execution</strong> (at runtime), whereas syntax errors are those detected during <strong>compiling</strong><span style="color: #000000;"> </span>the program into byte-code.</span> An exception interrupts the normal execution of a program.</p> 
+  <p>Let's consider several kinds of exceptions and how to avoid them.</p> 
+  <h5 id="arithmeticexception" style="text-align: center;">ArithmeticException</h5> 
+  <p>Suppose you are writing a program that reads two integers from the standard input and then outputs the result of the integer division of the first number by the second one. Look at the code below.</p> 
+  <pre><code class="language-java">import java.util.Scanner;
+
+public class ArithmeticExceptionDemo {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int a = scanner.nextInt();
+        int b = scanner.nextInt();
+
+        System.out.println(a / b); // an exception is possible here!
+        System.out.println("finished");
+    }
+}</code></pre> 
+  <p>If the user passes <code class="language-java">9</code> and <code class="language-java">3</code> as the input values, the program outputs <code class="language-java">3</code> as well as the <code class="language-java">"finished"</code> string. But if the second number is <code class="language-java">0</code>, the program throws an exception because of the division by zero.</p> 
+  <pre><code class="language-java">Exception in thread "main" java.lang.ArithmeticException: / by zero
+  at ArithmeticExceptionDemo.main(ArithmeticExceptionDemo.java:11)</code></pre> 
+  <p>As you can see, the program fails with the <code class="language-java">ArithmeticException</code> and the <code class="language-java">"finished"</code> string is not printed at all. <span style="color: #000000;">All the code </span><span style="color: #000000;"><strong>before</strong></span><span style="color: #000000;"> </span><span style="color: #000000;">the exception is executed properly, and everything </span><span style="color: #000000;"><strong>after </strong></span><span style="color: #000000;">is not. </span></p> 
+  <p>The displayed message shows the cause of the exception (<code class="language-java">"/ by zero"</code>), the file and the line number where it has occurred (<code class="language-java">ArithmeticExceptionDemo.java:11</code>). The provided information is useful for developers, but it is not very meaningful for the end-users of the program.</p> 
+  <p>To avoid the exception, we can check the value before the division, and, if the value is zero, print a message. Here is another version of the program. If the second number is zero, the program will print the "<strong>Division by zero!</strong>" string.</p> 
+  <pre><code class="language-java">import java.util.Scanner;
+
+public class ArithmeticExceptionDemo {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int a = scanner.nextInt();
+        int b = scanner.nextInt();
+
+        if (b == 0) {
+            System.out.println("Division by zero!");
+        } else {
+            System.out.println(a / b);
+        }
+        System.out.println("finished");
+    }
+}</code></pre> 
+  <p>Look at some input examples. Let's start with non-zero integers:</p> 
+  <pre><code class="language-java">8 4</code></pre> 
+  <p>The program still works in the same way and the result is:</p> 
+  <pre><code class="language-java">2
+finished</code></pre> 
+  <p>Now if we try to input zero as a divider:</p> 
+  <pre><code class="language-java">3 0</code></pre> 
+  <p>The result is:</p> 
+  <pre><code class="language-java">Division by zero!
+finished</code></pre> 
+  <p>As you can see, the new version of the program does not throw an exception and always successfully finishes. Additionally, it prints a user-friendly message instead of the standard message.</p> 
+  <h5 id="numberformatexception" style="text-align: center;">NumberFormatException</h5> 
+  <p>Another situation to consider is when you are trying to convert a string into an integer number. If the string has an unsuitable format, the code will throw an exception.</p> 
+  <p>The following program reads a line from the standard input and then outputs the number that follows it.</p> 
+  <pre><code class="language-java">import java.util.Scanner;
+
+public class NumberFormatExceptionDemo {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+
+        int number = Integer.parseInt(input); // an exception is possible here!
+        System.out.println(number + 1);
+    }
+}</code></pre> 
+  <p>It works pretty well if the input line is a correct integer number. But if the input is not correct (e.g. <code class="language-java">"121a"</code>), the program will fail:</p> 
+  <pre><code class="language-java">Exception in thread "main" java.lang.NumberFormatException: For input string: "121a"
+  at java.base/java.lang.NumberFormatException.forInputString(NumberFormatException.java:65)
+  at java.base/java.lang.Integer.parseInt(Integer.java:652)
+  at java.base/java.lang.Integer.parseInt(Integer.java:770)
+  at NumberFormatExceptionDemo.main(NumberFormatExceptionDemo.java:9)</code></pre> 
+  <p>This message displays the type of exception (<code class="language-java">NumberFormatException</code>) and the passed input string. The place where the exception occurred is shown in the last line of the message:</p> 
+  <ul> 
+   <li>the filename is <code class="language-java">NumberFormatExceptionDemo.java</code>;</li> 
+   <li>the <code class="language-java">main</code> method;</li> 
+   <li>the line 9.</li> 
+  </ul> 
+  <p>All the previous lines of the message show the positions inside the <code class="language-java">parseInt</code> method that is part of the standard library.</p> 
+  <p>To avoid this exception, it is possible to check the input string by using a regular expression. In case the input is not correct we can output a warning message. The following program does this:</p> 
+  <pre><code class="language-java">import java.util.Scanner;
+
+public class NumberFormatExceptionDemo {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+
+        if (input.matches("\\d+")) { // it checks if the input line contains only digits
+            int number = Integer.parseInt(input);
+            System.out.println(number + 1);
+        } else {
+            System.out.println("Incorrect number: " + input);
+        }
+    }
+}</code></pre> 
+  <p>If the input line is "121a", the program will not stop, and it will print the message:</p> 
+  <pre><code class="language-java">Incorrect number: 121a</code></pre> 
+  <p></p>
+  <div class="alert alert-primary">
+   Don't worry if you don't know regular expressions yet. Just remember this trick.
+  </div>
+  <p></p> 
+  <p><span style="color: #000000;">If you have trouble understanding what the exception is, you can always copy-paste its name and google it. Moreover, you're strongly encouraged to do it, as 99% of troubles that learners encounter have already been solved on professional forums.</span></p> 
+  <h5 id="conclusion" style="text-align: center;">Conclusion</h5> 
+  <ul> 
+   <li>Exceptions do not prevent a program from being compiled and run, <span style="color: #000000;">but the program crashes as soon as the line with an exception is being executed.</span></li> 
+   <li><span style="color: #000000;">There are many types of exceptions.</span></li> 
+   <li>You can use control statements to avoid some kinds of exceptions (like <code class="language-java">ArithmeticException</code> or <code class="language-java">NumberFormatException</code>) in your programs.</li> 
+   <li><span style="color: #000000;">There is a general approach to handle exceptions and even throw them by yourself that you will learn in the next lesson.</span></li> 
+  </ul>
+ </body>
+</html>

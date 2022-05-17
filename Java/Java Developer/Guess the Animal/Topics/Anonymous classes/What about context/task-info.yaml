@@ -1,0 +1,25 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: An anonymous class can capture only static members of its enclosing class
+    (an outer class).
+- text: An anonymous class can capture all members of its enclosing class (an outer
+    class).
+- text: An anonymous class can capture local variables that are declared as final
+    or effectively final.
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2557#comment
+status: Solved
+record: -1
+custom_name: What about context?

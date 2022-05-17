@@ -1,0 +1,30 @@
+content:
+- Comparing dates and time
+- Switch statement
+- What is an exception
+- NPE
+- Defining classes
+- Introduction to generic programming
+- Generics and Object
+- What are collections
+- ArrayList
+- The List interface
+- Parallel streams
+- LocalDate
+- LocalDateTime
+- Exception handling
+- Anonymous classes
+- Lambda expressions
+- Thread management
+- Thread synchronization
+- Inner classes
+- Currying
+- Factory method
+- Strategy
+- Regexes in programs
+- Patterns and Matcher
+- Match results
+- Replacing characters
+- Processing strings
+- Recursion
+- Printing data

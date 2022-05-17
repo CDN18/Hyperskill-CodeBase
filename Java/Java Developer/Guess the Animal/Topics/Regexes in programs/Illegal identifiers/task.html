@@ -1,0 +1,15 @@
+<h2>Illegal identifiers</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Suppose, you want to create a new programming language that supports variables.</p> 
+  <p>There is a set of rules for identifiers (names) of variables:</p> 
+  <ul> 
+   <li>It can include lower and upper letters, digits and the underscore character <code class="java">_</code>;</li> 
+   <li>It can only start with a letter or an underscore;</li> 
+   <li>If an identifier starts with an underscore, the second character should be either a letter or a digit, but not an underscore;</li> 
+  </ul> 
+  <p>Note that a single <code class="java">_</code> is not a valid identifier.</p> 
+  <p>Using the provided template, write a program that reads <code class="java">n</code> identifiers and then outputs all invalid ones in the same order as they appear in the input data. We hope that you will use regexes to solve the problem.</p>
+ </body>
+</html><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">6<br>ident<br>i<br>__<br>1a<br>b33<br>_n1</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">__<br>1a<br></code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 5 seconds</font><br><br>

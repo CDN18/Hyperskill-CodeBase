@@ -1,0 +1,39 @@
+<h2>Try-catch statements</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Which <strong>try-catch</strong> statements are correct?</p> 
+  <p>a)</p> 
+  <pre><code class="language-java">try {
+    // code that may throw an exception
+} catch (Exception e) {
+    // ...
+} catch (RuntimeException e) {
+    // ...
+}</code></pre> 
+  <p>b)</p> 
+  <pre><code class="language-java">try {
+    // code that may throw an exception
+} catch (RuntimeException | Exception e) {
+    // ...
+}</code></pre> 
+  <p>c)</p> 
+  <pre><code class="language-java">try {
+    // code that may throw an exception
+} catch (IndexOutOfBoundsException | NullPointerException e) {
+    // ...
+} catch (RuntimeException e) {
+    // ...
+}</code></pre> 
+  <p>d)</p> 
+  <pre><code class="language-java">try {
+    // code that may throw an exception
+} catch (IndexOutOfBoundsException e) {
+    // ...
+} catch (RuntimeException e) {
+    // ...
+} catch (Exception e) {
+    // ...
+}</code></pre>
+ </body>
+</html>

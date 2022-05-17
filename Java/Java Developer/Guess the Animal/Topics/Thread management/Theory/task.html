@@ -1,0 +1,84 @@
+<h2>Thread management</h2>
+<html>
+ <head></head>
+ <body>
+  <p>We've already learned how to start a new thread by simply invoking the <code class="language-java">start</code> method on a corresponding object. However, sometimes it is necessary to manage the lifecycle of a thread while it's working rather than just start it and leave it be.</p> 
+  <p>In this topic we will consider two commonly used methods in multithreading programming: <code class="language-java">sleep()</code> and <code class="language-java">join()</code>. Both methods may throw a checked <code class="language-java">InterruptedException</code> that is omitted here for brevity.</p> 
+  <h5 id="sleeping" style="text-align: center;">Sleeping</h5> 
+  <p>The static method <code class="language-java">Thread.sleep()</code> causes the currently executing thread to suspend execution for the specified number of milliseconds. This is an efficient means of making processor time available for the other threads of an application or other applications that might be running on a computer.</p> 
+  <p>We will often use this method throughout our educational platform to simulate expensive calls and difficult tasks.</p> 
+  <pre><code class="language-java">System.out.println("Started");
+
+Thread.sleep(2000L); // suspend current thread for 2000 millis
+         
+System.out.println("Finished");</code></pre> 
+  <p>Let's see what this code does. At first, it prints <strong>"Started"</strong>. Then the current thread is suspended for 2000 milliseconds (it may be longer, but not less than indicated). Eventually, the thread wakes up and prints <strong>"Finished"</strong>.</p> 
+  <p>Another way to make the current thread sleep is to use the special class <code class="language-java">TimeUnit</code> from the package <code class="language-java">java.util.concurrent:</code></p> 
+  <ul> 
+   <li><code class="language-java">TimeUnit.MILLISECONDS.sleep(2000)</code> performs <code class="language-java">Thread.sleep</code> for 2000 milliseconds;</li> 
+   <li><code class="language-java">TimeUnit.SECONDS.sleep(2)</code> performs <code class="language-java">Thread.sleep</code> for 2 seconds;</li> 
+  </ul> 
+  <p>There are more existing periods: <code class="language-java">NANOSECONDS</code>, <code class="language-java">MICROSECONDS</code>, <code class="language-java">MILLISECONDS</code>, <code class="language-java">SECONDS</code>, <code class="language-java">MINUTES</code>, <code class="language-java">HOURS</code>, <code class="language-java">DAYS</code>.</p> 
+  <h5 id="joining" style="text-align: center;">Joining</h5> 
+  <p>The <code class="language-java">join</code> method forces the current thread to wait for the completion of another thread on which the method was called. In the following example, the string <strong>"do something else"</strong> will not be printed until the thread terminates.</p> 
+  <pre><code class="language-java">Thread thread = ...
+thread.start(); // start thread
+
+System.out.println("Do something useful");
+
+thread.join();  // waiting for thread to die
+
+System.out.println("Do something else");</code></pre> 
+  <p>The overloaded version of this method takes a waiting time in milliseconds:</p> 
+  <pre><code class="language-java">thread.join(2000L);</code></pre> 
+  <p>This is used to avoid waiting for too long or even infinitely in case the thread is hung.</p> 
+  <p>Let's consider another example. The <code class="language-java">Worker</code> class is developed to solve "a difficult task" simulated by the sleep:</p> 
+  <pre><code class="language-java">class Worker extends Thread {
+    
+    @Override
+    public void run() {
+        try {
+            System.out.println("Starting a task");
+            Thread.sleep(2000L); // it solves a difficult task
+            System.out.println("The task is finished");
+        } catch (Exception ignored) {
+        }
+    }
+}</code></pre> 
+  <p> </p> 
+  <p>Here is the <code class="language-java">main</code> method where the <strong>main</strong> thread waits for completion of the <code class="language-java">worker</code>.</p> 
+  <pre><code class="language-java">public class JoiningExample {
+    public static void main(String []args) throws InterruptedException {
+        Thread worker = new Worker();
+        worker.start(); // start the worker
+       
+        Thread.sleep(100L);
+        System.out.println("Do something useful");
+        
+        worker.join(3000L);  // waiting for the worker
+        System.out.println("The program stopped");
+    }
+}</code></pre> 
+  <p>The main thread waits for <code class="language-java">worker</code> and cannot print the message <code class="language-java">The program stopped</code> until the worker terminates or the timeout is exceeded. We know exactly only that <code class="language-java">Starting a task</code> precedes <code class="language-java">The task is finished</code> and <code class="language-java">Do something useful</code> precedes <code class="language-java">The program stopped</code><strong>. </strong>There are several possible outputs</p> 
+  <p>First possible output (the task is completed before the timeout is exceeded):</p> 
+  <pre><code class="language-java">Starting a task
+Do something useful
+The task is finished
+The program stopped</code></pre> 
+  <p>Second possible output (the task is completed before the timeout is exceeded):</p> 
+  <pre><code class="language-java">Do something useful
+Starting a task
+The task is finished
+The program stopped</code></pre> 
+  <p>Third possible output:</p> 
+  <pre><code class="language-java">Do something useful
+Starting a task
+The program stopped
+The task is finished</code></pre> 
+  <p>Fourth possible output:</p> 
+  <pre><code class="language-java">Starting a task
+Do something useful
+The program stopped
+The task is finished</code></pre>
+ </body>
+</html>

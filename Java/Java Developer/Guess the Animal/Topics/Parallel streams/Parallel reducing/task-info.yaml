@@ -1,0 +1,22 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: Stream.of(1, 2, 4, 5).parallel().reduce(1, Integer::sum);
+- text: Stream.of(1, 2, 3, 4, 5).parallel().reduce(1, Integer::sum);
+- text: Stream.of(1, 2, 3, 4, 5).parallel().reduce(0, Integer::sum) + 1;
+- text: Stream.of(1, 2, 3, 4, 5).reduce(1, Integer::sum);
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/12484#comment
+status: Solved
+record: -1

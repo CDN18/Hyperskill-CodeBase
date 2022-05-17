@@ -1,0 +1,50 @@
+<h2>Match results</h2>
+<html>
+ <head></head>
+ <body>
+  <p>A simple check whether a string contains a substring matching our regular expression is not the only thing we can do with a <code class="language-java">Matcher</code>object. It also provides us with additional information about matches, which is essential in some tasks.</p> 
+  <h5 id="getting-match-results" style="text-align: center;">Getting match results</h5> 
+  <p>As you know, the <code class="language-java">find</code> method of <code class="language-java">Matcher</code> can check whether a substring of a string matches the pattern. Here is an example.</p> 
+  <pre><code class="language-java">String javaText = "Java supports regular expressions. LET'S USE JAVA!!!";
+
+Pattern javaPattern = Pattern.compile("java", Pattern.CASE_INSENSITIVE);
+Matcher matcher = javaPattern.matcher(javaText);
+
+System.out.println(matcher.find()); // prints "true"</code></pre> 
+  <p>When <code class="language-java">find()</code> method returns <code class="language-java">true</code> it is possible to get some info about the substring matching the pattern. <code class="language-java">start()</code> and <code class="language-java">end()</code> return the starting and the last indices of the match respectively, while <code class="language-java">group()</code> returns the matching substring itself.</p> 
+  <pre><code class="language-java">System.out.println(matcher.start()); // 0, the starting index of match
+System.out.println(matcher.end());   // 4, the index following the last index of match
+System.out.println(matcher.group()); // "Java", a substring that matches the pattern</code></pre> 
+  <p>There is a special class<code class="language-java">MatchResult</code> that comprises all this information about the match:</p> 
+  <pre><code class="language-java">MatchResult result = matcher.toMatchResult(); // a special object containing match results
+        
+System.out.println(result.start()); // 0
+System.out.println(result.end());   // 4
+System.out.println(result.group()); // "Java"</code></pre> 
+  <p>Be careful, if you invoke the methods <code class="language-java">start</code>, <code class="language-java">end</code>, <code class="language-java">group</code> before invoking<code class="language-java">find()</code> method or in case it was invoked and returned <code class="language-java">false</code>, they will throw <code class="language-java">IllegalStateException</code>. To avoid the exception, you should always check the boolean result of <code class="language-java">find()</code> before invoking these methods.</p> 
+  <pre><code class="language-java">if (matcher.find()) {
+    System.out.println(matcher.start());
+    System.out.println(matcher.end());
+    System.out.println(matcher.group());
+} else {
+    System.out.println("No matches found");
+}</code></pre> 
+  <p>This code prints <strong>"No matches found"</strong> if the <code class="language-java">find</code> method returns <code class="language-java">false</code>. It also makes sure that <code class="language-java">start()</code>, <code class="language-java">end()</code>, <code class="language-java">group()</code> are invoked only after the <code class="language-java">find()</code> method.</p> 
+  <h5 id="iterating-over-multiple-matches" style="text-align: center;">Iterating over multiple matches</h5> 
+  <p>Sometimes more than one substring matches the same pattern. In the previous example, there are two suitable strings <strong>"Java"</strong> and <strong>"JAVA"</strong>, because the pattern is case insensitive. The <code class="language-java">find()</code> method allows us to iterate in a loop over all substrings that match the pattern.</p> 
+  <pre><code class="language-java">String javaText = "Java supports regular expressions. LET'S USE JAVA!!!";
+
+Pattern javaPattern = Pattern.compile("java", Pattern.CASE_INSENSITIVE);
+Matcher matcher = javaPattern.matcher(javaText);
+
+while (matcher.find()) {
+    System.out.println("group: " + matcher.group() + ", start: " + matcher.start());
+}</code></pre> 
+  <p>This code outputs the following lines:</p> 
+  <pre><code class="language-java">group: Java, start: 0
+group: JAVA, start: 45</code></pre> 
+  <p>The condition of the loop allows invoking<code class="language-java">start()</code> and <code class="language-java">group()</code>only when the <code class="language-java">find()</code> method returns <code class="language-java">true</code>.</p> 
+  <h5 id="conclusions" style="text-align: center;">Conclusions</h5> 
+  <p>As you can see, <code class="language-java">Matcher</code> saves all the necessary info about matches. We can learn where every matching substring starts and where it ends and how it looks like. Later this data can be saved in a <code class="language-java">MatchResult</code> object.</p>
+ </body>
+</html>

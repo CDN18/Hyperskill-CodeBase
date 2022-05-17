@@ -1,0 +1,23 @@
+type: choice
+is_multiple_choice: false
+options:
+- text: x1 -&gt; x2 -&gt; x3 -&gt; x1 + x2 + x3;
+- text: x1 -&gt; x2 -&gt; x3 = x1 + x2 + x3;
+- text: x1 -&gt; x2 -&gt; x1 + x2;
+- text: x1 -&gt; x1 + x2 + x3;
+- text: x1 =&gt; x1 + x2 + x3;
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2427#comment
+status: Solved
+record: -1

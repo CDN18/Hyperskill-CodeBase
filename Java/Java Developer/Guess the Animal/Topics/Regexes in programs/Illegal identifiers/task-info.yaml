@@ -1,0 +1,31 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.Scanner;
+
+    public class Main {
+
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+
+            int numberOfVariables = Integer.parseInt(scanner.nextLine());
+
+            String regex = "write-your-regex-here";
+
+            for (int i = 0; i < numberOfVariables; i++) {
+                String identifier = scanner.nextLine();
+                if (!identifier.matches(regex)) {
+                    System.out.println(identifier);
+                }
+            }
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/3707#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Sun, 08 May 2022 20:34:25 UTC
+record: -1

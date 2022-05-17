@@ -1,0 +1,20 @@
+<h2>Find NPE</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Examine the code below:</p> 
+  <pre><code class="language-java">String str1;
+String str2 = "123";
+
+if (str2.equals(str1 = "123")) { // #1
+    str2 = null;                 // #2
+}
+
+str1 = str2;                     // #3
+str2 = str1;                     // #4
+
+System.out.println(str2);        // #5</code></pre> 
+  <p>Write the number of the line where NPE occurs.</p> 
+  <p>If you think the code is correct, write the output of this code.</p>
+ </body>
+</html>
