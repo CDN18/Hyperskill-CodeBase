@@ -1,0 +1,163 @@
+<h2>Builder</h2>
+<html>
+ <head></head>
+ <body>
+  <h5 id="the-design-problem" style="text-align: center;">The design problem</h5> 
+  <p>Imagine a pleasant situation that you are in a restaurant and making an order. The restaurant has all these signature dishes, each of them consisting of a set of ingredients. It can happen that a guest wants their dish modified: suppose, you don't eat onion or are allergic to peanuts or some other specific ingredient. The chef then would have to change the properties of a dish dynamically. In situations like that, the <strong>Builder </strong>design pattern really saves the day. Let's see how. </p> 
+  <p>Imagine you work on some GUI library. As a developer, you do your best to make your library convenient for application developers who will use it later. The library has an alert dialog element, which contains title, text, apply and cancel buttons, footer, and picture. You decided to create a class describing it:</p> 
+  <pre><code class="language-java">class AlertDialog {
+    private String title;
+    private String text;
+    private String applyButton;
+    private String cancelButton;
+    private String footer;
+    private String picture;
+
+    AlertDialog(String title, String text, String applyButton, String cancelButton, String footer, String picture) {
+        this.title = title;
+        this.text = text;
+        this.applyButton = applyButton;
+        this.cancelButton = cancelButton;
+        this.footer = footer;
+        this.picture = picture;
+    }
+}</code></pre> 
+  <p>To create an instance, just call the constructor:</p> 
+  <pre><code class="language-java">AlertDialog alertDialog = new AlertDialog("title", "text", "applyButton", "cancelButton", "footer", "pathToPicture");</code></pre> 
+  <p>Suppose an application developer needs an element with the title and apply button only. In such a case, your constructor doesn't look friendly and affects the code readability:</p> 
+  <pre><code class="language-java">AlertDialog alertNotification = new AlertDialog("Completed successfully", null, "Ok", null, null, null);</code></pre> 
+  <p>To avoid such constructor calls in application code, you create the corresponding constructor:</p> 
+  <pre><code class="language-java">class AlertDialog {
+    ...
+
+    AlertDialog(String title, String applyButton) {
+        this(title, null, applyButton, null, null, null);
+
+    ...
+}</code></pre> 
+  <p>The problem seems to be solved, but only until an application developer decides to create an element with another combination of elements. In this case, you need to create a new constructor as well. Thus the number of constructors grows up again. Such a situation is called constructor pollution.</p> 
+  <p>An alternative way is adding one default constructor <code class="language-java">AlertDialog() {...}</code> and setters for each field:</p> 
+  <pre><code class="language-java">AlertDialog alertDialog = new AlertDialog();
+alertDialog.setTitle("Completed successfully");
+alertDialog.setApplyButton("Ok");</code></pre> 
+  <p>It solves the problem, but in case if AlertDialog instances must be immutable, the solution doesn't work.</p> 
+  <h5 id="the-builder-pattern" style="text-align: center;">The Builder pattern</h5> 
+  <p>The <strong>Builder</strong> pattern is a <strong>creational</strong> design pattern used to separate complex object construction from its representation. It can be used to create objects with a specified structure step-by-step. The main benefit is that you can avoid the so-called constructor pollution. </p> 
+  <p style="text-align: center;"><img alt="" height="547" src="https://ucarecdn.com/3cde3c0f-45f0-429d-9600-7157e3b40d94/" width="847"></p> 
+  <p>The builder pattern has the following components: </p> 
+  <ul> 
+   <li> <p><strong>Builder</strong> interface describes the steps of product construction. Each complex object requires the service of a <strong>Builder</strong> class to generate object instances.</p> </li> 
+  </ul> 
+  <ul> 
+   <li> <p><strong>ConcreteBuilder</strong> implements <strong>Builder</strong> to make the required representation of the product. It will construct and assemble the parts of the final product and provide the interface to retrieve it. This is the main component that keeps track of the specific representation of the product.</p> </li> 
+  </ul> 
+  <ul> 
+   <li> <p><strong>Director</strong> manages the object creation process using the <strong>Builder</strong> class, and it will not directly create and assemble the final complex object.</p> </li> 
+  </ul> 
+  <ul> 
+   <li> <p><strong>Product</strong> is the complex object constructed using the concrete builder class which contains the final user-requested representation.</p> </li> 
+  </ul> 
+  <p>In our example, we will create a simple <em>AlertDialog</em> with a fixed structure: <em>Title, Text, ApplyButton, </em>and <em>CancelButton. </em>Pay attention that the Builder pattern allows us to avoid the fixed properties, but it can't allow extending them. You will see it further.</p> 
+  <h5 id="example" style="text-align: center;">Example</h5> 
+  <p>There are only two steps, but stay vigilant as the first step is capacious and powerful. The implementation of <em>AlertDialog </em>contains its Builder:</p> 
+  <pre><code class="language-java">class AlertDialog {
+    private String title;
+    private String text;
+    private String applyButton;
+    private String cancelButton;
+
+    private AlertDialog(String title, String text, String applyButton, String cancelButton) {
+        this.title = title;
+        this.text = text;
+        this.applyButton = applyButton;
+        this.cancelButton = cancelButton;
+    }
+
+    @Override
+    public String toString() {
+        String str = "";
+        if (title != null) {
+            str += "The title is: \"" + title + "\"\n";
+        }
+        if (text != null) {
+            str += "The text is: \"" + text + "\"\n";
+        }
+        if (applyButton != null) {
+            str += "The applyButton is: \"" + applyButton + "\"\n";
+        }
+        if (cancelButton != null) {
+            str += "The cancelButton is: \"" + cancelButton + "\"\n";
+        }
+
+        return str;
+    }
+
+    static class Builder {
+        private String title;
+        private String text;
+        private String applyButton;
+        private String cancelButton;
+
+        Builder() {}
+
+        Builder setTitle(String title) {
+            this.title = title;
+            return this;
+        }
+
+        Builder setText(String text) {
+            this.text = text;
+            return this;
+        }
+
+        Builder setApplyButton(String applyButton) {
+            this.applyButton = applyButton;
+            return this;
+        }
+
+        Builder setCancelButton(String cancelButton) {
+            this.cancelButton = cancelButton;
+            return this;
+        }
+
+        AlertDialog build() {
+            return new AlertDialog(title, text, applyButton, cancelButton);
+        }
+    }
+}</code></pre> 
+  <p>For simplicity, the example doesn't contain <strong>Builder</strong> and <strong>Director</strong>. <code class="language-java">Builder</code> is a <strong>ConcreteBuilder</strong> here. <code class="language-java">AlertDialog</code> is a <strong>Product</strong>. Note that we made the constructor <code class="language-java">private</code> to prevent direct usage. </p> 
+  <p>The last step is <em>TestDrive. </em>As you can see above, method <em>build() </em>returns the object we needed. This is our trigger starting object creation and works as a <strong>Director</strong>.</p> 
+  <pre><code class="language-java">class TestDrive {
+    public static void main(String[] args) {
+
+        AlertDialog twoButtonsDialog = new AlertDialog.Builder()
+                .setTitle("Two buttons dialog")
+                .setText("You can use either `Okay` or `Cancel`")
+                .setApplyButton("Okay")
+                .setCancelButton("Cancel")
+                .build();
+
+        System.out.println(twoButtonsDialog);
+
+        AlertDialog oneButtonsDialog = new AlertDialog.Builder()
+                .setTitle("One button dialog")
+                .setText("You can use `Close` only")
+                .setCancelButton("Close")
+                .build();
+
+        System.out.println(oneButtonsDialog);
+    }
+}</code></pre> 
+  <p>And that's it. Although the example pattern code structure differs from a pattern structure described in UML, this is a common builder implementation. The pattern looks small and easy to implement, but it is extremely helpful in combination with other patterns, such as <em>Composite</em> <em>pattern, </em>any<em> Factory pattern, </em>and others<em>. </em>Finally, the output is: </p> 
+  <pre><code class="language-java">The title is: "Two buttons dialog"
+The text is: "You can use either `Okay` or `Cancel`"
+The applyButton is: "Okay"
+The cancelButton is: "Cancel"
+
+The title is: "One button dialog"
+The text is: "You can use `Close` only"
+The cancelButton is: "Close"</code></pre> 
+  <h5 id="conclusion" style="text-align: center;">Conclusion</h5> 
+  <p>We have created an encapsulated step-by-step creational process. Also, the builder provides an opportunity to create an object with a variable set of steps and consequently instantiated properties (unlike "one-step" Factory Patterns).</p>
+ </body>
+</html>
