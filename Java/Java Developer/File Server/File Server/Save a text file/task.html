@@ -1,0 +1,98 @@
+<h5 id="description">Description</h5>
+
+<p>In this stage, you will write a program that can save files on a hard drive and send or delete them upon request.</p>
+
+<p>To manage our files, we will use simplified HTTP requests. An HTTP request in our program should start with <code class="java">GET</code>, <code class="java">PUT</code>, or <code class="java">DELETE</code>. We encourage you to <a target="_blank" target="_blank" target="_blank" target="_blank" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods" rel="noopener noreferrer nofollow">read more</a> about the HTTP methods. An HTTP response in our program should start with the status code of the operation. For example, the code <code class="java">200</code> means that the operation was successful, and <code class="java">404</code> means that the resource was not found. Check out the <a target="_blank" target="_blank" target="_blank" target="_blank" target="_blank" href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes" rel="nofollow noopener noreferrer">full list of status codes on Wikipedia</a>.</p>
+
+<p>To create a new file on the server, the client should send a request <code class="java">PUT NAME DATA</code>, where <code class="java">NAME</code> is the name of the file without spaces or tabs, and <code class="java">DATA</code> indicates text data. If a file with this name already exists, the server should respond with the code <code class="java">403</code>. If the file is created successfully, the server responds with the code <code class="java">200</code>. In this case, the client should print <code class="java">The response says that the file was created!</code>. Otherwise, it should print <code class="java">The response says that creating the file was forbidden!</code></p>
+
+<p>The server should store the client's files in the <em>.../server/data/</em> folder.<br>
+<br>
+To get a file from the server, the client should send a request <code class="java">GET NAME</code>, where <code class="java">NAME</code> is the name of the file. If the file with this name does not exist, the server should respond with the code <code class="java">404</code>. If a file with this name exists, the server responds with the code <code class="java">200</code>, a single space, and the content of the file. In this case, the client should print <code class="java">The content of the file is: FILE_CONTENT</code>, where <code class="java">FILE_CONTENT</code> is the content of the requested file. Otherwise, it should print <code class="java">The response says that the file was not found!</code></p>
+
+<p>To delete a file from the server, the client should send a request <code class="java">DELETE NAME</code>, where <code class="java">NAME</code> is the name of the file. If a file with this name does not exist, the server should respond with the code <code class="java">404</code>. If the file is deleted successfully, the server responds with the code <code class="java">200</code>. In this case, the client should print <code class="java">The response says that the file was successfully deleted!</code>. Otherwise, it should print <code class="java">The response says that the file was not found!</code></p>
+
+<p>In this stage, you should write a client program that prompts the user for an action, connects to the server, gets a response, prints it in a readable format, and quits. The client program should perform only one work cycle. Also, you should write a server program that processes the requests one after another in one cycle. As these requests are fast to process, there is no need for parallel execution.</p>
+
+<p>Since the server cannot shut down by itself and the tests require that the program stops at a certain point, you should implement a simple way to stop the server. The client should be able to handle the <code class="java">exit</code> action and send the respective message to the server. When the client sends <code class="java">exit</code>, you should stop the server. Note: you shouldn't allow this behavior in a normal situation when no testing needs to be done.</p>
+
+<p>Don't forget to shut down your server before starting tests!</p>
+
+<h5 id="objectives">Objectives</h5>
+
+<p>In this stage, your client-side program should:</p>
+
+<ol>
+	<li>Prompt the user to enter an action.</li>
+	<li>Prompt the user for the name of the file to be created, sent, or deleted.</li>
+	<li>Prompt the user to enter the content of the file (when applicable).</li>
+	<li>Send the request to the server and receive a response from the server.</li>
+	<li>Print the respective message after receiving the response.</li>
+	<li>Disconnect from the server and terminate.</li>
+</ol>
+
+<p>Your server-side program should:</p>
+
+<ol>
+	<li>Print <code class="java">Server started!</code> when the program starts.</li>
+	<li>Receive a request from the client and respond accordingly.</li>
+</ol>
+
+<ul>
+	<li>For a <code class="java">PUT</code> request, send a status code <code class="java">200</code> if the file is created successfully; otherwise, send a status code <code class="java">403</code>.</li>
+	<li>For a <code class="java">GET</code> request, send a <code class="java">200</code> status code and the <code class="java">FILE_CONTENT</code> separated by a single space if the file exists; otherwise, send a <code class="java">404</code> status code.</li>
+	<li>For a <code class="java">DELETE</code> request, send a <code class="java">200</code> status code if the file is deleted successfully; otherwise, send a <code class="java">404</code> status code.</li>
+</ul>
+
+<p>      3. Server program should not terminate until it receives the <code class="java">exit</code> command.</p>
+
+<h5 id="examples">Examples</h5>
+
+<p>The greater-than symbol followed by a space (<code class="java">&gt; </code>) represents the user input. Note that it's not part of the input.</p>
+
+<p>The first execution of the client program should produce the following output:</p>
+
+<pre><code class="language-no-highlight">Enter action (1 - get a file, 2 - create a file, 3 - delete a file): &gt; 2
+Enter filename: &gt; 123.txt
+Enter file content: &gt; This is the first file on the server!
+The request was sent.
+The response says that file was created!</code></pre>
+
+<p>Then, the server should create a file on the disk drive with the text "<em>This is the first file on the server!</em>". You should be able to access this file even after restarting the server.</p>
+
+<p>After the second execution, the output of the client program should be the following:</p>
+
+<pre><code class="language-no-highlight">Enter action (1 - get a file, 2 - create a file, 3 - delete a file): &gt; 1
+Enter filename: &gt; 123.txt
+The request was sent.
+The content of the file is: This is the first file on the server!
+</code></pre>
+
+<p>Here is an example of the output after deleting the file:</p>
+
+<pre><code class="language-no-highlight">Enter action (1 - get a file, 2 - create a file, 3 - delete a file): &gt; 3
+Enter filename: &gt; 123.txt
+The request was sent.
+The response says that the file was successfully deleted!
+</code></pre>
+
+<p>After attempting to delete the same file again, the output should be the following:</p>
+
+<pre><code class="language-no-highlight">Enter action (1 - get a file, 2 - create a file, 3 - delete a file): &gt; 3
+Enter filename: &gt; 123.txt
+The request was sent.
+The response says that the file was not found!
+</code></pre>
+
+<p>After attempting to get a file that doesn't exist, the output should be the following:</p>
+
+<pre><code class="language-no-highlight">Enter action (1 - get a file, 2 - create a file, 3 - delete a file): &gt; 1
+Enter filename: &gt; file_that_doesnt_exist.txt
+The request was sent.
+The response says that the file was not found!
+</code></pre>
+
+<p>Here is an example of the output after stopping the server:</p>
+
+<pre><code class="language-no-highlight">Enter action (1 - get a file, 2 - create a file, 3 - delete a file): &gt; exit
+The request was sent.</code></pre>

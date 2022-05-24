@@ -1,0 +1,12 @@
+type: hyperskill
+title: File Server
+language: English
+summary: It's so easy to lose your precious data — unless you store it on a server.
+  Besides, file servers allow you to access your files remotely, no matter where you
+  are. In this project, you will create your own file server, even though a simple
+  one.<br/><br/>Learn more at <a href="https://hyperskill.org/projects/52?utm_source=ide&utm_medium=ide&utm_campaign=ide&utm_content=project-card">https://hyperskill.org/projects/52</a>
+programming_language: Java
+programming_language_version: 11
+content:
+- File Server
+mode: Study

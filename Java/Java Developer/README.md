@@ -11,6 +11,6 @@ Choose this track to learn more about Java, one of the most popular programming 
 | Contacts | Hard(Graduate Project) |
 | Budget Manager | Hard(Graduate Project) |
 | JSON Database | Hard(Graduate Project) |
-| File Server | Hard(Graduate Project) |
+| [File Server](./File%20Server/) | Hard(Graduate Project) |
 | Sorting Tool | Hard(Graduate Project) |
 | JSON-XML Converter | Hard(Graduate Project) |

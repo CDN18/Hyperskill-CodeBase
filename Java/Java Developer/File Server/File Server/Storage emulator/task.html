@@ -1,0 +1,42 @@
+<h5 id="description">Description</h5>
+
+<p>An HTTP File Server is like a remote file storage. If you have Internet access, you can manage your files from anywhere in the world. In this project, you will create your own file keeper that will let you save, get, and delete files. </p>
+
+<p>Let's start by creating a simulator of a file storage that can save only 10 files named<em> file1, file2, file3, ... file10</em>. At first, when the file server just starts, there are no files on it yet: you add them using the <code class="java">add</code> command followed by the name of the file, for example, <code class="java">add NAME</code>, where <code class="java">NAME</code> is the actual name of the file. </p>
+
+<p>Your program should support three additional commands: <code class="java">get</code>, <code class="java">delete</code>, and <code class="java">exit</code>. The <code class="java">get</code> command will be used to retrieve a file: <code class="java">get NAME</code>. The <code class="java">delete</code> command will be used to delete a file: <code class="java">delete NAME</code>. The <code class="java">exit</code> command should terminate the program.</p>
+
+<h5 id="objectives">Objectives </h5>
+
+<p>In this stage, your program should:</p>
+
+<ol>
+	<li>Accept a command and a file name from the user.</li>
+	<li>For the <code class="java">add</code> action, print the message <code class="java">The file NAME added successfully</code> if the file has been added; otherwise, print the message <code class="java"><span style="color: #000000;">Cannot add the file NAME</span></code>.</li>
+	<li>For the <code class="java">get</code> action, print  the message <code class="java">The file NAME was sent</code> if the file exists; otherwise, print the message <code class="java">The file NAME not found</code>.</li>
+	<li>For the <code class="java">delete</code> action, print the message <code class="java">The file NAME was deleted</code> if the file has been deleted successfully; otherwise, print the message <code class="java">The file NAME not found</code>.</li>
+</ol>
+
+<h5 id="example">Example</h5>
+
+<p>Below is an output example of the described program. Try to output all the messages from the example.</p>
+
+<p>The greater-than symbol followed by a space (<code class="java">&gt; </code>) represents the user input. Note that it's not part of the input.</p>
+
+<pre><code class="java">&gt; add file1
+The file file1 added successfully
+&gt; add file1
+Cannot add the file file1
+&gt; add file11
+Cannot add the file file11
+&gt; get file1
+The file file1 was sent
+&gt; get file2
+The file file2 not found
+&gt; get abcd1
+The file abcd1 not found
+&gt; delete file2
+The file file2 not found
+&gt; delete file1
+The file file1 was deleted
+&gt; exit</code></pre>

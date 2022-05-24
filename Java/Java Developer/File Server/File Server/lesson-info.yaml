@@ -1,0 +1,7 @@
+type: framework
+content:
+- Storage emulator
+- Networking
+- Save a text file
+- Save anything
+current_task: 3
