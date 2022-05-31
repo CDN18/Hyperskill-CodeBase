@@ -1,0 +1,75 @@
+<h5 id="description" style="text-align: center;">Description</h5>
+
+<p>In this stage, you will improve the usability of your text editor.</p>
+
+<p>The first thing to point out is that the "Save" and "Load" buttons take up a lot of space on the screen. You can't add a lot of buttons to the top bar when they contain text. This problem can be solved using icons instead of text. The constructor of <code class="language-java">JButton</code> can take an <code class="language-java">ImageIcon</code> instead of text. You should replace the buttons "Load" and "Save" with corresponding icons. You can download the icons from the internet.</p>
+
+<p>It is also impractical to restrict users to load (open) a file from only one directory, i.e. the project folder. The Swing library has a useful component for navigating your filesystem called <code class="language-java">JFileChooser</code>. So, when the user clicks on the "Open" button (the button that was previously named "Load") you should open a file manager using <code class="language-java">JFileChooser</code> and let the user choose the file he wants to open. Then, the contents of this file should be visible in the text editor. You follow <a target="_blank" target="_blank" target="_blank" target="_blank" target="_blank" href="http://www.mkyong.com/swing/java-swing-jfilechooser-example/" rel="nofollow noopener noreferrer">this</a> link to see how to use <code class="language-java">JFileChooser</code>.</p>
+
+<p>Also, you should add a search panel. It should contain a text field, a "Start search" button, a "Previous match" button and a "Next match” button. All of these buttons should also be icons. The search can be performed by regular expressions or by plain text. For this, you should add a checkbox that is checked when the user wants to search using a regular expression. You can use <code class="language-java">JCheckBox</code> for this. The search can slow down the GUI thread, so you should implement the search in a separate thread.</p>
+
+<p>After the user presses the "Start search" button, the program should select the first part of the text that is matched and put the caret at the end of the selected part. Use buttons "Next match" and "Previous match" to iterate through all the matches in the text. You can use the following working code to set the caret position and select the text of the text area:</p>
+
+<pre><code class="language-java">textArea.setCaretPosition(index + foundText.length());
+textArea.select(index, index + foundText.length());
+textArea.grabFocus();</code></pre>
+
+<p>Do not forget about the menu. You can add a new menu list with search functionality that copies all the search buttons.</p>
+
+<p>Due to testing reasons, you need to name some components.</p>
+
+<p>Set the names to these components:</p>
+
+<ul>
+	<li>JTextArea component to "TextArea"</li>
+	<li>Search field to "SearchField"</li>
+	<li>Button that saves the file to "SaveButton"</li>
+	<li>Button that opens a filemanager to "OpenButton"</li>
+	<li>Start search button to "StartSearchButton"</li>
+	<li>Previous match button to "PreviousMatchButton"</li>
+	<li>Next match button to "NextMatchButton"</li>
+	<li>Use regex checkbox to "UseRegExCheckbox"</li>
+	<li>JFileChooser to "FileChooser"</li>
+	<li>ScrollPane to "ScrollPane"</li>
+	<li>File option in menu to "MenuFile"</li>
+	<li>Search option in menu to "MenuSearch"</li>
+	<li>Open option in menu to "MenuOpen"</li>
+	<li>Save option in menu to "MenuSave"</li>
+	<li>Exit option in menu to "MenuExit"</li>
+	<li>Start search option in menu to "MenuStartSearch"</li>
+	<li>Previous match option in menu to "MenuPreviousMatch"</li>
+	<li>Next match option in menu to "MenuNextMatch"</li>
+	<li>Use regex option in menu to "MenuUseRegExp"</li>
+</ul>
+
+<p>For the testing reasons, you should use a single instance of <code class="language-java">JFileChooser</code>. Add this instance to the frame using <code class="language-java">add</code> method. Hide this instance of JFileChooser if it isn't needed at the moment and show it when it is.</p>
+
+<h5 id="example" style="text-align: center;">Example</h5>
+
+<p>Below is an example of what your text editor might look like:</p>
+
+<p> </p>
+
+<p style="text-align: center;"><img alt="" height="433" src="https://ucarecdn.com/c9a09e0a-a4bf-4b96-96d6-8180dfbda308/" width="619"></p>
+
+<p> </p>
+
+<p style="text-align: center;"><img alt="" src="https://ucarecdn.com/4fc28e91-c3e2-4ab2-a130-f589a79cc900/"></p>
+
+<p> </p>
+
+<p style="text-align: center;"><img alt="" src="https://ucarecdn.com/91ccfb04-98e3-4cc4-9a20-6ecae77f5682/"></p>
+
+<p> </p>
+
+<p style="text-align: center;"><img alt="" src="https://ucarecdn.com/e6a27c9a-4195-416c-96d8-c3da0d2f5ff9/"></p>
+
+<p style="text-align: center;"><img alt="" src="https://ucarecdn.com/959f414f-d7c7-44be-af07-630d224a5c36/"></p>
+
+<p> </p>
+
+<p style="text-align: center;"><img alt="" src="https://ucarecdn.com/908cdec4-2376-4c01-a8b8-e38c2cec3b33/"></p>
+
+<p> </p>
+
+<p style="text-align: center;"><img alt="" src="https://ucarecdn.com/05bd4f5c-e22b-453a-b31c-6641e24a7d1a/"></p>

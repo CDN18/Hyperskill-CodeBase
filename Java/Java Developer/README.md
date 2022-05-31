@@ -14,3 +14,4 @@ Choose this track to learn more about Java, one of the most popular programming 
 | [File Server](./File%20Server/) | Hard(Graduate Project) |
 | Sorting Tool | Hard(Graduate Project) |
 | JSON-XML Converter | Hard(Graduate Project) |
+| [Text Editor](./Text%20Editor/) | Hard |

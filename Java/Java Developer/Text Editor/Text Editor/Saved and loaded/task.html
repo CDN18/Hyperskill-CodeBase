@@ -1,0 +1,50 @@
+<h5 id="description" style="text-align: center;">Description</h5>
+
+<p>In this stage, you will write a program that can read files from the hard drive, edit them, and save them to the same or any other file.</p>
+
+<p>Notice that if you expand the window, the other elements stay in the same place. However, in most applications, you can see that some components get bigger or smaller when you change the size of the window. To do this, you should apply another layout instead of the null layout that was shown in the first stage.</p>
+
+<p>In Java, there are a lot of different layouts, and the default layout is named <code class="language-java">BorderLayout</code>. This layout has 5 places for components: top, bottom, left, right, and center. If you execute the code below you can see where these places are. Do not forget to remove the<code class="language-java"> setLayout(null)</code> line and add nothing, as <code class="language-java">BorderLayout</code> is a standard layout for <code class="language-java">JFrame</code>. <a target="_blank" target="_blank" target="_blank" target="_blank" target="_blank" href="https://docs.oracle.com/javase/tutorial/uiswing/layout/visual.html" rel="nofollow noopener noreferrer">Here</a> you can see a visual representation of different layouts.</p>
+
+<pre><code class="language-java">add(new JButton("North"), BorderLayout.NORTH);
+add(new JButton("South"), BorderLayout.SOUTH);
+add(new JButton("West"), BorderLayout.WEST);
+add(new JButton("East"), BorderLayout.EAST);
+add(new JButton("Center"), BorderLayout.CENTER);</code></pre>
+
+<p>So this layout can contain only 5 components, but is this enough to create more complex programs? Yes, and actually this layout is used widely when developing programs on Swing. The component <code class="language-java">JPanel</code> can contain other components. The default layout for this is <code class="language-java">FlowLayout;</code> it puts components on the screen from left to right and from top to bottom. Just add a <code class="language-java">JPanel</code> component to the frame with <code class="language-java">BorderLayout</code> and then add several components to this <code class="language-java">JPanel</code> with <code class="language-java">FlowLayout</code>!  You can find out more about <code class="language-java">BorderLayout</code> <a target="_blank" target="_blank" target="_blank" target="_blank" target="_blank" href="https://docs.oracle.com/javase/tutorial/uiswing/layout/border.html" rel="nofollow noopener noreferrer">here</a> and <a target="_blank" target="_blank" target="_blank" target="_blank" target="_blank" href="https://hajsoftutorial.com/borderlayout/" rel="nofollow noopener noreferrer">here</a>. Check out <a target="_blank" target="_blank" target="_blank" target="_blank" target="_blank" href="https://docs.oracle.com/javase/tutorial/uiswing/layout/flow.html" rel="nofollow noopener noreferrer">this link</a> to see how to use FlowLayout.</p>
+
+<p>Did you notice that if you type more text than the size of the component (in our case, in <code class="language-java">JTextArea</code>), then the text is just not visible? This is the problem that can happen with any component. To solve it, this component should be wrapped by another component - <code class="language-java">JScrollPane</code>. This class takes the initial component as a parameter and should be added to the <code class="language-java">JFrame</code> instead of it. Also, all manipulations with size and location should be done with this wrapper. As a result, the component can be scrolled horizontally as well as vertically. <a target="_blank" target="_blank" target="_blank" target="_blank" target="_blank" href="https://www.javatpoint.com/java-jscrollpane" rel="nofollow noopener noreferrer">Here</a> and <a target="_blank" target="_blank" target="_blank" target="_blank" target="_blank" href="https://way2java.com/swing/jscrollpane/" rel="nofollow noopener noreferrer">here</a> you can see how to use JScrollPane.</p>
+
+<p>Now, let's add working with files. To load a file from a hard drive, the user should specify the name of the existing file. If you run this from an IDE, this file should be in the same folder as the "src" folder. Then, after the user presses the "Load" button, the content of the file should be displayed in the text field. After editing, you should be able to save the file. For that you need to specify a name for the file and then press the button "Save".</p>
+
+<p>To create a one-line input field for the name of the file you need the <code class="language-java">JTextField</code> component. To get the input text from that field, you need the <code class="language-java">getText</code> method.</p>
+
+<p>To create buttons, you need <code class="language-java">JButton</code>. Now, you need to add interaction with buttons. Some of the code should execute when pressing the button. To perform this action, you need <code class="language-java">ActionListener</code>. Since <code class="language-java">ActionListener</code> is an interface, you need to implement the <code class="language-java">actionPerformed</code> method in a class that implements this interface. This would be your code when the user presses the button. Note, that for different buttons you need different logic, so you need different classes that implement the <code class="language-java">ActionListener</code> interface. After that, you need to bind each class with each button. The method <code class="language-java">button.addActionListener(ActionListener listener)</code> makes this possible. This method takes an object of a class that implements <code class="language-java">ActionListener</code>. After that, everything should be fine. Pressing the button triggers the <code class="language-java">actionPerformed</code> method of that object.</p>
+
+<p>If you are familiar with lambdas, you can use them instead of creating classes that will be used only once. You can implement them as shown in the following template:</p>
+
+<pre><code class="language-java">JButton button = new JButton();
+button.addActionListener(actionEvent -&gt; {
+/* write your code here */
+});</code></pre>
+
+<p>During the programming of this stage, you may want to slightly tweak the sizes of the components. You can do it in two ways: first is to create an invisible border around it (<a target="_blank" target="_blank" target="_blank" target="_blank" target="_blank" href="http://www.java2s.com/example/java/swing/set-jcomponent-margin.html" rel="nofollow noopener noreferrer">this </a>link will help), and the second is to force the component to be a certain size (<a target="_blank" target="_blank" target="_blank" target="_blank" target="_blank" href="http://www.java2s.com/example/java/swing/force-jcomponent-size.html" rel="nofollow noopener noreferrer">this</a> link).</p>
+
+<p>Due to testing reasons, you need to set names to some components.</p>
+
+<p>Set the names to these components:</p>
+
+<ul>
+	<li>JTextArea component to "TextArea"</li>
+	<li>A field which contains filename to "FilenameField"</li>
+	<li>A button that saves the file to "SaveButton"</li>
+	<li>A button that loads a file to "LoadButton"</li>
+	<li>ScrollPane to "ScrollPane"</li>
+</ul>
+
+<h5 id="example" style="text-align: center;">Example</h5>
+
+<p>Below is an example of what your text editor might look like:</p>
+
+<p style="text-align: center;"><img alt="" src="https://ucarecdn.com/df773afa-ad5e-4fc3-b1e3-60f505dff53c/"></p>

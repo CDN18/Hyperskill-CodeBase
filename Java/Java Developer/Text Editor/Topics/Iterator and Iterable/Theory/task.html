@@ -1,0 +1,123 @@
+<h2>Iterator and Iterable</h2>
+<html>
+ <head></head>
+ <body>
+  <p>As you know, there is a <em>for-each </em>loop and the <code class="language-java">forEach</code> method to iterate over elements of a collection. Both of them provide a simple and unified way to process different types of collections. In this topic, you will learn more about why they work and how to use them.</p> 
+  <h5 id="being-iterable" style="text-align: center;">Being iterable</h5> 
+  <p>The <em>Java Standard Library</em> has a special interface called <code class="language-java">Iterable</code>. Implementing this interface allows objects of a class to be targets of the<em> for-each</em> loop. If you think that the <code class="language-java">Collection</code> interface extends this to be <strong>iterable</strong>, you are absolutely right.</p> 
+  <pre><code class="language-java">public interface Collection&lt;E&gt; extends Iterable&lt;E&gt; { /* methods */ }</code></pre> 
+  <p></p>
+  <div class="alert alert-primary">
+   The 
+   <code class="language-java">Collection</code> interface extends 
+   <code class="language-java">Iterable</code>, but 
+   <code class="language-java">Map</code> does not.
+  </div>
+  <p></p> 
+  <p>Due to this, any collection class (<code class="language-java">List</code>, <code class="language-java">Queue</code>, <code class="language-java">Set</code>) can be considered as <code class="language-java">Iterable</code>.</p> 
+  <pre><code class="language-kotlin">Iterable&lt;String&gt; iterable = List.of("first", "second", "third");</code></pre> 
+  <p>The order of elements when iterating is specific to a chosen collection. For lists, the order is the same as the order of its elements.</p> 
+  <pre><code class="language-java">List&lt;String&gt; strings = List.of("first", "second", "third");
+
+// the loop prints "first", "second", and then "third"
+for (String elem : strings) {
+    System.out.println(elem);
+}</code></pre> 
+  <p>The same is true for the <code class="language-java">forEach</code> method that can take the reference to a method:</p> 
+  <pre><code class="language-java">// the loop prints "first", "second", and then "third"
+strings.forEach(System.out::println);</code></pre> 
+  <p>For sets, the situation is different, since ordinary sets are not ordered. As an experiment, you can replace the list with the following set:</p> 
+  <pre><code class="language-java">Set&lt;String&gt; strings = Set.of("first", "second", "third");</code></pre> 
+  <p>The result may be different each time the program starts.</p> 
+  <p>The <code class="language-java">Iterable</code> interface provides three generic methods. In this topic, we will consider two of them:</p> 
+  <ul> 
+   <li><code class="language-java">Iterator&lt;T&gt; iterator()</code> returns a special object which can iterate over the collection;</li> 
+   <li><code class="language-java">void forEach(Consumer&lt;T&gt; action)</code> takes an action and executes it on each element of the collection, it can be used together with lambda expressions and method references.</li> 
+  </ul> 
+  <p>All collections that inherit the <code class="language-java">Collection</code> interface have these methods.</p> 
+  <h5 id="using-iterators" style="text-align: center;">Using iterators</h5> 
+  <p>The <code class="language-java">Iterator&lt;T&gt;</code> is a universal mechanism for iterating over collections regardless of their structure. It takes elements in the order provided by the collection. In some sense, it is like a moveable "pointer" to an element of the collection.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   The 
+   <strong>iterator</strong> allows you to remove elements from the underlying collection but you cannot do it using a 
+   <em>for-each</em> loop.
+  </div>
+  <p></p> 
+  <p>Some methods of the <code class="language-java">Iterator&lt;E&gt;</code> interface:</p> 
+  <ul> 
+   <li><code class="language-java">boolean hasNext()</code> returns <code class="language-java">true</code> if the iteration has more elements, and <code class="language-java">false</code> otherwise;</li> 
+   <li><code class="language-java">E next()</code> returns the next element in the iteration;</li> 
+   <li><code class="language-java">void remove()</code> removes the last element returned by this iterator from the collection.</li> 
+  </ul> 
+  <p>The <em>for-each</em> loop uses the first two methods under the hood.</p> 
+  <p>It is also possible to directly access and use an iterator of a collection. The typical usage includes three steps:</p> 
+  <ol> 
+   <li>Check the collection has next element.</li> 
+   <li>Obtain the next element.</li> 
+   <li>Process the obtained element.</li> 
+  </ol> 
+  <p>For example, let's remove all elements less than 10 from a sorted set.</p> 
+  <pre><code class="language-java">Set&lt;Long&gt; set = new TreeSet&lt;&gt;(); // sorted set
+set.add(10L);
+set.add(5L);
+set.add(18L);
+set.add(14L);
+set.add(9L);
+
+System.out.println(set); // [5, 9, 10, 14, 18]
+
+Iterator&lt;Long&gt; iter = set.iterator();
+while (iter.hasNext()) {
+    Long current = iter.next();
+    if (current &lt; 10L) {
+        iter.remove();
+    }
+}
+
+System.out.println(set); // [10, 14, 18]</code></pre> 
+  <p>In this example, the <strong>iterator</strong> gets elements according to the sorting order and successfully removes some of them.</p> 
+  <h5 id="an-iterator-for-lists" style="text-align: center;">An iterator for lists</h5> 
+  <p>There is a special iterator for lists called <code class="language-java">ListIterator</code> which extends the common <code class="language-java">Iterator</code> interface. It allows the programmer to traverse the list in either direction, modify the list during iteration, and obtain the current position in the list.</p> 
+  <p>In addition to standard <code class="language-java">Iterator</code>'s methods, this iterator provides the following methods:</p> 
+  <ul> 
+   <li><code class="language-java">int nextIndex()</code> returns the index of the element that would be returned by invoking <code class="language-java">next</code>;</li> 
+   <li><code class="language-java">boolean hasPrevious()</code> returns <code class="language-java">true</code> if the list has more previous elements;</li> 
+   <li><code class="language-java">E previous()</code> returns the previous element in the list and moves the cursor position backwards;</li> 
+   <li><code class="language-java">int previousIndex()</code> returns the index of the element that would be returned by invoking <code class="language-java">previous</code>;</li> 
+   <li><code class="language-java">void set(E element)</code> replaces the last element returned by <code class="language-java">next</code> or <code class="language-java">previous</code> with the specified element;</li> 
+   <li><code class="language-java">void add(E element)</code> inserts the specified element into the list immediately before the element that would be returned by <code class="language-java">next</code>, and after the element that would be returned by <code class="language-java">previous</code>.<em style="color: #629755;"> </em></li> 
+  </ul> 
+  <p>Here is an example of how it works:</p> 
+  <pre><code class="language-java">List&lt;Integer&gt; list = List.of(1, 2, 3, 4);
+ListIterator&lt;Integer&gt; iterator = list.listIterator(); // only for lists!
+
+// go to the last element
+while (iterator.hasNext()) { iterator.next(); }
+
+// print elements in the backward order with their indexes
+while (iterator.hasPrevious()) {
+    int previousIndex = iterator.previousIndex();
+    int element = iterator.previous();
+    System.out.println(element + " on " + previousIndex);
+}</code></pre> 
+  <p>This code prints numbers in the backward order with their indexes.</p> 
+  <pre><code class="language-java">4 on 3
+3 on 2
+2 on 1
+1 on 0</code></pre> 
+  <p></p>
+  <div class="alert alert-warning">
+   If you invoke 
+   <code class="language-java">previous</code> before 
+   <code class="language-java">previousIndex</code> the result will differ since 
+   <code class="language-java">previous</code> changes the state of the iterator: the current position.
+  </div>
+  <p></p> 
+  <p>This concludes our consideration of iterators.</p> 
+  <h5 id="to-sum-up">To sum up</h5> 
+  <p>Implementing <code class="language-java">Iterable</code> interface allows objects of a class to be targets of the<em> for-each</em> loop and more than that. This interface provides <code class="language-java">iterator</code> and <code class="language-java">forEach</code> methods, which are inherited by all collections of the <code class="language-java">Collection</code> interface.</p> 
+  <p>The <code class="language-java">iterator</code> method returns an <code class="language-java">Iterator&lt;T&gt;</code> object, which implements an interface for iterating over collections regardless of their structure. It takes elements in the order provided by the collection and has <code class="language-java">hasNext</code>, <code class="language-java">next</code>, and <code class="language-java">remove</code> methods. The first two are actually used by a <em>for-each</em> loop, which does not allow removing elements.</p> 
+  <p>A <code class="language-java">ListIterator</code> is a special iterator for lists that extends the <code class="language-java">Iterator</code> interface. It has additional methods that allow traversing the list in either direction, modify the list during iteration, and obtain the current position.</p>
+ </body>
+</html>

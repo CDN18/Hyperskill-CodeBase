@@ -1,0 +1,23 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: It's impossible to return an instance of an anonymous class from a method.
+- text: It's possible to pass an instance of an anonymous class to a method as an
+    argument.
+- text: An anonymous class can have any number of methods.
+- text: An anonymous class can have fields.
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2559#comment
+status: Solved
+record: -1

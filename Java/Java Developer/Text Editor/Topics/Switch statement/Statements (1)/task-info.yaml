@@ -1,0 +1,23 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: A switch can work with the byte, short, char, and int primitive data types
+- text: Inside a case the keyword break is always needed
+- text: If no case statements match the input value the default statement is executed
+- text: The switch statement must always have a default case
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2067#comment
+status: Solved
+record: -1
+custom_name: Statements

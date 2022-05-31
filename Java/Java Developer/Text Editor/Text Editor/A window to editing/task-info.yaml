@@ -1,0 +1,76 @@
+type: edu
+custom_name: stage1
+files:
+- name: src/editor/ApplicationRunner.java
+  visible: true
+  text: |
+    package editor;
+
+
+    public class ApplicationRunner {
+        public static void main(String[] args) {
+            new TextEditor();
+        }
+    }
+  learner_created: false
+- name: src/editor/TextEditor.java
+  visible: true
+  text: |
+    package editor;
+
+    import javax.swing.*;
+
+    public class TextEditor extends JFrame {
+        public TextEditor() {
+            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            setSize(300, 300);
+            setVisible(true);
+            setLayout(null);
+        }
+    }
+  learner_created: false
+- name: test/EditorTest.java
+  visible: false
+  text: |
+    import editor.TextEditor;
+    import org.assertj.swing.fixture.JTextComponentFixture;
+    import org.hyperskill.hstest.dynamic.DynamicTest;
+    import org.hyperskill.hstest.stage.SwingTest;
+    import org.hyperskill.hstest.testcase.CheckResult;
+    import org.hyperskill.hstest.testing.swing.SwingComponent;
+
+    import static org.hyperskill.hstest.testcase.CheckResult.correct;
+
+    public class EditorTest extends SwingTest {
+        public EditorTest() {
+            super(new TextEditor());
+        }
+
+        @SwingComponent
+        private JTextComponentFixture textArea;
+
+        @DynamicTest
+        CheckResult test1() {
+            requireEditable(textArea);
+            requireEmpty(textArea);
+            return correct();
+        }
+
+        @DynamicTest(feedback = "Can't enter multiline text in TextArea.")
+        CheckResult test2() {
+            String text = "Basic text editor\nType here too\nHere also";
+            textArea.setText(text);
+            textArea.requireText(text);
+            return correct();
+        }
+    }
+  learner_created: false
+- name: src/editor/Constants.java
+  visible: true
+  learner_created: true
+feedback_link: https://hyperskill.org/learn/step/5258#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Sat, 28 May 2022 13:41:49 UTC
+record: 1

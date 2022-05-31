@@ -1,0 +1,13 @@
+type: hyperskill
+title: Text Editor
+language: English
+summary: Looks like you like challenges! This project, however, is not too tricky
+  if you’re feeling like an advanced learner. A text editor you’re going to write
+  allows to search for specific files and open them. Check out the prerequisites,
+  and if you’re ready, let’s roll!<br/><br/>Learn more at <a href="https://hyperskill.org/projects/38?utm_source=ide&utm_medium=ide&utm_campaign=ide&utm_content=project-card">https://hyperskill.org/projects/38</a>
+programming_language: Java
+programming_language_version: 11
+content:
+- Text Editor
+- Topics
+mode: Study
