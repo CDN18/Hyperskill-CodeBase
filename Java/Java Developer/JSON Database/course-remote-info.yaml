@@ -33,12 +33,12 @@ topics:
     theory_id: 6865
   - title: IDE
     theory_id: 10996
+  - title: Introduction to Operating systems
+    theory_id: 9704
   - title: Computer algorithms
     theory_id: 16547
   - title: Immutability
     theory_id: 7929
-  - title: Introduction to Operating systems
-    theory_id: 9704
   - title: The big O notation
     theory_id: 16699
   - title: Data structures
@@ -131,10 +131,6 @@ topics:
     theory_id: 3553
   - title: Custom exceptions
     theory_id: 15639
-  - title: Pseudocode
-    theory_id: 15090
-  - title: Pseudocode basics
-    theory_id: 19510
   - title: Command line overview
     theory_id: 8977
   - title: Parameters and Options
@@ -143,6 +139,10 @@ topics:
     theory_id: 3746
   - title: Files
     theory_id: 3635
+  - title: Pseudocode
+    theory_id: 15090
+  - title: Pseudocode basics
+    theory_id: 19510
   - title: Fixed-size array
     theory_id: 7255
   - title: Dynamic array

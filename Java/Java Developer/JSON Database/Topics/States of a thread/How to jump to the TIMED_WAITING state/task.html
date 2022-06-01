@@ -1,0 +1,13 @@
+<h2>How to jump to the TIMED_WAITING state</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Suppose that we have two references: one to the current thread and one to another thread.</p> 
+  <p> </p> 
+  <pre><code class="language-xml">Thread currentThread = Thread.currentThread();
+Thread anotherThread = new Thread(...);
+anotherThread.start();</code></pre> 
+  <p> </p> 
+  <p>Which invocations cause the <code class="language-xml">currentThread</code> to jump to the state <code class="language-xml">TIMED_WAITING</code>?</p>
+ </body>
+</html>

@@ -468,6 +468,12 @@ files:
 - name: src/common/Response.java
   visible: true
   learner_created: true
+- name: src/server/data/data.json
+  visible: true
+  learner_created: true
+- name: src/server/data/db.json
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/5495#comment
 status: Solved
 feedback:

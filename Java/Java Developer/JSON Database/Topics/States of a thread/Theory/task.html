@@ -1,0 +1,37 @@
+<h2>States of a thread</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Throughout its life cycle, a thread's state changes. This is caused both by the actions of the programmer and internal events of the operating system. In this lesson, we will consider possible states of a thread and some features of the operating system (OS) level.</p> 
+  <h5 id="the-threadstate-enum" style="text-align: center;">The Thread.State enum</h5> 
+  <p>In Java, the state of a thread is presented by the <code class="language-java">Thread.State</code> enum with six possible values:</p> 
+  <ul> 
+   <li><code class="language-java">NEW</code>: an instance of the class <code class="language-java">Thread</code> has been created, but it has not yet started;</li> 
+   <li><code class="language-java">RUNNABLE</code>: a thread is executing in JVM but it may be waiting for OS resources such as processor;</li> 
+   <li><code class="language-java">BLOCKED</code>: a thread that is blocked waiting for a monitor lock (we will consider it later);</li> 
+   <li><code class="language-java">WAITING</code>: a thread is waiting for another thread indefinitely long to perform a task (e.g., join without timeout);</li> 
+   <li><code class="language-java">TIMED_WAITING</code>: a thread is waiting for another thread for a specified waiting time (e.g., sleep, join with timeout);</li> 
+   <li><code class="language-java">TERMINATED</code>: a thread is terminated when <code class="language-java">run</code> method completely executes itself or an uncaught exception occurs. Once a thread terminates it never gets back to its runnable state.</li> 
+  </ul> 
+  <p>To obtain the current state of a thread there is an instance method <code class="language-java">getState()</code>.</p> 
+  <p>Let's look at how these states are changed depending on the programmer's actions.</p> 
+  <pre><code class="language-java">Thread worker = ... // new worker to make a difficult task
+System.out.println(worker.getState()); // NEW
+         
+worker.start(); // start the worker
+System.out.println(worker.getState()); // RUNNABLE
+
+worker.join();  // waiting for completing the worker
+System.out.println(worker.getState()); // TERMINATED</code></pre> 
+  <p>When a thread is created its state is <code class="language-java">NEW</code>. When a thread is started its state is <code class="language-java">RUNNABLE</code> (the method <code class="language-java">run</code>may not be called yet). Finally, when a thread is completed the state is <code class="language-java">TERMINATED</code>. At the same time, the <code class="language-java">main</code> thread also went through the state <code class="language-java">WAITING</code> (indefinitely long) after invoking the <code class="language-java">thread.join()</code> method.</p> 
+  <p> </p> 
+  <h5 id="the-almost-real-lifecycle-of-a-thread" style="text-align: center;">The (almost) real lifecycle of a thread</h5> 
+  <p>The states discussed above are specific to Java's point of view. The real lifecycle of a thread is slightly different. As an example, the <code class="language-java">RUNNABLE</code> state is actually more complicated than it might seem. In this state, a thread might actually be running or it might be ready to run.</p> 
+  <p>Below you may see the simplified lifecycle of a thread related to the OS terminology. The diagram includes five states and events that cause the thread to jump from one state to another. Please, do not confuse these states with the corresponding states in Java (those are in UPPERCASE).</p> 
+  <p style="text-align: center;"><img alt="" height="284" src="https://ucarecdn.com/06e9a09a-7e0a-4d18-8bb7-cbe6bbd33f21/" width="812"></p> 
+  <p style="text-align: center;"><strong>The simplified lifecycle of a thread in the operating system</strong></p> 
+  <p>After initialization, the thread is ready to run (<strong>Ready</strong>). It is the responsibility of the <strong>thread scheduler</strong> to give some instants of time for a thread to run (<strong>Running</strong>) and then move it again to <strong>Ready</strong>. This is used to share the processor time between multiple threads concurrently. Otherwise, one thread could capture all the available processor time.</p> 
+  <p>The <strong>Waiting </strong>state means that a thread is temporarily inactive (for example, a thread may be waiting for another thread or completing I/O). A thread in this state cannot continue its execution any further until it is moved to the <strong>Ready</strong> state. Actually, this state is a set of different states that we will consider in the next topics.</p> 
+  <p>Of course, the real life cycle of threads is even more complicated than we've discussed. For example, the <strong>Waiting</strong> state actually corresponds to multiple states at once. For now, it is enough to have a simplified view of how threads actually work.</p>
+ </body>
+</html>

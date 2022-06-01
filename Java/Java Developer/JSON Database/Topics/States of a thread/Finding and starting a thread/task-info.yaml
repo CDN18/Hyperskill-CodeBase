@@ -1,0 +1,17 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class ThreadProcessor {
+        public static void findAndStartThread(Thread... threads) throws InterruptedException {
+            // implement this method
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2537#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Wed, 01 Jun 2022 13:45:18 UTC
+record: -1

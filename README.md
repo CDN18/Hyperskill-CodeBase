@@ -10,7 +10,7 @@ The repo contains my source codes of projects in [Hyperskill/JetBrains Academy](
 ## Coverage (within the track)
 - All projects with "Challenging" difficulties
 - All graduate projects
-- A few projects that I'm interested in
+- A few other projects that I'm interested in
 
 ## Catalogue
 ### [Java](./Java/)
