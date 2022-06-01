@@ -1,0 +1,53 @@
+<h5 id="description" style="text-align: center;">Description</h5>
+
+<p>Usually, online databases are accessed through the Internet. In this project, the database will be on your computer, but it will still be run as a separate program. The client who wants to get, create, or delete some information is a separate program, too.<br>
+<br>
+We will be using a <strong>socket</strong> to connect to the database. A socket is an interface to send and receive data between different processes. These processes can be on the same computer or different computers connected through the Internet.<br>
+<br>
+In this stage, you will implement the simplest connection between one server and one client. The client should send the server a message: something along the lines of <code class="language-java">Give me a record # N</code>, where <code class="language-java">N</code> is an integer number. The server should reply <code class="language-java">A record # N was sent!</code> to the client.<br>
+Both the client and the server should print the received messages to the console. Note that they exchange only these texts, not actual database files.</p>
+
+<p>Before a client connects to the server, the server output should be <code class="language-java">'Server started!'</code>.</p>
+
+<p>To connect to the server, the client must know its address, which consists of two parts: IP-address and port. The address of your computer is always "127.0.0.1". The port can be any number between 0 and 65535, but preferably greater than 1024. </p>
+
+<p>Let's take a look at this client-side code:</p>
+
+<pre><code class="language-java">String address = "127.0.0.1";
+int port = 23456;
+Socket socket = new Socket(InetAddress.getByName(address), port);
+DataInputStream input = new DataInputStream(socket.getInputStream());
+DataOutputStream output = new DataOutputStream(socket.getOutputStream());</code></pre>
+
+<p>The client created a new socket, which means that the client tried to connect to the server. Successful creation of a socket means that the client found the server and managed to connect to it.</p>
+
+<p>After that, you can see the creation of <code class="language-java">DataInputStream</code> and <code class="language-java">DataOutputStream</code> objects. These are the input and output streams to the server. If you expect data from the server, you need to write <code class="language-java">input.readUTF()</code>. This returns the String object that the server sent to the client. If you want to send data to the server, you need to write <code class="language-java">output.writeUTF(stringText)</code>, and this message will be sent to the server.</p>
+
+<p>Now let's look at the server-side code:</p>
+
+<pre><code class="language-java">String address = "127.0.0.1";
+int port = 23456;
+ServerSocket server = new ServerSocket(port, 50, InetAddress.getByName(address));
+Socket socket = server.accept();
+DataInputStream input = new DataInputStream(socket.getInputStream());
+DataOutputStream output  = new DataOutputStream(socket.getOutputStream());</code></pre>
+
+<p>The server created a ServerSocket object that waits for client connections. When a client connects, the method <code class="language-java">server.accept() </code>returns the Socket connection to this client. After that, you can see the creation of <code class="language-java">DataInputStream</code> and <code class="language-java">DataOutputStream</code> objects: these are the input and output streams to this client, now from the server side. To receive data from the client, write <code class="language-java">input.readUTF()</code>. To send data to the client, write <code class="language-java">output.writeUTF(stringText)</code>. The server should stop after responding to the client.</p>
+
+<p>Note: the server and the client are different programs that run separately. Your server should run from the main method of the <em>/server/Main</em> class, and the client should run from the main method of the <em>/client/Main</em> class. To test your program you should run the server first so a client can connect to the server.</p>
+
+<h5 id="example" style="text-align: center;">Example</h5>
+
+<p>The server should output something like this:</p>
+
+<pre><code class="language-java">Server started!
+Received: Give me a record # 12
+Sent: A record # 12 was sent!
+</code></pre>
+
+<p>The client should output something like this:</p>
+
+<pre><code class="language-java">Client started!
+Sent: Give me a record # 12
+Received: A record # 12 was sent!
+</code></pre>

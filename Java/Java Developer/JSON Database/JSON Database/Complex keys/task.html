@@ -1,0 +1,151 @@
+<h5 id="description" style="text-align: center;">Description</h5>
+
+<p>In this stage, you will improve your database. It should be able to store not only strings, but any JSON objects as values.</p>
+
+<p>The key should not only be a string since the user needs to retrieve part of the JSON value. For example, in the code snippet below, the user wants to get only the surname of the person:</p>
+
+<pre><code class="language-no-highlight">{
+    ... ,
+
+    "person": {
+        "name": "Adam",
+        "surname": "Smith"
+    }
+    ...
+}</code></pre>
+
+<p>Then, the user should type the full path to this field in a form of a JSON array: <code class="language-json">["person", "surname"]</code>. If the user wants to get the full <code class="language-json">person</code> object, then they should type <code class="language-json">["person"]</code>. The user should be able to set separate values inside JSON values. For example, it should be possible to set only the surname using a key <code class="language-json">["person", "surname"]</code> and any value including another JSON. Moreover, the user should be able to set new values inside other JSON values. For example, using a key <code class="language-json">["person", "age"]</code> and a value <code class="language-json">25</code>, the <code class="language-json">person</code> object should look like this:</p>
+
+<pre><code class="language-no-highlight">{
+    ... ,
+
+    "person": {
+        "name": "Adam",
+        "surname": "Smith",
+        "age": 25
+
+    }
+    ...
+}</code></pre>
+
+<p>If there are no root objects, the server should create them, too. For example, if the database does not have a <code class="language-json">"person1"</code> key but the user set the value <code class="language-json">{"id1": 12, "id2": 14}</code> for the key <code class="language-json">["person1", "inside1", "inside2"]</code>, then the database will have the following structure:</p>
+
+<pre><code class="language-no-highlight">{
+    ... ,
+    "person1": {
+        "inside1": {
+            "inside2" : {
+                "id1": 12,
+                "id2": 14
+            }
+        }
+    },
+    ...
+}</code></pre>
+
+<p>The deletion of objects should follow the same rules. If a user deletes the object above by the key <code class="language-json">["person1", "inside1", "inside2]</code>, then only <code class="language-json">"inside2"</code> should be deleted, not <code class="language-json">"inside1"</code> or <code class="language-json">"person1"</code>. See the example below:</p>
+
+<pre><code class="language-no-highlight">{
+    ... ,
+    "person1": {
+        "inside1": { }
+    }
+
+    ...
+}</code></pre>
+
+<h5 id="example" style="text-align: center;">Example</h5>
+
+<p>The greater-than symbol followed by a space (<code class="language-json">&gt; </code>) represents the user input. Note that it's not part of the input.</p>
+
+<p>Starting the server:</p>
+
+<pre><code class="language-no-highlight">&gt; java Main
+Server started!</code></pre>
+
+<p>There is no need to format JSON in the output.</p>
+
+<p>Starting the clients:</p>
+
+<pre><code class="language-json">&gt; java Main -t set -k 1 -v "Hello world!" 
+Client started!
+Sent: {"type":"set","key":"1","value":"Hello world!"}
+Received: {"response":"OK"}</code></pre>
+
+<pre><code class="language-json">&gt; java Main -in setFile.json 
+Client started!
+Sent:
+{
+   "type":"set",
+   "key":"person",
+   "value":{
+      "name":"Elon Musk",
+      "car":{
+         "model":"Tesla Roadster",
+         "year":"2018"
+      },
+      "rocket":{
+         "name":"Falcon 9",
+         "launches":"87"
+      }
+   }
+}
+Received: {"response":"OK"}</code></pre>
+
+<pre><code class="language-json">&gt; java Main -in getFile.json 
+Client started!
+Sent: {"type":"get","key":["person","name"]}
+Received: {"response":"OK","value":"Elon Musk"}</code></pre>
+
+<pre><code class="language-json">&gt; java Main -in updateFile.json 
+Client started!
+Sent: {"type":"set","key":["person","rocket","launches"],"value":"88"}
+Received: {"response":"OK"}</code></pre>
+
+<pre><code class="language-json">&gt; java Main -in secondGetFile.json 
+Client started!
+Sent: {"type":"get","key":["person"]}
+Received:
+{
+   "response":"OK",
+   "value":{
+      "name":"Elon Musk",
+      "car":{
+         "model":"Tesla Roadster",
+         "year":"2018"
+      },
+      "rocket":{
+         "name":"Falcon 9",
+         "launches":"88"
+      }
+   }
+}</code></pre>
+
+<pre><code class="language-json">&gt; java Main -in deleteFile.json 
+Client started!
+Sent: {"type":"delete","key":["person","car","year"]}
+Received: {"response":"OK"}
+</code></pre>
+
+<pre><code class="language-json">&gt; java Main -in secondGetFile.json 
+Client started!
+Sent: {"type":"get","key":["person"]}
+Received:
+{
+   "response":"OK",
+   "value":{
+      "name":"Elon Musk",
+      "car":{
+         "model":"Tesla Roadster"
+      },
+      "rocket":{
+         "name":"Falcon 9",
+         "launches":"88"
+      }
+   }
+}</code></pre>
+
+<pre><code class="language-json">&gt; java Main -t exit 
+Client started!
+Sent: {"type":"exit"}
+Received: {"response":"OK"}</code></pre>

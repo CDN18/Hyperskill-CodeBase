@@ -1,0 +1,93 @@
+<h5 id="description" style="text-align: center;">Description</h5>
+
+<p>In this stage, you will store the database in the JSON format. To work with JSON, we recommend to use <code class="language-json">GSON</code> library made by Google. It is also included in our project setup. It is a good idea to get familiar with the library beforehand: see <a target="_blank" target="_blank" target="_blank" target="_blank" target="_blank" href="http://zetcode.com/java/gson/" rel="nofollow noopener noreferrer">zetcode.com</a> for some explanations!</p>
+
+<p>In this stage, you should store the database as a Java JSON object.</p>
+
+<p>The keys should be strings (no more limited integer indexes), and the values should be strings, as well.</p>
+
+<p>Example of JSON database:</p>
+
+<pre><code class="language-json">{
+    "key1": "String value",
+    "key2": 2,
+    "key3": true
+}</code></pre>
+
+<p>Also, you should send to the server a valid JSON (as a string) which includes all the parameters needed to execute the request. Below are a few examples for the <code class="language-json">set</code>, <code class="language-json">get</code>, and <code class="language-json">delete</code> requests. Don't worry about multiple lines: the <code class="language-json">GSON</code> library can represent them as a single line. Also, don't worry about extra spaces before and after quotes.</p>
+
+<p>Here is what the <code class="language-json">set</code> request format should look like:</p>
+
+<pre><code class="language-json">{ "type": "set", "key": "Secret key", "value": "Secret value" }</code></pre>
+
+<p>The responses should be in the JSON format. Please consider the examples below.</p>
+
+<pre><code class="language-json">{ "response": "OK" }</code></pre>
+
+<p>The <code class="language-json">get</code> request</p>
+
+<pre><code class="language-json">{ "type": "get", "key": "Secret key" }</code></pre>
+
+<p>The <code class="language-json">delete</code> request</p>
+
+<pre><code class="language-json">{ "type": "delete", "key": "Key that doesn't exist" }</code></pre>
+
+<p>In the case of a <code class="language-json">get</code> request with a key stored in the database:</p>
+
+<pre><code class="language-json">{ "response": "OK", "value": "Secret value" }</code></pre>
+
+<p>In the case of a <code class="language-json">get</code> or <code class="language-json">delete</code> request with a key that doesn't exist:</p>
+
+<pre><code class="language-json">{ "response": "ERROR", "reason": "No such key" }</code></pre>
+
+<p>The arguments will be passed to the client in the following format:</p>
+
+<pre><code class="language-no-highlight">-t set -k "Some key" -v "Here is some text to store on the server"</code></pre>
+
+<p><code class="language-json">-t</code> is the type of the request, and <code class="language-json">-k</code> is the key. <code class="language-json">-v</code> is the value to save in the database: you only need it in case of a <code class="language-json">set</code> request.</p>
+
+<h5 id="example" style="text-align: center;">Example</h5>
+
+<p>The greater-than symbol followed by a space (<code class="language-json">&gt; </code>) represents the user input. Note that it's not part of the input.</p>
+
+<p> Starting the server:</p>
+
+<pre><code class="language-no-highlight">&gt; java Main
+Server started!</code></pre>
+
+<p>Starting the clients:</p>
+
+<pre><code class="language-json">&gt; java Main -t get -k 1
+Client started!
+Sent: {"type":"get","key":"1"}
+Received: {"response":"ERROR","reason":"No such key"}</code></pre>
+
+<pre><code class="language-json">&gt; java Main -t set -k 1 -v HelloWorld!
+Client started!
+Sent: {"type":"set","key":"1","value":"HelloWorld!"}
+Received: {"response":"OK"}</code></pre>
+
+<pre><code class="language-json">&gt; java Main -t get -k 1
+Client started!
+Sent: {"type":"get","key":"1"}
+Received: {"response":"OK","value":"HelloWorld!"}</code></pre>
+
+<pre><code class="language-json">&gt; java Main -t delete -k 1
+Client started!
+Sent: {"type":"delete","key":"1"}
+Received: {"response":"OK"}</code></pre>
+
+<pre><code class="language-json">&gt; java Main -t delete -k 1
+Client started!
+Sent: {"type":"delete","key":"1"}
+Received: {"response":"ERROR","reason":"No such key"}</code></pre>
+
+<pre><code class="language-json">&gt; java Main -t get -k 1
+Client started!
+Sent: {"type":"get","key":"1"}
+Received: {"response":"ERROR","reason":"No such key"}</code></pre>
+
+<pre><code class="language-json">&gt; java Main -t exit
+Client started!
+Sent: {"type":"exit"}
+Received: {"response":"OK"}</code></pre>

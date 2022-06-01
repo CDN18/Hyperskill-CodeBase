@@ -1,0 +1,13 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: "import java.util.List;        \n\nclass Utils {\n\n    public static List<Integer>\
+    \ sortOddEven(List<Integer> numbers) {\n        return numbers;\n    }\n}"
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/12972#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Tue, 31 May 2022 12:56:53 UTC
+record: -1

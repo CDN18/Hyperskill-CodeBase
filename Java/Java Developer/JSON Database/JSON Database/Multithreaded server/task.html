@@ -1,0 +1,73 @@
+<h5 id="description" style="text-align: center;">Description</h5>
+
+<p>In this stage, you will improve your client and server by adding the ability to work with files.</p>
+
+<p>The server should keep the database on the hard drive in the <code class="language-json">db.json</code> file and update only after setting a new value or deleting one. You should store the JSON file in the <em>/server/data</em> folder.</p>
+
+<p>Let's think about another important aspect: when your database server becomes very popular, it won’t be able to process a lot of requests because it can only process one request at a time. To avoid that, you can parallelize the server's work using executors, so that every request is parsed and handled in a separate executor's task. The main thread should just wait for incoming requests.</p>
+
+<p>For this kind of functionality, you need synchronization because all your threads will work with the same file. Even after parallelizing, you need to preserve the integrity of the database. Of course, you can't write the file in two separate threads simultaneously, but if no one is currently writing to the file, a lot of threads can read it, and no-one can interrupt the other since no-one is modifying it. This behavior is implemented in <code class="language-json">java.util.concurrent.locks.ReentrantReadWriteLock</code> class. It allows multiple readers of the resource but only a single writer. Once a writer locks the resource, it waits until all the readers finish reading and only then starts to write. The readers can freely read the file even though other readers locked it, but if the writer locks the file, no readers can read it.</p>
+
+<p>To use this class, you need two locks: read lock and write lock. See the snippet below:</p>
+
+<pre><code class="language-no-highlight">ReadWriteLock lock = new ReentrantReadWriteLock();
+Lock readLock = lock.readLock();
+Lock writeLock = lock.writeLock();</code></pre>
+
+<p>Every time you want to read the file, invoke <code class="language-json">readLock.lock()</code>. After reading, invoke <code class="language-json">readLock.unlock()</code>. Do the same with <code class="language-json">writeLock</code>, but only when you want to change the data.</p>
+
+<p>Also, you should implement the ability to read a request from a file. If the <code class="language-json">-in</code> argument followed by the file name was provided, you should read a request from that file. The file will be stored in <em>/client/data</em>.</p>
+
+<p>Here are some examples of the input file contents:</p>
+
+<pre><code class="language-json">{"type":"set","key":"name","value":"Kate"}</code></pre>
+
+<pre><code class="language-json">{"type":"get","key":"name"}</code></pre>
+
+<pre><code class="language-json">{"type":"delete","key":"name"}</code></pre>
+
+<h5 id="example" style="text-align: center;">Example</h5>
+
+<p>The greater-than symbol followed by a space (<code class="language-json">&gt; </code>) represents the user input. Note that it's not part of the input.</p>
+
+<p>Starting the server:</p>
+
+<pre><code class="language-no-highlight">&gt; java Main
+Server started!</code></pre>
+
+<p>Starting the clients:</p>
+
+<pre><code class="language-json">&gt; java Main -t get -k 1
+Client started!
+Sent: {"type":"get","key":"1"}
+Received: {"response":"ERROR","reason":"No such key"}</code></pre>
+
+<pre><code class="language-json">&gt; java Main -t set -k 1 -v HelloWorld! 
+Client started!
+Sent: {"type":"set","key":"1","value":"HelloWorld!"}
+Received: {"response":"OK"}</code></pre>
+
+<pre><code class="language-json">&gt; java Main -t get -k 1 
+Client started!
+Sent: {"type":"get","key":"1"}
+Received: {"response":"OK","value":"HelloWorld!"}</code></pre>
+
+<pre><code class="language-json">&gt; java Main -in testSet.json 
+Client started!
+Sent: {"type":"set","key":"name","value":"Kate"}
+Received: {"response":"OK"}</code></pre>
+
+<pre><code class="language-json">&gt; java Main -in testGet.json 
+Client started!
+Sent: {"type":"get","key":"name"}
+Received: {"response":"OK","value":"Kate"}</code></pre>
+
+<pre><code class="language-json">&gt; java Main -in testDelete.json 
+Client started!
+Sent: {"type":"delete","key":"name"}
+Received: {"response":"OK"}</code></pre>
+
+<pre><code class="language-json">&gt; java Main -t exit 
+Client started!
+Sent: {"type":"exit"}
+Received: {"response":"OK"}</code></pre>

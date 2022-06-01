@@ -1,0 +1,52 @@
+<h5 id="description" style="text-align: center;">Description</h5>
+
+<p>JSON database is a single file database that stores information in the form of JSON. It is a remote database, so it's usually accessed  through the Internet.</p>
+
+<p>In this stage, you need to simulate a database that can store text information in an array of the size 100. From the start of the database, every cell contains an empty string. Users can save strings in the cells, read the information from these cells, and delete that information if needed. After a string has been deleted, that cell should contain an empty string.</p>
+
+<p>The user can use the <code class="java">set</code>, <code class="java">get</code>, or, <code class="java">delete</code> commands.</p>
+
+<p>After <code class="java">set</code>, the user should specify a number (1-100) and the text to be saved in the cell. If the index is wrong, the program should output <code class="java">ERROR</code>, otherwise, output  <code class="java">OK</code>. If the specified cell already contains information, it should be overwritten.<br>
+<br>
+After <code class="java">get</code>, the user should specify the number of the cell from which they want to get information. If the cell is empty or the index is wrong, the program should output <code class="java">ERROR</code>; otherwise, the program should output the content of the cell.<br>
+<br>
+After <code class="java">delete</code>, the user should specify the number of the cell. If the index is wrong, the program should output <code class="java">ERROR</code>; otherwise, output <code class="java">OK</code>. If the string is empty, you don't have to do anything. </p>
+
+<p>To exit the program, the user should enter <code class="java">exit</code>.</p>
+
+<p>Your program should run from the main method of the <strong>server/Main</strong> class.</p>
+
+<h5 id="example" style="text-align: center;">Example</h5>
+
+<p>The greater-than symbol followed by a space (<code class="java">&gt; </code>) represents the user input. Note that it's not part of the input.</p>
+
+<pre><code class="language-no-highlight">&gt; get 1
+ERROR
+&gt; set 1 Hello world!
+OK
+&gt; set 1 HelloWorld!
+OK
+&gt; get 1
+HelloWorld!
+&gt; delete 1
+OK
+&gt; delete 1
+OK
+&gt; get 1
+ERROR
+&gt; set 55 Some text here
+OK
+&gt; get 55
+Some text here
+&gt; get 56
+ERROR
+&gt; delete 55
+OK
+&gt; delete 56
+OK
+&gt; delete 100
+OK
+&gt; delete 101
+ERROR
+&gt; exit
+</code></pre>
