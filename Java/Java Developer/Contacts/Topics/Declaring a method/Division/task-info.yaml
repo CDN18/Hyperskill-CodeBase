@@ -1,0 +1,28 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.Scanner;
+
+    public class Main {
+
+        public static double divide(long a, long b) {
+            // write your code here
+        }
+
+        /* Do not change code below */
+        public static void main(String[] args) {
+            final Scanner scanner = new Scanner(System.in);
+            final long a = scanner.nextLong();
+            final long b = scanner.nextLong();
+            System.out.println(divide(a, b));
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/10991#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Fri, 03 Jun 2022 05:02:15 UTC
+record: -1

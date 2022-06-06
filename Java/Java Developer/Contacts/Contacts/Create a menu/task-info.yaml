@@ -1,0 +1,247 @@
+type: edu
+custom_name: stage2
+files:
+- name: test/ContactsTest.java
+  visible: false
+  text: "import org.hyperskill.hstest.stage.StageTest;\nimport org.hyperskill.hstest.testcase.CheckResult;\n\
+    import org.hyperskill.hstest.testcase.TestCase;\n\nimport java.util.List;\nimport\
+    \ java.util.function.Function;\n\nclass TestClue {\n\n    Function<String, CheckResult>\
+    \ callback;\n\n    TestClue(Function<String, CheckResult> callback) {\n      \
+    \  this.callback = callback;\n    }\n}\n\n\npublic class ContactsTest extends\
+    \ StageTest<TestClue> {\n\n    private TestCase<TestClue> testPhoneNumber(String\
+    \ num, boolean isCorrect, boolean giveHint) {\n        return new TestCase<TestClue>()\n\
+    \            .setInput(\n                \"count\\n\" +\n                    \"\
+    add\\n\" +\n                    \"John1\\n\" +\n                    \"Smith2\\\
+    n\" +\n                    num + \"\\n\" +\n                    \"list\\n\" +\n\
+    \                    \"exit\")\n            .setAttach(new TestClue(output ->\
+    \ {\n\n                boolean containsNum = output.contains(num);\n         \
+    \       boolean containsNoNumber = output.contains(\"[no number]\");\n\n     \
+    \           if (containsNum && containsNoNumber) {\n                    return\
+    \ new CheckResult(false,\n                        \"On \\'list\\\" action you\
+    \ seem to output both \" +\n                            \"\\\"[no number]\\\"\
+    \ and an actual number - \" +\n                            \"you should output\
+    \ only one of them.\"\n                    );\n                }\n\n         \
+    \       if (!containsNum && !containsNoNumber) {\n                    return new\
+    \ CheckResult(false,\n                        \"On \\'list\\\" action you seem\
+    \ to output neither \" +\n                            \"\\\"[no number]\\\" nor\
+    \ an actual number - \" +\n                            \"you should output one\
+    \ of them.\"\n                    );\n                }\n\n\n                if\
+    \ (isCorrect &&\n                    !output.contains(num) &&\n              \
+    \      output.contains(\"[no number]\")\n\n                    ||\n\n        \
+    \            !isCorrect &&\n                        output.contains(num) &&\n\
+    \                        !output.contains(\"[no number]\")\n                )\
+    \ {\n                    if (giveHint) {\n                        if (isCorrect)\
+    \ {\n                            return new CheckResult(false,\n             \
+    \                   \"Test contains a legal phone number \\\"\" + num + \"\\\"\
+    , \" +\n                                    \"you should print this number instead\
+    \ of \\\"[no number]\\\"\");\n                        } else {\n             \
+    \               return new CheckResult(false,\n                              \
+    \  \"Test contains an illegal phone number \\\"\" + num + \"\\\", \" +\n     \
+    \                               \"you should print \\\"[no number]\\\" instead\
+    \ of this number\");\n                        }\n                    } else {\n\
+    \                        if (isCorrect) {\n                            return\
+    \ new CheckResult(false,\n                                \"Test contains an legal\
+    \ phone number, \" +\n                                    \"you should print this\
+    \ number instead of \\\"[no number]\\\"\");\n                        } else {\n\
+    \                            return new CheckResult(false,\n                 \
+    \               \"Test contains an illegal phone number, \" +\n              \
+    \                      \"you should print \\\"[no number]\\\" instead of this\
+    \ number\");\n                        }\n                    }\n             \
+    \   }\n                return CheckResult.correct();\n            }));\n    }\n\
+    \n    @Override\n    public List<TestCase<TestClue>> generate() {\n        return\
+    \ List.of (\n            new TestCase<TestClue>()\n                .setInput(\"\
+    exit\")\n                .setAttach(new TestClue(output -> {\n               \
+    \     output = output.strip().toLowerCase();\n                    if (!output.contains(\"\
+    enter action\")) {\n                        return new CheckResult(false,\n  \
+    \                          \"No \\\"Enter action\\\" substring found in the output\"\
+    );\n                    }\n                    return CheckResult.correct();\n\
+    \                })),\n\n            new TestCase<TestClue>()\n              \
+    \  .setInput(\n                    \"count\\n\" +\n                        \"\
+    exit\")\n                .setAttach(new TestClue(output -> {\n               \
+    \     output = output.strip().toLowerCase();\n                    if (!output.contains(\"\
+    0 records\")) {\n                        return new CheckResult(false,\n     \
+    \                       \"No \\\"0 records\\\" substring found in the output\"\
+    );\n                    }\n                    return CheckResult.correct();\n\
+    \                })),\n\n            new TestCase<TestClue>()\n              \
+    \  .setInput(\n                    \"edit\\n\" +\n                        \"exit\"\
+    )\n                .setAttach(new TestClue(output -> {\n                    output\
+    \ = output.strip().toLowerCase();\n                    if (!output.contains(\"\
+    no records to edit\")) {\n                        return new CheckResult(false,\n\
+    \                            \"No \\\"No records to edit\\\" substring found in\
+    \ the output\");\n                    }\n                    return CheckResult.correct();\n\
+    \                })),\n\n            new TestCase<TestClue>()\n              \
+    \  .setInput(\n                    \"remove\\n\" +\n                        \"\
+    exit\")\n                .setAttach(new TestClue(output -> {\n               \
+    \     output = output.strip().toLowerCase();\n                    if (!output.contains(\"\
+    no records to remove\")) {\n                        return new CheckResult(false,\n\
+    \                            \"No \\\"No records to remove\\\" substring found\
+    \ in the output\");\n                    }\n                    return CheckResult.correct();\n\
+    \                })),\n\n            new TestCase<TestClue>()\n              \
+    \  .setInput(\n                    \"add\\n\" +\n                        \"John\\\
+    n\" +\n                        \"Smith\\n\" +\n                        \"123 456\
+    \ 789\\n\" +\n                        \"count\\n\" +\n                       \
+    \ \"exit\")\n                .setAttach(new TestClue(output -> {\n           \
+    \         output = output.strip().toLowerCase();\n                    if (output.contains(\"\
+    0 records\")) {\n                        return new CheckResult(false,\n     \
+    \                       \"Can't add the person\");\n                    }\n  \
+    \                  return CheckResult.correct();\n                })),\n\n   \
+    \         new TestCase<TestClue>()\n                .setInput(\n             \
+    \       \"add\\n\" +\n                        \"John1\\n\" +\n               \
+    \         \"Smith2\\n\" +\n                        \"123-456-78912\\n\" +\n  \
+    \                      \"list\\n\" +\n                        \"exit\")\n    \
+    \            .setAttach(new TestClue(output -> {\n                    if (!output.contains(\"\
+    1. John1 Smith2, 123-456-78912\") &&\n                        !output.contains(\"\
+    1. John1 Smith2, [no number]\")) {\n\n                        return new CheckResult(false,\n\
+    \                            \"No \\\"[id]. [name] [surname], [phone]\\\" part\
+    \ \" +\n                                \"after \\\"list\\\" action\");\n    \
+    \                }\n                    return CheckResult.correct();\n      \
+    \          })),\n\n            testPhoneNumber(\"123\", true, true),\n       \
+    \     testPhoneNumber(\"123 abc\", true, true),\n            testPhoneNumber(\"\
+    123-ABC\", true, true),\n            testPhoneNumber(\"123 456 xyz\", true, true),\n\
+    \            testPhoneNumber(\"123-456-XYZ\", true, true),\n            testPhoneNumber(\"\
+    123 456-789\", true, true),\n            testPhoneNumber(\"123-456 789\", true,\
+    \ true),\n            testPhoneNumber(\"123 45-up-89\", true, true),\n\n     \
+    \       testPhoneNumber(\"(123)\", true, true),\n            testPhoneNumber(\"\
+    (123) 456\", true, true),\n            testPhoneNumber(\"123-(456)\", true, true),\n\
+    \            testPhoneNumber(\"123 (456) 789\", true, true),\n            testPhoneNumber(\"\
+    123-(456)-789\", true, true),\n            testPhoneNumber(\"(123) 456-789\",\
+    \ true, true),\n            testPhoneNumber(\"(123)-456 789\", true, true),\n\
+    \            testPhoneNumber(\"123 (45)-67-89\", true, true),\n            testPhoneNumber(\"\
+    +(phone)\", true, true),\n\n            testPhoneNumber(\"123+456 78912\", false,\
+    \ true),\n            testPhoneNumber(\"(123)-456-(78912)\", false, true),\n \
+    \           testPhoneNumber(\"9\", true, true),\n            testPhoneNumber(\"\
+    123 456 9\", false, true),\n            testPhoneNumber(\"123 9 9234\", false,\
+    \ true),\n            testPhoneNumber(\"123 4?5 678\", false, true),\n       \
+    \     testPhoneNumber(\"+(with space)\", false, true),\n\n\n            testPhoneNumber(\"\
+    193\", true, false),\n            testPhoneNumber(\"129 abf\", true, false),\n\
+    \            testPhoneNumber(\"123-AFC\", true, false),\n            testPhoneNumber(\"\
+    154 456 xyz\", true, false),\n            testPhoneNumber(\"123-566-XYZ\", true,\
+    \ false),\n            testPhoneNumber(\"123 456-349\", true, false),\n      \
+    \      testPhoneNumber(\"134-456 789\", true, false),\n            testPhoneNumber(\"\
+    123 45-down-89\", true, false),\n\n            testPhoneNumber(\"(234)\", true,\
+    \ false),\n            testPhoneNumber(\"(123) 566\", true, false),\n        \
+    \    testPhoneNumber(\"873-(456)\", true, false),\n            testPhoneNumber(\"\
+    123 (786) 789\", true, false),\n            testPhoneNumber(\"163-(456)-789\"\
+    , true, false),\n            testPhoneNumber(\"(123) 496-789\", true, false),\n\
+    \            testPhoneNumber(\"(173)-456 789\", true, false),\n            testPhoneNumber(\"\
+    123 (95)-67-89\", true, false),\n            testPhoneNumber(\"+(another)\", true,\
+    \ false),\n\n            testPhoneNumber(\"132+456 78912\", false, false),\n \
+    \           testPhoneNumber(\"(123)-456-(45912)\", false, false),\n          \
+    \  testPhoneNumber(\"8\", true, false),\n            testPhoneNumber(\"153 456\
+    \ 9\", false, false),\n            testPhoneNumber(\"823 9 9234\", false, false),\n\
+    \            testPhoneNumber(\"123 4?5 654\", false, false),\n            testPhoneNumber(\"\
+    +(another space)\", false, true),\n            \n            testPhoneNumber(\"\
+    +1 ()\", false, false),\n            testPhoneNumber(\"+1 11\", true, false),\n\
+    \n            new TestCase<TestClue>()\n                .setInput(\n         \
+    \           \"add\\n\" +\n                        \"Jq\\n\" +\n              \
+    \          \"Sr\\n\" +\n                        \"123\\n\" +\n               \
+    \         \"add\\n\" +\n                        \"Qw\\n\" +\n                \
+    \        \"We\\n\" +\n                        \"234\\n\" +\n                 \
+    \       \"list\\n\" +\n                        \"exit\")\n                .setAttach(new\
+    \ TestClue(output -> {\n                    if (!output.contains(\"1. Jq Sr, 123\"\
+    ) ||\n                        !output.contains(\"2. Qw We, 234\")) {\n       \
+    \                 return new CheckResult(false,\n                            \"\
+    New persons should be added at the end of the list\");\n                    }\n\
+    \                    return CheckResult.correct();\n                })),\n\n \
+    \           new TestCase<TestClue>()\n                .setInput(\n           \
+    \         \"add\\n\" +\n                        \"Jq\\n\" +\n                \
+    \        \"Sr\\n\" +\n                        \"123\\n\" +\n                 \
+    \       \"add\\n\" +\n                        \"Qw\\n\" +\n                  \
+    \      \"We\\n\" +\n                        \"234\\n\" +\n                   \
+    \     \"edit\\n\" +\n                        \"2\\n\" +\n                    \
+    \    \"name\\n\" +\n                        \"Qe\\n\" +\n                    \
+    \    \"list\\n\" +\n                        \"exit\")\n                .setAttach(new\
+    \ TestClue(output -> {\n                    if (!output.contains(\"1. Jq Sr, 123\"\
+    ) ||\n                        !output.contains(\"2. Qe We, 234\")) {\n       \
+    \                 return new CheckResult(false,\n                            \"\
+    Something wrong with name editing\");\n                    }\n               \
+    \     return CheckResult.correct();\n                })),\n\n            new TestCase<TestClue>()\n\
+    \                .setInput(\n                    \"add\\n\" +\n              \
+    \          \"Jq\\n\" +\n                        \"Sr\\n\" +\n                \
+    \        \"123\\n\" +\n                        \"add\\n\" +\n                \
+    \        \"Qw\\n\" +\n                        \"We\\n\" +\n                  \
+    \      \"234\\n\" +\n                        \"edit\\n\" +\n                 \
+    \       \"2\\n\" +\n                        \"surname\\n\" +\n               \
+    \         \"QR\\n\" +\n                        \"list\\n\" +\n               \
+    \         \"exit\")\n                .setAttach(new TestClue(output -> {\n   \
+    \                 if (!output.contains(\"1. Jq Sr, 123\") ||\n               \
+    \         !output.contains(\"2. Qw QR, 234\")) {\n                        return\
+    \ new CheckResult(false,\n                            \"Something wrong with surname\
+    \ editing\");\n                    }\n                    return CheckResult.correct();\n\
+    \                })),\n\n            new TestCase<TestClue>()\n              \
+    \  .setInput(\n                    \"add\\n\" +\n                        \"Jq\\\
+    n\" +\n                        \"Sr\\n\" +\n                        \"123\\n\"\
+    \ +\n                        \"add\\n\" +\n                        \"Qw\\n\" +\n\
+    \                        \"We\\n\" +\n                        \"234\\n\" +\n \
+    \                       \"edit\\n\" +\n                        \"2\\n\" +\n  \
+    \                      \"number\\n\" +\n                        \"+(123) (123)\\\
+    n\" +\n                        \"list\\n\" +\n                        \"exit\"\
+    )\n                .setAttach(new TestClue(output -> {\n                    if\
+    \ (!output.contains(\"1. Jq Sr, 123\") ||\n                        !output.contains(\"\
+    2. Qw We, [no number]\")) {\n                        return new CheckResult(false,\n\
+    \                            \"Something wrong with number editing\");\n     \
+    \               }\n                    return CheckResult.correct();\n       \
+    \         })),\n\n            new TestCase<TestClue>()\n                .setInput(\n\
+    \                    \"add\\n\" +\n                        \"Jq\\n\" +\n     \
+    \                   \"Sr\\n\" +\n                        \"123\\n\" +\n      \
+    \                  \"add\\n\" +\n                        \"Qw\\n\" +\n       \
+    \                 \"We\\n\" +\n                        \"234\\n\" +\n        \
+    \                \"remove\\n\" +\n                        \"1\\n\" +\n       \
+    \                 \"list\\n\" +\n                        \"exit\")\n         \
+    \       .setAttach(new TestClue(output -> {\n                    if (!output.contains(\"\
+    1. Qw We, 234\")) {\n                        return new CheckResult(false,\n \
+    \                           \"Something wrong with removing contacts\");\n   \
+    \                 }\n                    return CheckResult.correct();\n     \
+    \           })),\n\n            new TestCase<TestClue>()\n                .setInput(\n\
+    \                    \"add\\n\" +\n                        \"Jq\\n\" +\n     \
+    \                   \"Sr\\n\" +\n                        \"123\\n\" +\n      \
+    \                  \"add\\n\" +\n                        \"Qw\\n\" +\n       \
+    \                 \"We\\n\" +\n                        \"234\\n\" +\n        \
+    \                \"remove\\n\" +\n                        \"2\\n\" +\n       \
+    \                 \"list\\n\" +\n                        \"exit\")\n         \
+    \       .setAttach(new TestClue(output -> {\n                    if (!output.contains(\"\
+    1. Jq Sr, 123\")) {\n                        return new CheckResult(false,\n \
+    \                           \"Something wrong with removing contacts\");\n   \
+    \                 }\n                    return CheckResult.correct();\n     \
+    \           }))\n        );\n    }\n\n    @Override\n    public CheckResult check(String\
+    \ reply, TestClue clue) {\n        try {\n            return clue.callback.apply(reply);\n\
+    \        }\n        catch (Exception ex) {\n            return new CheckResult(false,\
+    \ \"Can't check the answer\");\n        }\n    }\n}\n"
+  learner_created: false
+- name: src/contacts/Contact.java
+  visible: true
+  text: |
+    package contacts;
+
+    public class Contact {
+        String name;
+        String surname;
+        String number;
+
+        public Contact(String name, String surname, String number) {
+            this.name = name;
+            this.surname = surname;
+            this.number = number;
+        }
+    }
+  learner_created: true
+- name: src/contacts/PhoneBook.java
+  visible: true
+  learner_created: true
+- name: src/contacts/Main.java
+  visible: true
+  text: |
+    package contacts;
+
+    public class Main {
+        public static void main(String[] args) {
+            System.out.println("Hello World!");
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/5325#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Fri, 03 Jun 2022 09:10:04 UTC
+record: 2

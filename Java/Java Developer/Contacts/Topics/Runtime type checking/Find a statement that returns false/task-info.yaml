@@ -1,0 +1,22 @@
+type: choice
+is_multiple_choice: false
+options:
+- text: circle instanceof Shape
+- text: circle.getClass() == Shape2D.class
+- text: circle instanceof Circle
+- text: circle.getClass() == Circle.class
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/3069#comment
+status: Solved
+record: -1

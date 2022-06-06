@@ -1,0 +1,12 @@
+type: hyperskill
+title: Contacts
+language: English
+summary: 'Here is something you probably use regularly: contacts. In this project,
+  you will write a program to create contacts (like on the mobile phone) and search
+  for people or organizations by name.<br/><br/>Learn more at <a href="https://hyperskill.org/projects/43?utm_source=ide&utm_medium=ide&utm_campaign=ide&utm_content=project-card">https://hyperskill.org/projects/43</a>'
+programming_language: Java
+programming_language_version: 11
+content:
+- Contacts
+- Topics
+mode: Study

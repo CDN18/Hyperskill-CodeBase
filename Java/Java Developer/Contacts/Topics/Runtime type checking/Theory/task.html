@@ -1,0 +1,118 @@
+<h2>Runtime type checking</h2>
+<html>
+ <head></head>
+ <body>
+  <h5 id="runtime-type-checking" style="text-align: center;">Runtime type checking</h5> 
+  <p>A variable of a base class can always refer to an object of a subclass. We can determine the actual type of the referred object at runtime.</p> 
+  <p>Java provides several ways to do it:</p> 
+  <ul> 
+   <li>the <code class="language-java">instanceof</code> operator that can be used for testing if an object is of a specified type;</li> 
+   <li><strong>java reflection</strong> that can be used to obtain an object representing the class.</li> 
+  </ul> 
+  <p>Let's consider these ways to check types of objects at runtime.</p> 
+  <p>Here is a class hierarchy which we will use in examples:</p> 
+  <pre><code class="language-java">class Shape {...}
+
+class Circle extends Shape {...}
+
+class Rectangle extends Shape {...}</code></pre> 
+  <p>The hierarchy is very simple, the fields and methods of classes are hidden for clarity. However, this hierarchy demonstrates the <strong>"IS-A"</strong> relation pretty well.</p> 
+  <h5 id="the-keyword-instanceof" style="text-align: center;">The keyword instanceof</h5> 
+  <p>The binary operator <code class="language-java">instanceof</code> returns <code class="language-java">true</code> if an object is an instance of a particular class or its subclass.</p> 
+  <p>The base syntax is the following:</p> 
+  <pre><code class="language-java">obj instanceof Class</code></pre> 
+  <p>We've created a couple of instances of the classes above:</p> 
+  <pre><code class="language-java">Shape circle = new Circle();  // the reference is Shape, the object is Circle
+Shape rect = new Rectangle(); // the reference is Shape, the object is Rectangle</code></pre> 
+  <p>Let's determine their types:</p> 
+  <pre><code class="language-java">boolean circleIsCircle = circle instanceof Circle; // true
+boolean circleIsRectangle = circle instanceof Rectangle; // false
+boolean circleIsShape = circle instanceof Shape; // true
+
+boolean rectIsRectangle = rect instanceof Rectangle; // true
+boolean rectIsCircle = rect instanceof Circle; // false
+boolean rectIsShape = rect instanceof Shape; // true</code></pre> 
+  <p>So, the <code class="language-java">instanceof</code> operator allows you to determine the actual type of an object even if it is referred to by its superclass.</p> 
+  <p>As you can see, this operator considers a subclass object an instance of the superclass:</p> 
+  <pre><code class="language-java">boolean circleIsShape = circle instanceof Shape; // true</code></pre> 
+  <p><strong>Pay attention,</strong> the type of the object in question should be a subtype (or the type) of the specified class. Otherwise, the statement cannot be compiled.</p> 
+  <p>Here is a non-compiled example:</p> 
+  <pre><code class="language-java">Circle c = new Circle();
+boolean circleIsRect = c instanceof Rectangle; // Inconvertible types</code></pre> 
+  <p>The second line contains the compile-time error: <strong>Inconvertible types</strong>.</p> 
+  <h5 id="pattern-matching-for-instanceof" style="text-align: center;">Pattern matching for instanceof</h5> 
+  <p>Since Java 14 we've had language enhancement for the <code class="language-java">instanceof</code> operator as a preview feature, which was then finalized and officially released in Java 16. Before the release of this feature, it could only operate with a type — now it is also able to operate with a type pattern. This provides us with a more precise syntax for type checking, followed by casting and performing certain operations. To figure out how it's useful to us, let's first look at the code without a pattern matching:</p> 
+  <pre><code class="language-java">public class PatternMatchingDemo {
+    public static void main(String[] args) {
+        Object obj = " ";
+
+        if (obj instanceof String) {
+            String str = (String) obj;
+
+            if (str.isBlank()) {
+                System.out.println("The variable is empty or contains only a whitespace");
+            }
+        }
+    }
+}</code></pre> 
+  <p>Here we have a very simple application. If the <code class="language-java">obj</code> variable is an instance of the <code class="language-java">String</code> class, we cast it to <code class="language-java">String</code> and perform a certain operation. Now take a look at the code where the new pattern is used:</p> 
+  <pre><code class="language-java">public class PatternMatchingDemo {
+    public static void main(String[] args) {
+        Object obj = "";
+
+        if (obj instanceof String str) {
+            if (str.isBlank()) {
+                System.out.println("The variable is empty or contains only a whitespace");
+            }
+        }
+    }
+}</code></pre> 
+  <p>If the statement is true, <code class="language-java">obj</code> will be automatically cast to <code class="language-java">String</code> and its value will be assigned to the <code class="language-java">str</code> variable. In addition, we can combine this code with the logical <code class="language-java">&amp;&amp;</code> operator:</p> 
+  <pre><code class="language-java">public class PatternMatchingDemo {
+    public static void main(String[] args) {
+        Object obj = " ";
+
+        if (obj instanceof String str &amp;&amp; str.length() &gt; 0) {
+            if (str.isBlank()) {
+                System.out.println("The variable contains only a whitespace");
+            }
+        }
+    }
+}</code></pre> 
+  <p>The code to the right of the logical operator is executed only if the type checking returns true and the <code class="language-java">obj</code> value is assigned to the <code class="language-java">str</code> pattern variable. That's why the same code using the <code class="language-java">||</code> logical operator does not compile since it does not require the type checking to return <code class="language-java">true</code>.</p> 
+  <h5 id="use-reflection" style="text-align: center;">Use reflection</h5> 
+  <p>Each object has a method <code class="language-java">getClass</code> that can be used to obtain an object representing the class. We can directly compare the classes represented by objects at runtime using <strong>java reflection</strong>.</p> 
+  <p>Let's consider an example. Here is an instance of <code class="language-java">Circle</code>:</p> 
+  <pre><code class="language-java">Shape circle = new Circle();</code></pre> 
+  <p>Let's test it using reflection:</p> 
+  <pre><code class="language-java">boolean equalsCircle = circle.getClass() == Circle.class; // true
+boolean equalsShape = circle.getClass() == Shape.class;   // false
+boolean rectangle = circle.getClass() == Rectangle.class; // false</code></pre> 
+  <p>Unlike the <code class="language-java">instanceof</code> operator, this approach performs strict type testing and does not see subclass objects as instances of the superclass.</p> 
+  <p>There is also another way to check types. An object representing the class has a method <code class="language-java">isInstance</code> that is similar to the <code class="language-java">instanceof</code> keyword.</p> 
+  <p>Let's test the object <code class="language-java">circle</code> again.</p> 
+  <pre><code class="language-java">boolean isInstanceOfCircle = Circle.class.isInstance(circle); // true
+boolean isInstanceOfShape = Shape.class.isInstance(circle); // true
+boolean isInstanceOfRectangle = Rectangle.class.isInstance(circle); // false</code></pre> 
+  <p>Similar to the <code class="language-java">instanceof</code> operator, this method considers a subclass object as an instance of its superclass. However, unlike the operator, the following example is successfully compiled:</p> 
+  <pre><code class="language-java">Circle c = new Circle();
+boolean circleIsRect = Rectangle.class.isInstance(c); // false</code></pre> 
+  <p>You can use any of the described approaches to determine the actual type of the referred object.</p> 
+  <h5 id="when-to-use-it" style="text-align: center;">When to use it</h5> 
+  <p>If you cast a superclass object to its subclass, you may get a <code class="language-java">ClassCastException</code> if the object has another type. Before casting, you can check the actual type using one of the approaches we've considered in this topic.</p> 
+  <p>The following example demonstrates it.</p> 
+  <pre><code class="language-java">Shape shape = new Circle();
+
+if (shape.getClass() == Circle.class) {
+    Circle circle = (Circle) shape;
+
+    // now we can process it as a circle
+}</code></pre> 
+  <p></p>
+  <div class="alert alert-warning">
+   Keep in mind, a lot of runtime checks in the program may indicate a poor design. Use runtime 
+   <strong>polymorphism</strong> to reduce them.
+  </div>
+  <p></p>
+ </body>
+</html>

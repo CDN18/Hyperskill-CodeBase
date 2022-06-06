@@ -1,0 +1,86 @@
+<h5 id="description" style="text-align: center;">Description</h5>
+
+<p>Sometimes we need to restrict the ability to change the instance fields. For example, a phone number can't be just any string; it should follow some rules. As you can see <a target="_blank" target="_blank" target="_blank" target="_blank" target="_blank" target="_blank" href="https://en.wikipedia.org/wiki/National_conventions_for_writing_telephone_numbers" rel="nofollow noopener noreferrer">here</a>, the phone number format is different for every country, but they all have some elements in common.</p>
+
+<p>So, you should set the field with a phone number to be private and create a getter and setter to this field. The setter should check the value using a regular expression and set the value to the field only if the value satisfies all the rules below:</p>
+
+<ol>
+	<li>The phone number should be split into groups using a space or dash. One group is also possible.</li>
+	<li>Before the first group, there may or may not be a plus symbol.</li>
+	<li>The first group or the second group can be wrapped in parentheses, but there should be no more than one group that is wrapped in parentheses. There may also be no groups wrapped in parentheses.</li>
+	<li>A group can contain numbers, uppercase, and lowercase English letters. A group should be at least 2 symbols in length. But the first group may be only one symbol in length.</li>
+</ol>
+
+<p>If you are struggling with a regular expression that checks all of these, you might check the phone number with only String methods.<br>
+Also, create getters and setters for the name and surname of the person. Besides, there should be a method <code class="java">hasNumber()</code> that checks if the user has a number. Initially, set the number to be an empty string.</p>
+
+<p>Create a separate method to check the validity of the phone number. This is standalone logic, and potentially it can be used in multiple places of a class. But this is also a method for internal use. Therefore, mark the method as private.</p>
+
+<p>This concept of restricting the usage of a class is called <strong>encapsulation</strong>. This is a self-documented solution for how to use a class.</p>
+
+<p>In this stage, you should write a program that keeps all the records in a list. You should be able to add, remove, edit the records, and get the number of records. If the user inputs an incorrect phone number, you should reset it as empty. If the number is empty, you should write the string <code class="java">[no number]</code> instead of it.</p>
+
+<h5 id="examples" style="text-align: center;">Examples</h5>
+
+<p>Below is an example of how your output might look. The symbol <code class="java">&gt;</code> represents the user input.</p>
+
+<p><strong>Example 1:</strong></p>
+
+<pre><code class="language-no-highlight">Enter action (add, remove, edit, count, list, exit): &gt; count
+The Phone Book has 0 records.
+Enter action (add, remove, edit, count, list, exit): &gt; edit
+No records to edit!
+Enter action (add, remove, edit, count, list, exit): &gt; remove
+No records to remove!
+Enter action (add, remove, edit, count, list, exit): &gt; add
+Enter the name: &gt; John
+Enter the surname: &gt; Smith
+Enter the number: &gt; +0 (123) 456-789-ABcd
+The record added.
+Enter action (add, remove, edit, count, list, exit): &gt; add
+Enter the name: &gt; Adam
+Enter the surname: &gt; Jones
+Enter the number: &gt; +0(123)456-789-9999
+Wrong number format!
+The record added.
+Enter action (add, remove, edit, count, list, exit): &gt; list
+1. John Smith, +0 (123) 456-789-ABcd
+2. Adam Jones, [no number]
+Enter action (add, remove, edit, count, list, exit): &gt; edit
+1. John Smith, +0 (123) 456-789-ABcd
+2. Adam Jones, [no number]
+Select a record: &gt; 2
+Select a field (name, surname, number): &gt; number
+Enter number: &gt; (123) 234 345-456
+The record updated!
+Enter action (add, remove, edit, count, list, exit): &gt; list
+1. John Smith, +0 (123) 456-789-ABcd
+2. Adam Jones, (123) 234 345-456
+Enter action (add, remove, edit, count, list, exit): &gt; remove
+1. John Smith, +0 (123) 456-789-ABcd
+2. Adam Jones, (123) 234 345-456
+Select a record: &gt; 1
+The record removed!
+Enter action (add, remove, edit, count, list, exit): &gt; list
+1. Adam Jones, (123) 234 345-456
+Enter action (add, remove, edit, count, list, exit): &gt; exit
+</code></pre>
+
+<p><strong>Example 2:</strong></p>
+
+<pre><code class="language-no-highlight">Enter action (add, remove, edit, count, list, exit): &gt; add
+Enter the name: &gt; John
+Enter the surname: &gt; Smith
+Enter the number: &gt; +0 (123) 456-789-ABcd
+The record added.
+Enter action (add, remove, edit, count, list, exit): &gt; edit
+1. John Smith, +0 (123) 456-789-ABcd
+Select a record: &gt; 1
+Select a field (name, surname, number): &gt; number
+Enter number: &gt; ()()
+Wrong number format!
+The record updated!
+Enter action (add, remove, edit, count, list, exit): &gt; list
+1. John Smith, [no number]
+Enter action (add, remove, edit, count, list, exit): &gt; exit
+</code></pre>
