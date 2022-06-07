@@ -1,0 +1,22 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: fully-qualified class name
+- text: ' timestamp mark when class was loaded'
+- text: class requested loading
+- text: class loader which had loaded this class
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/12599#comment
+status: Solved
+record: -1

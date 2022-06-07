@@ -1,0 +1,67 @@
+<h2>Class Loader</h2>
+<html>
+ <head></head>
+ <body>
+  <br>
+  <p>A typical enterprise Java application may comprise thousands of source and dependency classes. To handle all of them in a proper way JVM introduces a special mechanism called <strong>class loader</strong>. It is a part of <strong>JRE</strong> responsible for dynamic loading classes into memory. Understanding class loading allows to control this process and helps to avoid some types of exceptions.</p> 
+  <p>First of all, let's recall that java code goes through 2 stages: a compilation from source code to byte code (<code class="language-java">.java</code> -&gt; <code class="language-java">.class</code>) and a byte code interpretation. The task of a class loader is finding the needed class through <code class="language-java">.class</code> files from a disc and loading a representing object into the RAM. However, classes are not loaded in bulk mode on the application startup. A class loader loads them on-demand during an interpretation starting with a class containing the <code class="language-java">main</code> method. The on-demand approach means that the class will be loaded on its first invocation. It can be a constructor call, e.g. new <code class="language-java">MyObject()</code> or a static reference to a class, e.g. <code class="language-java">System.out</code></p> 
+  <h5 id="internals">Internals</h5> 
+  <p>A <strong>class loader</strong> concept is represented by <code class="language-java">java.lang.ClassLoader</code> abstract class. There are 3 standard <code class="language-java">ClassLoader</code> implementation:</p> 
+  <ul> 
+   <li> <strong>Bootstrap</strong> loads JDK internal classes e.g. <code class="language-java">java.util</code> package.</li> 
+   <li> <strong>Extension/Platform</strong> loads classes from JDK extensions.</li> 
+   <li> <strong>Application/System</strong> loads classes from application <strong>classpath.</strong></li> 
+  </ul> 
+  <p>One may ask what comes first if classes are loaded by a class loader and the <code class="language-java">ClassLoader</code> itself is a class. To answer the question let's consider a sequence of these <code class="language-java">ClassLoaders</code> invocations. First, JRE creates the <strong>Bootstrap</strong> <code class="language-java">ClassLoader</code> which loads core classes. Then, <strong>Extension</strong> <code class="language-java">ClassLoader</code> is created with <strong>Bootstrap</strong> as a parent. It loads classes for extensions if such exist. Finally, the <strong>Application </strong><code class="language-java">ClassLoader</code> is created with <strong>Extension</strong> as a parent. It is responsible for loading application classes from a classpath. Each class loaded in memory is identified by a fully-qualified class name and <code class="language-java">ClassLoader</code> that loaded this class. Moreover, <code class="language-java">Class</code> has a method <code class="language-java">getClassLoader</code> that returns the class loader which loads the given class.</p> 
+  <p>Take a look at the example:</p> 
+  <pre><code class="language-java">import java.sql.SQLData;
+import java.util.ArrayList;
+
+public class Main {
+    public static void main(String[] args) {
+        ClassLoader listClassLoader = ArrayList.class.getClassLoader();
+        ClassLoader sqlClassLoader = SQLData.class.getClassLoader();
+        ClassLoader mainClassLoader = Main.class.getClassLoader();
+
+        System.out.println(listClassLoader); // null
+        System.out.println(sqlClassLoader.getName()); // platform
+        System.out.println(mainClassLoader.getName()); // app
+    }
+}</code></pre> 
+  <h5 id="delegation-model">Delegation model</h5> 
+  <p>When the class loader receives a request for loading a class, it follows certain steps in order to resolve the class. Default behavior defined by JVM specification:</p> 
+  <ol> 
+   <li>Check if the class has already been loaded</li> 
+   <li>If not, delegate the request to a parent</li> 
+   <li>If the parent class returns nothing, it attempts to find the class in its own classpath</li> 
+  </ol> 
+  <p style="text-align: center;"><img alt="" height="389" src="https://ucarecdn.com/1f09636f-b38b-4a85-ae4c-c96a4cf695b5/" width="590"></p> 
+  <p>Default logic can be overridden in custom class loaders. So web container class loaders will look for classes in the local <strong>classpath</strong> and only in case the class is not found will delegate resolving to a parent.</p> 
+  <h5 id="example">Example</h5> 
+  <p>Let's consider an application that consists of 2 classes. Although it does nothing, it is a good example of a class loader explanation.</p> 
+  <pre><code class="language-java">public class A {
+    public static void main(String[] args) {
+        B b = new B();
+    }
+}</code></pre> 
+  <pre><code class="language-java">public class B {
+}</code></pre> 
+  <p>Launch the program by command:</p> 
+  <pre><code class="language-bash">java A</code></pre> 
+  <p>Let's go through key points of class loading during code execution:</p> 
+  <ol> 
+   <li> Bootstrap <code class="language-java">ClassLoader</code> is invoked by JRE on the start <code class="language-java">java</code> process. It loads <code class="language-java">java</code> internal packages.</li> 
+   <li> Extension <code class="language-java">ClassLoader</code> is invoked but loads nothing.</li> 
+   <li> Application <code class="language-java">ClassLoader</code> is invoked and loads class <code class="language-java">A</code>.</li> 
+   <li> When the constructor of class <code class="language-java">B</code> is invoked <code class="language-java">ClassLoader</code> of class <code class="language-java">A</code> (Application <code class="language-java">ClassLoader</code>) is invoked to load class <code class="language-java">B</code> and delegates loading to Extension <code class="language-java">ClassLoader</code>.</li> 
+   <li> Extension <code class="language-java">ClassLoader</code> is invoked and delegates loading to Bootstrap <code class="language-java">ClassLoader</code>.</li> 
+   <li> Bootstrap <code class="language-java">ClassLoader</code> is invoked and tries to resolve the class, but finds nothing and returns control to Extension <code class="language-java">ClassLoader</code>.</li> 
+   <li> Extension <code class="language-java">ClassLoader</code> finds nothing as well and returns control to Application <code class="language-java">ClassLoader</code>.</li> 
+   <li> Application <code class="language-java">ClassLoader</code> resolves the class and loads it into memory.</li> 
+  </ol> 
+  <h5 id="when-something-goes-wrong">When something goes wrong</h5> 
+  <p>Let's have a quick glance at problems related to class loaders. The common root cause comes because runtime dependencies may differ from compile-time ones. For instance, a project may be compiled successfully, but some classes were not added to the classpath. In that case, a class loader cannot find a class. That leads to <code class="language-java">ClassNotFoundException</code> or <code class="language-java">NoClassDefFoundError</code>. Another kind of exception happens because a project was compiled with one version of a class, but the classpath includes a different one. In that case <code class="language-java">NoSuchMethodError</code> or <code class="language-java">NoSuchFieldError</code> are thrown.</p> 
+  <h5 id="conclusion">Conclusion</h5> 
+  <p>A class loader is a part of JRE that loads byte code classes from a file system into RAM. It is a dynamic on-demand concept. There are 3 standard class loaders: bootstrap, platform, and system. A class loading process is performed according to a delegation model. Although dealing with classloading is not a daily job for most programmers, understanding the concept helps to investigate some types of exceptions. It is highly required for building complex systems like web frameworks as well.</p>
+ </body>
+</html>

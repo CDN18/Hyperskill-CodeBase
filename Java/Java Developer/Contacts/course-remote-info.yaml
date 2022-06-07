@@ -3,7 +3,7 @@ hyperskill_project:
   ide_files: https://stepik.org/media/attachments/lesson/204791/additional_files.json
   is_template_based: false
   use_ide: true
-update_date: Mon, 06 Jun 2022 06:24:19 UTC
+update_date: Tue, 07 Jun 2022 10:19:59 UTC
 stages:
 - id: 228
   step: 5324
@@ -130,7 +130,7 @@ topics:
   - title: Pseudocode basics
     theory_id: 19510
   - title: Fixed-size array
-    theory_id: 7255
+    theory_id: 20078
   - title: Dynamic array
     theory_id: 5357
   - title: IntelliJ IDEA

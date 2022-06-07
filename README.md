@@ -4,6 +4,7 @@ The repo contains my source codes of projects in [Hyperskill/JetBrains Academy](
 
 ## Note
 - **Disclaimer**: Tracks, courses, projects, theories, practices, tests, examples and instructions are developed by Hyperskill and I do not hold the copyright of these contents.
+- The path of the actual code of the project is under `/$TRACK_NAME/$PROJECT_NAME/$PROJECT_NAME/task/src`. Theoretically when you open the project folder(`/$TRACK_NAME/$PROJECT_NAME`) you can view source code of different stages using IDEA and EduTools
 - Code samples of tracks you learned can be found at [hyperskill/hs-java-samples](https://github.com/hyperskill/hs-java-samples)
 - [Hyperskill](https://hyperskill.org) is an interactive learning platform which offers multiple courses about Programming Language, Computer Science and so on. Students can get up to 5 months free trail by signing up for [JetBrains Academy For Students](https://lp.jetbrains.com/jba-students/).
 
