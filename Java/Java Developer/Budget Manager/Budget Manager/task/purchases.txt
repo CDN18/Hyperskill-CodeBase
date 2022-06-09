@@ -1,0 +1,58 @@
+version: 1
+balance: 785.64
+currency: $
+transactions:
+Name: 
+Amount: 1000.00
+Category: null
+Name: Almond 250g
+Amount: -35.43
+Category: Food
+Name: Milk
+Amount: -3.50
+Category: Food
+Name: Red Fuji Apple
+Amount: -5.99
+Category: Food
+Name: Eggs
+Amount: -3.99
+Category: Food
+Name: FIJI Natural Artesian Water
+Amount: -25.98
+Category: Food
+Name: Hershey's milk chocolate bars
+Amount: -8.54
+Category: Food
+Name: Great Value Broccoli Florets
+Amount: -1.00
+Category: Food
+Name: Keystone Ground Bee
+Amount: -6.28
+Category: Food
+Name: Gildan LT
+Amount: -8.61
+Category: Clothes
+Name: Men's Dual Defense Crew Socks 12 Pairs
+Amount: -13.00
+Category: Clothes
+Name: Wrangler Men's Stretch Cargo Pant
+Amount: -19.97
+Category: Clothes
+Name: LEGO DUPLO Town Farm Animals
+Amount: -10.10
+Category: Entertainment
+Name: Cinema
+Amount: -8.73
+Category: Entertainment
+Name: Skate rental
+Amount: -30.00
+Category: Entertainment
+Name: Sensodyne Pronamel Toothpaste
+Amount: -19.74
+Category: Other
+Name: Chick-fil-A $10 Gift Card
+Amount: -10.00
+Category: Other
+Name: Debt
+Amount: -3.50
+Category: Other
