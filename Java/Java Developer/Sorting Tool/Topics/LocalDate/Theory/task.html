@@ -1,0 +1,46 @@
+<h2>LocalDate</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Time is a fundamental notion not only in human life but in programming as well. Of course, Java provides some tools for working with temporal entities. We'll start with such units of time measurement as days (or dates).</p> 
+  <p>The class <code class="language-java">LocalDate</code> represents a single date in a <strong>YYYY-MM-dd</strong> format, such as <code class="language-java">2017-11-25</code> or <code class="language-java">2025-01-23</code> . It could be used to store any date: from your birthday to the day of the Apocalypse.</p> 
+  <p>The class belongs to the <code class="language-java">java.time</code> package. </p> 
+  <h5 id="creating-localdate-and-current-time" style="text-align: center;">Creating LocalDate and current time</h5> 
+  <p>After importing the class, an instance storing the current date can be created as below:</p> 
+  <pre><code class="language-java">LocalDate now = LocalDate.now();</code></pre> 
+  <p>Of course, it is also possible to create an instance of <code class="language-java">LocalDate</code> that represents a specific day of a year. It can be obtained by using either of the two special static methods: <code class="language-java">of</code> and <code class="language-java">parse</code>.</p> 
+  <p>Here are two examples:</p> 
+  <pre><code class="language-java">LocalDate date1 = LocalDate.of(2017, 11, 25); // 2017-11-25 (25 November 2017)
+LocalDate date2 = LocalDate.parse("2017-11-25"); // 2017-11-25 (25 November 2017)</code></pre> 
+  <p>The numbering system is intuitive: the number of a month is a number from 1 to 12 inclusive, the first day in a month has the number 1.</p> 
+  <p>The other useful way to create an instance of <code class="language-java">LocalDate</code> is by indicating a year and the sequential number of a day in this year, like this:</p> 
+  <pre><code class="language-java">LocalDate.ofYearDay(2017, 33); // 2017-02-02 (2 February 2017)</code></pre> 
+  <p>A number of a day in the year is an <code class="language-java">int</code> number from 1 to 365-366 (depending on whether it is a leap year or not).</p> 
+  <pre><code class="language-java">LocalDate.ofYearDay(2016, 365); // 2016-12-30 (30 December 2016)
+LocalDate.ofYearDay(2017, 365); // 2017-12-31 (31 December 2017)</code></pre> 
+  <p>Be careful though, because an exception may occur when we deal with the 366-th day:</p> 
+  <pre><code class="language-java">LocalDate.ofYearDay(2016, 366); // 2016-12-31 (31 December 2016)
+LocalDate.ofYearDay(2017, 366); // here is an exception occurs, because the year is not leap</code></pre> 
+  <h5 id="localdate-year-month-day-and-length" style="text-align: center;">LocalDate: year, month, day and length</h5> 
+  <p>Let's now consider the following instance of <code class="language-java">LocalDate</code>:</p> 
+  <pre><code class="language-java">LocalDate date = LocalDate.of(2017, 11, 25); // 2017-11-25 (25 November 2017)</code></pre> 
+  <p>We can get the year, month, the day of a month, the day of a year:</p> 
+  <pre><code class="language-java">int year = date.getYear(); // 2017
+int month = date.getMonthValue(); // 11
+int dayOfMonth = date.getDayOfMonth(); // 25
+int dayOfYear = date.getDayOfYear();  // 329</code></pre> 
+  <p>It is also possible to get a length of the year and month:</p> 
+  <pre><code class="language-java">int lenOfYear = date.lengthOfYear(); // 365
+int lenOfMonth = date.lengthOfMonth(); // 30</code></pre> 
+  <h5 id="arithmetic-methods-of-localdate" style="text-align: center;">Arithmetic methods of LocalDate</h5> 
+  <p>The class has other methods for adding, subtracting and altering a day, month and year. Let's create another <code class="language-java">LocalDate</code> instance: </p> 
+  <pre><code class="language-java">LocalDate date = LocalDate.of(2017, 1, 1); // 2017-01-01 (1 January 2017)</code></pre> 
+  <p>And take a look at how we can apply these methods:</p> 
+  <pre><code class="language-java">LocalDate tomorrow = date.plusDays(1);    // 2017-01-02 (2 January 2017)
+LocalDate yesterday = date.minusDays(1);  // 2016-12-31 (31 December 2016)
+LocalDate inTwoYears = date.plusYears(2); // 2019-01-01 (1 January 2019)
+LocalDate in2016 = date.withYear(2016);   // 2016-01-01 (1 January 2016)</code></pre> 
+  <h5 id="conclusion">Conclusion</h5> 
+  <p>As you can see, the <code class="language-java">LocalDate</code> class provides plenty of helpful methods for working with dates. Don't hesitate to use them when needed! The <code class="language-java">LocalDate</code> class is immutable and its methods always return a new instance of the class.</p>
+ </body>
+</html>

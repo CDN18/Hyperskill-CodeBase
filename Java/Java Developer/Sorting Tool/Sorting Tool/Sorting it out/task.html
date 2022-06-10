@@ -1,0 +1,30 @@
+<h5 id="description" style="text-align: center;">Description</h5>
+
+<p>This project is called Sorting Tool, but, so far, you still haven’t really sorted the elements of the user input. Let's add a number-sorting mechanism to the program and provide an appropriate command-line argument to use this function.</p>
+
+<p>The new optional <code class="java">-sortIntegers</code> argument indicates that the input numbers should be sorted.</p>
+
+<h5 id="objectives" style="text-align: center;">Objectives</h5>
+
+<p>Update the parsing of command-line arguments to support the number sorting option.</p>
+
+<p>If the <code class="java">-sortIntegers</code> argument is provided, ignore the other arguments and output two lines: the first containing the total number of numbers in the input, and the second containing all of the input numbers in ascending order.</p>
+
+<p>If the <code class="java">-sortIntegers</code> argument is not provided, the behavior of the program should be the same as in the previous stage.</p>
+
+<h5 id="example" style="text-align: center;">Example</h5>
+
+<p><strong>Run configuration example:</strong></p>
+
+<pre><code class="language-no-highlight">java SortingTool -sortIntegers
+</code></pre>
+
+<p><strong>Run example</strong></p>
+
+<p>The greater-than symbol followed by a space (<code class="java">&gt; </code>) represents the user input. Note that it's not part of the input.</p>
+
+<pre><code class="language-no-highlight">&gt; 1 -2   33 4
+&gt; 42
+&gt; 1                 1
+Total numbers: 7.
+Sorted data: -2 1 1 1 4 33 42</code></pre>

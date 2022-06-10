@@ -1,0 +1,95 @@
+<h5 id="description" style="text-align: center;">Description</h5>
+
+<p>Now that it’s possible to sort numbers, it's time to implement the same functionality for words and lines. But that's not all for this stage! Let's also add a new sorting type that is often rather useful: sorting by count, a type of sorting that arranges the elements by number of occurrences.</p>
+
+<p>Instead of <code class="java">-sortIntegers</code>, we will use the universal <code class="java">-sortingType</code> argument.</p>
+
+<p>The result of sorting by count should be pairs <code class="java">(count, dataEntry)</code> sorted by the <code class="java">count</code> value.</p>
+
+<p>Note that from this stage on, your program focuses on sorting user data, so it will no longer output information about the greatest number or the longest string.</p>
+
+<h5 id="objectives" style="text-align: center;">Objectives</h5>
+
+<p>Update the parsing of command-line arguments to support the sorting type definition:</p>
+
+<ul>
+	<li>if the <code class="java">-sortingType</code> argument is provided, it should be followed by <code class="java">natural</code> or <code class="java">byCount</code>, which defines the sorting type.</li>
+	<li>if the argument is not provided, then consider <code class="java">natural</code> to be the default sorting type.</li>
+</ul>
+
+<p>Implement natural sorting for words and lines, and sorting by count for all data types. Within the group, elements with equal count values should be sorted naturally.</p>
+
+<p><strong>Note</strong>: for strings (words and lines), natural order is lexicographic order, for numbers it is numeric order.</p>
+
+<p>Print the line containing the total number <code class="java">m</code> of elements in the input: <code class="java">Total ELEMENTS: m.</code>, where <code class="java">ELEMENTS</code>  can be <code class="java">numbers</code>, <code class="java">words</code>, or <code class="java">lines</code>, depending on the input. Then output the sorting results:</p>
+
+<ul>
+	<li>for natural sorting of numbers or words, print elements on one line in ascending order:</li>
+	<li>
+	<pre><code class="language-no-highlight">Sorted data: el_1 el_2 ... el_m </code></pre>
+	</li>
+	<li>for natural sorting of lines, print lexicographically sorted elements each on a new line:</li>
+	<li>
+	<pre><code class="language-no-highlight">Sorted data:
+line_1
+line_2
+…
+line_m</code></pre>
+	</li>
+	<li>for sorting by count, print elements sorted by the number of occurrences, each on a new line, using the following format:
+	<pre><code class="language-no-highlight">element: count time(s), percentage%</code></pre>
+	Here, <code class="java">element</code> is a number, word, or line, <code class="java">count</code> is the number of times it appears in the input, and <code class="java">percentage</code> is the proportion of the <code class="java">count</code> to the total number of elements in the input, given as a percentage.</li>
+</ul>
+
+<h5 id="examples" style="text-align: center;">Examples</h5>
+
+<p><strong>Run configuration examples:</strong></p>
+
+<pre><code class="language-no-highlight">java SortingTool -sortingType natural -dataType long
+</code></pre>
+
+<pre><code class="language-no-highlight">java SortingTool -dataType word -sortingType byCount
+</code></pre>
+
+<p><strong>Run examples</strong></p>
+
+<p>The greater-than symbol followed by a space (<code class="java">&gt; </code>) represents the user input. Note that it's not part of the input.</p>
+
+<p><strong>Example 1</strong>, for sorting longs by count:</p>
+
+<pre><code class="java">&gt; 1 -2   33 4
+&gt; 42
+&gt; 1                 1
+Total numbers: 7.
+-2: 1 time(s), 14%
+4: 1 time(s), 14%
+33: 1 time(s), 14%
+42: 1 time(s), 14%
+1: 3 time(s), 43%</code></pre>
+
+<p><strong>Example 2</strong>, for sorting numbers naturally: </p>
+
+<pre><code class="language-no-highlight">&gt; 1 -2   33 4
+&gt; 42
+&gt; 1                 1
+Total numbers: 7.
+Sorted data: -2 1 1 1 4 33 42 </code></pre>
+
+<p><strong>Example 3</strong>, for sorting words naturally:</p>
+
+<pre><code class="language-no-highlight">&gt; 1 -2   33 4
+&gt; 42
+&gt; 1                 1
+Total words: 7.
+Sorted data: -2 1 1 1 33 4 42 </code></pre>
+
+<p><strong>Example 4</strong>, for sorting lines naturally:</p>
+
+<pre><code class="language-no-highlight">&gt; 1 -2   33 4
+&gt; 42
+&gt; 1                 1
+Total lines: 3
+Sorted data:
+1                 1
+1 -2   33 4
+42</code></pre>

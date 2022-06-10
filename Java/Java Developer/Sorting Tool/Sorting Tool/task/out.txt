@@ -1,0 +1,2 @@
+Total words: 7
+Sorted data: 1 4 1 1 -2 42 333

@@ -1,0 +1,77 @@
+<h5 id="description" style="text-align: center;">Description</h5>
+
+<p>Remember how we wanted the program to work not only with numbers but also with lines and words? In this stage, you will add behavior for text data types to your program. You will also implement parsing for command-line arguments that will allow the user to define the input data type</p>
+
+<p>After parsing the arguments and reading the input, the program should treat the input according to its data type and output an information message similar to the one from the previous stage.</p>
+
+<h5 id="objectives" style="text-align: center;">Objectives</h5>
+
+<ol>
+	<li>Parse arguments that define the input data type:
+	<ul>
+		<li>if the optional <code class="java">-dataType</code> argument is provided, it should be followed by <code class="java">long</code>, <code class="java">line</code>, or <code class="java">word</code>, which means that the input consists of numbers, lines, or words, respectively.</li>
+		<li>if the argument is not provided, you should assume that the <code class="java">-dataType</code> argument is <code class="java">word</code>.</li>
+	</ul>
+	</li>
+	<li>Read the input depending on the type:
+	<ul>
+		<li><code class="java">long</code> — numbers with an arbitrary number of spaces between them, just like in the previous stage.</li>
+		<li><code class="java">line</code> — each line treated as a whole string.</li>
+		<li><code class="java">word</code> — continuous sequences of characters separated by an arbitrary number of spaces.</li>
+	</ul>
+	</li>
+	<li>Compute the following information about the data:
+	<ol>
+		<li>The number of lines, numbers, or words in the input.</li>
+		<li>The greatest number or the longest line or word in the input.</li>
+		<li>How many times this greatest or longest element occurs in the input (compare words and lines by length; if two elements are the same length, arrange them alphabetically).</li>
+		<li>The greatest/longest element's occurrence percentage.</li>
+	</ol>
+	</li>
+	<li>Print this information as shown in the examples. Note that you should print the longest line on a separate line, so you will end up printing 4 lines instead of 2.</li>
+</ol>
+
+<h5 id="examples" style="text-align: center;">Examples</h5>
+
+<p><strong>Run configuration examples:</strong></p>
+
+<pre><code class="language-no-highlight">java SortingTool -dataType long
+</code></pre>
+
+<pre><code class="language-no-highlight">java SortingTool -dataType line
+</code></pre>
+
+<pre><code class="language-no-highlight">java SortingTool -dataType word
+</code></pre>
+
+<p><strong>Run examples</strong></p>
+
+<p>The greater-than symbol followed by a space (<code class="java">&gt; </code>) represents the user input. Note that it's not part of the input.</p>
+
+<p><strong>Example 1, </strong>for integers:</p>
+
+<pre><code class="language-no-highlight">&gt; 1 -2   333 4
+&gt; 42
+&gt; 1                 1
+Total numbers: 7.
+The greatest number: 333 (1 time(s), 14%).
+</code></pre>
+
+<p><strong>Example 2, </strong>for lines:</p>
+
+<pre><code class="language-no-highlight">&gt; 1 -2   333 4
+&gt; 42
+&gt; 1                 1
+Total lines: 3.
+The longest line:
+1                 1
+(1 time(s), 33%).</code></pre>
+
+<p><strong>Example 3</strong>, for words:</p>
+
+<pre><code class="language-no-highlight">&gt; 1 -2   333 4
+&gt; 42
+&gt; 1                 1
+Total words: 7.
+The longest word: 333 (1 time(s), 14%).
+</code></pre>

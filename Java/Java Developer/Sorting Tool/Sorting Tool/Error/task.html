@@ -1,0 +1,62 @@
+<h5 id="description" style="text-align: center;">Description</h5>
+
+<p>There is always a possibility that someone will run your program the wrong way. It shouldn't just silently crash, but instead, it should print a message that informs the user of the mistake they made.</p>
+
+<p>In this stage, let's implement error handling for various exceptional situations the user might encounter.</p>
+
+<h5 id="objectives" style="text-align: center;">Objectives</h5>
+
+<p>Add exception handling for possible errors and output error messages to the console:</p>
+
+<ul>
+	<li>if the <code class="java">-sortingType</code> argument is provided but the type is not, print a message <code class="java">No sorting type defined!</code></li>
+	<li>if the <code class="java">-dataType</code> argument is provided but the type is not, print <code class="java">No data type defined!</code> </li>
+	<li>if unknown command-line arguments are provided, print <code class="java">"-arg" is not a valid parameter. It will be skipped.</code> for each unknown argument <code class="java">-arg</code>;</li>
+	<li>if there are strings in the input, but the data type is defined as <code class="java">long</code>, print <code class="java">"abc" is not a long. It will be skipped.</code> for each string <code class="java">abc</code> from the input.</li>
+</ul>
+
+<h5 id="examples" style="text-align: center;">Examples</h5>
+
+<p>The greater-than symbol followed by a space (<code class="java">&gt; </code>) represents the user input. Note that it's not part of the input.</p>
+
+<p><strong>Example 1: </strong><em>sorting numbers naturally without errors</em></p>
+
+<pre><code class="language-no-highlight">$&gt; java SortingTool -sortingType natural -dataType long
+&gt; 1 -2   33 4
+&gt; 42
+&gt; 1                 1
+Total numbers: 7.
+Sorted data: -2 1 1 1 4 42 333 </code></pre>
+
+<p><strong>Example 2: </strong><em>sorting numbers by count without errors</em></p>
+
+<pre><code class="language-no-highlight">$&gt; java SortingTool -sortingType byCount -dataType long
+&gt; 1 -2   33 4
+&gt; 42
+&gt; 1                 1
+Total numbers: 7.
+-2: 1 time(s), 14%
+4: 1 time(s), 14%
+33: 1 time(s), 14%
+42: 1 time(s), 14%
+1: 3 time(s), 43%</code></pre>
+
+<p><strong>Example 3: </strong><em>missing sorting type</em></p>
+
+<pre><code class="language-no-highlight">$&gt; java SortingTool -sortingType
+No sorting type defined!</code></pre>
+
+<p><strong>Example 4: </strong><em>missing data type</em></p>
+
+<pre><code class="language-no-highlight">$&gt; java SortingTool -dataType
+No data type defined!</code></pre>
+
+<p><strong>Example 5: </strong><em>invalid arguments and input value</em></p>
+
+<pre><code class="language-no-highlight">$&gt; java SortingTool -dataType long -sortingType natural -abc -def
+"-abc" is not a valid parameter. It will be skipped.
+"-def" is not a valid parameter. It will be skipped.
+&gt; a 2 -42
+"a" is not a long. It will be skipped.
+Total numbers: 2.
+Sorted data: -42 2</code></pre>

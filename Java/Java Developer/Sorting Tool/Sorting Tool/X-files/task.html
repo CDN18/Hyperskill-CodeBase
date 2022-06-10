@@ -1,0 +1,21 @@
+<h5 id="description" style="text-align: center;">Description</h5>
+
+<p>Sometimes it's useful to read data that is from a file, rather than from the standard input, and write the result to another file instead of printing it to the console. Add this functionality to your program along with the appropriate command-line argument support.</p>
+
+<h5 id="objectives" style="text-align: center;">Objectives</h5>
+
+<p>Update command-line arguments parsing to support the <code class="java">-inputFile</code> and <code class="java">-outputFile</code> arguments.</p>
+
+<p>If <code class="java">-inputFile</code> is provided followed by the file name, read the input data from the file.</p>
+
+<p>If <code class="java">-outputFile</code> is provided followed by the file name, output only the error messages to the console and print the results to the file.</p>
+
+<h5 id="examples" style="text-align: center;">Examples</h5>
+
+<p><strong>Example 1: </strong><em>input file is defined</em></p>
+
+<pre><code class="language-no-highlight">java SortingTool -sortingType byCount -inputFile input.txt</code></pre>
+
+<p><strong>Example 2: </strong><em>input and output files are defined</em></p>
+
+<pre><code class="language-no-highlight">java SortingTool -sortingType byCount -inputFile data.dat -outputFile out.txt</code></pre>

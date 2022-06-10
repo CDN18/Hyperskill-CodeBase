@@ -1,0 +1,406 @@
+type: edu
+custom_name: stage2
+files:
+- name: src/sorting/Main.java
+  visible: true
+  text: |
+    package sorting;
+
+    import java.util.*;
+
+    public class Main {
+        public static void main(final String[] args) {
+            Scanner scanner = new Scanner(System.in);
+
+            while (scanner.hasNextLong()) {
+                long number = scanner.nextLong();
+                // write your code here
+            }
+        }
+    }
+  learner_created: false
+- name: test/common/SortingToolStage2Test.kt
+  visible: false
+  text: |
+    package common
+
+    import org.hyperskill.hstest.stage.StageTest
+    import org.hyperskill.hstest.testcase.CheckResult
+    import org.hyperskill.hstest.testcase.TestCase
+    import org.hyperskill.hstest.testing.Settings
+    import java.util.*
+    import kotlin.math.roundToInt
+
+    class SortingToolStage2Test : StageTest<SortingToolClue>() {
+
+        init {
+            Settings.allowOutOfInput = true
+        }
+
+        override fun generate(): List<TestCase<SortingToolClue>> {
+            return stage1Tests() + stage2Tests()
+        }
+
+        override fun check(reply: String, clue: SortingToolClue): CheckResult {
+            return when {
+                "long" in clue.args -> checkForLong(clue, reply)
+                "word" in clue.args -> checkForWord(clue, reply)
+                "line" in clue.args -> checkForLine(clue, reply)
+
+                else -> throw IllegalArgumentException("Bad test: no data type found")
+            }
+        }
+    }
+
+    fun stage1Tests(): List<TestCase<SortingToolClue>> {
+        return listOf(
+                createTest(
+                        """
+                    |1 -2   33 4
+                    |42
+                    |1                 1
+                    """.trimMargin(),
+                        true
+                ),
+                createTest("1 2 2 3 4 5 5", true),
+                createTest("1 1 2 2 3 4 4 4", false)
+        )
+    }
+
+    fun stage2Tests(): List<TestCase<SortingToolClue>> {
+        return listOf(
+                createTest(
+                        """
+                    |1 -2   333 4
+                    |42
+                    |1                 1
+                    """.trimMargin(),
+                        true,
+                        "-dataType", "word"
+                ),
+                createTest(
+                        """abcc de a""".trimMargin(),
+                        false,
+                        "-dataType", "word"
+                ),
+                createTest(
+                        """
+                    |1 -2   333 4
+                    |42
+                    |1                 1
+                    """.trimMargin(),
+                        true,
+                        "-dataType", "line"
+                ),
+                createTest(
+                        """
+                    |1111
+                    |22222
+                    |3
+                    |44
+                    """.trimMargin(),
+                        false,
+                        "-dataType", "line"
+                )
+        )
+    }
+
+
+    fun revealRawTest(clue: SortingToolClue, reply: String): String {
+        return with(clue) { "Args:\n${args.joinToString(" ")}\nInput:\n$consoleInput\nYour output:\n$reply\n\n" }
+    }
+
+
+    class SortingToolClue(val consoleInput: String, val revealTest: Boolean, val args: List<String>)
+
+
+    fun createTest(
+            consoleInput: String,
+            revealTest: Boolean,
+            vararg args: String = arrayOf("-dataType", "long")
+    ): TestCase<SortingToolClue> {
+        return TestCase<SortingToolClue>()
+                .setAttach(SortingToolClue(consoleInput, revealTest, args.toList()))
+                .setInput(consoleInput)
+                .addArguments(*args)
+    }
+
+
+    fun checkForLong(clue: SortingToolClue, reply_: String): CheckResult {
+        val reply = reply_.trim()
+        val regex = """(\d+)\D+(\d+)\D+(\d+)""".toRegex()
+        val matchResult = regex.find(reply)
+        if (matchResult == null) {
+            return if (clue.revealTest) {
+                CheckResult(
+                        false,
+                        "Can't parse your output. Please check if your output contains three numbers\n" +
+                                revealRawTest(clue, reply)
+                )
+            } else {
+                CheckResult(false, "Can't parse your output.")
+            }
+        }
+
+        val (totalNumbers, greatestNumber, greatestNumberCount) = matchResult.groupValues.drop(1).map { it.toInt() }
+
+        val scanner = Scanner(clue.consoleInput)
+
+        val actualNumbers = mutableListOf<Int>()
+
+        while (scanner.hasNextInt()) {
+            actualNumbers.add(scanner.nextInt())
+        }
+
+        val actualTotal = actualNumbers.size
+
+        if (actualTotal != totalNumbers) {
+            return if (clue.revealTest) {
+                CheckResult(
+                        false,
+                        "Total numbers ($totalNumbers) are incorrect. Expected: $actualTotal.\n" +
+                                revealRawTest(clue, reply)
+                )
+            } else {
+                CheckResult(false, "Total numbers are incorrect.")
+            }
+        }
+
+        val actualMax = actualNumbers.maxOrNull()
+
+        if (actualMax != greatestNumber) {
+            return if (clue.revealTest) {
+                CheckResult(
+                        false,
+                        "Greatest number ($greatestNumber) is incorrect. Expected: $actualMax.\n" +
+                                revealRawTest(clue, reply)
+                )
+            } else {
+                CheckResult(false, "Greatest number is incorrect.")
+            }
+        }
+
+        val actualMaxCount = actualNumbers.count { it == actualMax }
+
+        if (actualMaxCount != greatestNumberCount) {
+            return if (clue.revealTest) {
+                CheckResult(
+                        false,
+                        "Greatest number times ($greatestNumberCount) are incorrect. Expected: $actualMaxCount.\n" +
+                                revealRawTest(clue, reply)
+                )
+            } else {
+                CheckResult(false, "Greatest number times are incorrect.")
+            }
+        }
+
+        return CheckResult(true)
+    }
+
+
+    fun checkForWord(clue: SortingToolClue, reply_: String): CheckResult {
+        val reply = reply_.trim()
+        val regex = """(\d+)\D+: (.+) \(\D*(\d+)\D+(\d+)\D*\)""".toRegex()
+        val matchResult = regex.find(reply)
+        if (matchResult == null) {
+            return if (clue.revealTest) {
+                CheckResult(
+                        false,
+                        "Can't parse your output.\n" +
+                                revealRawTest(clue, reply)
+                )
+            } else {
+                CheckResult(false, "Can't parse your output.")
+            }
+        }
+
+        val totalWords = matchResult.groupValues[1].toInt()
+        val word = matchResult.groupValues[2]
+        val longestWordCount = matchResult.groupValues[3].toInt()
+        val longestWordPercentage = matchResult.groupValues[4].toInt()
+
+        val scanner = Scanner(clue.consoleInput)
+
+        val actualWords = mutableListOf<String>()
+
+        while (scanner.hasNext()) {
+            actualWords.add(scanner.next())
+        }
+
+        val actualTotal = actualWords.size
+
+        if (actualTotal != totalWords) {
+            return if (clue.revealTest) {
+                CheckResult(
+                        false,
+                        "Total words ($totalWords) are incorrect. Expected: $actualTotal.\n" +
+                                revealRawTest(clue, reply)
+                )
+            } else {
+                CheckResult(false, "Total words are incorrect.")
+            }
+        }
+
+        val actualMax = actualWords.maxByOrNull { it.length }
+
+        if (actualMax != word) {
+            return if (clue.revealTest) {
+                CheckResult(
+                        false,
+                        "Longest word ($word) is incorrect. Expected: $actualMax.\n" +
+                                revealRawTest(clue, reply)
+                )
+            } else {
+                CheckResult(false, "Longest word is incorrect.")
+            }
+        }
+
+        val actualMaxCount = actualWords.count { it == actualMax }
+
+        if (actualMaxCount != longestWordCount) {
+            return if (clue.revealTest) {
+                CheckResult(
+                        false,
+                        "Longest word times ($longestWordCount) are incorrect. Expected: $actualMaxCount.\n" +
+                                revealRawTest(clue, reply)
+                )
+            } else {
+                CheckResult(false, "Longest word times are incorrect.")
+            }
+        }
+
+        val actualPercentage = (actualMaxCount * 100.0 / actualTotal).roundToInt()
+
+        if (actualPercentage != longestWordPercentage) {
+            return if (clue.revealTest) {
+                CheckResult(
+                        false,
+                        "Percentage ($longestWordPercentage) is incorrect. Expected: $actualPercentage.\n" +
+                                revealRawTest(clue, reply)
+                )
+            } else {
+                CheckResult(false, "Percentage is incorrect.")
+            }
+        }
+
+        return CheckResult(true)
+    }
+
+
+    fun checkForLine(clue: SortingToolClue, reply_: String): CheckResult {
+        val reply = reply_.trim()
+        val lines = reply.lines()
+
+        if (lines.size != 4) {
+            return if (clue.revealTest) {
+                CheckResult(
+                        false,
+                        "Can't parse your output: expected 4 lines.\n" +
+                                revealRawTest(clue, reply)
+                )
+            } else {
+                CheckResult(false, "Can't parse your output: expected 4 lines.")
+            }
+        }
+
+        val totalRegex = """(\d+)""".toRegex()
+        val totalMatchResult = totalRegex.find(lines[0])
+        if (totalMatchResult == null) {
+            return if (clue.revealTest) {
+                CheckResult(
+                        false,
+                        "Can't find number in the first line of your output.\n" +
+                                revealRawTest(clue, reply)
+                )
+            } else {
+                CheckResult(false, "Can't find number in the first line of your output.")
+            }
+        }
+
+        val totalLines = totalMatchResult.groupValues[1].toInt()
+        val line = lines[2]
+
+        val countRegex = """(\d+)\D+(\d+)""".toRegex()
+        val countMatchResult = countRegex.find(lines[3])
+        if (countMatchResult == null) {
+            return if (clue.revealTest) {
+                CheckResult(
+                        false,
+                        "Can't find two numbers in the last line of your output.\n" +
+                                revealRawTest(clue, reply)
+                )
+            } else {
+                CheckResult(false, "Can't find two numbers in the last line of your output.")
+            }
+        }
+
+        val longestWordCount = countMatchResult.groupValues[1].toInt()
+        val longestWordPercentage = countMatchResult.groupValues[2].toInt()
+
+        val actualLines = clue.consoleInput.lines()
+
+        val actualTotal = actualLines.size
+
+        if (actualTotal != totalLines) {
+            return if (clue.revealTest) {
+                CheckResult(
+                        false,
+                        "Total lines ($totalLines) are incorrect. Expected: $actualTotal.\n" +
+                                revealRawTest(clue, reply)
+                )
+            } else {
+                CheckResult(false, "Total lines are incorrect.")
+            }
+        }
+
+        val actualMax = actualLines.maxByOrNull { it.length }
+
+        if (actualMax != line) {
+            return if (clue.revealTest) {
+                CheckResult(
+                        false,
+                        "Longest line ($line) is incorrect. Expected: $actualMax.\n" +
+                                revealRawTest(clue, reply)
+                )
+            } else {
+                CheckResult(false, "Longest line is incorrect.")
+            }
+        }
+
+        val actualMaxCount = actualLines.count { it == actualMax }
+
+        if (actualMaxCount != longestWordCount) {
+            return if (clue.revealTest) {
+                CheckResult(
+                        false,
+                        "Longest line times ($longestWordCount) are incorrect. Expected: $actualMaxCount.\n" +
+                                revealRawTest(clue, reply)
+                )
+            } else {
+                CheckResult(false, "Longest line times are incorrect.")
+            }
+        }
+
+        val actualPercentage = (actualMaxCount * 100.0 / actualTotal).roundToInt()
+
+        if (actualPercentage != longestWordPercentage) {
+            return if (clue.revealTest) {
+                CheckResult(
+                        false,
+                        "Percentage ($longestWordPercentage) is incorrect. Expected: $actualPercentage.\n" +
+                                revealRawTest(clue, reply)
+                )
+            } else {
+                CheckResult(false, "Percentage is incorrect.")
+            }
+        }
+
+        return CheckResult(true)
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/5382#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Thu, 09 Jun 2022 12:56:21 UTC
+record: 2
